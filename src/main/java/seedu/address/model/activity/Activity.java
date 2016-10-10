@@ -18,9 +18,4 @@ public class Activity implements ReadOnlyActivity {
 	public String getName() {
 	    return name;
 	}
-	
-	@Override
-	public void setName(String newName) {
-		this.name = newName;
-	}
 }

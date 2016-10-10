@@ -24,7 +24,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Removes the equivalent activity from the list.
      *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
+     * @throws ActivityNotFoundException if no such person could be found in the list.
      */
     public boolean remove(Activity toRemove) throws ActivityNotFoundException {
         assert toRemove != null;
@@ -33,26 +33,6 @@ public class ActivityList implements Iterable<Activity> {
             throw new ActivityNotFoundException();
         }
         return activityFoundAndDeleted;
-    }
-    
-    /**
-     * Updates the equivalent activity in the list.
-     *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
-     */
-    
-    public boolean update(Activity toUpdate, String newName) throws ActivityNotFoundException {
-    	assert toUpdate != null;
-    	assert newName != null;
-    	final boolean activityFound = internalList.contains(toUpdate);
-    	if (activityFound) {
-	    	int toUpdateIndex = internalList.indexOf(toUpdate);
-	    	Activity toUpdateInList = internalList.get(toUpdateIndex);
-	    	toUpdateInList.setName(newName);
-    	} else {
-    		throw new ActivityNotFoundException();
-    	}
-    	return activityFound;
     }
     
     /**

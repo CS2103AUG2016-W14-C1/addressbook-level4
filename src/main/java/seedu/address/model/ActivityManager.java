@@ -109,15 +109,6 @@ public class ActivityManager implements ReadOnlyActivityManager {
             throw new ActivityList.ActivityNotFoundException();
         }
     }
-    
-    public boolean updateActivity(Activity key, String newName) throws ActivityList.ActivityNotFoundException {
-    	if (activities.update(key, newName)) {
-    		key.setName(newName);
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
-    }
 
 //// tag-level operations
 
