@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class Activity implements ReadOnlyActivity {
 	public String name;
+	public Status status;
 	
 	public Activity(String name) {
 		this.name = name;
+		this.status = new Status();
 	}
 
 	/**
@@ -24,6 +26,20 @@ public class Activity implements ReadOnlyActivity {
 	@Override
 	public void setName(String newName) {
 		this.name = newName;
+	}
+	
+	@Override
+	public void setStatus(boolean completed) {
+		if (completed) {
+			(this.status).setCompleted();
+		} else {
+			(this.status).setPending();
+		}
+	}
+	
+	@Override
+	public String getStatus() {
+		return (this.status).toString();
 	}
 	
 	// TODO: Re-implement equality if necessary when more details are added

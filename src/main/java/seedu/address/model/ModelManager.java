@@ -9,6 +9,7 @@ import seedu.address.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.ActivityList.ActivityNotFoundException;
+import seedu.address.model.activity.Status;
 
 import java.util.Set;
 import java.util.logging.Logger;
@@ -86,6 +87,14 @@ public class ModelManager extends ComponentManager implements Model {
         activityManager.updateActivity(activity, newName);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
+        indicateActivityManagerChanged();
+    }
+    
+    @Override
+    public synchronized void markActivity(Activity activity, boolean status) throws ActivityNotFoundException {
+        activityManager.markActivity(activity, status);
+        updateFilteredListToShowAll();
+    //    indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
     }
 

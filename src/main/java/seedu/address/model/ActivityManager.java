@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.ActivityList;
 import seedu.address.model.activity.FloatingActivity;
+import seedu.address.model.activity.Status;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -113,6 +114,15 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public boolean updateActivity(Activity key, String newName) throws ActivityList.ActivityNotFoundException {
     	if (activities.update(key, newName)) {
     		key.setName(newName);
+    		return true;
+    	} else {
+    		throw new ActivityList.ActivityNotFoundException();
+    	}
+    }
+    
+    public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
+    	if (activities.mark(key, status)) {
+    		key.setStatus(status);
     		return true;
     	} else {
     		throw new ActivityList.ActivityNotFoundException();

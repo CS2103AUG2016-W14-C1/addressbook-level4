@@ -22,7 +22,7 @@ public class Parser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     private static final Pattern ACTIVITY_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\S+)(?<arguments>.*)");
-
+    
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
@@ -58,6 +58,9 @@ public class Parser {
             
         case UpdateCommand.COMMAND_WORD:
         	return prepareUpdate(arguments);
+        	
+        case MarkCommand.COMMAND_WORD:
+        	return prepareMark(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -153,6 +156,50 @@ public class Parser {
         return new UpdateCommand(index.get(), matcher.group("arguments").trim());
     }
 
+    /**
+     * Parses arguments in the context of the mark activity command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareMark(String args) {
+    	final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+    	
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        // Validate index format
+        Optional<Integer> index = parseIndex(matcher.group("targetIndex"));
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        String[] splitArgs = (matcher.group("arguments").trim()).split("as");
+        String wordStatus;
+        if (splitArgs.length == 1) {
+        	wordStatus = (splitArgs[0]).trim();
+        } else {
+        	wordStatus = (splitArgs[1]).trim();
+        }
+        
+        String lowerCaseArgs = wordStatus.toLowerCase();
+        boolean status;
+        if (lowerCaseArgs.equals("pending")) {
+        	status = false;
+        } else if (lowerCaseArgs.equals("completed")) {
+        	status = true;
+        } else {
+        	return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        return new MarkCommand(index.get(), status);
+    }
+    
 
     /**
      * Parses arguments in the context of the select person command.

@@ -56,6 +56,24 @@ public class ActivityList implements Iterable<Activity> {
     }
     
     /**
+     * Marks the equivalent activity in the list as pending or completed.
+     *
+     * @throws ActivityNotFoundException if no such activity could be found in the list.
+     */
+    
+    public boolean mark(Activity toMark, boolean status) throws ActivityNotFoundException {
+    	assert toMark != null;
+    	final boolean activityFound = internalList.contains(toMark);
+    	if (activityFound) {
+    		toMark.setStatus(status);
+    	} else {
+    		throw new ActivityNotFoundException();
+    	}
+    	return activityFound;
+    }
+    
+    
+    /**
      * Signals that an operation targeting a specified activity in the list would fail because
      * there is no such matching activity in the list.
      */
