@@ -3,6 +3,7 @@ package seedu.address.model;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.ActivityList.ActivityNotFoundException;
+import seedu.address.model.activity.UniqueActivityList.DuplicateActivityException;
 
 import java.util.Set;
 
@@ -21,6 +22,9 @@ public interface Model {
 
     /** Adds the given person */
     void addActivity(Activity activity);
+    
+    /** Updates the given person */
+    void updateActivity(Activity target, String newName) throws ActivityNotFoundException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();

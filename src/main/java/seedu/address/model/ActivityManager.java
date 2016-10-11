@@ -26,14 +26,14 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public ActivityManager() {}
 
     /**
-     * Persons and Tags are copied into this addressbook
+     * Persons and Tags are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
         this(toBeCopied.getActivityList(), toBeCopied.getUniqueTagList());
     }
 
     /**
-     * Persons and Tags are copied into this addressbook
+     * Persons and Tags are copied into this activity manager
      */
     public ActivityManager(ActivityList activities, UniqueTagList tags) {
         resetData(activities.getInternalList(), tags.getInternalList());
@@ -69,8 +69,8 @@ public class ActivityManager implements ReadOnlyActivityManager {
 //// activity-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * Adds an activity to the activity manager.
+     * Also checks the new acitivity's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      *
      */
@@ -110,6 +110,15 @@ public class ActivityManager implements ReadOnlyActivityManager {
         }
     }
 
+    public boolean updateActivity(Activity key, String newName) throws ActivityList.ActivityNotFoundException {
+    	if (activities.update(key, newName)) {
+    		key.setName(newName);
+    		return true;
+    	} else {
+    		throw new ActivityList.ActivityNotFoundException();
+    	}
+    }
+    
 //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

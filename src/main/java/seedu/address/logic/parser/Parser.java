@@ -21,7 +21,7 @@ public class Parser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private static final Pattern ACTIVITY_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern ACTIVITY_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\S+)(?<arguments>.*)");
 
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
@@ -55,6 +55,9 @@ public class Parser {
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
+            
+        case UpdateCommand.COMMAND_WORD:
+        	return prepareUpdate(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -125,6 +128,31 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
+    
+    /**
+     * Parses arguments in the context of the update activity command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareUpdate(String args) {
+    	final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+        }
+        
+        // Validate index format
+        Optional<Integer> index = parseIndex(matcher.group("targetIndex"));
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+        }
+        
+        return new UpdateCommand(index.get(), matcher.group("arguments").trim());
+    }
+
 
     /**
      * Parses arguments in the context of the select person command.

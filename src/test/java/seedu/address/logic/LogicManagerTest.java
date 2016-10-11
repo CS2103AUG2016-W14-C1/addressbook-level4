@@ -1,12 +1,16 @@
 package seedu.address.logic;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.ObservableList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.logic.commands.*;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -103,24 +107,28 @@ public class LogicManagerTest {
      */
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
                                        ReadOnlyActivityManager expectedActivityManager,
-                                       List<? extends ReadOnlyActivity> expectedShownList) throws Exception {
+                                       List<? extends Activity> expectedShownList) throws Exception {
 
         //Execute the command
         CommandResult result = logic.execute(inputCommand);
 
         //Confirm the ui display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedShownList, model.getFilteredActivityList());
-
+        assertTrue(model.getFilteredActivityList().containsAll(expectedShownList));
+        
         //Confirm the state of data (saved and in-memory) is as expected
         assertEquals(expectedActivityManager, model.getActivityManager());
         assertEquals(expectedActivityManager, latestSavedActivityManager);
     }
     
+    // TODO: Refactor this "hack" if possible
+    /**
+     * Overload assertCommandBehavior(..., List<? extends Activity> expectedShownList) to accept both data types
+     */
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
             ReadOnlyActivityManager expectedActivityManager,
             ActivityList expectedShownList) throws Exception {
-        assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends ReadOnlyActivity>)expectedShownList.getInternalList());
+        assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends Activity>)expectedShownList.getInternalList());
     }
 
 
@@ -197,6 +205,8 @@ public class LogicManagerTest {
 
     }
 
+    /*
+    TODO: Use test only if duplicate activities should be prohibited
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -216,14 +226,14 @@ public class LogicManagerTest {
                 expectedAM.getActivityList());
 
     }
-
+    */
 
     @Test
     public void execute_list_showsAllActivities() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = helper.generateActivityManager(2);
-        List<? extends ReadOnlyActivity> expectedList = (List<? extends ReadOnlyActivity>)expectedAM.getActivityList().getInternalList();
+        List<? extends Activity> expectedList = (List<? extends Activity>)expectedAM.getActivityList().getInternalList();
         // prepare activity manager state
         helper.addToModel(model, 2);
 
@@ -320,7 +330,34 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
+    
+    @Test
+    public void execute_updateInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("update", expectedMessage);
+    }
+    
+    @Test
+    public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("update");
+    }
+    
+    @Test
+    public void execute_update_trimArguments() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity existingActivity = helper.generateActivityWithName("bla bla bla");
+        List<Activity> activities = helper.generateActivityList(existingActivity);
+        helper.addToModel(model, activities);
+        
+        Activity newActivity = helper.generateActivityWithName("bla");
+        List<Activity> expectedList = helper.generateActivityList(newActivity);
+        ActivityManager expectedAM = helper.generateActivityManager(expectedList);
 
+        assertCommandBehavior("update 1     bla",
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newActivity.getName()),
+                expectedAM,
+                expectedList);
+    }
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
