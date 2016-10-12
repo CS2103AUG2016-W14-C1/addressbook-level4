@@ -1,4 +1,4 @@
-package seedu.address.model.activity;
+package seedu.manager.model.activity;
 
 /**
  * Represents an activity's status in Remindaroo 

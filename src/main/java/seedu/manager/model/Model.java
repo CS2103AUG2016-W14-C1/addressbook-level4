@@ -4,7 +4,6 @@ import java.util.Set;
 
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.model.activity.Activity;
-import seedu.address.model.activity.Status;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 import seedu.manager.model.activity.UniqueActivityList.DuplicateActivityException;
 

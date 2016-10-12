@@ -8,7 +8,6 @@ import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.Activity;
-import seedu.address.model.activity.Status;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;

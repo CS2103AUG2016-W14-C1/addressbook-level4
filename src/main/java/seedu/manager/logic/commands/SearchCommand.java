@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.manager.logic.commands;
 
 import java.util.Set;
 
@@ -10,7 +10,7 @@ public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Search all activities whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches all activities whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";

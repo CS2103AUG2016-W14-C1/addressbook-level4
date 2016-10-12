@@ -1,13 +1,13 @@
-package seedu.address.logic.commands;
+package seedu.manager.logic.commands;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.UnmodifiableObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.address.model.activity.Status;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.manager.commons.core.Messages;
+import seedu.manager.commons.core.UnmodifiableObservableList;
+import seedu.manager.commons.exceptions.IllegalValueException;
+import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
+import seedu.manager.model.activity.Status;
+import seedu.manager.model.tag.Tag;
+import seedu.manager.model.tag.UniqueTagList;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +37,7 @@ public class MarkCommand extends Command {
 	
 	@Override
 	public CommandResult execute() {
-		UnmodifiableObservableList<Activity> lastShownList = model.getFilteredActivityList();
+		UnmodifiableObservableList<seedu.manager.model.activity.Activity> lastShownList = model.getFilteredActivityList();
 
         if (lastShownList.size() < targetIndex) {
             indicateAttemptToExecuteIncorrectCommand();

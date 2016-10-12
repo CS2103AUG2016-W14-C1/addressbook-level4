@@ -2,7 +2,6 @@ package seedu.manager.model;
 
 import javafx.collections.ObservableList;
 import seedu.manager.model.activity.Activity;
-import seedu.address.model.activity.Status;
 import seedu.manager.model.activity.ActivityList;
 import seedu.manager.model.activity.FloatingActivity;
 import seedu.manager.model.tag.Tag;
@@ -121,12 +120,12 @@ public class ActivityManager implements ReadOnlyActivityManager {
     }
 
     public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
-        if (activities.mark(key, status)) {
-            key.setStatus(status);
-            return true;
-        } else {
-            throw new ActivityList.ActivityNotFoundException();
-        }
+    	if (activities.mark(key, status)) {
+    		key.setStatus(status);
+    		return true;
+    	} else {
+    		throw new ActivityList.ActivityNotFoundException();
+    	}
     }
 
     
