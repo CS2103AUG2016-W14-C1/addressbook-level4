@@ -5,8 +5,8 @@ package seedu.manager.model.activity;
  */
 
 public class Status{
-	private static final String MESSAGE_STATUS_PENDING = "Pending";
-	private static final String MESSAGE_STATUS_COMPLETED = "Completed";
+	private static final String MESSAGE_STATUS_PENDING = "pending";
+	private static final String MESSAGE_STATUS_COMPLETED = "completed";
 	
 	private boolean status;
 	
