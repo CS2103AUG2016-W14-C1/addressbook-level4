@@ -22,8 +22,8 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the activity identified by the index number used in the last activity listing as pending or completed.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1" + " pending\n"
-            + "Example: " + COMMAND_WORD + " 1" + " completed";
+            + "Example: " + COMMAND_WORD + " 1" + " as pending\n"
+            + "Example: " + COMMAND_WORD + " 1" + " as completed";
 
     public static final String MESSAGE_MARK_ACTIVITY_SUCCESS = "Marked Activity as %1$s: %2$s";
 	public final int targetIndex;
