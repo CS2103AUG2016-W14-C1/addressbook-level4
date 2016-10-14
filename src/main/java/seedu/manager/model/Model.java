@@ -17,14 +17,17 @@ public interface Model {
     /** Returns the ActivityManager */
     ReadOnlyActivityManager getActivityManager();
 
-    /** Deletes the given person. */
+    /** Deletes the given activity. */
     void deleteActivity(Activity target) throws ActivityNotFoundException;
 
-    /** Adds the given person */
+    /** Adds the given activity */
     void addActivity(Activity activity);
     
-    /** Updates the given person */
+    /** Updates the given activity */
     void updateActivity(Activity target, String newName) throws ActivityNotFoundException;
+
+    /** Marks the given activity */
+    void markActivity(Activity target, boolean status) throws ActivityNotFoundException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();

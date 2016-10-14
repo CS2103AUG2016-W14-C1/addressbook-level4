@@ -11,6 +11,7 @@ import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -89,6 +90,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityManagerChanged();
     }
 
+    @Override
+    public synchronized void markActivity(Activity activity, boolean status) throws ActivityNotFoundException {
+        activityManager.markActivity(activity, status);
+        updateFilteredActivityList();
+        indicateActivityManagerChanged();
+    }
+
 
     //=========== Filtered Person List Accessors ===============================================================
 
@@ -109,6 +117,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
+    }
+    
+    private void updateFilteredActivityList() {
+        filteredActivities.setPredicate(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return !activity.status.isCompleted();
+    		}
+    	});
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
