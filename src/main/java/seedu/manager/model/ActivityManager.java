@@ -118,6 +118,16 @@ public class ActivityManager implements ReadOnlyActivityManager {
     		throw new ActivityList.ActivityNotFoundException();
     	}
     }
+
+    public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
+    	if (activities.mark(key, status)) {
+    		key.setStatus(status);
+    		return true;
+    	} else {
+    		throw new ActivityList.ActivityNotFoundException();
+    	}
+    }
+
     
 //// tag-level operations
 
