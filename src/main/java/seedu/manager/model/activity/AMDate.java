@@ -23,9 +23,22 @@ public class AMDate {
         this.dateTime = dateGroups.get(0).getDates().get(0); 
     }
     
+    /**
+     * Reconstruct from epoch time to load from storage
+     * 
+     * @param newDateTime
+     */
+    AMDate(Long newEpochTime) {
+        this.dateTime = new Date(newEpochTime);
+    }
+    
     public void setAMDate(String newDateTime) {
         List<DateGroup> dateGroups = dateTimeParser.parse(newDateTime);
         this.dateTime = dateGroups.get(0).getDates().get(0); 
+    }
+    
+    public Long getTime() {
+        return dateTime.getTime();
     }
     
     public String getMonth() {
@@ -50,7 +63,11 @@ public class AMDate {
     
     public String getMinutes() {
         assert dateTime != null;
-        return Integer.toString(dateTime.getMinutes());
+        if (dateTime.getMinutes() < 10) {
+            return "0" + Integer.toString(dateTime.getMinutes());
+        } else {
+            return Integer.toString(dateTime.getMinutes());
+        }
     }
     
     public String getSeconds() {

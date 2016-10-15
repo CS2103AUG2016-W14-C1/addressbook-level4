@@ -20,11 +20,22 @@ public class Activity implements ReadOnlyActivity {
         this(name);
         this.dateTime = new AMDate(newDateTime);
     }
+	
+	public Activity(String name, Long newEpochDateTime) {
+        this(name);
+        this.dateTime = new AMDate(newEpochDateTime);
+    }
 
-	public Activity(String name, String newStartDateTime, String newEndDateTime) {
+    public Activity(String name, String newStartDateTime, String newEndDateTime) {
         this(name);
         this.dateTime = new AMDate(newStartDateTime);
         this.endDateTime = new AMDate(newEndDateTime);
+    }
+	
+	public Activity(String name, Long newEpochStartDateTime, Long newEpochEndDateTime) {
+        this(name);
+        this.dateTime = new AMDate(newEpochStartDateTime);
+        this.endDateTime = new AMDate(newEpochEndDateTime);
     }
 	
 	/**
