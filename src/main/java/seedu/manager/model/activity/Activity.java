@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import seedu.manager.commons.exceptions.IllegalValueException;
+
 public class Activity implements ReadOnlyActivity {
 	public String name;
 	public Status status;
@@ -26,10 +28,13 @@ public class Activity implements ReadOnlyActivity {
         this.dateTime = new AMDate(newEpochDateTime);
     }
 
-    public Activity(String name, String newStartDateTime, String newEndDateTime) {
+    public Activity(String name, String newStartDateTime, String newEndDateTime) throws IllegalValueException {
         this(name);
         this.dateTime = new AMDate(newStartDateTime);
         this.endDateTime = new AMDate(newEndDateTime);
+        if (this.dateTime.getTime() > this.endDateTime.getTime()) {
+            throw new IllegalValueException("Event has already ended before it starts.");
+        }
     }
 	
 	public Activity(String name, Long newEpochStartDateTime, Long newEpochEndDateTime) {
