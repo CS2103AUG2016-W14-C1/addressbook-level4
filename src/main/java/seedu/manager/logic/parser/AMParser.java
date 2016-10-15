@@ -113,6 +113,8 @@ public class AMParser {
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
+            } else {
+                return new AddCommand(matcher.group("name"));
             }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
