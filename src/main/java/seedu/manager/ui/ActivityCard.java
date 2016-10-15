@@ -9,13 +9,18 @@ import seedu.manager.model.activity.Activity;
 public class ActivityCard extends UiPart{
 
     private static final String FXML = "ActivityListCard.fxml";
-
+    private static final String DATETIME_DELIMITER = " | ";
+    private static final String DATE_DELIMITER = " ";
+    private static final String TIME_DELIMITER = ":";
+    
     @FXML
     private HBox cardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
+    @FXML
+    private Label dateTime;
 // TODO: re-instate tags or equivalent when implementation is complete    
 //    @FXML
 //    private Label tags;
@@ -38,10 +43,19 @@ public class ActivityCard extends UiPart{
     public void initialize() {
         name.setText(activity.name);
         id.setText(displayedIndex + ". ");
-//        phone.setText(person.getPhone().value);
-//        address.setText(person.getAddress().value);
-//        email.setText(person.getEmail().value);
-//        tags.setText(person.tagsString());
+        dateTime.setText(generateDateTimeString());
+    }
+    
+    private String generateDateTimeString() {
+        if (activity.getDate() == null) {
+            return "";
+        } else {
+            return activity.getDayOfWeek() + DATE_DELIMITER +
+                   activity.getDay() + DATE_DELIMITER +
+                   activity.getMonth() + DATETIME_DELIMITER + 
+                   activity.getHour() + TIME_DELIMITER +
+                   activity.getMinutes();
+        }
     }
 
     public HBox getLayout() {

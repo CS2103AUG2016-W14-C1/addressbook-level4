@@ -33,6 +33,7 @@ public class AMParser {
      * Various token counts
      */
     private static final int ADD_DEADLINE_TOKEN_COUNT = 2;
+    private static final int ADD_EVENT_TOKEN_COUNT = 2;
     
     public AMParser() {}
 
@@ -99,14 +100,20 @@ public class AMParser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-        String[] deadline_tokens = args.trim().split("on");
-        String[] events_tokens = args.trim().split("from");
+        String[] deadlineTokens = args.trim().split("on");
+        String[] eventTokens = args.trim().split("from");
         
         try {
-            if (deadline_tokens.length == ADD_DEADLINE_TOKEN_COUNT) {
-                return new AddCommand(deadline_tokens[0], deadline_tokens[1]);
+            if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
+            } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventTimeTokens = eventTokens[1].split("to"); 
+                if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new AddCommand(eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
+                } else {
+                    return new AddCommand(matcher.group("name"));
+                }
             }
-            return new AddCommand(matcher.group("name"));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
