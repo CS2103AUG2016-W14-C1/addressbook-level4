@@ -39,4 +39,16 @@ public class TestActivity implements ReadOnlyActivity {
         // this.getTags().getInternalList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }
+
+    @Override
+    public void setStatus(boolean completed) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String getStatus() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

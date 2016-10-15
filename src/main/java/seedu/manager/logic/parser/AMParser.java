@@ -14,7 +14,7 @@ import seedu.manager.logic.commands.*;
 /**
  * Parses user input.
  */
-public class Parser {
+public class AMParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -29,7 +29,12 @@ public class Parser {
     private static final Pattern ACTIVITY_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"); // variable number of tags
 
-    public Parser() {}
+    /**
+     * Various token counts
+     */
+    private static final int ADD_DEADLINE_TOKEN_COUNT = 2;
+    
+    public AMParser() {}
 
     /**
      * Parses user input into command for execution.
@@ -94,7 +99,13 @@ public class Parser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+        String[] deadline_tokens = args.trim().split("on");
+        String[] events_tokens = args.trim().split("from");
+        
         try {
+            if (deadline_tokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadline_tokens[0], deadline_tokens[1]);
+            }
             return new AddCommand(matcher.group("name"));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());

@@ -1,16 +1,29 @@
 package seedu.manager.model.activity;
 
+import java.util.List;
 import java.util.Objects;
+import com.joestelmach.natty.*;
 
 public class Activity implements ReadOnlyActivity {
 	public String name;
 	public Status status;
+	Parser parser = new Parser();
+	
 	
 	public Activity(String name) {
 		this.name = name;
 		this.status = new Status();
 	}
 
+	
+    public Activity(String name, String date_time) {
+        this(name);
+        List<DateGroup> dateGroups = parser.parse(date_time);
+        for (DateGroup dateGroup : dateGroups) {
+            System.out.println(dateGroup.getLine());
+        }
+    }
+	
 	/**
 	 * Copy constructor
 	 */
