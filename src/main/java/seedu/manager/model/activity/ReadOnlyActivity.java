@@ -1,20 +1,16 @@
 package seedu.manager.model.activity;
 
-import java.util.Date;
-
 public interface ReadOnlyActivity {
     
     String getName();
-    Date getDate();
-    String getMonth();
-    String getDay();
-    String getDayOfWeek();
-    String getHour();
-    String getMinutes();
-    String getSeconds();
-    String getStatus();
+    
+    AMDate getDate();
+    AMDate getEndDate();
     
     void setName(String newName);
     void setStatus(boolean completed);
+    String getStatus();
+    
     void setDateTime(String newDateTime);
+    void setEndDateTime(String newEndDateTime);
 }

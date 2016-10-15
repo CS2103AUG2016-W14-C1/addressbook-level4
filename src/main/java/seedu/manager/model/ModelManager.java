@@ -33,7 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert src != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with address book: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with activity manager: " + src + " and user prefs " + userPrefs);
 
         activityManager = new ActivityManager(src);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
@@ -98,7 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    //=========== Filtered Person List Accessors ===============================================================
+    //=========== Filtered Activity List Accessors ===============================================================
 
     @Override
     public UnmodifiableObservableList<Activity> getFilteredActivityList() {

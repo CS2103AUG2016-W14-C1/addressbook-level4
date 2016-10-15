@@ -3,36 +3,44 @@ package seedu.manager.model.activity;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import com.joestelmach.natty.*;
+
+import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class Activity implements ReadOnlyActivity {
 	public String name;
 	public Status status;
-	public Date dateTime;
-	public Date endDateTime;
-	Parser parser = new Parser();
+	public AMDate dateTime;
+	public AMDate endDateTime;
 	
-	public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	
-	public static final String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    
 	public Activity(String name) {
 	    this.name = name;
 		this.status = new Status();
 	}
-
-	public Activity(String name, String newStartDateTime, String newEndDateTime) {
+	
+	public Activity(String name, String newDateTime) {
         this(name);
-        List<DateGroup> startDateGroups = parser.parse(newStartDateTime);
-        this.dateTime = startDateGroups.get(0).getDates().get(0);
-        List<DateGroup> endDateGroups = parser.parse(newStartDateTime);
-        this.dateTime = endDateGroups.get(0).getDates().get(0);
+        this.dateTime = new AMDate(newDateTime);
     }
 	
-    public Activity(String name, String newDateTime) {
+	public Activity(String name, Long newEpochDateTime) {
         this(name);
-        List<DateGroup> dateGroups = parser.parse(newDateTime);
-        this.dateTime = dateGroups.get(0).getDates().get(0);
+        this.dateTime = new AMDate(newEpochDateTime);
+    }
+
+    public Activity(String name, String newStartDateTime, String newEndDateTime) throws IllegalValueException {
+        this(name);
+        this.dateTime = new AMDate(newStartDateTime);
+        this.endDateTime = new AMDate(newEndDateTime);
+        if (this.dateTime.getTime() > this.endDateTime.getTime()) {
+            throw new IllegalValueException("Event has already ended before it starts.");
+        }
+    }
+	
+	public Activity(String name, Long newEpochStartDateTime, Long newEpochEndDateTime) {
+        this(name);
+        this.dateTime = new AMDate(newEpochStartDateTime);
+        this.endDateTime = new AMDate(newEpochEndDateTime);
     }
 	
 	/**
@@ -48,66 +56,14 @@ public class Activity implements ReadOnlyActivity {
 	}
 	
 	@Override
-    public Date getDate() {
+    public AMDate getDate() {
         return dateTime;
     }
 	
 	@Override
-    public String getMonth() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return MONTHS[dateTime.getMonth()];
-        }
+    public AMDate getEndDate() {
+        return endDateTime;
     }
-	
-	@Override
-	public String getDay() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return Integer.toString(dateTime.getDate());
-        }
-    }
-	
-	@Override
-    public String getDayOfWeek() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return DAYS[dateTime.getDay()];
-        }
-    }
-	
-	@Override
-    public String getHour() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return Integer.toString(dateTime.getHours());
-        }
-    }
-    
-	@Override
-    public String getMinutes() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return Integer.toString(dateTime.getMinutes());
-        }
-    }
-	
-	@Override
-    public String getSeconds() {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return Integer.toString(dateTime.getSeconds());
-        }
-    }
-    
-    
-	
 	
 	@Override
 	public void setName(String newName) {
@@ -116,9 +72,13 @@ public class Activity implements ReadOnlyActivity {
 	
 	@Override
     public void setDateTime(String newDateTime) {
-	    List<DateGroup> dateGroups = parser.parse(newDateTime);
-        this.dateTime = dateGroups.get(0).getDates().get(0);
-    }
+	    this.dateTime.setAMDate(newDateTime);
+	    }
+	
+	@Override
+    public void setEndDateTime(String newEndDateTime) {
+	    this.endDateTime.setAMDate(newEndDateTime);
+	}
 	
 	@Override
 	public void setStatus(boolean completed) {

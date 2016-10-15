@@ -17,6 +17,12 @@ public class XmlAdaptedActivity {
     @XmlElement(required = true)
     private String name;
 
+    @XmlElement(required = false)
+    private Long epochDateTime;
+    
+    @XmlElement(required = false)
+    private Long epochEndDateTime;
+    
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -33,6 +39,12 @@ public class XmlAdaptedActivity {
      */
     public XmlAdaptedActivity(Activity source) {
         name = source.name;
+        if (source.getDate() != null) {
+            epochDateTime = source.getDate().getTime();
+        }
+        if (source.getEndDate() != null) {
+            epochEndDateTime = source.getEndDate().getTime();
+        }
         // TODO: implement other required fields if necessary
 //        phone = source.getPhone().value;
 //        email = source.getEmail().value;
@@ -59,6 +71,12 @@ public class XmlAdaptedActivity {
 //        final Email email = new Email(this.email);
 //        final Address address = new Address(this.address);
 //        final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Activity(this.name);
+        if (epochDateTime != null && epochEndDateTime != null) {
+            return new Activity(this.name, epochDateTime, epochEndDateTime);
+        } else if(epochDateTime != null) {
+            return new Activity(this.name, epochDateTime);    
+        } else {
+            return new Activity(this.name);
+        }
     }
 }

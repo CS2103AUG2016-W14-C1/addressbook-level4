@@ -48,10 +48,10 @@ public class ActivityListPanel extends UiPart {
         this.placeHolderPane = pane;
     }
 
-    public static ActivityListPanel load(Stage primaryStage, AnchorPane personListPlaceholder,
+    public static ActivityListPanel load(Stage primaryStage, AnchorPane activityListPlaceholder,
                                        ObservableList<Activity> observableList) {
         ActivityListPanel activityListPanel =
-                UiPartLoader.loadUiPart(primaryStage, personListPlaceholder, new ActivityListPanel());
+                UiPartLoader.loadUiPart(primaryStage, activityListPlaceholder, new ActivityListPanel());
         activityListPanel.configure(observableList);
         return activityListPanel;
     }
