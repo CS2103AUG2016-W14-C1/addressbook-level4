@@ -9,6 +9,8 @@ import seedu.manager.model.tag.UniqueTagList;
 public class TestActivity implements ReadOnlyActivity {
 
     private String name;
+    private AMDate dateTime;
+    private AMDate endDateTime;
     private UniqueTagList tags;
 
     public TestActivity() {
@@ -19,6 +21,7 @@ public class TestActivity implements ReadOnlyActivity {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -26,7 +29,7 @@ public class TestActivity implements ReadOnlyActivity {
     public UniqueTagList getTags() {
         return tags;
     }
-
+    
     @Override
     public String toString() {
         return this.getName();
@@ -38,5 +41,37 @@ public class TestActivity implements ReadOnlyActivity {
         // TODO: Re-implement tags when possible
         // this.getTags().getInternalList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
+    }
+
+    
+    public void setStatus(boolean completed) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Status getStatus() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    
+    public AMDate getDateTime() {
+        return dateTime;
+    }
+    
+    
+    public AMDate getEndDateTime() {
+        return endDateTime;
+    }
+
+    
+    public void setDateTime(String newDateTime) {
+        this.dateTime.setAMDate(newDateTime);
+    }
+
+    
+    public void setEndDateTime(String newEndDateTime) {
+        this.dateTime.setAMDate(newEndDateTime);    
     }
 }

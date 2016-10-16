@@ -121,7 +121,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadPersonPage(event.getNewSelection());
+        mainWindow.loadActivityPage(event.getNewSelection());
     }
     
     @Subscribe

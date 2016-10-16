@@ -14,7 +14,7 @@ import seedu.manager.logic.commands.*;
 /**
  * Parses user input.
  */
-public class Parser {
+public class AMParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -22,14 +22,20 @@ public class Parser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     private static final Pattern ACTIVITY_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\S+)(?<arguments>.*)");
-
+    
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+    private static final Pattern ACTIVITY_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"); // variable number of tags
 
-    public Parser() {}
+    /**
+     * Various token counts
+     */
+    private static final int ADD_DEADLINE_TOKEN_COUNT = 2;
+    private static final int ADD_EVENT_TOKEN_COUNT = 2;
+    
+    public AMParser() {}
 
     /**
      * Parses user input into command for execution.
@@ -58,12 +64,15 @@ public class Parser {
             
         case UpdateCommand.COMMAND_WORD:
         	return prepareUpdate(arguments);
+        	
+        case MarkCommand.COMMAND_WORD:
+        	return prepareMark(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return prepareFind(arguments);
+        case SearchCommand.COMMAND_WORD:
+            return prepareSearch(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -86,13 +95,27 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+        final Matcher matcher = ACTIVITY_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+        String[] deadlineTokens = args.trim().split("on");
+        String[] eventTokens = args.trim().split("from");
+        
         try {
-            return new AddCommand(matcher.group("name"));
+            if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
+            } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventTimeTokens = eventTokens[1].split("to"); 
+                if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new AddCommand(eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
+                } else {
+                    return new AddCommand(matcher.group("name"));
+                }
+            } else {
+                return new AddCommand(matcher.group("name"));
+            }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
@@ -153,6 +176,50 @@ public class Parser {
         return new UpdateCommand(index.get(), matcher.group("arguments").trim());
     }
 
+    /**
+     * Parses arguments in the context of the mark activity command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareMark(String args) {
+    	final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+    	
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        // Validate index format
+        Optional<Integer> index = parseIndex(matcher.group("targetIndex"));
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        String[] splitArgs = (matcher.group("arguments").trim()).split("as");
+        String wordStatus;
+        if (splitArgs.length == 1) {
+        	wordStatus = (splitArgs[0]).trim();
+        } else {
+        	wordStatus = (splitArgs[1]).trim();
+        }
+        
+        String lowerCaseArgs = wordStatus.toLowerCase();
+        boolean status;
+        if (lowerCaseArgs.equals("pending")) {
+        	status = false;
+        } else if (lowerCaseArgs.equals("completed")) {
+        	status = true;
+        } else {
+        	return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+        
+        return new MarkCommand(index.get(), status);
+    }
+    
 
     /**
      * Parses arguments in the context of the select person command.
@@ -194,17 +261,17 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareFind(String args) {
+    private Command prepareSearch(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FindCommand.MESSAGE_USAGE));
+                    SearchCommand.MESSAGE_USAGE));
         }
 
         // keywords delimited by whitespace
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        return new FindCommand(keywordSet);
+        return new SearchCommand(keywordSet);
     }
 
 }

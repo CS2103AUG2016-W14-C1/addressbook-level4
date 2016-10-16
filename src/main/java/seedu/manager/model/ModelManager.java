@@ -11,6 +11,7 @@ import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert src != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with address book: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with activity manager: " + src + " and user prefs " + userPrefs);
 
         activityManager = new ActivityManager(src);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
@@ -89,8 +90,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityManagerChanged();
     }
 
+    @Override
+    public synchronized void markActivity(Activity activity, boolean status) throws ActivityNotFoundException {
+        activityManager.markActivity(activity, status);
+        updateFilteredActivityList();
+        indicateActivityManagerChanged();
+    }
 
-    //=========== Filtered Person List Accessors ===============================================================
+
+    //=========== Filtered Activity List Accessors ===============================================================
 
     @Override
     public UnmodifiableObservableList<Activity> getFilteredActivityList() {
@@ -109,6 +117,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
+    }
+    
+    private void updateFilteredActivityList() {
+        filteredActivities.setPredicate(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return !activity.getStatus().isCompleted();
+    		}
+    	});
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
@@ -152,7 +168,7 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public boolean run(Activity activity) {
             return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.name, keyword))
+                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.getName(), keyword))
                     .findAny()
                     .isPresent();
         }

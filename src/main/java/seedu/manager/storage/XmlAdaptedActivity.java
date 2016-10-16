@@ -3,7 +3,7 @@ package seedu.manager.storage;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.Tag;
 
 import java.util.ArrayList;
@@ -17,6 +17,12 @@ public class XmlAdaptedActivity {
     @XmlElement(required = true)
     private String name;
 
+    @XmlElement(required = false)
+    private Long epochDateTime;
+    
+    @XmlElement(required = false)
+    private Long epochEndDateTime;
+    
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -32,7 +38,14 @@ public class XmlAdaptedActivity {
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
     public XmlAdaptedActivity(Activity source) {
-        name = source.name;
+        name = source.getName();
+        
+        if (source.getClass().equals(DeadlineActivity.class)) {
+            epochDateTime = ((DeadlineActivity)source).getDateTime().getTime();
+        } if (source.getClass().equals(EventActivity.class)) {
+            epochDateTime = ((EventActivity)source).getDateTime().getTime();
+            epochEndDateTime = ((EventActivity)source).getEndDateTime().getTime();
+        }
         // TODO: implement other required fields if necessary
 //        phone = source.getPhone().value;
 //        email = source.getEmail().value;
@@ -59,6 +72,12 @@ public class XmlAdaptedActivity {
 //        final Email email = new Email(this.email);
 //        final Address address = new Address(this.address);
 //        final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Activity(this.name);
+        if (epochDateTime != null && epochEndDateTime != null) {
+            return new EventActivity(this.name, epochDateTime, epochEndDateTime);
+        } else if(epochDateTime != null) {
+            return new DeadlineActivity(this.name, epochDateTime);    
+        } else {
+            return new FloatingActivity(this.name);
+        }
     }
 }

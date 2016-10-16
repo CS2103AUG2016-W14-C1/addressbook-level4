@@ -83,12 +83,12 @@ public class MainWindow extends UiPart {
         return mainWindow;
     }
 
-    private void configure(String appTitle, String addressBookName, Config config, UserPrefs prefs,
+    private void configure(String appTitle, String activityManagerName, Config config, UserPrefs prefs,
                            Logic logic) {
 
         //Set dependencies
         this.logic = logic;
-        this.activityManagerName = addressBookName;
+        this.activityManagerName = activityManagerName;
         this.config = config;
         this.userPrefs = prefs;
 
@@ -186,7 +186,7 @@ public class MainWindow extends UiPart {
         return this.activityListPanel;
     }
 
-    public void loadPersonPage(Activity activity) {
+    public void loadActivityPage(Activity activity) {
         browserPanel.loadPersonPage(activity);
     }
 
