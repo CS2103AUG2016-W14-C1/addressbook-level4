@@ -173,7 +173,26 @@ public class AMParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
         
-        return new UpdateCommand(index.get(), matcher.group("arguments").trim());
+        String arguments = matcher.group("arguments").trim();
+        String[] deadlineTokens = arguments.split("on");
+        String[] eventTokens = arguments.split("from");
+        
+        try {
+            if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new UpdateCommand(index.get(), deadlineTokens[0].trim(), deadlineTokens[1].trim());
+            } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventTimeTokens = eventTokens[1].split("to"); 
+                if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new UpdateCommand(index.get(), eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
+                } else {
+                    return new UpdateCommand(index.get(), arguments);
+                }
+            } else {
+                return new UpdateCommand(index.get(), arguments);
+            }
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
     }
 
     /**

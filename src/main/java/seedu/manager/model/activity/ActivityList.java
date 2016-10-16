@@ -41,14 +41,23 @@ public class ActivityList implements Iterable<Activity> {
      * @throws ActivityNotFoundException if no such activity could be found in the list.
      */
     
-    public boolean update(Activity toUpdate, String newName) throws ActivityNotFoundException {
+    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
     	assert toUpdate != null;
-    	assert newName != null;
     	final boolean activityFound = internalList.contains(toUpdate);
     	if (activityFound) {
 	    	int toUpdateIndex = internalList.indexOf(toUpdate);
 	    	Activity toUpdateInList = internalList.get(toUpdateIndex);
-	    	toUpdateInList.setName(newName);
+	    	// Update Activity name
+	    	if (newName != null && !newName.equals("")) toUpdateInList.setName(newName);
+	    	// Handle Deadline tasks
+	    	if (toUpdate instanceof DeadlineActivity) {
+	    		if (newDateTime != null) ((DeadlineActivity) toUpdate).setDateTime(newDateTime);
+	    	}
+	    	// Handle Event tasks
+	    	if (toUpdate instanceof EventActivity) {
+	    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdate).setDateTime(newDateTime);
+	    		if (newEndDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdate).setEndDateTime(newEndDateTime);
+	    	}
     	} else {
     		throw new ActivityNotFoundException();
     	}

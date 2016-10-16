@@ -1,8 +1,5 @@
 package seedu.manager.logic.commands;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.exceptions.IllegalValueException;
@@ -26,10 +23,38 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_UPDATE_ACTIVITY_SUCCESS = "Updated Activity: %1$s";
 	public final int targetIndex;
 	public final String newName;
+	public String newDateTime;
+	public String newEndDateTime;
 
-	public UpdateCommand(int targetIndex, String newName) {
+	/**
+	 * Constructor for floating tasks
+	 * 
+	 * @throws IllegalValueException if any of the raw values are invalid
+	 */
+	public UpdateCommand(int targetIndex, String newName) throws IllegalValueException {
 		this.targetIndex = targetIndex;
 		this.newName = newName;
+	}
+	
+	/**
+	 * Constructor for deadline tasks
+	 * 
+	 * @throws IllegalValueException if any of the raw values are invalid
+	 */
+	public UpdateCommand(int targetIndex, String newName, String dateTime) throws IllegalValueException {
+		this(targetIndex, newName);
+		this.newDateTime = dateTime;
+	}
+	
+	/**
+	 * Constructor for event tasks
+	 * 
+	 * @throws IllegalValueException if any of the raw values are invalid
+	 */
+	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) throws IllegalValueException {
+		this(targetIndex, newName);
+		this.newDateTime = dateTime;
+		this.newEndDateTime = endDateTime;
 	}
 	
 	@Override
@@ -43,7 +68,7 @@ public class UpdateCommand extends Command {
 
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
         try {
-            model.updateActivity(activityToUpdate, newName);
+            model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
         } catch (ActivityNotFoundException anfe) {
             assert false : "The target activity cannot be found";
         }

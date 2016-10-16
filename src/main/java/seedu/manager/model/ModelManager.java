@@ -83,8 +83,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void updateActivity(Activity activity, String newName) throws ActivityNotFoundException {
-        activityManager.updateActivity(activity, newName);
+    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
+        activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();

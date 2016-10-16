@@ -3,6 +3,8 @@ package seedu.manager.model;
 import javafx.collections.ObservableList;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList;
+import seedu.manager.model.activity.DeadlineActivity;
+import seedu.manager.model.activity.EventActivity;
 import seedu.manager.model.activity.FloatingActivity;
 import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
@@ -110,9 +112,19 @@ public class ActivityManager implements ReadOnlyActivityManager {
         }
     }
 
-    public boolean updateActivity(Activity key, String newName) throws ActivityList.ActivityNotFoundException {
-    	if (activities.update(key, newName)) {
-    		key.setName(newName);
+    public boolean updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) throws ActivityList.ActivityNotFoundException {
+    	if (activities.update(key, newName, newDateTime, newEndDateTime)) {
+	    	// Update Activity name
+	    	if (newName != null && !newName.equals("")) key.setName(newName);
+	    	// Handle Deadline tasks
+	    	if (key instanceof DeadlineActivity) {
+	    		if (newDateTime != null) ((DeadlineActivity) key).setDateTime(newDateTime);
+	    	}
+	    	// Handle Event tasks
+	    	if (key instanceof EventActivity) {
+	    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) key).setDateTime(newDateTime);
+	    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) key).setEndDateTime(newEndDateTime);
+	    	}
     		return true;
     	} else {
     		throw new ActivityList.ActivityNotFoundException();
