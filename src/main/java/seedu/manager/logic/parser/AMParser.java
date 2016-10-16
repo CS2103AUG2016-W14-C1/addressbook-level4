@@ -104,15 +104,15 @@ public class AMParser {
         String[] eventTokens = args.trim().split("from");
         
         try {
-            if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
-                return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
-            } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
+            if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
                 String[] eventTimeTokens = eventTokens[1].split("to"); 
                 if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new AddCommand(eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
+            } else if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
             } else {
                 return new AddCommand(matcher.group("name"));
             }
