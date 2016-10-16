@@ -122,7 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredActivityList() {
         filteredActivities.setPredicate(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
-    			return !activity.status.isCompleted();
+    			return !activity.getStatus().isCompleted();
     		}
     	});
     }
@@ -168,7 +168,7 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public boolean run(Activity activity) {
             return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.name, keyword))
+                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.getName(), keyword))
                     .findAny()
                     .isPresent();
         }

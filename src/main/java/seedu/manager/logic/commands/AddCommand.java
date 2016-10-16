@@ -63,7 +63,7 @@ public class AddCommand extends Command {
     public CommandResult execute() {
         assert model != null;
         model.addActivity(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.name));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
     }
 
 }

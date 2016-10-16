@@ -8,6 +8,6 @@ package seedu.manager.model.activity;
 public interface ReadOnlyActivity {
     
     String getName();
-    String getStatus();
+    Status getStatus();
     
 }

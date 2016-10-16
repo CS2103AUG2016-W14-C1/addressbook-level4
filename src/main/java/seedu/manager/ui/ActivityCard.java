@@ -43,7 +43,7 @@ public class ActivityCard extends UiPart{
 
     @FXML
     public void initialize() {
-        name.setText(activity.name);
+        name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
         if (activity.getClass().equals(DeadlineActivity.class)) {
             dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));

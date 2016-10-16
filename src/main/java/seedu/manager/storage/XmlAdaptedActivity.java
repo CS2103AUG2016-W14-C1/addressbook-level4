@@ -38,7 +38,7 @@ public class XmlAdaptedActivity {
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
     public XmlAdaptedActivity(Activity source) {
-        name = source.name;
+        name = source.getName();
         
         if (source.getClass().equals(DeadlineActivity.class)) {
             epochDateTime = ((DeadlineActivity)source).getDateTime().getTime();

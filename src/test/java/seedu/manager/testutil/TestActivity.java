@@ -50,7 +50,7 @@ public class TestActivity implements ReadOnlyActivity {
     }
 
     @Override
-    public String getStatus() {
+    public Status getStatus() {
         // TODO Auto-generated method stub
         return null;
     }

@@ -5,8 +5,8 @@ package seedu.manager.model.activity;
  */
 
 public abstract class Activity implements ReadOnlyActivity {
-	public String name;
-	public Status status;
+	protected String name;
+	protected Status status;
 	
 	public Activity(String name) {
 	    this.name = name;
@@ -38,8 +38,8 @@ public abstract class Activity implements ReadOnlyActivity {
 	}
 	
 	@Override
-	public String getStatus() {
-		return (this.status).toString();
+	public Status getStatus() {
+		return this.status;
 	}
 	
 	// TODO: Re-implement equality if necessary when more details are added
