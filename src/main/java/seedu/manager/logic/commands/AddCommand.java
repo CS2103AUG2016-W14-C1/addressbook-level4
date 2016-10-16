@@ -30,7 +30,7 @@ public class AddCommand extends Command {
     private final Activity toAdd;
 
     /**
-     * Convenience constructor using raw values.
+     * Constructor for floating tasks
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -38,7 +38,27 @@ public class AddCommand extends Command {
             throws IllegalValueException {
         this.toAdd = new Activity(name);
     }
+    
+    /**
+     * Constructor for deadlines
+     * 
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, String dateTime)
+            throws IllegalValueException {
+        this.toAdd = new Activity(name, dateTime);
+    }
 
+    /**
+     * Constructor for events
+     * 
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, String startDateTime, String endDateTime)
+            throws IllegalValueException {
+        this.toAdd = new Activity(name, startDateTime, endDateTime);
+    }
+    
     @Override
     public CommandResult execute() {
         assert model != null;

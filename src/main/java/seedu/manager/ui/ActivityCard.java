@@ -4,18 +4,26 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import seedu.manager.model.activity.AMDate;
 import seedu.manager.model.activity.Activity;
 
 public class ActivityCard extends UiPart{
 
     private static final String FXML = "ActivityListCard.fxml";
-
+    private static final String DATETIME_DELIMITER = " | ";
+    private static final String DATE_DELIMITER = " ";
+    private static final String TIME_DELIMITER = ":";
+    
     @FXML
     private HBox cardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
+    @FXML
+    private Label dateTime;
+    @FXML
+    private Label endDateTime;
 // TODO: re-instate tags or equivalent when implementation is complete    
 //    @FXML
 //    private Label tags;
@@ -38,10 +46,20 @@ public class ActivityCard extends UiPart{
     public void initialize() {
         name.setText(activity.name);
         id.setText(displayedIndex + ". ");
-//        phone.setText(person.getPhone().value);
-//        address.setText(person.getAddress().value);
-//        email.setText(person.getEmail().value);
-//        tags.setText(person.tagsString());
+        dateTime.setText(generateDateTimeString(activity.getDate()));
+        endDateTime.setText(generateDateTimeString(activity.getEndDate()));
+    }
+    
+    private String generateDateTimeString(AMDate dateTime) {
+        if (dateTime == null) {
+            return "";
+        } else {
+            return dateTime.getDayOfWeek() + DATE_DELIMITER +
+                   dateTime.getDay() + DATE_DELIMITER +
+                   dateTime.getMonth() + DATETIME_DELIMITER + 
+                   dateTime.getHour() + TIME_DELIMITER +
+                   dateTime.getMinutes();
+        }
     }
 
     public HBox getLayout() {

@@ -362,13 +362,13 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_find_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        assertCommandBehavior("find ", expectedMessage);
+    public void execute_search_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE);
+        assertCommandBehavior("search ", expectedMessage);
     }
 
     @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
+    public void execute_search_onlyMatchesFullWordsInNames() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Activity pTarget1 = helper.generateActivityWithName("bla bla KEY bla");
         Activity pTarget2 = helper.generateActivityWithName("bla KEY bla bceofeia");
@@ -380,14 +380,14 @@ public class LogicManagerTest {
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
         helper.addToModel(model, fourPersons);
 
-        assertCommandBehavior("find KEY",
+        assertCommandBehavior("search KEY",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
     }
 
     @Test
-    public void execute_find_isNotCaseSensitive() throws Exception {
+    public void execute_search_isNotCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Activity p1 = helper.generateActivityWithName("bla bla KEY bla");
         Activity p2 = helper.generateActivityWithName("bla KEY bla bceofeia");
@@ -399,14 +399,14 @@ public class LogicManagerTest {
         List<Activity> expectedList = fourPersons;
         helper.addToModel(model, fourPersons);
 
-        assertCommandBehavior("find KEY",
+        assertCommandBehavior("search KEY",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
     }
 
     @Test
-    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
+    public void execute_search_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Activity pTarget1 = helper.generateActivityWithName("bla bla KEY bla");
         Activity pTarget2 = helper.generateActivityWithName("bla rAnDoM bla bceofeia");
@@ -418,7 +418,7 @@ public class LogicManagerTest {
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2, pTarget3);
         helper.addToModel(model, fourPersons);
 
-        assertCommandBehavior("find key rAnDoM",
+        assertCommandBehavior("search key rAnDoM",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
