@@ -45,6 +45,8 @@ public class ActivityCard extends UiPart{
     public void initialize() {
         name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
+        dateTime.setText(""); // default
+        endDateTime.setText(""); // default
         if (activity.getClass().equals(DeadlineActivity.class)) {
             dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));
         } else if (activity.getClass().equals(EventActivity.class)) {
@@ -54,15 +56,13 @@ public class ActivityCard extends UiPart{
     }
     
     private String generateDateTimeString(AMDate dateTime) {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return dateTime.getDayOfWeek() + DATE_DELIMITER +
-                   dateTime.getDay() + DATE_DELIMITER +
-                   dateTime.getMonth() + DATETIME_DELIMITER + 
-                   dateTime.getHour() + TIME_DELIMITER +
-                   dateTime.getMinutes();
-        }
+        assert dateTime == null;
+        
+        return dateTime.getDayOfWeek() + DATE_DELIMITER +
+               dateTime.getDay() + DATE_DELIMITER +
+               dateTime.getMonth() + DATETIME_DELIMITER + 
+               dateTime.getHour() + TIME_DELIMITER +
+               dateTime.getMinutes();
     }
 
     public HBox getLayout() {
