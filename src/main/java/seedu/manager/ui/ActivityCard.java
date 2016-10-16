@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import seedu.manager.model.activity.AMDate;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 
 public class ActivityCard extends UiPart{
 
@@ -46,8 +45,12 @@ public class ActivityCard extends UiPart{
     public void initialize() {
         name.setText(activity.name);
         id.setText(displayedIndex + ". ");
-        dateTime.setText(generateDateTimeString(activity.getDate()));
-        endDateTime.setText(generateDateTimeString(activity.getEndDate()));
+        if (activity.getClass().equals(DeadlineActivity.class)) {
+            dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));
+        } else if (activity.getClass().equals(EventActivity.class)) {
+            dateTime.setText(generateDateTimeString(((EventActivity)activity).getDateTime()));
+            endDateTime.setText(generateDateTimeString(((EventActivity)activity).getEndDateTime()));
+        }
     }
     
     private String generateDateTimeString(AMDate dateTime) {

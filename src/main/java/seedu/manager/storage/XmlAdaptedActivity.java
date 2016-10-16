@@ -3,7 +3,7 @@ package seedu.manager.storage;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.Tag;
 
 import java.util.ArrayList;
@@ -39,11 +39,12 @@ public class XmlAdaptedActivity {
      */
     public XmlAdaptedActivity(Activity source) {
         name = source.name;
-        if (source.getDate() != null) {
-            epochDateTime = source.getDate().getTime();
-        }
-        if (source.getEndDate() != null) {
-            epochEndDateTime = source.getEndDate().getTime();
+        
+        if (source.getClass().equals(DeadlineActivity.class)) {
+            epochDateTime = ((DeadlineActivity)source).getDateTime().getTime();
+        } if (source.getClass().equals(EventActivity.class)) {
+            epochDateTime = ((EventActivity)source).getDateTime().getTime();
+            epochEndDateTime = ((EventActivity)source).getEndDateTime().getTime();
         }
         // TODO: implement other required fields if necessary
 //        phone = source.getPhone().value;
@@ -72,11 +73,11 @@ public class XmlAdaptedActivity {
 //        final Address address = new Address(this.address);
 //        final UniqueTagList tags = new UniqueTagList(personTags);
         if (epochDateTime != null && epochEndDateTime != null) {
-            return new Activity(this.name, epochDateTime, epochEndDateTime);
+            return new EventActivity(this.name, epochDateTime, epochEndDateTime);
         } else if(epochDateTime != null) {
-            return new Activity(this.name, epochDateTime);    
+            return new DeadlineActivity(this.name, epochDateTime);    
         } else {
-            return new Activity(this.name);
+            return new FloatingActivity(this.name);
         }
     }
 }

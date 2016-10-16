@@ -21,6 +21,7 @@ public class TestActivity implements ReadOnlyActivity {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -42,7 +43,7 @@ public class TestActivity implements ReadOnlyActivity {
         return sb.toString();
     }
 
-    @Override
+    
     public void setStatus(boolean completed) {
         // TODO Auto-generated method stub
         
@@ -54,22 +55,22 @@ public class TestActivity implements ReadOnlyActivity {
         return null;
     }
 
-    @Override
-    public AMDate getDate() {
+    
+    public AMDate getDateTime() {
         return dateTime;
     }
     
-    @Override
-    public AMDate getEndDate() {
+    
+    public AMDate getEndDateTime() {
         return endDateTime;
     }
 
-    @Override
+    
     public void setDateTime(String newDateTime) {
         this.dateTime.setAMDate(newDateTime);
     }
 
-    @Override
+    
     public void setEndDateTime(String newEndDateTime) {
         this.dateTime.setAMDate(newEndDateTime);    
     }
