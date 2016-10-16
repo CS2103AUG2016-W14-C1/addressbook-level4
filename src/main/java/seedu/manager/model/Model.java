@@ -24,7 +24,7 @@ public interface Model {
     void addActivity(Activity activity);
     
     /** Updates the given activity */
-    void updateActivity(Activity target, String newName) throws ActivityNotFoundException;
+    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException;
 
     /** Marks the given activity */
     void markActivity(Activity target, boolean status) throws ActivityNotFoundException;
