@@ -48,7 +48,7 @@ public class UpdateCommand extends Command {
             assert false : "The target activity cannot be found";
         }
 
-        return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.name));
+        return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }
 }
 

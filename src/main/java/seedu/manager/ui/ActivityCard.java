@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import seedu.manager.model.activity.AMDate;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 
 public class ActivityCard extends UiPart{
 
@@ -44,22 +43,26 @@ public class ActivityCard extends UiPart{
 
     @FXML
     public void initialize() {
-        name.setText(activity.name);
+        name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
-        dateTime.setText(generateDateTimeString(activity.getDate()));
-        endDateTime.setText(generateDateTimeString(activity.getEndDate()));
+        dateTime.setText(""); // default
+        endDateTime.setText(""); // default
+        if (activity.getClass().equals(DeadlineActivity.class)) {
+            dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));
+        } else if (activity.getClass().equals(EventActivity.class)) {
+            dateTime.setText(generateDateTimeString(((EventActivity)activity).getDateTime()));
+            endDateTime.setText(generateDateTimeString(((EventActivity)activity).getEndDateTime()));
+        }
     }
     
     private String generateDateTimeString(AMDate dateTime) {
-        if (dateTime == null) {
-            return "";
-        } else {
-            return dateTime.getDayOfWeek() + DATE_DELIMITER +
-                   dateTime.getDay() + DATE_DELIMITER +
-                   dateTime.getMonth() + DATETIME_DELIMITER + 
-                   dateTime.getHour() + TIME_DELIMITER +
-                   dateTime.getMinutes();
-        }
+        assert dateTime == null;
+        
+        return dateTime.getDayOfWeek() + DATE_DELIMITER +
+               dateTime.getDay() + DATE_DELIMITER +
+               dateTime.getMonth() + DATETIME_DELIMITER + 
+               dateTime.getHour() + TIME_DELIMITER +
+               dateTime.getMinutes();
     }
 
     public HBox getLayout() {

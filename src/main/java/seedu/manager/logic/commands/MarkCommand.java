@@ -50,8 +50,8 @@ public class MarkCommand extends Command {
         } catch (ActivityNotFoundException anfe) {
             assert false : "The target activity cannot be found";
         }
-        String stringStatus = activityToMark.getStatus();
-        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, stringStatus, activityToMark.name));
+        String stringStatus = activityToMark.getStatus().toString();
+        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, stringStatus, activityToMark.getName()));
     }
 }
 

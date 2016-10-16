@@ -32,10 +32,10 @@ public class TypicalTestActivities {
     public static void loadActivityManagerWithSampleData(ActivityManager am) {
 
 //        try {
-            am.addActivity(new Activity(groceries));
-            am.addActivity(new Activity(reading));
-            am.addActivity(new Activity(guitar));
-            am.addActivity(new Activity(paint));
+            am.addActivity(new FloatingActivity(groceries));
+            am.addActivity(new FloatingActivity(reading));
+            am.addActivity(new FloatingActivity(guitar));
+            am.addActivity(new FloatingActivity(paint));
 //        } catch (UniquePersonList.DuplicatePersonException e) {
 //            assert false : "not possible";
 //        }
