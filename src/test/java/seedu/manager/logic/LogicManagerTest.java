@@ -432,7 +432,7 @@ public class LogicManagerTest {
 
         Activity sampleActivity() throws Exception {
             String name = "My Activity";
-            return new Activity(name);
+            return new FloatingActivity(name);
         }
 
         /**
@@ -443,7 +443,7 @@ public class LogicManagerTest {
          * @param seed used to generate the person data field values
          */
         Activity generateActivity(int seed) throws Exception {
-            return new Activity("Activity " + seed);
+            return new FloatingActivity("Activity " + seed);
         }
 
         /** Generates the correct add command based on the activity given */
@@ -533,7 +533,7 @@ public class LogicManagerTest {
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
         Activity generateActivityWithName(String name) throws Exception {
-            return new Activity(name);
+            return new FloatingActivity(name);
         }
     }
 }
