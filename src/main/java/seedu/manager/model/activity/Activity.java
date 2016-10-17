@@ -54,7 +54,11 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
     @Override
     public int compareTo(Activity other) {
         // Check for floating tasks
-        if (this instanceof FloatingActivity) {
+        if (this instanceof FloatingActivity && other instanceof FloatingActivity) {
+            return 0;
+        } else if (other instanceof FloatingActivity) {
+            return -1;
+        } else if (this instanceof FloatingActivity) {
             return 1;
         } else if (other instanceof FloatingActivity) {
             return -1;
