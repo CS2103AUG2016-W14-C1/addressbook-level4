@@ -195,8 +195,8 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public boolean run(Activity activity) {
             if (activity instanceof FloatingActivity) {
-                // no need check dateTime for floating activity
-                return true;
+                // no need check dateTime for floating activity, but should not return either
+                return false;
             } else if (activity instanceof DeadlineActivity) {
                 // return true if deadline falls within dateTime range 
                 Long deadlineTime = ((DeadlineActivity) activity).getDateTime().getTime(); 
