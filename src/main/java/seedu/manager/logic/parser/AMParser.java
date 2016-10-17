@@ -64,10 +64,10 @@ public class AMParser {
             return prepareDelete(arguments);
             
         case UpdateCommand.COMMAND_WORD:
-        	return prepareUpdate(arguments);
-        	
+            return prepareUpdate(arguments);
+            
         case MarkCommand.COMMAND_WORD:
-        	return prepareMark(arguments);
+            return prepareMark(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -101,17 +101,37 @@ public class AMParser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-        String[] deadlineTokens = args.trim().split("on");
-        String[] eventTokens = args.trim().split("from");
+        String[] eventTokens = args.trim().split(" from ");
+        String[] deadlineTokens = args.trim().split(" on ");
+        String[] deadlineAltTokens = args.split(" by ");
+        String[] eventStrictTokens = args.trim().split(" \"from\" ");
+        String[] deadlineStrictTokens = args.trim().split(" \"on\" ");
+        String[] deadlineAltStrictTokens = args.split(" \"by\" ");
         
         try {
-            if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
+            // Perform strict token checking for events before processing normally
+            if (eventStrictTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventStrictTimeTokens = eventStrictTokens[1].split("to"); 
+                if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new AddCommand(eventStrictTokens[0].trim(), eventStrictTimeTokens[0].trim(), eventStrictTimeTokens[1].trim());
+                } else {
+                    return new AddCommand(matcher.group("name"));
+                }
+            } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
                 String[] eventTimeTokens = eventTokens[1].split("to"); 
                 if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new AddCommand(eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
+             // Perform strict token checking for alt. deadlines before processing normally
+            } else if (deadlineAltStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineAltStrictTokens[0].trim(), deadlineAltStrictTokens[1].trim());
+            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());
+            // Perform strict token checking for deadlines before processing normally
+            } else if (deadlineStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineStrictTokens[0].trim(), deadlineStrictTokens[1].trim());
             } else if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
             } else {
@@ -161,7 +181,7 @@ public class AMParser {
      */
     
     private Command prepareUpdate(String args) {
-    	final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+        final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
@@ -175,17 +195,34 @@ public class AMParser {
         }
         
         String arguments = matcher.group("arguments").trim();
-        String[] eventTokens = arguments.split("from");
-        String[] deadlineTokens = arguments.split("on");
+        String[] eventTokens = arguments.split(" from ");
+        String[] deadlineTokens = arguments.split(" on ");
+        String[] deadlineAltTokens = arguments.split(" by ");
+        String[] eventStrictTokens = arguments.trim().split(" \"from\" ");
+        String[] deadlineAltStrictTokens = arguments.trim().split(" \"by\" ");
+        String[] deadlineStrictTokens = arguments.trim().split(" \"on\" ");
         
         try {
-            if (eventTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+            if (eventStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                String[] eventStrictTimeTokens = eventStrictTokens[1].split("to"); 
+                if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), eventStrictTimeTokens[0].trim(), eventStrictTimeTokens[1].trim());
+                } else {
+                    return new UpdateCommand(index.get(), arguments);
+                }
+            } else if (eventTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 String[] eventTimeTokens = eventTokens[1].split("to"); 
                 if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new UpdateCommand(index.get(), eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
                 } else {
                     return new UpdateCommand(index.get(), arguments);
                 }
+            } else if (deadlineAltStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new UpdateCommand(index.get(), deadlineAltStrictTokens[0].trim(), deadlineAltStrictTokens[1].trim());    
+            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new UpdateCommand(index.get(), deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());    
+            } else if (deadlineStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new UpdateCommand(index.get(), deadlineStrictTokens[0].trim(), deadlineStrictTokens[1].trim());    
             } else if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new UpdateCommand(index.get(), deadlineTokens[0].trim(), deadlineTokens[1].trim());    
             } else {
@@ -204,8 +241,8 @@ public class AMParser {
      */
     
     private Command prepareMark(String args) {
-    	final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
-    	
+        final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+        
         // Validate arg string format
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
@@ -221,19 +258,19 @@ public class AMParser {
         String[] splitArgs = (matcher.group("arguments").trim()).split("as");
         String wordStatus;
         if (splitArgs.length == 1) {
-        	wordStatus = (splitArgs[0]).trim();
+            wordStatus = (splitArgs[0]).trim();
         } else {
-        	wordStatus = (splitArgs[1]).trim();
+            wordStatus = (splitArgs[1]).trim();
         }
         
         String lowerCaseArgs = wordStatus.toLowerCase();
         boolean status;
         if (lowerCaseArgs.equals("pending")) {
-        	status = false;
+            status = false;
         } else if (lowerCaseArgs.equals("completed")) {
-        	status = true;
+            status = true;
         } else {
-        	return new IncorrectCommand(
+            return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
         }
         
