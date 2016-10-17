@@ -5,6 +5,8 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
+import com.joestelmach.natty.*;
+
 /**
  * Helper functions for handling strings.
  */
@@ -32,5 +34,15 @@ public class StringUtil {
      */
     public static boolean isUnsignedInteger(String s){
         return s != null && s.matches("^0*[1-9]\\d*$");
+    }
+    
+    /**
+     * Returns true if s can be parsed as an AMDate type
+     * @param s Should be trimmed
+     */
+    public static boolean isAMDate(String s) {
+        Parser parser = new Parser();
+        List<DateGroup> groups = parser.parse(s);
+        return groups.size() > 0;
     }
 }

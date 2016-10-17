@@ -34,6 +34,7 @@ public class AMParser {
      */
     private static final int ADD_DEADLINE_TOKEN_COUNT = 2;
     private static final int ADD_EVENT_TOKEN_COUNT = 2;
+    private static final int SEARCH_RANGE_TOKEN_COUNT = 2;
     
     public AMParser() {}
 
@@ -89,7 +90,7 @@ public class AMParser {
     }
 
     /**
-     * Parses arguments in the context of the add person command.
+     * Parses arguments in the context of the add activity command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -136,7 +137,7 @@ public class AMParser {
     }
 
     /**
-     * Parses arguments in the context of the delete person command.
+     * Parses arguments in the context of the delete activity command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -241,7 +242,7 @@ public class AMParser {
     
 
     /**
-     * Parses arguments in the context of the select person command.
+     * Parses arguments in the context of the select activity command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -275,7 +276,7 @@ public class AMParser {
     }
 
     /**
-     * Parses arguments in the context of the find person command.
+     * Parses arguments in the context of the search command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -290,7 +291,19 @@ public class AMParser {
         // keywords delimited by whitespace
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        return new SearchCommand(keywordSet);
+        SearchCommand searchCommand = new SearchCommand(keywordSet);
+        
+        // add dateTime range if dateTime is indicated in part of search
+        if (StringUtil.isAMDate(args.trim())) {
+            String[] searchTimeTokens = args.trim().split(" to ");
+            if (searchTimeTokens.length == SEARCH_RANGE_TOKEN_COUNT) {
+                searchCommand.addDateTimeRange(searchTimeTokens[0].trim(), searchTimeTokens[1].trim());
+            } else {
+                searchCommand.addDateTimeRange(searchTimeTokens[0].trim());
+            }
+        }
+        
+        return searchCommand;
     }
 
 }
