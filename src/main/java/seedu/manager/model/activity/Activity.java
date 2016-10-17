@@ -68,7 +68,7 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
             return (int)(((DeadlineActivity) this).getDateTime().getTime() - ((EventActivity) other).getDateTime().getTime());   
         // Comparisons between 2 events
         } else {
-           long startTimeDifference = ((EventActivity) this).getDateTime().getTime() - ((DeadlineActivity) other).getDateTime().getTime();     
+           long startTimeDifference = ((EventActivity) this).getDateTime().getTime() - ((EventActivity) other).getDateTime().getTime();     
            if (startTimeDifference == 0) {
                return (int)(((EventActivity) this).getEndDateTime().getTime() - ((EventActivity) other).getEndDateTime().getTime());
            } else {
