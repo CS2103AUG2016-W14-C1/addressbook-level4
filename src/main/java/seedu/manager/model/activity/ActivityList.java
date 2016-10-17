@@ -105,7 +105,7 @@ public class ActivityList implements Iterable<Activity> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueActivityList // instanceof handles nulls
+                || (other instanceof ActivityList // instanceof handles nulls
                 && this.internalList.equals(
                 ((ActivityList) other).internalList));
     }

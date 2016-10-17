@@ -6,7 +6,6 @@ import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.manager.model.activity.UniqueActivityList.DuplicateActivityException;
 
 /**
  * The API of the Model component.
