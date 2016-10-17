@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.AMDate;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 import seedu.manager.model.activity.UniqueActivityList.DuplicateActivityException;
 
@@ -29,13 +30,16 @@ public interface Model {
     /** Marks the given activity */
     void markActivity(Activity target, boolean status) throws ActivityNotFoundException;
 
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    /** Returns the filtered activity list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
 
-    /** Updates the filter of the filtered person list to show all persons */
+    /** Updates the filter of the filtered activity list to show all persons */
     void updateFilteredListToShowAll();
 
-    /** Updates the filter of the filtered person list to filter by the given keywords*/
+    /** Updates the filter of the filtered activity list to filter by the given keywords*/
     void updateFilteredActivityList(Set<String> keywords);
+    
+    /** Updates the filter of the filtered activity list to filter by the given dateTime range*/
+    void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime);
 
 }
