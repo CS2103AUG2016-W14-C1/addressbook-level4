@@ -7,7 +7,7 @@ import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.util.StringUtil;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;
@@ -114,6 +114,10 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredActivityList(Set<String> keywords){
         updateFilteredActivityList(new PredicateExpression(new NameQualifier(keywords)));
     }
+    
+    public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
+        updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
+    }
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
@@ -176,6 +180,46 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
+        }
+    }
+    
+    private class DateQualifier implements Qualifier {
+        private AMDate dateTime;
+        private AMDate endDateTime;
+
+        DateQualifier(AMDate dateTime, AMDate endDateTime) {
+            this.dateTime = dateTime;
+            this.endDateTime = endDateTime;
+        }
+
+        @Override
+        public boolean run(Activity activity) {
+            if (activity instanceof FloatingActivity) {
+                // no need check dateTime for floating activity
+                return true;
+            } else if (activity instanceof DeadlineActivity) {
+                // return true if deadline falls within dateTime range 
+                Long deadlineTime = ((DeadlineActivity) activity).getDateTime().getTime(); 
+                return deadlineTime >= dateTime.getTime() && deadlineTime <= endDateTime.getTime(); 
+            } else if (activity instanceof EventActivity) {
+                // return true if either start or end of event falls within dateTime range
+                Long eventTime = ((EventActivity) activity).getDateTime().getTime();
+                Long endEventTime = ((EventActivity) activity).getEndDateTime().getTime();
+                return (eventTime >= dateTime.getTime() && eventTime <= endDateTime.getTime()) 
+                       || (endEventTime >= dateTime.getTime() && endEventTime <= endDateTime.getTime());
+            } else {
+                return false; // should not happen
+            }
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("dateTime=");
+            sb.append(dateTime.toString());
+            sb.append("\nendDateTime=");
+            sb.append(endDateTime.toString());
+            return sb.toString();
         }
     }
 

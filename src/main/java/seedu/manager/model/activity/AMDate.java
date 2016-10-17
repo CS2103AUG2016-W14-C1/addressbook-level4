@@ -18,7 +18,7 @@ public class AMDate {
     /**
      * Default constructor for Activity Manager date
      */
-    AMDate(String newDateTime) {
+    public AMDate(String newDateTime) {
         List<DateGroup> dateGroups = dateTimeParser.parse(newDateTime);
         this.dateTime = dateGroups.get(0).getDates().get(0); 
     }
@@ -35,6 +35,18 @@ public class AMDate {
     public void setAMDate(String newDateTime) {
         List<DateGroup> dateGroups = dateTimeParser.parse(newDateTime);
         this.dateTime = dateGroups.get(0).getDates().get(0); 
+    }
+    
+    public void toStartOfDay() {
+        this.dateTime.setHours(0);
+        this.dateTime.setMinutes(0);
+        this.dateTime.setSeconds(0);
+    }
+    
+    public void toEndOfDay() {
+        this.dateTime.setHours(23);
+        this.dateTime.setMinutes(59);
+        this.dateTime.setSeconds(59);
     }
     
     public Long getTime() {
@@ -73,6 +85,11 @@ public class AMDate {
     public String getSeconds() {
         assert dateTime != null;
         return Integer.toString(dateTime.getSeconds());
+    }
+    
+    @Override
+    public String toString() {
+        return dateTime.toString();
     }
     
 }
