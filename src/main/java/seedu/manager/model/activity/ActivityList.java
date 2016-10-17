@@ -56,7 +56,7 @@ public class ActivityList implements Iterable<Activity> {
 	    	// Handle Event tasks
 	    	if (toUpdate instanceof EventActivity) {
 	    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdate).setDateTime(newDateTime);
-	    		if (newEndDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdate).setEndDateTime(newEndDateTime);
+	    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) toUpdate).setEndDateTime(newEndDateTime);
 	    	}
     	} else {
     		throw new ActivityNotFoundException();
