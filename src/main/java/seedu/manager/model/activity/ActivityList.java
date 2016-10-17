@@ -1,5 +1,6 @@
 package seedu.manager.model.activity;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ public class ActivityList implements Iterable<Activity> {
     public void add(Activity toAdd){
         assert toAdd != null;
         internalList.add(toAdd);
+        Collections.sort(internalList);
     }
     
     /**
@@ -32,6 +34,7 @@ public class ActivityList implements Iterable<Activity> {
         if (!activityFoundAndDeleted) {
             throw new ActivityNotFoundException();
         }
+        Collections.sort(internalList);
         return activityFoundAndDeleted;
     }
     
@@ -61,6 +64,7 @@ public class ActivityList implements Iterable<Activity> {
     	} else {
     		throw new ActivityNotFoundException();
     	}
+    	Collections.sort(internalList);
     	return activityFound;
     }
     
@@ -105,7 +109,7 @@ public class ActivityList implements Iterable<Activity> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueActivityList // instanceof handles nulls
+                || (other instanceof ActivityList // instanceof handles nulls
                 && this.internalList.equals(
                 ((ActivityList) other).internalList));
     }
