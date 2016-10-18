@@ -302,7 +302,7 @@ public class AMParser {
                     if (!StringUtil.isAMDate(endDateTime)) {
                         throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, endDateTime));
                     }
-                    return new UpdateCommand(index.get(), eventVeryStrictTimeTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), dateTime, endDateTime);
                 } else if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     final String dateTime = eventStrictTimeTokens[0].trim();
                     final String endDateTime = eventStrictTimeTokens[1].trim();
@@ -315,7 +315,7 @@ public class AMParser {
                         throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, endDateTime));
                     }
                     
-                    return new UpdateCommand(index.get(), eventStrictTimeTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), dateTime, endDateTime);
                 } else {
                     return new UpdateCommand(index.get(), arguments);
                 }
@@ -336,7 +336,7 @@ public class AMParser {
                         throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, endDateTime));
                     }
                     
-                    return new UpdateCommand(index.get(), eventStrictToTimeTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(index.get(), eventTokens[0].trim(), dateTime, endDateTime);
                 } else if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     final String dateTime = eventTimeTokens[0].trim();
                     final String endDateTime = eventTimeTokens[1].trim();
@@ -349,7 +349,7 @@ public class AMParser {
                         throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, endDateTime));
                     }
                     
-                    return new UpdateCommand(index.get(), eventTimeTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(index.get(), eventTokens[0].trim(), dateTime, endDateTime);
                 } else {
                     return new UpdateCommand(index.get(), arguments);
                 }
