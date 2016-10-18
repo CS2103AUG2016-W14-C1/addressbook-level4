@@ -70,8 +70,6 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
             return -1;
         } else if (this instanceof FloatingActivity) {
             return 1;
-        } else if (other instanceof FloatingActivity) {
-            return -1;
         // Comparison between 2 deadlines
         } else if (this instanceof DeadlineActivity && other instanceof DeadlineActivity) {
             return (int)(((DeadlineActivity) this).getDateTime().getTime() - ((DeadlineActivity) other).getDateTime().getTime());

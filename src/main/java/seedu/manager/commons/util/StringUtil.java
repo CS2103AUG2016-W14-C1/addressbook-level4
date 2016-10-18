@@ -1,11 +1,15 @@
 package seedu.manager.commons.util;
 
+import static seedu.manager.commons.core.Messages.MESSAGE_CANNOT_PARSE_TO_DATE;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
 import com.joestelmach.natty.*;
+
+import seedu.manager.commons.exceptions.IllegalValueException;
 
 /**
  * Helper functions for handling strings.
@@ -40,9 +44,11 @@ public class StringUtil {
      * Returns true if s can be parsed as an AMDate type
      * @param s Should be trimmed
      */
-    public static boolean isAMDate(String s) {
+    public static void validateAMDate(String dateTime) throws IllegalValueException {
         Parser parser = new Parser();
-        List<DateGroup> groups = parser.parse(s);
-        return groups.size() > 0;
+        List<DateGroup> groups = parser.parse(dateTime);
+        if (groups.size() > 0) {
+            throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, dateTime));
+        }
     }
 }

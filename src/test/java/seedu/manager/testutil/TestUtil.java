@@ -118,7 +118,7 @@ public class TestUtil {
     }
 
     public static void createDataFileWithSampleData(String filePath) {
-        createDataFileWithData(generateSampleStorageAddressBook(), filePath);
+        createDataFileWithData(generateSampleStorageActivityManager(), filePath);
     }
 
     public static <T> void createDataFileWithData(T data, String filePath) {
@@ -139,7 +139,7 @@ public class TestUtil {
         return new ActivityManager(new ActivityList(), new UniqueTagList());
     }
 
-    public static XmlSerializableActivityManager generateSampleStorageAddressBook() {
+    public static XmlSerializableActivityManager generateSampleStorageActivityManager() {
         return new XmlSerializableActivityManager(generateEmptyActivityManager());
     }
 
