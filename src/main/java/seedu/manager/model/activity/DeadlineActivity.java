@@ -34,6 +34,14 @@ public class DeadlineActivity extends Activity {
         this.dateTime = new AMDate(newEpochDateTime);
     }
     
+    /**
+     * Constructor which gets dateTime in AMDate, used for testing
+     */
+    public DeadlineActivity(String name, AMDate testDateTime) {
+        super(name);
+        this.dateTime = testDateTime;
+    }
+    
     public AMDate getDateTime() {
         return dateTime;
     }

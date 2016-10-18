@@ -40,6 +40,15 @@ public class EventActivity extends Activity {
         this.endDateTime = new AMDate(newEpochEndDateTime);
     }
     
+    /**
+     * Constructor which gets start and end dateTime in AMDate, used for testing
+     */
+    public EventActivity(String name, AMDate testDateTime, AMDate testEndDateTime) {
+        super(name);
+        this.dateTime = testDateTime;
+        this.endDateTime = testEndDateTime;
+    }
+    
     public AMDate getDateTime() {
         return dateTime;
     }
