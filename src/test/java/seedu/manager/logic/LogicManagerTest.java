@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import seedu.manager.commons.core.EventsCenter;
+import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.JumpToListRequestEvent;
@@ -161,36 +162,24 @@ public class LogicManagerTest {
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new ActivityManager(), Collections.emptyList());
     }
 
-
-    // TODO: Re-implement invalid argument checking when more arguments can be potentially out of place
-    /*
     @Test
-    public void execute_add_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        assertCommandBehavior(
-                "add wrong args wrong args", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+    public void execute_add_EventActivity_endDateEarlierThanStartDate() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        assertCommandBehavior("add invalid event from " + helper.getReferenceDateString()
+                              + " to day before " + helper.getReferenceDateString(),
+                EventActivity.MESSAGE_DATE_CONSTRAINTS);
     }
-    */
-
-//    @Test
-//    public void execute_add_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
-//
-//    }
-
+    
+    @Test
+    public void execute_add_invalidDate() throws Exception {
+        assertCommandBehavior("add event from abc to def", 
+                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+        assertCommandBehavior("add event from today to def", 
+                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+        assertCommandBehavior("add deadline by ghi", 
+                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+    }
+    
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations for floating activity
@@ -198,9 +187,96 @@ public class LogicManagerTest {
         Activity toBeAdded = new FloatingActivity("Activity");
         ActivityManager expectedAM = new ActivityManager();
         expectedAM.addActivity(toBeAdded);
-
-        // execute command and verify result
         assertCommandBehavior("add Activity",
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // setup expectations for deadline activity
+        toBeAdded = new DeadlineActivity("deadline", helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add deadline on " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // setup expectations for event activity
+        toBeAdded = new EventActivity("some event", helper.getReferenceDate(), helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add some event from " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
+    
+    @Test
+    public void execute_add_parseKeywordsCorrectly() throws Exception {
+        // able to add deadline activity with keywords (on/by) (without spaces)
+        TestDataHelper helper = new TestDataHelper();
+        Activity toBeAdded = new DeadlineActivity("Presentation Ruby", helper.getReferenceDate());
+        ActivityManager expectedAM = new ActivityManager();
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add Presentation Ruby on " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add deadline activity with keywords (on/by) (with spaces)
+        toBeAdded = new DeadlineActivity("read Village by the Sea", helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add read Village by the Sea \"on\" " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add deadline activity with keywords (on/by) (with spaces)
+        toBeAdded = new DeadlineActivity("learn Ruby on Rails", helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add learn Ruby on Rails \"by\" " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add event activity with keywords (from/to) (without spaces)
+        toBeAdded = new EventActivity("The fromance of tom and jerry", helper.getReferenceDate(), helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add The fromance of tom and jerry from " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add event activity with keywords (from/to) (with spaces)
+        toBeAdded = new EventActivity("Love from Paris", helper.getReferenceDate(), helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add Love from Paris \"from\" " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add event activity with keywords (from/to) (with spaces)
+        toBeAdded = new EventActivity("Train to Busan", helper.getReferenceDate(), helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add Train to Busan from " + helper.getReferenceDateString() 
+                              + " \"to\" " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add event activity with keywords (from/to) (with spaces)
+        toBeAdded = new EventActivity("Movie: from Jupiter to Mars", helper.getReferenceDate(), helper.getReferenceDate());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
+                              + " \"to\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -429,8 +505,12 @@ public class LogicManagerTest {
      */
     class TestDataHelper {
         
+        String getReferenceDateString() {
+            return "28 Feb 2016 00:00:00";
+        }
+        
         AMDate getReferenceDate() throws Exception {
-            return new AMDate("28 Feb 2016 00:00:00");
+            return new AMDate(getReferenceDateString());
         }
 
         /**
