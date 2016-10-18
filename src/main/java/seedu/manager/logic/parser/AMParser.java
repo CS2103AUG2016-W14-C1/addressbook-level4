@@ -111,15 +111,25 @@ public class AMParser {
         try {
             // Perform strict token checking for events before processing normally
             if (eventStrictTokens.length == ADD_EVENT_TOKEN_COUNT) {
-                String[] eventStrictTimeTokens = eventStrictTokens[1].split("to"); 
-                if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventVeryStrictTimeTokens = eventStrictTokens[1].split(" \"to\" ");
+                String[] eventStrictTimeTokens = eventStrictTokens[1].split(" to ");
+                
+                // Perform strict token checking for events "to" keyword before processing normally
+                if (eventVeryStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new AddCommand(eventStrictTokens[0].trim(), eventVeryStrictTimeTokens[0].trim(), eventVeryStrictTimeTokens[1].trim());
+                } else if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new AddCommand(eventStrictTokens[0].trim(), eventStrictTimeTokens[0].trim(), eventStrictTimeTokens[1].trim());
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
             } else if (eventTokens.length == ADD_EVENT_TOKEN_COUNT) {
-                String[] eventTimeTokens = eventTokens[1].split("to"); 
-                if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                String[] eventStrictToTimeTokens = eventTokens[1].split(" \"to\" "); 
+                String[] eventTimeTokens = eventTokens[1].split(" to "); 
+                
+                // Perform strict token checking for events "to" keyword before processing normally
+                if (eventStrictToTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
+                    return new AddCommand(eventTokens[0].trim(), eventStrictToTimeTokens[0].trim(), eventStrictToTimeTokens[1].trim());
+                } else if (eventTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new AddCommand(eventTokens[0].trim(), eventTimeTokens[0].trim(), eventTimeTokens[1].trim());
                 } else {
                     return new AddCommand(matcher.group("name"));
