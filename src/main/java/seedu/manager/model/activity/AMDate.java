@@ -37,6 +37,8 @@ public class AMDate {
         this.dateTime = dateGroups.get(0).getDates().get(0); 
     }
     
+    /** dateTime manipulation methods **/
+    
     public void toStartOfDay() {
         this.dateTime.setHours(0);
         this.dateTime.setMinutes(0);
@@ -48,6 +50,28 @@ public class AMDate {
         this.dateTime.setMinutes(59);
         this.dateTime.setSeconds(59);
     }
+    
+    public void addMonth(int offset) {
+        this.dateTime.setMonth(this.dateTime.getMonth() + offset);
+    }
+    
+    public void addDay(int offset) {
+        this.dateTime.setDate(this.dateTime.getDate() + offset);
+    }
+    
+    public void addHours(int offset) {
+        this.dateTime.setHours(this.dateTime.getHours() + offset);
+    }
+    
+    public void addMinutes(int offset) {
+        this.dateTime.setMinutes(this.dateTime.getMinutes() + offset);
+    }
+    
+    public void addSeconds(int offset) {
+        this.dateTime.setSeconds(this.dateTime.getSeconds() + offset);
+    }
+    
+    /** dateTime accessors **/
     
     public Long getTime() {
         return dateTime.getTime();
