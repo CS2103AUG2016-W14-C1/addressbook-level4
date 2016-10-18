@@ -6,6 +6,7 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
@@ -83,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
+    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);

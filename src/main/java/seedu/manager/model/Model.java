@@ -3,6 +3,7 @@ package seedu.manager.model;
 import java.util.Set;
 
 import seedu.manager.commons.core.UnmodifiableObservableList;
+import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
@@ -23,8 +24,9 @@ public interface Model {
     /** Adds the given activity */
     void addActivity(Activity activity);
     
-    /** Updates the given activity */
-    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException;
+    /** Updates the given activity 
+     * @throws IllegalValueException */
+    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException;
 
     /** Marks the given activity */
     void markActivity(Activity target, boolean status) throws ActivityNotFoundException;

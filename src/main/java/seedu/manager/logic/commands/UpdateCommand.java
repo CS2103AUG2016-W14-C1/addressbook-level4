@@ -71,7 +71,9 @@ public class UpdateCommand extends Command {
             model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
         } catch (ActivityNotFoundException anfe) {
             assert false : "The target activity cannot be found";
-        }
+        } catch (IllegalValueException ive) {
+			assert false : ive.getMessage();
+		}
 
         return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }

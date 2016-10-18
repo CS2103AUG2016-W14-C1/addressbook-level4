@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class ActivityList implements Iterable<Activity> {
 	
@@ -42,25 +43,30 @@ public class ActivityList implements Iterable<Activity> {
      * Updates the equivalent activity in the list.
      *
      * @throws ActivityNotFoundException if no such activity could be found in the list.
+     * @throws IllegalValueException if the dateTime and endDateTime are invalid
      */
     
-    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
+    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
     	assert toUpdate != null;
     	final boolean activityFound = internalList.contains(toUpdate);
     	if (activityFound) {
-	    	int toUpdateIndex = internalList.indexOf(toUpdate);
-	    	Activity toUpdateInList = internalList.get(toUpdateIndex);
-	    	// Update Activity name
-	    	if (newName != null && !newName.equals("")) toUpdateInList.setName(newName);
-	    	// Handle Deadline tasks
-	    	if (toUpdate instanceof DeadlineActivity) {
-	    		if (newDateTime != null) ((DeadlineActivity) toUpdate).setDateTime(newDateTime);
-	    	}
-	    	// Handle Event tasks
-	    	if (toUpdate instanceof EventActivity) {
-	    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdate).setDateTime(newDateTime);
-	    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) toUpdate).setEndDateTime(newEndDateTime);
-	    	}
+    		try {
+		    	int toUpdateIndex = internalList.indexOf(toUpdate);
+		    	Activity toUpdateInList = internalList.get(toUpdateIndex);
+		    	// Update Activity name
+		    	if (newName != null && !newName.equals("")) toUpdateInList.setName(newName);
+		    	// Handle Deadline tasks
+		    	if (toUpdate instanceof DeadlineActivity) {
+		    		if (newDateTime != null) ((DeadlineActivity) toUpdateInList).setDateTime(newDateTime);
+		    	}
+		    	// Handle Event tasks
+		    	if (toUpdate instanceof EventActivity) {
+		    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdateInList).setDateTime(newDateTime);
+		    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) toUpdateInList).setEndDateTime(newEndDateTime);
+		    	}
+    		} catch (Exception e) {
+				throw new IllegalValueException(e.getMessage());
+			}
     	} else {
     		throw new ActivityNotFoundException();
     	}

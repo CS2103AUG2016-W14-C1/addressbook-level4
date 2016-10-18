@@ -58,12 +58,18 @@ public class EventActivity extends Activity {
         return endDateTime;
     }
     
-    public void setDateTime(String newDateTime) {
+    public void setDateTime(String newDateTime) throws IllegalValueException {
+        if ((new AMDate(newDateTime)).getTime() > this.endDateTime.getTime()) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
         this.dateTime.setAMDate(newDateTime);
     }
     
     
-    public void setEndDateTime(String newEndDateTime) {
+    public void setEndDateTime(String newEndDateTime) throws IllegalValueException {
+        if (this.dateTime.getTime() > (new AMDate(newEndDateTime)).getTime()) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
         this.endDateTime.setAMDate(newEndDateTime);
     }
 }

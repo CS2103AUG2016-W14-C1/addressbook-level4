@@ -1,6 +1,7 @@
 package seedu.manager.model;
 
 import javafx.collections.ObservableList;
+import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList;
 import seedu.manager.model.activity.DeadlineActivity;
@@ -112,23 +113,16 @@ public class ActivityManager implements ReadOnlyActivityManager {
         }
     }
 
-    public boolean updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) throws ActivityList.ActivityNotFoundException {
-    	if (activities.update(key, newName, newDateTime, newEndDateTime)) {
-	    	// Update Activity name
-	    	if (newName != null && !newName.equals("")) key.setName(newName);
-	    	// Handle Deadline tasks
-	    	if (key instanceof DeadlineActivity) {
-	    		if (newDateTime != null) ((DeadlineActivity) key).setDateTime(newDateTime);
+    public boolean updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) throws ActivityList.ActivityNotFoundException, IllegalValueException {
+    	try {
+	    	if (activities.update(key, newName, newDateTime, newEndDateTime)) {
+	    		return true;
+	    	} else {
+	    		throw new ActivityList.ActivityNotFoundException();
 	    	}
-	    	// Handle Event tasks
-	    	if (key instanceof EventActivity) {
-	    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) key).setDateTime(newDateTime);
-	    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) key).setEndDateTime(newEndDateTime);
-	    	}
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
+    	} catch (Exception e) {
+			throw new IllegalValueException(EventActivity.MESSAGE_DATE_CONSTRAINTS);
+		}
     }
 
     public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
