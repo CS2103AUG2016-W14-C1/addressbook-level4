@@ -14,6 +14,10 @@ public class Status{
 		this.status = false;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+	    return this.status == ((Status)o).status;
+	}
 	
 	@Override
 	public String toString() {

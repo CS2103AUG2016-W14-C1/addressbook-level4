@@ -112,6 +112,13 @@ public class AMDate {
     }
     
     @Override
+    public boolean equals(Object o) {
+        return o == this
+               || (o instanceof AMDate 
+                  && this.getTime().equals(((AMDate)o).getTime()));
+    }
+    
+    @Override
     public String toString() {
         return dateTime.toString();
     }

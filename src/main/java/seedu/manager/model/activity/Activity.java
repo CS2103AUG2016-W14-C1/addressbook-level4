@@ -42,13 +42,23 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
 		return this.status;
 	}
 	
-	// TODO: Re-implement equality if necessary when more details are added
 	@Override
 	public boolean equals(Object o) {
-	    // Check for name equality
-	    return o == this ||
-	           (o instanceof Activity &&
-	            this.name.equals(((Activity)o).name));
+	    return o == this
+	                // Activity equality
+	            || (o instanceof Activity
+	                && this.name.equals(((Activity)o).name)
+	                && this.status.equals(((Activity)o).status)
+	                // FloatingActivity equality
+	                && ((this instanceof FloatingActivity && o instanceof FloatingActivity)
+	                // DeadlineActivity equality
+	                || (this instanceof DeadlineActivity && o instanceof DeadlineActivity
+	                    && ((DeadlineActivity)this).getDateTime().equals(((DeadlineActivity)o).getDateTime()))
+	                // EventActivity equality
+	                || (this instanceof EventActivity && o instanceof EventActivity
+	                    && ((EventActivity)this).getDateTime().equals(((EventActivity)o).getDateTime())
+	                    && ((EventActivity)this).getEndDateTime().equals(((EventActivity)o).getEndDateTime()))
+	                ));
 	}
 	
     @Override
