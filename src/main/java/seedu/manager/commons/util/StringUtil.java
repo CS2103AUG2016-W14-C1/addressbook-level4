@@ -41,7 +41,7 @@ public class StringUtil {
     }
     
     /**
-     * Returns true if s can be parsed as an AMDate type
+     * Attempts to validate an AMDate type
      * @param s Should be trimmed
      */
     public static void validateAMDate(String dateTime) throws IllegalValueException {
@@ -50,5 +50,15 @@ public class StringUtil {
         if (groups.size() > 0) {
             throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, dateTime));
         }
+    }
+    
+    /**
+     * Returns true if s can be parsed as an AMDate type
+     * @param s Should be trimmed
+     */
+    public static boolean isAMDate(String dateTime) {
+        Parser parser = new Parser();
+        List<DateGroup> groups = parser.parse(dateTime);
+        return groups.size() > 0;
     }
 }
