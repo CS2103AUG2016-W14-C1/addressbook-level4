@@ -415,17 +415,6 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_update_EventActivity_endDateEarlierThanStartDate() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity dummyEvent = new EventActivity("Dummy", helper.getReferenceDate(), helper.getReferenceDate());
-        List<Activity> activities = helper.generateActivityList(dummyEvent);
-        helper.addToModel(model, activities);
-        assertCommandBehavior("update 1 newName from " + helper.getReferenceDateString()
-                              + " to day before " + helper.getReferenceDateString(),
-                EventActivity.MESSAGE_DATE_CONSTRAINTS);
-    }
-    
-    @Test
     public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("update");
     }
@@ -438,116 +427,6 @@ public class LogicManagerTest {
                 String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
         assertCommandBehavior("update 1 new by ghi", 
                 String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
-    }
-    
-    
-    @Test
-    public void execute_update_trimArguments() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity existingActivity = new FloatingActivity("bla bla bla");
-        List<Activity> activities = helper.generateActivityList(existingActivity);
-        helper.addToModel(model, activities);
-        
-        Activity newActivity = new FloatingActivity("bla");
-        List<Activity> expectedList = helper.generateActivityList(newActivity);
-        ActivityManager expectedAM = helper.generateActivityManager(expectedList);
-
-        assertCommandBehavior("update 1     bla",
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newActivity.getName()),
-                expectedAM,
-                expectedList);
-    
-        // setup expectations for deadline activity
-        Activity existingDeadline = new DeadlineActivity("deadline", helper.getReferenceDate());
-        activities = helper.generateActivityList(existingDeadline);
-        helper.addToModel(model, activities);
-        
-        Activity newDeadline = new DeadlineActivity("new deadline", helper.getReferenceDate());
-        expectedList = helper.generateActivityList(newDeadline);
-        expectedAM = helper.generateActivityManager(expectedList);
-      
-        assertCommandBehavior("update 1 new deadline by " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
-                expectedAM,
-                expectedAM.getActivityList()); 
-        
-     // setup expectations for event activity
-        Activity existingEvent = new EventActivity("event", helper.getReferenceDate(), helper.getReferenceDate());
-        activities = helper.generateActivityList(existingEvent);
-        helper.addToModel(model, activities);
-        
-        Activity newEvent = new EventActivity("new event", helper.getReferenceDate(), helper.getReferenceDate());
-        expectedList = helper.generateActivityList(newEvent);
-        expectedAM = helper.generateActivityManager(expectedList);
-      
-        assertCommandBehavior("update 1 new event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-    }
-    
-    @Test
-    public void execute_update_parseKeywordsCorrectly() throws Exception {
-        // able to update deadline activity with keywords (on/by) (without spaces)
-    	TestDataHelper helper = new TestDataHelper();
-    	Activity existingDeadline = new DeadlineActivity("Presentation", helper.getReferenceDateString());
-        List<Activity> activities = helper.generateActivityList(existingDeadline);
-        helper.addToModel(model, activities);
-        
-        Activity newDeadline = new DeadlineActivity("Presentation Ruby", helper.getReferenceDateString());
-        List<Activity> expectedList = helper.generateActivityList(newDeadline);
-        ActivityManager expectedAM = helper.generateActivityManager(expectedList);
-        
-        assertCommandBehavior("update 1 Presentation Ruby on " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
-                expectedAM,
-                expectedList);
-        
-        // able to update deadline activity with keywords (on/by) (with spaces)
-        expectedAM.updateActivity(existingDeadline, "read Village by the Sea", helper.getReferenceDateString(), new String());
-        assertCommandBehavior("update 1 read Village by the Sea \"on\" " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // able to update event activity with keywords (from/to) (without spaces)
-        Activity existingEvent = new EventActivity("Tom and jerry", helper.getReferenceDate(), helper.getReferenceDate());
-        activities = helper.generateActivityList(existingEvent);
-        helper.addToModel(model, activities);
-        
-        Activity newEvent = new EventActivity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
-        expectedList = helper.generateActivityList(newEvent);
-        expectedAM = helper.generateActivityManager(expectedList);
-       
-        assertCommandBehavior("update 1 The fromance of tom and jerry from " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // able to update event activity with keywords (from/to) (with spaces)
-        newEvent = new EventActivity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
-        assertCommandBehavior("update 1 Love from Paris \"from\" " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // able to update event activity with keywords (from/to) (with spaces)
-        newEvent = new EventActivity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
-        assertCommandBehavior("update 1 Train to Busan from " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // able to update event activity with keywords (from/to) (with spaces)
-        newEvent = new EventActivity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
-        assertCommandBehavior("update 1 Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString(),
-                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
     }
 
     @Test
