@@ -124,14 +124,13 @@ public class AMParser {
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
-             // Perform strict token checking for alt. deadlines before processing normally
+             // Perform strict token checking for (alt.) deadlines before processing normally
             } else if (deadlineAltStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new AddCommand(deadlineAltStrictTokens[0].trim(), deadlineAltStrictTokens[1].trim());
-            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
-                return new AddCommand(deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());
-            // Perform strict token checking for deadlines before processing normally
             } else if (deadlineStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new AddCommand(deadlineStrictTokens[0].trim(), deadlineStrictTokens[1].trim());
+            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new AddCommand(deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());
             } else if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new AddCommand(deadlineTokens[0].trim(), deadlineTokens[1].trim());
             } else {
@@ -204,7 +203,7 @@ public class AMParser {
         
         try {
             if (eventStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
-                String[] eventStrictTimeTokens = eventStrictTokens[1].split("to"); 
+                String[] eventStrictTimeTokens = eventStrictTokens[1].split(" to "); 
                 if (eventStrictTimeTokens.length == ADD_EVENT_TOKEN_COUNT) {
                     return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), eventStrictTimeTokens[0].trim(), eventStrictTimeTokens[1].trim());
                 } else {
@@ -219,10 +218,10 @@ public class AMParser {
                 }
             } else if (deadlineAltStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new UpdateCommand(index.get(), deadlineAltStrictTokens[0].trim(), deadlineAltStrictTokens[1].trim());    
-            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
-                return new UpdateCommand(index.get(), deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());    
             } else if (deadlineStrictTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new UpdateCommand(index.get(), deadlineStrictTokens[0].trim(), deadlineStrictTokens[1].trim());    
+            } else if (deadlineAltTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
+                return new UpdateCommand(index.get(), deadlineAltTokens[0].trim(), deadlineAltTokens[1].trim());    
             } else if (deadlineTokens.length == ADD_DEADLINE_TOKEN_COUNT) {
                 return new UpdateCommand(index.get(), deadlineTokens[0].trim(), deadlineTokens[1].trim());    
             } else {
