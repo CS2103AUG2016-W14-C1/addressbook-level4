@@ -6,11 +6,13 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert src != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with address book: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with activity manager: " + src + " and user prefs " + userPrefs);
 
         activityManager = new ActivityManager(src);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
@@ -82,15 +84,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void updateActivity(Activity activity, String newName) throws ActivityNotFoundException {
-        activityManager.updateActivity(activity, newName);
+    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
+        activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
     }
 
+    @Override
+    public synchronized void markActivity(Activity activity, boolean status) throws ActivityNotFoundException {
+        activityManager.markActivity(activity, status);
+        updateFilteredActivityList();
+        indicateActivityManagerChanged();
+    }
 
-    //=========== Filtered Person List Accessors ===============================================================
+
+    //=========== Filtered Activity List Accessors ===============================================================
 
     @Override
     public UnmodifiableObservableList<Activity> getFilteredActivityList() {
@@ -106,9 +115,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredActivityList(Set<String> keywords){
         updateFilteredActivityList(new PredicateExpression(new NameQualifier(keywords)));
     }
+    
+    public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
+        updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
+    }
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
+    }
+    
+    private void updateFilteredActivityList() {
+        filteredActivities.setPredicate(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return !activity.getStatus().isCompleted();
+    		}
+    	});
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
@@ -152,7 +173,7 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public boolean run(Activity activity) {
             return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.name, keyword))
+                    .filter(keyword -> StringUtil.containsIgnoreCase(activity.getName(), keyword))
                     .findAny()
                     .isPresent();
         }
@@ -160,6 +181,46 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
+        }
+    }
+    
+    private class DateQualifier implements Qualifier {
+        private AMDate dateTime;
+        private AMDate endDateTime;
+
+        DateQualifier(AMDate dateTime, AMDate endDateTime) {
+            this.dateTime = dateTime;
+            this.endDateTime = endDateTime;
+        }
+
+        @Override
+        public boolean run(Activity activity) {
+            if (activity instanceof FloatingActivity) {
+                // no need check dateTime for floating activity, but should not return either
+                return false;
+            } else if (activity instanceof DeadlineActivity) {
+                // return true if deadline falls within dateTime range 
+                Long deadlineTime = ((DeadlineActivity) activity).getDateTime().getTime(); 
+                return deadlineTime >= dateTime.getTime() && deadlineTime <= endDateTime.getTime(); 
+            } else if (activity instanceof EventActivity) {
+                // return true if either start or end of event falls within dateTime range
+                Long eventTime = ((EventActivity) activity).getDateTime().getTime();
+                Long endEventTime = ((EventActivity) activity).getEndDateTime().getTime();
+                return (eventTime >= dateTime.getTime() && eventTime <= endDateTime.getTime()) 
+                       || (endEventTime >= dateTime.getTime() && endEventTime <= endDateTime.getTime());
+            } else {
+                return false; // should not happen
+            }
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("dateTime=");
+            sb.append(dateTime.toString());
+            sb.append("\nendDateTime=");
+            sb.append(endDateTime.toString());
+            return sb.toString();
         }
     }
 

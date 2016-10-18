@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/logo.png";
 
     private Logic logic;
     private Config config;
@@ -121,7 +121,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadPersonPage(event.getNewSelection());
+        mainWindow.loadActivityPage(event.getNewSelection());
     }
     
     @Subscribe

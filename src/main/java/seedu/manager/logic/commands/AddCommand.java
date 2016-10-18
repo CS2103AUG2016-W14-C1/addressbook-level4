@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
 
@@ -30,20 +30,40 @@ public class AddCommand extends Command {
     private final Activity toAdd;
 
     /**
-     * Convenience constructor using raw values.
+     * Constructor for floating tasks
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
     public AddCommand(String name)
             throws IllegalValueException {
-        this.toAdd = new Activity(name);
+        this.toAdd = new FloatingActivity(name);
+    }
+    
+    /**
+     * Constructor for deadlines
+     * 
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, String dateTime)
+            throws IllegalValueException {
+        this.toAdd = new DeadlineActivity(name, dateTime);
     }
 
+    /**
+     * Constructor for events
+     * 
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, String startDateTime, String endDateTime)
+            throws IllegalValueException {
+        this.toAdd = new EventActivity(name, startDateTime, endDateTime);
+    }
+    
     @Override
     public CommandResult execute() {
         assert model != null;
         model.addActivity(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.name));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
     }
 
 }

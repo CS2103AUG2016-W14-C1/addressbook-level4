@@ -12,7 +12,7 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="105.0" prefHeight="115.0" GridPane.columnIndex="0">
+                <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="30.0" prefHeight="40.0" GridPane.columnIndex="0">
                     <stylesheets>
                         <URL value="@DarkTheme.css" />
                         <URL value="@Extensions.css" />
@@ -25,10 +25,12 @@
                         <HBox spacing="5" alignment="CENTER_LEFT">
                             <children>
                                 <HBox>
-                                    <Label fx:id="id" styleClass="cell_big_label"></Label>
+                                    <Label fx:id="id" styleClass="cell_big_label" />
                                     <Label fx:id="name" text="\$first" styleClass="cell_big_label"/>
                                 </HBox>
-                                <!-- <Label fx:id="tags" styleClass="cell_small_label" text="\$tags" /> -->
+                                <Pane HBox.hgrow="ALWAYS" />
+                                <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" />
+                                <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" />
                             </children>
                         </HBox>
                     </children>

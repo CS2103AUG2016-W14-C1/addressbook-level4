@@ -10,7 +10,7 @@ import seedu.manager.commons.exceptions.DataConversionException;
 import seedu.manager.commons.util.FileUtil;
 import seedu.manager.model.ActivityManager;
 import seedu.manager.model.ReadOnlyActivityManager;
-import seedu.manager.model.activity.Activity;
+import seedu.manager.model.activity.*;
 import seedu.manager.storage.XmlActivityManagerStorage;
 import seedu.manager.testutil.TypicalTestActivities;
 
@@ -73,9 +73,9 @@ public class XmlActivityManagerStorageTest {
         assertEquals(original, new ActivityManager(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addActivity(new Activity(TypicalTestActivities.tidy));
-        original.removeActivity(new Activity(TypicalTestActivities.tidy));
-        original.updateActivity(new Activity(TypicalTestActivities.groceries), "Buy Bread");
+        original.addActivity(new FloatingActivity(TypicalTestActivities.tidy));
+        original.removeActivity(new FloatingActivity(TypicalTestActivities.tidy));
+        original.updateActivity(new FloatingActivity(TypicalTestActivities.groceries), "Buy Bread", null, null);
         xmlActivityManagerStorage.saveActivityManager(original, filePath);
         readBack = xmlActivityManagerStorage.readActivityManager(filePath).get();
         assertEquals(original, new ActivityManager(readBack));
