@@ -47,7 +47,7 @@ public class StringUtil {
     public static void validateAMDate(String dateTime) throws IllegalValueException {
         Parser parser = new Parser();
         List<DateGroup> groups = parser.parse(dateTime);
-        if (groups.size() > 0) {
+        if (groups.size() <= 0) {
             throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, dateTime));
         }
     }
