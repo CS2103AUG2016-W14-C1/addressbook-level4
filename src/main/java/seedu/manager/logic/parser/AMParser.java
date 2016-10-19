@@ -115,6 +115,7 @@ public class AMParser {
         try {
             // Perform strict token checking for events before processing normally
             if (eventStrictTokens.length == EVENT_TOKEN_COUNT) {
+                final String eventName = eventStrictTokens[0].trim();
                 String[] eventVeryStrictTimeTokens = eventStrictTokens[1].split(" \"to\" ");
                 String[] eventStrictTimeTokens = eventStrictTokens[1].split(" to ");
                 
@@ -126,7 +127,7 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new AddCommand(eventStrictTokens[0].trim(), dateTime, endDateTime);
+                    return new AddCommand(eventName, dateTime, endDateTime);
                 } else if (eventStrictTimeTokens.length == EVENT_TOKEN_COUNT) {
                     final String dateTime = eventStrictTimeTokens[0].trim();
                     final String endDateTime = eventStrictTimeTokens[1].trim();
@@ -134,11 +135,12 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new AddCommand(eventStrictTokens[0].trim(), dateTime, endDateTime);
+                    return new AddCommand(eventName, dateTime, endDateTime);
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
             } else if (eventTokens.length == EVENT_TOKEN_COUNT) {
+                final String eventName = eventTokens[0].trim();
                 String[] eventStrictToTimeTokens = eventTokens[1].split(" \"to\" "); 
                 String[] eventTimeTokens = eventTokens[1].split(" to "); 
                 
@@ -150,7 +152,7 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new AddCommand(eventTokens[0].trim(), dateTime, endDateTime);
+                    return new AddCommand(eventName, dateTime, endDateTime);
                 } else if (eventTimeTokens.length == EVENT_TOKEN_COUNT) {
                     final String dateTime = eventTimeTokens[0].trim();
                     final String endDateTime = eventTimeTokens[1].trim();
@@ -158,35 +160,39 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new AddCommand(eventTokens[0].trim(), dateTime, endDateTime);
+                    return new AddCommand(eventName, dateTime, endDateTime);
                 } else {
                     return new AddCommand(matcher.group("name"));
                 }
              // Perform strict token checking for (alt.) deadlines before processing normally
             } else if (deadlineAltStrictTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineAltStrictTokens[0].trim();
                 final String dateTime = deadlineAltStrictTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new AddCommand(deadlineAltStrictTokens[0].trim(), dateTime);
+                return new AddCommand(deadlineName, dateTime);
             } else if (deadlineStrictTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineStrictTokens[0].trim();
                 final String dateTime = deadlineStrictTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new AddCommand(deadlineStrictTokens[0].trim(), dateTime);
+                return new AddCommand(deadlineName, dateTime);
             } else if (deadlineAltTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineAltTokens[0].trim();
                 final String dateTime = deadlineAltTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new AddCommand(deadlineAltTokens[0].trim(), dateTime);
+                return new AddCommand(deadlineName, dateTime);
             } else if (deadlineTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineTokens[0].trim();
                 final String dateTime = deadlineTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new AddCommand(deadlineTokens[0].trim(), dateTime);
+                return new AddCommand(deadlineName, dateTime);
             } else {
                 return new AddCommand(matcher.group("name"));
             }
@@ -246,6 +252,7 @@ public class AMParser {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
+        final Integer targetIndex = index.get();
         
         String arguments = matcher.group("arguments").trim();
         String[] eventTokens = arguments.split(" from ");
@@ -258,6 +265,7 @@ public class AMParser {
         try {
             // Perform strict token checking for events before processing normally
             if (eventStrictTokens.length == EVENT_TOKEN_COUNT) {
+                final String eventName = eventStrictTokens[0].trim();
                 String[] eventVeryStrictTimeTokens = eventStrictTokens[1].split(" \"to\" ");
                 String[] eventStrictTimeTokens = eventStrictTokens[1].split(" to ");
                 
@@ -269,7 +277,7 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
 
-                    return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(targetIndex, eventName, dateTime, endDateTime);
                 } else if (eventStrictTimeTokens.length == EVENT_TOKEN_COUNT) {
                     final String dateTime = eventStrictTimeTokens[0].trim();
                     final String endDateTime = eventStrictTimeTokens[1].trim();
@@ -277,11 +285,12 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new UpdateCommand(index.get(), eventStrictTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(targetIndex, eventName, dateTime, endDateTime);
                 } else {
-                    return new UpdateCommand(index.get(), arguments);
+                    return new UpdateCommand(targetIndex, arguments);
                 }
             } else if (eventTokens.length == EVENT_TOKEN_COUNT) {
+                final String eventName = eventTokens[0].trim();
                 String[] eventStrictToTimeTokens = eventTokens[1].split(" \"to\" "); 
                 String[] eventTimeTokens = eventTokens[1].split(" to "); 
                 
@@ -293,7 +302,7 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
                     
-                    return new UpdateCommand(index.get(), eventTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(targetIndex, eventName, dateTime, endDateTime);
                 } else if (eventTimeTokens.length == EVENT_TOKEN_COUNT) {
                     final String dateTime = eventTimeTokens[0].trim();
                     final String endDateTime = eventTimeTokens[1].trim();
@@ -301,37 +310,41 @@ public class AMParser {
                     StringUtil.validateAMDate(dateTime);
                     StringUtil.validateAMDate(endDateTime);
 
-                    return new UpdateCommand(index.get(), eventTokens[0].trim(), dateTime, endDateTime);
+                    return new UpdateCommand(targetIndex, eventName, dateTime, endDateTime);
                 } else {
-                    return new UpdateCommand(index.get(), arguments);
+                    return new UpdateCommand(targetIndex, arguments);
                 }
             // Perform strict token checking for (alt.) deadlines before processing normally
             } else if (deadlineAltStrictTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineAltStrictTokens[0].trim();
                 final String dateTime = deadlineAltStrictTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new UpdateCommand(index.get(), deadlineAltStrictTokens[0].trim(), dateTime);  
+                return new UpdateCommand(targetIndex, deadlineName, dateTime);  
             } else if (deadlineStrictTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineStrictTokens[0].trim();
                 final String dateTime = deadlineStrictTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new UpdateCommand(index.get(), deadlineStrictTokens[0].trim(), dateTime);
+                return new UpdateCommand(targetIndex, deadlineName, dateTime);
             } else if (deadlineAltTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineAltTokens[0].trim();
                 final String dateTime = deadlineAltTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new UpdateCommand(index.get(), deadlineAltTokens[0].trim(), dateTime);
+                return new UpdateCommand(targetIndex, deadlineName, dateTime);
             } else if (deadlineTokens.length == DEADLINE_TOKEN_COUNT) {
+                final String deadlineName = deadlineTokens[0].trim();
                 final String dateTime = deadlineTokens[1].trim();
                 
                 StringUtil.validateAMDate(dateTime);
                 
-                return new UpdateCommand(index.get(), deadlineTokens[0].trim(), dateTime);
+                return new UpdateCommand(targetIndex, deadlineName, dateTime);
             } else {
-                return new UpdateCommand(index.get(), arguments);
+                return new UpdateCommand(targetIndex, arguments);
             }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
