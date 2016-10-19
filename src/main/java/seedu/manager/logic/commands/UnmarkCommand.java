@@ -16,19 +16,19 @@ import java.util.Set;
  * Updates an activity in Remindaroo
  */
 
-public class MarkCommand extends Command {
-	public static final String COMMAND_WORD = "mark";
+public class UnmarkCommand extends Command {
+	public static final String COMMAND_WORD = "unmark";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks the activity identified by the index number used in the last activity listing as completed.\n"
+            + ": Marks the activity identified by the index number used in the last activity listing as pending.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MARK_ACTIVITY_SUCCESS = "Completed Activity: %1$s";
+    public static final String MESSAGE_UNMARK_ACTIVITY_SUCCESS = "Pending Activity: %1$s";
 	public final int targetIndex;
 	
 	
-	public MarkCommand(int targetIndex) {
+	public UnmarkCommand(int targetIndex) {
 		this.targetIndex = targetIndex;
 	}
 	
@@ -41,14 +41,14 @@ public class MarkCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
         }
 
-        Activity activityToMark = lastShownList.get(targetIndex - 1);
+        Activity activityToUnmark = lastShownList.get(targetIndex - 1);
         try {
-            model.markActivity(activityToMark);
+            model.unmarkActivity(activityToUnmark);
         } catch (ActivityNotFoundException anfe) {
             assert false : "The target activity cannot be found";
         }
-        String stringStatus = activityToMark.getStatus().toString();
-        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, activityToMark.getName()));
+        String stringStatus = activityToUnmark.getStatus().toString();
+        return new CommandResult(String.format(MESSAGE_UNMARK_ACTIVITY_SUCCESS, activityToUnmark.getName()));
     }
 }
 

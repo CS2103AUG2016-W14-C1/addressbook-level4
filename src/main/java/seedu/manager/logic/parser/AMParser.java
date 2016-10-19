@@ -69,6 +69,9 @@ public class AMParser {
             
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
+            
+        case UnmarkCommand.COMMAND_WORD:
+            return prepareUnmark(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -343,40 +346,32 @@ public class AMParser {
      */
     
     private Command prepareMark(String args) {
-        final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
-        
-        // Validate arg string format
-        if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
-        }
-        
         // Validate index format
-        Optional<Integer> index = parseIndex(matcher.group("targetIndex"));
+        Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
         }
-        
-        String[] splitArgs = (matcher.group("arguments").trim()).split("as");
-        String wordStatus;
-        if (splitArgs.length == 1) {
-            wordStatus = (splitArgs[0]).trim();
-        } else {
-            wordStatus = (splitArgs[1]).trim();
-        }
-        
-        String lowerCaseArgs = wordStatus.toLowerCase();
-        boolean status;
-        if (lowerCaseArgs.equals("pending")) {
-            status = false;
-        } else if (lowerCaseArgs.equals("completed")) {
-            status = true;
-        } else {
+
+        return new MarkCommand(index.get());
+    }
+    
+    /**
+     * Parses arguments in the context of the unmark activity command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareUnmark(String args) {
+        // Validate index format
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
         }
-        
-        return new MarkCommand(index.get(), status);
+
+        return new UnmarkCommand(index.get());
     }
     
 
@@ -426,7 +421,7 @@ public class AMParser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SearchCommand.MESSAGE_USAGE));
         }
-
+        
         // keywords delimited by whitespace
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
@@ -440,6 +435,10 @@ public class AMParser {
             } else {
                 searchCommand.addDateTimeRange(searchTimeTokens[0].trim());
             }
+        }
+        
+        if ((args.trim().toLowerCase()).equals("pending") || (args.trim().toLowerCase()).equals("completed")) {
+        	searchCommand.addStatus(args.trim().toLowerCase());
         }
         
         return searchCommand;

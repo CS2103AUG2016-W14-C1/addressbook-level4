@@ -19,11 +19,13 @@ public class SearchCommand extends Command {
     private final Set<String> keywords;
     private AMDate dateTime;
     private AMDate endDateTime;
+    private String status;
 
     public SearchCommand(Set<String> keywords) {
         this.keywords = keywords;
         this.dateTime = null;
         this.endDateTime = null;
+        this.status = null;
     }
     
     /**
@@ -46,13 +48,33 @@ public class SearchCommand extends Command {
         this.dateTime.toStartOfDay();
         this.endDateTime.toEndOfDay();
     }
-
+    
+    /**
+     * Add the status for search
+     * 
+     * @param status specified by user
+     */
+    public void addStatus(String status) {
+    	this.status = status.toLowerCase();
+    }
+    
     @Override
     public CommandResult execute() {
         model.updateFilteredActivityList(keywords);
         if (this.dateTime != null && this.endDateTime != null) {
             model.updateFilteredActivityList(dateTime, endDateTime);
         }
+        
+        if (this.status != null) {
+        	boolean isCompleted;
+        	if ((this.status).equals("pending")) {
+        		isCompleted = false;
+        	} else {
+        		isCompleted = true;
+        	}    
+        	model.updateFilteredActivityList(isCompleted);
+        }
+        	
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 

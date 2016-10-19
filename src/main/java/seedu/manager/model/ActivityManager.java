@@ -1,6 +1,7 @@
 package seedu.manager.model;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList;
@@ -125,9 +126,18 @@ public class ActivityManager implements ReadOnlyActivityManager {
 		}
     }
 
-    public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
-    	if (activities.mark(key, status)) {
-    		key.setStatus(status);
+    public boolean markActivity(Activity key) throws ActivityList.ActivityNotFoundException {
+    	if (activities.mark(key)) {
+    		key.setStatus(true);
+    		return true;
+    	} else {
+    		throw new ActivityList.ActivityNotFoundException();
+    	}
+    }
+    
+    public boolean unmarkActivity(Activity key) throws ActivityList.ActivityNotFoundException {
+    	if (activities.mark(key)) {
+    		key.setStatus(false);
     		return true;
     	} else {
     		throw new ActivityList.ActivityNotFoundException();
@@ -190,5 +200,9 @@ public class ActivityManager implements ReadOnlyActivityManager {
 	@Override
 	public ActivityList getActivityList() {
 		return activities;
+	}
+	
+	public FilteredList<Activity> getPendingActivityList() {
+		return activities.getPendingInternalList();
 	}
 }
