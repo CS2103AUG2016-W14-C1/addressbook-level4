@@ -491,7 +491,59 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
+    
+    @Test
+    public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("mark", expectedMessage);
+    }
 
+    @Test
+    public void execute_markIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("mark");
+    }
+
+    @Test
+    public void execute_mark_marksCorrectActivity() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.markActivity(threeActivities.get(1));
+        helper.addToModel(model, threeActivities);
+       
+        assertCommandBehavior("mark 2",
+                String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
+                expectedAM,
+                expectedAM.getPendingActivityList());
+    }
+    
+    
+    @Test
+    public void execute_unmarkInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("unmark", expectedMessage);
+    }
+
+    @Test
+    public void execute_unmarkIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("unmark");
+    }
+
+    @Test
+    public void execute_unmark_unmarksCorrectActivity() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.unmarkActivity(threeActivities.get(1));
+        helper.addToModel(model, threeActivities);
+       
+        assertCommandBehavior("unmark 2",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
 
     /**
      * A utility class to generate test data.

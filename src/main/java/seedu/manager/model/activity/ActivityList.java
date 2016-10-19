@@ -2,9 +2,11 @@ package seedu.manager.model.activity;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class ActivityList implements Iterable<Activity> {
@@ -75,16 +77,33 @@ public class ActivityList implements Iterable<Activity> {
     }
     
     /**
-     * Marks the equivalent activity in the list as pending or completed.
+     * Marks the equivalent activity in the list as completed.
      *
      * @throws ActivityNotFoundException if no such activity could be found in the list.
      */
     
-    public boolean mark(Activity toMark, boolean status) throws ActivityNotFoundException {
+    public boolean mark(Activity toMark) throws ActivityNotFoundException {
     	assert toMark != null;
     	final boolean activityFound = internalList.contains(toMark);
     	if (activityFound) {
-    		toMark.setStatus(status);
+    		toMark.setStatus(true);
+    	} else {
+    		throw new ActivityNotFoundException();
+    	}
+    	return activityFound;
+    }
+    
+    /**
+     * Marks the equivalent activity in the list as pending.
+     *
+     * @throws ActivityNotFoundException if no such activity could be found in the list.
+     */
+    
+    public boolean unmark(Activity toUnmark) throws ActivityNotFoundException {
+    	assert toUnmark != null;
+    	final boolean activityFound = internalList.contains(toUnmark);
+    	if (activityFound) {
+    		toUnmark.setStatus(false);
     	} else {
     		throw new ActivityNotFoundException();
     	}
@@ -101,6 +120,14 @@ public class ActivityList implements Iterable<Activity> {
 	
     public ObservableList<Activity> getInternalList() {
         return internalList;
+    }
+    
+    public FilteredList<Activity> getPendingInternalList() {
+    	return internalList.filtered(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return !activity.getStatus().isCompleted();
+    		}
+    	});
     }
 
     public int size() {

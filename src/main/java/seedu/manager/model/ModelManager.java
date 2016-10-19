@@ -92,12 +92,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markActivity(Activity activity, boolean status) throws ActivityNotFoundException {
-        activityManager.markActivity(activity, status);
+    public synchronized void markActivity(Activity activity) throws ActivityNotFoundException {
+        activityManager.markActivity(activity);
         updateFilteredActivityList();
         indicateActivityManagerChanged();
     }
 
+    @Override
+    public synchronized void unmarkActivity(Activity activity) throws ActivityNotFoundException {
+        activityManager.unmarkActivity(activity);
+        updateFilteredActivityList();
+        indicateActivityManagerChanged();
+    }
 
     //=========== Filtered Activity List Accessors ===============================================================
 
@@ -119,15 +125,32 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
         updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
     }
+    
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
     }
     
-    private void updateFilteredActivityList() {
-        filteredActivities.setPredicate(new Predicate<Activity>() {
+    private void updateFilteredActivityList(Predicate<Activity> predicate) {
+        filteredActivities.setPredicate(predicate);
+    }
+    
+    public void updateFilteredActivityList() {
+    	updateFilteredActivityList(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
     			return !activity.getStatus().isCompleted();
+    		}
+    	});
+    }
+    
+    public void updateFilteredActivityList(boolean isCompleted) {
+    	updateFilteredActivityList(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			if (isCompleted) {
+    				return activity.getStatus().isCompleted();
+    			} else {
+    				return !activity.getStatus().isCompleted();
+    			}
     		}
     	});
     }

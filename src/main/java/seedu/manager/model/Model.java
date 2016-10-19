@@ -29,7 +29,10 @@ public interface Model {
     void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException;
 
     /** Marks the given activity */
-    void markActivity(Activity target, boolean status) throws ActivityNotFoundException;
+    void markActivity(Activity target) throws ActivityNotFoundException;
+    
+    /** Unmarks the given activity */
+    void unmarkActivity(Activity target) throws ActivityNotFoundException;
 
     /** Returns the filtered activity list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
@@ -42,5 +45,8 @@ public interface Model {
     
     /** Updates the filter of the filtered activity list to filter by the given dateTime range*/
     void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime);
+    
+    /** Updates the filter of the filtered activity list to filter by the given status*/
+    void updateFilteredActivityList(boolean isCompleted);
 
 }
