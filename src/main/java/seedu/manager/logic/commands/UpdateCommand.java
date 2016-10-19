@@ -98,13 +98,12 @@ public class UpdateCommand extends Command {
 //        	return false;
 //        }
 //        Activity activityToUpdate = lastShownList.get(targetIndex - 1);
-        if (this.newDateTime == null || this.newEndDateTime == null) return false;
+        if (this.newDateTime == null || this.newEndDateTime == null) return true;
         
         AMDate dateTime = new AMDate(this.newDateTime);
         AMDate endDateTime = new AMDate(this.newEndDateTime);
         
         // Parse the start date, if start date is not available get it from the current activity
-//        if (!(activityToUpdate instanceof EventActivity)) return true;
 //        if (this.newDateTime == null) {
 //        	dateTime = ((EventActivity) activityToUpdate).getDateTime();
 //        } else {
