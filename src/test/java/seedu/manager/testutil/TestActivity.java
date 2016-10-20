@@ -11,10 +11,12 @@ public class TestActivity implements ReadOnlyActivity {
     private String name;
     private AMDate dateTime;
     private AMDate endDateTime;
+    private Status status;
     private UniqueTagList tags;
 
     public TestActivity() {
         tags = new UniqueTagList();
+        status = new Status();
     }
 
     public void setName(String name) {
@@ -44,15 +46,13 @@ public class TestActivity implements ReadOnlyActivity {
     }
 
     
-    public void setStatus(boolean completed) {
-        // TODO Auto-generated method stub
-        
-    }
+	public void setStatus(boolean completed) {
+		(this.status).setStatus(completed);
+	}
 
     @Override
     public Status getStatus() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.getStatus();
     }
 
     

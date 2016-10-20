@@ -14,6 +14,10 @@ public class Status{
 		this.status = false;
 	}
 	
+	public Status(boolean status) {
+		this.status = status;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 	    return this.status == ((Status)o).status;
@@ -28,12 +32,8 @@ public class Status{
 		}
 	}
 	
-	public void setPending() {
-		this.status = false;
-	}
-	
-	public void setCompleted() {
-		this.status = true;
+	public void setStatus(boolean isCompleted) {
+		this.status = isCompleted;
 	}
 	
 	public boolean isCompleted() {

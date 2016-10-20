@@ -47,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyActivityManager initialData, UserPrefs userPrefs) {
         activityManager = new ActivityManager(initialData);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
+        updateFilteredActivityList();
     }
 
     @Override
