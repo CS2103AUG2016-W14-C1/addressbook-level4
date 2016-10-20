@@ -181,37 +181,6 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_add_successful() throws Exception {
-        // setup expectations for floating activity
-        TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = new FloatingActivity("Activity");
-        ActivityManager expectedAM = new ActivityManager();
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add Activity",
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        
-        // setup expectations for deadline activity
-        toBeAdded = new DeadlineActivity("deadline", helper.getReferenceDate());
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add deadline on " + helper.getReferenceDateString(),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // setup expectations for event activity
-        toBeAdded = new EventActivity("some event", helper.getReferenceDate(), helper.getReferenceDate());
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add some event from " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-    }
-    
-    @Test
     public void execute_add_parseKeywordsCorrectly() throws Exception {
         // able to add deadline activity with keywords (on/by) (without spaces)
         TestDataHelper helper = new TestDataHelper();
@@ -281,29 +250,6 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
-
-    /*
-    TODO: Use test only if duplicate activities should be prohibited
-    @Test
-    public void execute_addDuplicate_notAllowed() throws Exception {
-        // setup expectations
-        TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = helper.sampleActivity();
-        ActivityManager expectedAM = new ActivityManager();
-        expectedAM.addActivity(toBeAdded);
-
-        // setup starting state
-        model.addActivity(toBeAdded); // person already in internal address book
-
-        // execute command and verify result
-        assertCommandBehavior(
-                helper.generateAddCommand(toBeAdded),
-                AddCommand.MESSAGE_DUPLICATE_ACTIVITY,
-                expectedAM,
-                expectedAM.getActivityList());
-
-    }
-    */
 
     @Test
     public void execute_list_showsAllActivities() throws Exception {
@@ -474,7 +420,7 @@ public class LogicManagerTest {
         Activity newDeadline = new DeadlineActivity("new deadline", helper.getReferenceDate());
         expectedAM.addActivity(newDeadline);
       
-        assertCommandBehavior("update 1 new deadline by " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new deadline    by    " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
                 expectedAM.getActivityList()); 
@@ -488,7 +434,7 @@ public class LogicManagerTest {
         Activity newEvent = new EventActivity("new event", helper.getReferenceDate(), helper.getReferenceDate());
         expectedAM.addActivity(newEvent);
       
-        assertCommandBehavior("update 1 new event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new event   from   " + helper.getReferenceDateString() + "   to   " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
