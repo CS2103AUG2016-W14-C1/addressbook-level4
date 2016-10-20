@@ -525,60 +525,72 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_search_onlyMatchesFullWordsInNames() throws Exception {
+    public void execute_search_matchNameSuccess() throws Exception {
+        // should match if only full search name is found in part of activity name, case insensitive
         TestDataHelper helper = new TestDataHelper();
         Activity pTarget1 = new FloatingActivity("bla bla KEY bla");
-        Activity pTarget2 = new FloatingActivity("bla KEY bla bceofeia");
+        Activity pTarget2 = new DeadlineActivity("bla KEY bla bceofeia", helper.getReferenceDate());
+        Activity pTarget3 = new EventActivity("bla key bla", helper.getReferenceDate(), helper.getReferenceDate());
         Activity p1 = new FloatingActivity("KE Y");
-        Activity p2 = new FloatingActivity("KEYKEYKEY sduauo");
+        Activity p2 = new DeadlineActivity("KEYKEYKEY sduauo", helper.getReferenceDate());
+        Activity p3 = new EventActivity("KEXY", helper.getReferenceDate(), helper.getReferenceDate());
 
-        List<Activity> fourActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
-        List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
-        helper.addToModel(model, fourActivities);
-
-        assertCommandBehavior("search KEY",
-                Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
-                expectedList);
-    }
-
-    @Test
-    public void execute_search_isNotCaseSensitive() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity p1 = new FloatingActivity("bla bla KEY bla");
-        Activity p2 = new FloatingActivity("bla KEY bla bceofeia");
-        Activity p3 = new FloatingActivity("key key");
-        Activity p4 = new FloatingActivity("KEy sduauo");
-
-        List<Activity> fourActivities = helper.generateActivityList(p3, p1, p4, p2);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
-        List<Activity> expectedList = fourActivities;
-        helper.addToModel(model, fourActivities);
-
-        assertCommandBehavior("search KEY",
-                Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
-                expectedList);
-    }
-
-    @Test
-    public void execute_search_matchesIfAnyKeywordPresent() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity pTarget1 = new FloatingActivity("bla bla KEY bla");
-        Activity pTarget2 = new FloatingActivity("bla rAnDoM bla bceofeia");
-        Activity pTarget3 = new FloatingActivity("key key");
-        Activity p1 = new FloatingActivity("sduauo");
-
-        List<Activity> fourActivities = helper.generateActivityList(pTarget1, p1, pTarget2, pTarget3);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
+        List<Activity> sixActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2, p3, pTarget3);
+        ActivityManager expectedAB = helper.generateActivityManager(sixActivities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2, pTarget3);
-        helper.addToModel(model, fourActivities);
+        helper.addToModel(model, sixActivities);
 
-        assertCommandBehavior("search key rAnDoM",
+        assertCommandBehavior("search KEY",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
+    }
+    
+    @Test
+    public void execute_search_matchesIfWithinDateSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity pTarget1 = new DeadlineActivity("deadline", "today");
+        Activity pTarget2 = new EventActivity("event", "yesterday", "tomorow");
+        Activity p1 = new FloatingActivity("no match");
+        Activity p2 = new DeadlineActivity("deadline", "next week");
+        Activity p3 = new EventActivity("event", "next week", "2 week later");
+        
+        List<Activity> activities = helper.generateActivityList(pTarget1, p1, pTarget2, p2, p3);
+        ActivityManager expectedAB = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
+        helper.addToModel(model, activities);
+        
+        assertCommandBehavior("search today",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+        
+        assertCommandBehavior("search today to tomorrow",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_search_matchesStatusSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.markActivity(threeActivities.get(0));
+        helper.addToModel(model, threeActivities);
+        List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
+        List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
+       
+        assertCommandBehavior("search pending",
+                Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
+                expectedAM,
+                expectedPendingList);
+        
+        assertCommandBehavior("search completed",
+                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
+                expectedAM,
+                expectedMarkList);
     }
     
     @Test

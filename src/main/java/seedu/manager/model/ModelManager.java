@@ -229,8 +229,7 @@ public class ModelManager extends ComponentManager implements Model {
                 // return true if either start or end of event falls within dateTime range
                 Long eventTime = ((EventActivity) activity).getDateTime().getTime();
                 Long endEventTime = ((EventActivity) activity).getEndDateTime().getTime();
-                return (eventTime >= dateTime.getTime() && eventTime <= endDateTime.getTime()) 
-                       || (endEventTime >= dateTime.getTime() && endEventTime <= endDateTime.getTime());
+                return !(endEventTime < dateTime.getTime() || eventTime > endDateTime.getTime());
             } else {
                 return false; // should not happen
             }
