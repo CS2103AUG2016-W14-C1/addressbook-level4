@@ -32,12 +32,8 @@ public class Status{
 		}
 	}
 	
-	public void setPending() {
-		this.status = false;
-	}
-	
-	public void setCompleted() {
-		this.status = true;
+	public void setStatus(boolean isCompleted) {
+		this.status = isCompleted;
 	}
 	
 	public boolean isCompleted() {

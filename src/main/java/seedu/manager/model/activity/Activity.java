@@ -35,11 +35,7 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
 	}
 	
 	public void setStatus(boolean completed) {
-		if (completed) {
-			(this.status).setCompleted();
-		} else {
-			(this.status).setPending();
-		}
+		(this.status).setStatus(completed);
 	}
 	
 	@Override

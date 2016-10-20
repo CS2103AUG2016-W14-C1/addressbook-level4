@@ -18,6 +18,12 @@ public class ActivityBuilder {
         this.activity.setName(name);
         return this;
     }
+    
+    public ActivityBuilder withNameandStatus(String name, boolean status) throws IllegalValueException {
+        this.activity.setName(name);
+        this.activity.setStatus(status);
+        return this;
+    }
 
     public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
         for (String tag: tags) {

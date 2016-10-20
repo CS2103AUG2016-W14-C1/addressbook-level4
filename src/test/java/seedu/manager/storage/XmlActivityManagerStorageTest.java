@@ -74,7 +74,11 @@ public class XmlActivityManagerStorageTest {
 
         //Modify data, overwrite exiting file, and read back
         original.addActivity(new FloatingActivity(TypicalTestActivities.tidy));
+        original.addActivity(new FloatingActivity(TypicalTestActivities.plane));
+        original.addActivity(new FloatingActivity(TypicalTestActivities.hotel));
         original.removeActivity(new FloatingActivity(TypicalTestActivities.tidy));
+        original.addActivity(new FloatingActivity(TypicalTestActivities.plane));
+        original.addActivity(new FloatingActivity(TypicalTestActivities.hotel));
         original.updateActivity(new FloatingActivity(TypicalTestActivities.groceries), "Buy Bread", null, null);
         xmlActivityManagerStorage.saveActivityManager(original, filePath);
         readBack = xmlActivityManagerStorage.readActivityManager(filePath).get();
