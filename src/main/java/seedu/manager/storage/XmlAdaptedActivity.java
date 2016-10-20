@@ -23,6 +23,9 @@ public class XmlAdaptedActivity {
     @XmlElement(required = false)
     private Long epochEndDateTime;
     
+    @XmlElement(required = true)
+    private boolean isCompleted;
+    
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -39,6 +42,7 @@ public class XmlAdaptedActivity {
      */
     public XmlAdaptedActivity(Activity source) {
         name = source.getName();
+        isCompleted = source.getStatus().isCompleted();
         
         if (source.getClass().equals(DeadlineActivity.class)) {
             epochDateTime = ((DeadlineActivity)source).getDateTime().getTime();
@@ -72,12 +76,19 @@ public class XmlAdaptedActivity {
 //        final Email email = new Email(this.email);
 //        final Address address = new Address(this.address);
 //        final UniqueTagList tags = new UniqueTagList(personTags);
+        
+        Activity newActivity;
         if (epochDateTime != null && epochEndDateTime != null) {
-            return new EventActivity(this.name, epochDateTime, epochEndDateTime);
+            newActivity = new EventActivity(this.name, epochDateTime, epochEndDateTime);
         } else if(epochDateTime != null) {
-            return new DeadlineActivity(this.name, epochDateTime);    
+            newActivity = new DeadlineActivity(this.name, epochDateTime);    
         } else {
-            return new FloatingActivity(this.name);
+            newActivity = new FloatingActivity(this.name);
         }
+        
+        if (this.isCompleted) {
+        	newActivity.setStatus(true);
+        }
+        return newActivity;
     }
 }

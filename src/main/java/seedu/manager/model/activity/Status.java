@@ -14,6 +14,10 @@ public class Status{
 		this.status = false;
 	}
 	
+	public Status(boolean status) {
+		this.status = status;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 	    return this.status == ((Status)o).status;

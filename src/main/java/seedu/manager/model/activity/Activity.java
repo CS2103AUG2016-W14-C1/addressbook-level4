@@ -12,12 +12,17 @@ public abstract class Activity implements ReadOnlyActivity, Comparable<Activity>
 	    this.name = name;
 		this.status = new Status();
 	}
+	
+	public Activity(String name, boolean status) {
+	    this.name = name;
+		this.status = new Status(status);
+	}
 
 	/**
 	 * Copy constructor
 	 */
 	public Activity(ReadOnlyActivity source) {
-	    this(source.getName());
+	    this(source.getName(), source.getStatus().isCompleted());
 	}
 	
 	@Override
