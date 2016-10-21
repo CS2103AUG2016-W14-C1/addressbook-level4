@@ -73,11 +73,14 @@ public class AMParser {
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
+        case StoreCommand.COMMAND_WORD:
+        	return prepareStore(arguments);
+        	
         case SearchCommand.COMMAND_WORD:
             return prepareSearch(arguments);
+            
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -455,6 +458,17 @@ public class AMParser {
         }
         
         return searchCommand;
+    }
+    
+    private Command prepareStore(String args) {
+    	if (!args.equals("")) {
+    		try {
+				return new StoreCommand(args);
+			} catch (IllegalValueException e) {
+				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+			}
+    	}
+    	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
 
 }
