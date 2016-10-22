@@ -85,7 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
+    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
@@ -219,17 +219,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         @Override
         public boolean run(Activity activity) {
-            if (activity instanceof FloatingActivity) {
+            if (activity.getType().equals(ActivityType.FLOATING)) {
                 // no need check dateTime for floating activity, but should not return either
                 return false;
-            } else if (activity instanceof DeadlineActivity) {
+            } else if (activity.getType().equals(ActivityType.DEADLINE)) {
                 // return true if deadline falls within dateTime range 
-                Long deadlineTime = ((DeadlineActivity) activity).getDateTime().getTime(); 
+                Long deadlineTime = activity.getDateTime().getTime(); 
                 return deadlineTime >= dateTime.getTime() && deadlineTime <= endDateTime.getTime(); 
-            } else if (activity instanceof EventActivity) {
+            } else if (activity.getType().equals(ActivityType.EVENT)) {
                 // return true if either start or end of event falls within dateTime range
-                Long eventTime = ((EventActivity) activity).getDateTime().getTime();
-                Long endEventTime = ((EventActivity) activity).getEndDateTime().getTime();
+                Long eventTime = activity.getDateTime().getTime();
+                Long endEventTime = activity.getEndDateTime().getTime();
                 return !(endEventTime < dateTime.getTime() || eventTime > endDateTime.getTime());
             } else {
                 return false; // should not happen

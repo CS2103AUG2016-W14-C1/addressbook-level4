@@ -15,6 +15,9 @@ import java.util.List;
 public class XmlAdaptedActivity {
 
     @XmlElement(required = true)
+    private ActivityType type;
+    
+    @XmlElement(required = true)
     private String name;
 
     @XmlElement(required = false)
@@ -26,8 +29,8 @@ public class XmlAdaptedActivity {
     @XmlElement(required = true)
     private boolean isCompleted;
     
-    @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    // @XmlElement
+    // private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * No-arg constructor for JAXB use.
@@ -41,14 +44,15 @@ public class XmlAdaptedActivity {
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
     public XmlAdaptedActivity(Activity source) {
+        type = source.getType();
         name = source.getName();
         isCompleted = source.getStatus().isCompleted();
         
-        if (source.getClass().equals(DeadlineActivity.class)) {
-            epochDateTime = ((DeadlineActivity)source).getDateTime().getTime();
-        } if (source.getClass().equals(EventActivity.class)) {
-            epochDateTime = ((EventActivity)source).getDateTime().getTime();
-            epochEndDateTime = ((EventActivity)source).getEndDateTime().getTime();
+        if (type.equals(ActivityType.DEADLINE)) {
+            epochDateTime = source.getDateTime().getTime();
+        } if (type.equals(ActivityType.EVENT)) {
+            epochDateTime = source.getDateTime().getTime();
+            epochEndDateTime = source.getEndDateTime().getTime();
         }
         // TODO: implement other required fields if necessary
 //        phone = source.getPhone().value;
@@ -65,11 +69,11 @@ public class XmlAdaptedActivity {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    public Activity toModelType() throws IllegalValueException {
-        final List<Tag> activityTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            activityTags.add(tag.toModelType());
-        }
+    public Activity toModelType() {
+//        final List<Tag> activityTags = new ArrayList<>();
+//        for (XmlAdaptedTag tag : tagged) {
+//            activityTags.add(tag.toModelType());
+//        }
         // TODO: implement for other fields if necessary
 //        final Name name = new Name(this.name);
 //        final Phone phone = new Phone(this.phone);
@@ -78,17 +82,15 @@ public class XmlAdaptedActivity {
 //        final UniqueTagList tags = new UniqueTagList(personTags);
         
         Activity newActivity;
-        if (epochDateTime != null && epochEndDateTime != null) {
-            newActivity = new EventActivity(this.name, epochDateTime, epochEndDateTime);
-        } else if(epochDateTime != null) {
-            newActivity = new DeadlineActivity(this.name, epochDateTime);    
+        if (type.equals(ActivityType.EVENT)) {
+            newActivity = new Activity(this.name, epochDateTime, epochEndDateTime);
+        } else if(type.equals(ActivityType.DEADLINE)) {
+            newActivity = new Activity(this.name, epochDateTime);    
         } else {
-            newActivity = new FloatingActivity(this.name);
+            newActivity = new Activity(this.name);
         }
-        
-        if (this.isCompleted) {
-        	newActivity.setStatus(true);
-        }
+    	newActivity.setStatus(this.isCompleted);
+    	
         return newActivity;
     }
 }

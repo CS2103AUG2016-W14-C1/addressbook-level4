@@ -24,13 +24,14 @@ public class ActivityBuilder {
         this.activity.setStatus(status);
         return this;
     }
-
-    public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
-        for (String tag: tags) {
-            activity.getTags().add(new Tag(tag));
-        }
-        return this;
-    }
+    
+    //TODO: remove if not using tags
+    //    public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
+    //        for (String tag: tags) {
+    //            activity.getTags().add(new Tag(tag));
+    //        }
+    //        return this;
+    //    }
 
     public TestActivity build() {
         return this.activity;

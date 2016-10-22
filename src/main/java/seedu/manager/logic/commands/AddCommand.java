@@ -34,9 +34,8 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name)
-            throws IllegalValueException {
-        this.toAdd = new FloatingActivity(name);
+    public AddCommand(String name) {
+        this.toAdd = new Activity(name);
     }
     
     /**
@@ -44,9 +43,8 @@ public class AddCommand extends Command {
      * 
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, String dateTime)
-            throws IllegalValueException {
-        this.toAdd = new DeadlineActivity(name, dateTime);
+    public AddCommand(String name, String dateTime) {
+        this.toAdd = new Activity(name, dateTime);
     }
 
     /**
@@ -56,7 +54,7 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name, String startDateTime, String endDateTime)
             throws IllegalValueException {
-        this.toAdd = new EventActivity(name, startDateTime, endDateTime);
+        this.toAdd = new Activity(name, startDateTime, endDateTime);
     }
     
     @Override

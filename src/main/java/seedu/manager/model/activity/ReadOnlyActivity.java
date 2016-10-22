@@ -7,7 +7,10 @@ package seedu.manager.model.activity;
 
 public interface ReadOnlyActivity {
     
+    ActivityType getType();
     String getName();
     Status getStatus();
+    AMDate getDateTime();
+    AMDate getEndDateTime();
     
 }

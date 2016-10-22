@@ -47,11 +47,11 @@ public class ActivityCard extends UiPart{
         id.setText(displayedIndex + ". ");
         dateTime.setText(""); // default
         endDateTime.setText(""); // default
-        if (activity.getClass().equals(DeadlineActivity.class)) {
-            dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));
-        } else if (activity.getClass().equals(EventActivity.class)) {
-            dateTime.setText(generateDateTimeString(((EventActivity)activity).getDateTime()));
-            endDateTime.setText(generateDateTimeString(((EventActivity)activity).getEndDateTime()));
+        if (activity.getType().equals(ActivityType.DEADLINE)) {
+            dateTime.setText(generateDateTimeString(activity.getDateTime()));
+        } else if (activity.getType().equals(ActivityType.EVENT)) {
+            dateTime.setText(generateDateTimeString(activity.getDateTime()));
+            endDateTime.setText(generateDateTimeString(activity.getEndDateTime()));
         }
     }
     

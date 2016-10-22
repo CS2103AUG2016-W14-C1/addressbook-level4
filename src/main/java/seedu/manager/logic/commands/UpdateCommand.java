@@ -3,12 +3,7 @@ package seedu.manager.logic.commands;
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.AMDate;
-import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.manager.model.activity.EventActivity;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
+import seedu.manager.model.activity.*;
 
 /**
  * Updates an activity in Remindaroo
@@ -29,42 +24,34 @@ public class UpdateCommand extends Command {
 	public String newEndDateTime;
 
 	/**
-	 * Constructor for floating tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name only
 	 */
-	public UpdateCommand(int targetIndex, String newName) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName) {
 		this.targetIndex = targetIndex;
 		this.newName = newName;
+		this.newDateTime = null;
+		this.newEndDateTime = null;
 	}
 	
 	/**
-	 * Constructor for deadline tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name and dateTime
 	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName, String dateTime) {
 		this(targetIndex, newName);
 		this.newDateTime = dateTime;
-		if (!checkStartBeforeEnd()) {
-			throw new IllegalValueException(EventActivity.MESSAGE_DATE_CONSTRAINTS);
-		}
 	}
 	
 	/**
-	 * Constructor for event tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name, dateTime and endDateTime
 	 */
 	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) throws IllegalValueException {
 		this(targetIndex, newName);
 		this.newDateTime = dateTime;
 		this.newEndDateTime = endDateTime;
-		System.out.println("Start: " + dateTime);
-		System.out.println("End: " + endDateTime);
-		if (!checkStartBeforeEnd()) {
-			throw new IllegalValueException(EventActivity.MESSAGE_DATE_CONSTRAINTS);
-		}
+		// TODO: Handle IllegalValueException in AMParser
+		if (new AMDate(this.newDateTime).getTime() > new AMDate(this.newEndDateTime).getTime()) {
+            throw new IllegalValueException(Activity.MESSAGE_DATE_CONSTRAINTS);
+        }
 	}
 	
 	@Override
@@ -79,48 +66,11 @@ public class UpdateCommand extends Command {
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
         try {
             model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
-        } catch (ActivityNotFoundException anfe) {
+        } catch (ActivityList.ActivityNotFoundException anfe) {
             assert false : "The target activity cannot be found";
-        } catch (IllegalValueException ive) {
-			assert false : ive.getMessage();
-		}
+        }
 
         return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }
-	
-	/**
-	 * This method is to ensure an EventActivity will have a start date < end date before constructing
-	 * the UpdateCommand
-	 */
-	private boolean checkStartBeforeEnd() {
-//		UnmodifiableObservableList<Activity> lastShownList = model.getFilteredActivityList();
-//        if (lastShownList.size() < targetIndex) {
-//        	return false;
-//        }
-//        Activity activityToUpdate = lastShownList.get(targetIndex - 1);
-        if (this.newDateTime == null || this.newEndDateTime == null) return true;
-        
-        AMDate dateTime = new AMDate(this.newDateTime);
-        AMDate endDateTime = new AMDate(this.newEndDateTime);
-        
-        // Parse the start date, if start date is not available get it from the current activity
-//        if (this.newDateTime == null) {
-//        	dateTime = ((EventActivity) activityToUpdate).getDateTime();
-//        } else {
-//        	dateTime = new AMDate(this.newDateTime);
-//        }
-        
-        // Parse the start date, if start date is not available get it from the current activity
-//        if (this.newEndDateTime == null) {
-//        	endDateTime = ((EventActivity) activityToUpdate).getEndDateTime();
-//        } else {
-//        	endDateTime = new AMDate(this.newEndDateTime);
-//        }
-        
-        if (dateTime.getTime() > endDateTime.getTime()) {
-        	return false;
-        }
-        return true;
-	}
 }
 

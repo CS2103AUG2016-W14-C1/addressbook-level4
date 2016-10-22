@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
+        <type>FLOATING</type>
         <name>Floating Task 1</name>
+        <isCompleted>false</isCompleted>
     </activity>
     <activity>
+        <type>FLOATING</type>
         <name>Floating Task 2</name>
+        <isCompleted>false</isCompleted>
     </activity>
     <activity>
+        <type>FLOATING</type>
         <name>Floating Task 3</name>
+        <isCompleted>false</isCompleted>
     </activity>
     <activity>
+        <type>FLOATING</type>
         <name>Floating Task 4</name>
+        <isCompleted>false</isCompleted>
     </activity>
     <activity>
+        <type>FLOATING</type>
         <name>Floating Task 5</name>
+        <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>

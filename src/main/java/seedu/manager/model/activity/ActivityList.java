@@ -48,27 +48,27 @@ public class ActivityList implements Iterable<Activity> {
      * @throws IllegalValueException if the dateTime and endDateTime are invalid
      */
     
-    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
+    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
     	assert toUpdate != null;
     	final boolean activityFound = internalList.contains(toUpdate);
     	if (activityFound) {
-    		try {
-		    	int toUpdateIndex = internalList.indexOf(toUpdate);
-		    	Activity toUpdateInList = internalList.get(toUpdateIndex);
-		    	// Update Activity name
-		    	if (newName != null && !newName.equals("")) toUpdateInList.setName(newName);
-		    	// Handle Deadline tasks
-		    	if (toUpdate instanceof DeadlineActivity) {
-		    		if (newDateTime != null) ((DeadlineActivity) toUpdateInList).setDateTime(newDateTime);
-		    	}
-		    	// Handle Event tasks
-		    	if (toUpdate instanceof EventActivity) {
-		    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdateInList).setDateTime(newDateTime);
-		    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) toUpdateInList).setEndDateTime(newEndDateTime);
-		    	}
-    		} catch (Exception e) {
-				throw new IllegalValueException(e.getMessage());
-			}
+	    	int toUpdateIndex = internalList.indexOf(toUpdate);
+	    	Activity toUpdateInList = internalList.get(toUpdateIndex);
+	    	// Update Activity name (if there is new name)
+	    	if (newName != null && !newName.equals("")) {
+	    	    toUpdateInList.setName(newName);
+	    	}
+	    	// Update task to event
+	    	if (newDateTime != null && newEndDateTime != null) {
+	    	    toUpdateInList.setDateTime(newDateTime);
+	    	    toUpdateInList.setEndDateTime(newEndDateTime);
+	    	    toUpdateInList.setType(ActivityType.EVENT);
+	    	// Update task to deadline
+		    } else if (newDateTime != null) {
+	    		toUpdateInList.setDateTime(newDateTime);
+	    		toUpdateInList.setType(ActivityType.DEADLINE);
+	    		toUpdateInList.setEndDateTime(null);
+	    	}
     	} else {
     		throw new ActivityNotFoundException();
     	}

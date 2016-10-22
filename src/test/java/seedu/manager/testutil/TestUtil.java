@@ -66,15 +66,15 @@ public class TestUtil {
     private static Activity[] getSampleActivityData() {
 //        try {
             return new Activity[]{
-                    new FloatingActivity("buy milk"),
-                    new FloatingActivity("buy vegetable"),
-                    new FloatingActivity("Submit Assignment 1"),
-                    new FloatingActivity("Assignment 2 deadline"),
-                    new FloatingActivity("CS2103T tutorial"),
-                    new FloatingActivity("CS2101 tutorial"),
-                    new FloatingActivity("World Cup"),
-                    new FloatingActivity("football tournament"),
-                    new FloatingActivity("Singing Competition")
+                    new Activity("buy milk"),
+                    new Activity("buy vegetable"),
+                    new Activity("Submit Assignment 1"),
+                    new Activity("Assignment 2 deadline"),
+                    new Activity("CS2103T tutorial"),
+                    new Activity("CS2101 tutorial"),
+                    new Activity("World Cup"),
+                    new Activity("football tournament"),
+                    new Activity("Singing Competition")
             };
 //        } catch (IllegalValueException e) {
 //            assert false;
