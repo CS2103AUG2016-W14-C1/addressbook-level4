@@ -1,5 +1,7 @@
 package seedu.manager.logic.commands;
 
+import static seedu.manager.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -19,7 +21,7 @@ public class StoreCommand extends Command {
     public static final String MESSAGE_STORE_FILE_SUCCESS = "Remindaroo data have been saved to %1$s";
     public static final String MESSAGE_STORE_FILE_FAIL= "An error has ocurred while saving";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Saves Remindaroo data to the specified storage file path. \n"
-             + "Example: " + COMMAND_WORD + " Users/Documents/Remindaroo";
+             + "Example: " + COMMAND_WORD + " Users/Documents/Remindaroo.xml";
 
     private final String dataFileLocation;
     
@@ -39,7 +41,7 @@ public class StoreCommand extends Command {
         	XmlSerializableActivityManager xmlAM = new XmlSerializableActivityManager(AM);
         	XmlFileStorage.saveDataToFile(newDataFile, xmlAM);
         } catch (IOException e) {
-        	return new CommandResult(e.getMessage());
+        	return new CommandResult(MESSAGE_STORE_FILE_FAIL);
         }
         
         Config currentConfig;
@@ -51,6 +53,6 @@ public class StoreCommand extends Command {
 			return new CommandResult(MESSAGE_STORE_FILE_FAIL);
 		}
       
-        return new CommandResult(String.format(MESSAGE_STORE_FILE_SUCCESS, dataFileLocation));
+        return new CommandResult(String.format(MESSAGE_STORE_FILE_SUCCESS, dataFileLocation.trim()));
     }
 }

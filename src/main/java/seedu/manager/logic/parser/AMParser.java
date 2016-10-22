@@ -461,7 +461,8 @@ public class AMParser {
     }
     
     private Command prepareStore(String args) {
-    	if (!args.equals("")) {
+    	assert args != null;
+    	if (!args.equals("") && args.endsWith(".xml")) {
     		try {
 				return new StoreCommand(args);
 			} catch (IllegalValueException e) {
