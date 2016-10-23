@@ -8,14 +8,16 @@ import seedu.manager.model.tag.UniqueTagList;
  */
 public class TestActivity implements ReadOnlyActivity {
 
+    private ActivityType type;
     private String name;
     private AMDate dateTime;
     private AMDate endDateTime;
     private Status status;
-    private UniqueTagList tags;
+//    private UniqueTagList tags;
 
     public TestActivity() {
-        tags = new UniqueTagList();
+//        tags = new UniqueTagList();
+        type = ActivityType.FLOATING; // default floating
         status = new Status();
     }
 
@@ -28,9 +30,9 @@ public class TestActivity implements ReadOnlyActivity {
         return name;
     }
 
-    public UniqueTagList getTags() {
-        return tags;
-    }
+//    public UniqueTagList getTags() {
+//        return tags;
+//    }
     
     @Override
     public String toString() {
@@ -52,15 +54,15 @@ public class TestActivity implements ReadOnlyActivity {
 
     @Override
     public Status getStatus() {
-        return this.getStatus();
+        return this.status;
     }
 
-    
+    @Override
     public AMDate getDateTime() {
         return dateTime;
     }
     
-    
+    @Override
     public AMDate getEndDateTime() {
         return endDateTime;
     }
@@ -73,5 +75,14 @@ public class TestActivity implements ReadOnlyActivity {
     
     public void setEndDateTime(String newEndDateTime) {
         this.dateTime.setAMDate(newEndDateTime);    
+    }
+
+    @Override
+    public ActivityType getType() {
+        return type;
+    }
+    
+    public void setType(ActivityType type) {
+        this.type = type;
     }
 }

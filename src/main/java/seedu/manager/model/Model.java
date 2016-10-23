@@ -26,7 +26,7 @@ public interface Model {
     
     /** Updates the given activity 
      * @throws IllegalValueException */
-    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException;
+    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException;
 
     /** Marks the given activity */
     void markActivity(Activity target) throws ActivityNotFoundException;

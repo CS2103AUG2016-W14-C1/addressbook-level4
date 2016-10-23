@@ -19,7 +19,8 @@ public class TypicalTestActivities {
             guitar = new ActivityBuilder().withName("Practice playing guitar").build();
             paint = new ActivityBuilder().withName("Paint room wall (blue)").build();
             movie =  new ActivityBuilder().withNameandStatus("Watch Lord of the Rings", false).build();
-            dog =  new ActivityBuilder().withNameandStatus("Walk the dog", true).build();
+            // TODO: set to true to test for mark when GUI is more stable
+            dog =  new ActivityBuilder().withNameandStatus("Walk the dog", false).build();
            
             
             // Manual activities
@@ -36,12 +37,12 @@ public class TypicalTestActivities {
     public static void loadActivityManagerWithSampleData(ActivityManager am) {
 
 //        try {
-            am.addActivity(new FloatingActivity(groceries));
-            am.addActivity(new FloatingActivity(reading));
-            am.addActivity(new FloatingActivity(guitar));
-            am.addActivity(new FloatingActivity(paint));
-            am.addActivity(new FloatingActivity(movie));
-            am.addActivity(new FloatingActivity(dog));
+            am.addActivity(new Activity(groceries));
+            am.addActivity(new Activity(reading));
+            am.addActivity(new Activity(guitar));
+            am.addActivity(new Activity(paint));
+            am.addActivity(new Activity(movie));
+            am.addActivity(new Activity(dog));
 //        } catch (UniquePersonList.DuplicatePersonException e) {
 //            assert false : "not possible";
 //        }

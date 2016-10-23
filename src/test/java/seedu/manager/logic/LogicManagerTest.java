@@ -163,11 +163,11 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_EventActivity_endDateEarlierThanStartDate() throws Exception {
+    public void execute_add_Activity_endDateEarlierThanStartDate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         assertCommandBehavior("add invalid event from " + helper.getReferenceDateString()
                               + " to day before " + helper.getReferenceDateString(),
-                EventActivity.MESSAGE_DATE_CONSTRAINTS);
+                Activity.MESSAGE_DATE_CONSTRAINTS);
     }
     
     @Test
@@ -184,7 +184,7 @@ public class LogicManagerTest {
     public void execute_add_parseKeywordsCorrectly() throws Exception {
         // able to add deadline activity with keywords (on/by) (without spaces)
         TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = new DeadlineActivity("Presentation Ruby", helper.getReferenceDate());
+        Activity toBeAdded = new Activity("Presentation Ruby", helper.getReferenceDateString());
         ActivityManager expectedAM = new ActivityManager();
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Presentation Ruby on " + helper.getReferenceDateString(),
@@ -194,7 +194,7 @@ public class LogicManagerTest {
         
         
         // able to add deadline activity with keywords (on/by) (with spaces)
-        toBeAdded = new DeadlineActivity("read Village by the Sea", helper.getReferenceDate());
+        toBeAdded = new Activity("read Village by the Sea", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add read Village by the Sea \"on\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
@@ -203,7 +203,7 @@ public class LogicManagerTest {
         
         
         // able to add deadline activity with keywords (on/by) (with spaces)
-        toBeAdded = new DeadlineActivity("learn Ruby on Rails", helper.getReferenceDate());
+        toBeAdded = new Activity("learn Ruby on Rails", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add learn Ruby on Rails \"by\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
@@ -212,7 +212,7 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (without spaces)
-        toBeAdded = new EventActivity("The fromance of tom and jerry", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add The fromance of tom and jerry from " + helper.getReferenceDateString() 
                               + " to " + helper.getReferenceDateString(),
@@ -222,7 +222,7 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Love from Paris", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Love from Paris \"from\" " + helper.getReferenceDateString() 
                               + " to " + helper.getReferenceDateString(),
@@ -232,7 +232,7 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Train to Busan", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Train to Busan from " + helper.getReferenceDateString() 
                               + " \"to\" " + helper.getReferenceDateString(),
@@ -242,7 +242,7 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Movie: from Jupiter to Mars", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
                               + " \"to\" " + helper.getReferenceDateString(),
@@ -361,17 +361,17 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_update_EventActivity_endDateEarlierThanStartDate() throws Exception {
+    public void execute_update_Activity_endDateEarlierThanStartDate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = new ActivityManager();
         
-        Activity dummyEvent = new EventActivity("Dummy", helper.getReferenceDate(), helper.getReferenceDate());
+        Activity dummyEvent = new Activity("Dummy", helper.getReferenceDateString(), helper.getReferenceDateString());
         model.addActivity(dummyEvent);
         expectedAM.addActivity(dummyEvent);
         
         assertCommandBehavior("update 1 newName from " + helper.getReferenceDateString()
                               + " to day before " + helper.getReferenceDateString(),
-                EventActivity.MESSAGE_DATE_CONSTRAINTS,
+                Activity.MESSAGE_DATE_CONSTRAINTS,
                 expectedAM,
                 expectedAM.getActivityList());
     }
@@ -400,10 +400,10 @@ public class LogicManagerTest {
         
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
-        Activity existingActivity = new FloatingActivity("bla bla bla");
+        Activity existingActivity = new Activity("bla bla bla");
         model.addActivity(existingActivity);
         
-        Activity newActivity = new FloatingActivity("bla");
+        Activity newActivity = new Activity("bla");
         expectedAM.addActivity(newActivity);
 
         assertCommandBehavior("update 1     bla",
@@ -414,10 +414,10 @@ public class LogicManagerTest {
         // setup expectations for deadline activity
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
-        Activity existingDeadline = new DeadlineActivity("deadline", helper.getReferenceDate());
+        Activity existingDeadline = new Activity("deadline", helper.getReferenceDateString());
         model.addActivity(existingDeadline);
         
-        Activity newDeadline = new DeadlineActivity("new deadline", helper.getReferenceDate());
+        Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
       
         assertCommandBehavior("update 1    new deadline    by    " + helper.getReferenceDateString(),
@@ -428,10 +428,10 @@ public class LogicManagerTest {
      // setup expectations for event activity
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
-        Activity existingEvent = new EventActivity("event", helper.getReferenceDate(), helper.getReferenceDate());
+        Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
         model.addActivity(existingEvent);
         
-        Activity newEvent = new EventActivity("new event", helper.getReferenceDate(), helper.getReferenceDate());
+        Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
       
         assertCommandBehavior("update 1    new event   from   " + helper.getReferenceDateString() + "   to   " + helper.getReferenceDateString(),
@@ -449,10 +449,10 @@ public class LogicManagerTest {
         // able to update deadline activity with keywords (on/by) (without spaces)
     	model.resetData(emptyAM);
     	expectedAM.resetData(emptyAM);
-    	Activity existingDeadline = new DeadlineActivity("Presentation", helper.getReferenceDateString());
+    	Activity existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
     	model.addActivity(existingDeadline);
         
-        Activity newDeadline = new DeadlineActivity("Presentation Ruby", helper.getReferenceDateString());
+        Activity newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
         
         assertCommandBehavior("update 1 Presentation Ruby on " + helper.getReferenceDateString(),
@@ -462,7 +462,7 @@ public class LogicManagerTest {
         
         // able to update deadline activity with keywords (on/by) (with spaces)
         expectedAM.resetData(emptyAM);
-        newDeadline = new DeadlineActivity("read Village by the Sea", helper.getReferenceDateString());
+        newDeadline = new Activity("read Village by the Sea", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
         assertCommandBehavior("update 1 read Village by the Sea \"on\" " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
@@ -472,10 +472,10 @@ public class LogicManagerTest {
         // able to update event activity with keywords (from/to) (without spaces)
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
-        Activity existingEvent = new EventActivity("Tom and jerry", helper.getReferenceDate(), helper.getReferenceDate());
+        Activity existingEvent = new Activity("Tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         model.addActivity(existingEvent);
         
-        Activity newEvent = new EventActivity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
+        Activity newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
        
         assertCommandBehavior("update 1 The fromance of tom and jerry from " + helper.getReferenceDateString() 
@@ -486,7 +486,7 @@ public class LogicManagerTest {
         
         // able to update event activity with keywords (from/to) (with spaces)
         expectedAM.resetData(emptyAM);
-        newEvent = new EventActivity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
+        newEvent = new Activity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
         
         assertCommandBehavior("update 1 Love from Paris \"from\" " + helper.getReferenceDateString() 
@@ -497,7 +497,7 @@ public class LogicManagerTest {
         
         // able to update event activity with keywords (from/to) (with spaces)
         expectedAM.resetData(emptyAM);
-        newEvent = new EventActivity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
+        newEvent = new Activity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
         
         assertCommandBehavior("update 1 Train to Busan from " + helper.getReferenceDateString() 
@@ -508,7 +508,7 @@ public class LogicManagerTest {
         
         // able to update event activity with keywords (from/to) (with spaces)
         expectedAM.resetData(emptyAM);
-        newEvent = new EventActivity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
+        newEvent = new Activity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
         
         assertCommandBehavior("update 1 Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
@@ -528,12 +528,12 @@ public class LogicManagerTest {
     public void execute_search_matchNameSuccess() throws Exception {
         // should match if only full search name is found in part of activity name, case insensitive
         TestDataHelper helper = new TestDataHelper();
-        Activity pTarget1 = new FloatingActivity("bla bla KEY bla");
-        Activity pTarget2 = new DeadlineActivity("bla KEY bla bceofeia", helper.getReferenceDate());
-        Activity pTarget3 = new EventActivity("bla key bla", helper.getReferenceDate(), helper.getReferenceDate());
-        Activity p1 = new FloatingActivity("KE Y");
-        Activity p2 = new DeadlineActivity("KEYKEYKEY sduauo", helper.getReferenceDate());
-        Activity p3 = new EventActivity("KEXY", helper.getReferenceDate(), helper.getReferenceDate());
+        Activity pTarget1 = new Activity("bla bla KEY bla");
+        Activity pTarget2 = new Activity("bla KEY bla bceofeia", helper.getReferenceDateString());
+        Activity pTarget3 = new Activity("bla key bla", helper.getReferenceDateString(), helper.getReferenceDateString());
+        Activity p1 = new Activity("KE Y");
+        Activity p2 = new Activity("KEYKEYKEY sduauo", helper.getReferenceDateString());
+        Activity p3 = new Activity("KEXY", helper.getReferenceDateString(), helper.getReferenceDateString());
 
         List<Activity> sixActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2, p3, pTarget3);
         ActivityManager expectedAB = helper.generateActivityManager(sixActivities);
@@ -549,11 +549,11 @@ public class LogicManagerTest {
     @Test
     public void execute_search_matchesIfWithinDateSuccess() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Activity pTarget1 = new DeadlineActivity("deadline", "today");
-        Activity pTarget2 = new EventActivity("event", "yesterday", "tomorow");
-        Activity p1 = new FloatingActivity("no match");
-        Activity p2 = new DeadlineActivity("deadline", "next week");
-        Activity p3 = new EventActivity("event", "next week", "2 week later");
+        Activity pTarget1 = new Activity("deadline", "today");
+        Activity pTarget2 = new Activity("event", "yesterday", "tomorow");
+        Activity p1 = new Activity("no match");
+        Activity p2 = new Activity("deadline", "next week");
+        Activity p3 = new Activity("event", "next week", "2 week later");
         
         List<Activity> activities = helper.generateActivityList(pTarget1, p1, pTarget2, p2, p3);
         ActivityManager expectedAB = helper.generateActivityManager(activities);
@@ -686,7 +686,7 @@ public class LogicManagerTest {
          * @param seed used to generate the activity data field values
          */
         Activity generateActivity(int seed) throws Exception {
-            return new FloatingActivity("Activity " + seed);
+            return new Activity("Activity " + seed);
         }
 
         /** Generates the correct add command based on the activity given */
