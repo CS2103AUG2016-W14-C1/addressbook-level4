@@ -645,6 +645,25 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
+    
+    @Test
+    public void execute_store_storeToCorrectLocation () throws Exception {
+    	String testDataFileLocation = "/data/RemindarooTest.xml";
+    	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
+    }
+
+    @Test
+    public void execute_store_incorrectExtension () throws Exception {
+    	String testDataFileLocation = "/data/RemindarooTest.txt";
+    	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+    }
+    
+    @Test
+    public void execute_store_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE);
+        assertCommandBehavior("store", expectedMessage);
+    }
+
 
     /**
      * A utility class to generate test data.

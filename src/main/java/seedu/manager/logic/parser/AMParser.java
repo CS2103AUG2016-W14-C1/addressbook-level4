@@ -73,11 +73,14 @@ public class AMParser {
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
+        case StoreCommand.COMMAND_WORD:
+            return prepareStore(arguments);
+        	
         case SearchCommand.COMMAND_WORD:
             return prepareSearch(arguments);
+            
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -226,7 +229,7 @@ public class AMParser {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            	String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
         return new DeleteCommand(index.get());
@@ -363,7 +366,7 @@ public class AMParser {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+				String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
         }
 
         return new MarkCommand(index.get());
@@ -381,7 +384,7 @@ public class AMParser {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
+				String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
         }
 
         return new UnmarkCommand(index.get());
@@ -398,7 +401,7 @@ public class AMParser {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+				String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }
 
         return new SelectCommand(index.get());
@@ -431,8 +434,7 @@ public class AMParser {
     private Command prepareSearch(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    SearchCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
         
         // keywords delimited by whitespace
@@ -456,5 +458,16 @@ public class AMParser {
         
         return searchCommand;
     }
-
+    
+    private Command prepareStore(String args) {
+    	assert args != null;
+    	if (!args.equals("") && args.endsWith(".xml")) {
+    		try {
+				return new StoreCommand(args);
+			} catch (IllegalValueException e) {
+				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+			}
+    	}
+    	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+    }
 }
