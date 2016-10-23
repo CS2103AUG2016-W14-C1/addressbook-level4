@@ -10,30 +10,29 @@ import static seedu.manager.logic.commands.DeleteCommand.MESSAGE_DELETE_ACTIVITY
 
 public class DeleteCommandTest extends ActivityManagerGuiTest {
 
-// TODO: fix this test
-//    @Test
-//    public void delete() {
-//
-//        //delete the first in the list
-//        TestActivity[] currentList = ta.getTypicalActivities();
-//        int targetIndex = 1;
-//        assertDeleteSuccess(targetIndex, currentList);
-//
-//        //delete the last in the list
-//        currentList = TestUtil.removeActivityFromList(currentList, targetIndex);
-//        targetIndex = currentList.length;
-//        assertDeleteSuccess(targetIndex, currentList);
-//
-//        //delete from the middle of the list
-//        currentList = TestUtil.removeActivityFromList(currentList, targetIndex);
-//        targetIndex = currentList.length/2;
-//        assertDeleteSuccess(targetIndex, currentList);
-//
-//        //invalid index
-//        commandBox.runCommand("delete " + currentList.length + 1);
-//        assertResultMessage("The activity index provided is invalid");
-//
-//    }
+    @Test
+    public void delete() {
+
+        //delete the first in the list
+        TestActivity[] currentList = ta.getTypicalActivities();
+        int targetIndex = 1;
+        assertDeleteSuccess(targetIndex, currentList);
+
+        //delete the last in the list
+        currentList = TestUtil.removeActivityFromList(currentList, targetIndex);
+        targetIndex = currentList.length;
+        assertDeleteSuccess(targetIndex, currentList);
+
+        //delete from the middle of the list
+        currentList = TestUtil.removeActivityFromList(currentList, targetIndex);
+        targetIndex = currentList.length/2;
+        assertDeleteSuccess(targetIndex, currentList);
+
+        //invalid index
+        commandBox.runCommand("delete " + currentList.length + 1);
+        assertResultMessage("The activity index provided is invalid");
+
+    }
 
     /**
      * Runs the delete command to delete the person at specified index and confirms the result is correct.

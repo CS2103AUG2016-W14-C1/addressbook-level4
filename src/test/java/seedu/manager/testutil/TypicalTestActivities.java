@@ -19,7 +19,8 @@ public class TypicalTestActivities {
             guitar = new ActivityBuilder().withName("Practice playing guitar").build();
             paint = new ActivityBuilder().withName("Paint room wall (blue)").build();
             movie =  new ActivityBuilder().withNameandStatus("Watch Lord of the Rings", false).build();
-            dog =  new ActivityBuilder().withNameandStatus("Walk the dog", true).build();
+            // TODO: set to true to test for mark when GUI is more stable
+            dog =  new ActivityBuilder().withNameandStatus("Walk the dog", false).build();
            
             
             // Manual activities
