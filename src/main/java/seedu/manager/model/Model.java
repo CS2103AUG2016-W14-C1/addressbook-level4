@@ -6,7 +6,6 @@ import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 /**
  * The API of the Model component.
@@ -19,20 +18,19 @@ public interface Model {
     ReadOnlyActivityManager getActivityManager();
 
     /** Deletes the given activity. */
-    void deleteActivity(Activity target) throws ActivityNotFoundException;
+    void deleteActivity(Activity target);
 
     /** Adds the given activity */
     void addActivity(Activity activity);
     
-    /** Updates the given activity 
-     * @throws IllegalValueException */
-    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException;
+    /** Updates the given activity */
+    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime);
 
     /** Marks the given activity */
-    void markActivity(Activity target) throws ActivityNotFoundException;
+    void markActivity(Activity target);
     
     /** Unmarks the given activity */
-    void unmarkActivity(Activity target) throws ActivityNotFoundException;
+    void unmarkActivity(Activity target);
 
     /** Returns the filtered activity list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();

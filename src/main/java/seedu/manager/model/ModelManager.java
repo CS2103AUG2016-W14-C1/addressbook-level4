@@ -9,7 +9,6 @@ import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 import java.util.Set;
 import java.util.function.Predicate;
@@ -72,7 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteActivity(Activity target) throws ActivityNotFoundException {
+    public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
         indicateActivityManagerChanged();
     }
@@ -85,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException {
+    public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
@@ -93,14 +92,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markActivity(Activity activity) throws ActivityNotFoundException {
+    public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
         updateFilteredActivityList();
         indicateActivityManagerChanged();
     }
 
     @Override
-    public synchronized void unmarkActivity(Activity activity) throws ActivityNotFoundException {
+    public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
         updateFilteredActivityList();
         indicateActivityManagerChanged();

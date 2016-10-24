@@ -2,15 +2,7 @@ package seedu.manager.logic.commands;
 
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.manager.model.activity.Status;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Updates an activity in Remindaroo
@@ -42,12 +34,9 @@ public class UnmarkCommand extends Command {
         }
 
         Activity activityToUnmark = lastShownList.get(targetIndex - 1);
-        try {
-            model.unmarkActivity(activityToUnmark);
-        } catch (ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        }
-        String stringStatus = activityToUnmark.getStatus().toString();
+        
+        model.unmarkActivity(activityToUnmark);
+
         return new CommandResult(String.format(MESSAGE_UNMARK_ACTIVITY_SUCCESS, activityToUnmark.getName()));
     }
 }

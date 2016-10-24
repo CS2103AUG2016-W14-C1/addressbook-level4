@@ -2,7 +2,6 @@ package seedu.manager.logic.commands;
 
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
 
 /**
@@ -44,14 +43,10 @@ public class UpdateCommand extends Command {
 	/**
 	 * Constructor for updating name, dateTime and endDateTime
 	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) {
 		this(targetIndex, newName);
 		this.newDateTime = dateTime;
 		this.newEndDateTime = endDateTime;
-		// TODO: Handle IllegalValueException in AMParser
-		if (new AMDate(this.newDateTime).getTime() > new AMDate(this.newEndDateTime).getTime()) {
-            throw new IllegalValueException(Activity.MESSAGE_DATE_CONSTRAINTS);
-        }
 	}
 	
 	@Override
@@ -64,11 +59,7 @@ public class UpdateCommand extends Command {
         }
 
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
-        try {
-            model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
-        } catch (ActivityList.ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        }
+        model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
 
         return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }

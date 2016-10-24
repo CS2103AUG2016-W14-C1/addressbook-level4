@@ -182,10 +182,19 @@ public class LogicManagerTest {
     
     @Test
     public void execute_add_parseKeywordsCorrectly() throws Exception {
-        // able to add deadline activity with keywords (on/by) (without spaces)
+        // able to add floating activity
+        // note that incomplete format of deadline / event will result in activity being considered as floating
         TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = new Activity("Presentation Ruby", helper.getReferenceDateString());
+        Activity toBeAdded = new Activity("Girl from next door");
         ActivityManager expectedAM = new ActivityManager();
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add Girl from next door",
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to add deadline activity with keywords (on/by) (without spaces)
+        toBeAdded = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Presentation Ruby on " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
@@ -378,7 +387,20 @@ public class LogicManagerTest {
     
     @Test
     public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("update");
+        String expectedMessage = MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> activityList = helper.generateActivityList(2);
+
+        // set AB state to 2 activities
+        model.resetData(new ActivityManager());
+        for (Activity p : activityList) {
+            model.addActivity(p);
+        }
+
+        assertCommandBehavior("update 3 blind mice", 
+                expectedMessage, 
+                model.getActivityManager(), 
+                activityList);
     }
     
     @Test
@@ -672,10 +694,6 @@ public class LogicManagerTest {
         
         String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
-        }
-        
-        AMDate getReferenceDate() throws Exception {
-            return new AMDate(getReferenceDateString());
         }
 
         /**

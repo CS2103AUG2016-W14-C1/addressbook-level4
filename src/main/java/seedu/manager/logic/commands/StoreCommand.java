@@ -27,7 +27,7 @@ public class StoreCommand extends Command {
 
     private final String dataFileLocation;
     
-    public StoreCommand(String dataFileLocation) throws IllegalValueException {
+    public StoreCommand(String dataFileLocation) {
     	assert dataFileLocation != null;
     	this.dataFileLocation = dataFileLocation;
     }

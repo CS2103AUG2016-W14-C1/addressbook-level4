@@ -1,6 +1,6 @@
 package seedu.manager.commons.util;
 
-import static seedu.manager.commons.core.Messages.MESSAGE_CANNOT_PARSE_TO_DATE;
+import static seedu.manager.commons.core.Messages.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -42,13 +42,43 @@ public class StringUtil {
     
     /**
      * Attempts to validate an AMDate type
-     * @param s Should be trimmed
+     * @param dateTime input string to be validated
+     * 
+     * @throws IllegalValueException if cannot parse to date
      */
     public static void validateAMDate(String dateTime) throws IllegalValueException {
         Parser parser = new Parser();
         List<DateGroup> groups = parser.parse(dateTime);
         if (groups.size() <= 0) {
             throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, dateTime));
+        }
+    }
+    
+    /**
+     * Attempts to validate two AMDate objects
+     * @param dateTime input string to be validated
+     * @param endDateTime input string to be validated
+     * 
+     * @throws IllegalValueException if cannot parse to date, or end earlier than start
+     */
+    public static void validateAMDate(String dateTime, String endDateTime) throws IllegalValueException {
+        Parser parser = new Parser();
+        
+        // check that both inputs can be parsed to Date
+        List<DateGroup> groups = parser.parse(dateTime);
+        if (groups.size() <= 0) {
+            throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, dateTime));
+        }
+        List<DateGroup> endGroups = parser.parse(endDateTime);
+        if (endGroups.size() <= 0) {
+            throw new IllegalValueException(String.format(MESSAGE_CANNOT_PARSE_TO_DATE, endDateTime));
+        }
+        
+        // check that end cannot be earlier than start
+        final long endTime = endGroups.get(0).getDates().get(0).getTime();
+        final long startTime = groups.get(0).getDates().get(0).getTime(); 
+        if (endTime < startTime) {
+            throw new IllegalValueException(MESSAGE_EVENT_DATE_CONSTRAINTS);
         }
     }
     
