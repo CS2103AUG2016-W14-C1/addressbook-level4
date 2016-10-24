@@ -11,9 +11,12 @@ import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
 import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -111,6 +114,26 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public UnmodifiableObservableList<Activity> getFilteredActivityList() {
         return new UnmodifiableObservableList<>(filteredActivities);
+    }
+    
+    @Override
+    public UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList() {
+    	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return activity.getType() != ActivityType.FLOATING;
+    		}
+		});
+    	return new UnmodifiableObservableList<>(deadlineAndEventList);
+    }
+    
+    @Override
+    public UnmodifiableObservableList<Activity> getFilteredFloatingActivityList() {
+    	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return activity.getType() == ActivityType.FLOATING;
+    		}
+		});
+    	return new UnmodifiableObservableList<>(deadlineAndEventList);
     }
 
     @Override
