@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<activitymanager>
+    <activity>
+        <name>test2</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <name>deadline 2</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+</activitymanager>

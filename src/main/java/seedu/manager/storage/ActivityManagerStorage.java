@@ -30,5 +30,10 @@ public interface ActivityManagerStorage {
      * @throws IOException if there was any problem writing to the file.
      */
     void saveActivityManager(ReadOnlyActivityManager addressBook) throws IOException;
-
+    
+    /**
+     * Sets new storage location for activity manager
+     * @param newFilePaths
+     */
+    void setActivityManagerFilePath(String newFilePaths);
 }
