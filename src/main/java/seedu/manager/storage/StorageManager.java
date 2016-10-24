@@ -7,6 +7,7 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.storage.ChangeStorageFileEvent;
 import seedu.manager.commons.events.storage.DataSavingExceptionEvent;
+import seedu.manager.commons.events.ui.ChangeStorageFileDisplayEvent;
 import seedu.manager.commons.exceptions.DataConversionException;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.model.UserPrefs;
@@ -88,5 +89,6 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleStorageFileChangedEvent(ChangeStorageFileEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event, "Data storage file location changed"));
     	setActivityManagerFilePath(event.file);
+    	raise(new ChangeStorageFileDisplayEvent(event.file));
     }
 }
