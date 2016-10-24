@@ -1,7 +1,5 @@
 package seedu.manager.model.activity;
 
-import seedu.manager.commons.exceptions.IllegalValueException;
-
 /**
  *  Class for all types of activity in Remindaroo.
  */
@@ -51,15 +49,11 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     /**
      * Constructor which gets start and end dateTime in natural English from user input
      */
-    public Activity(String name, String newStartDateTime, String newEndDateTime) throws IllegalValueException {
+    public Activity(String name, String newStartDateTime, String newEndDateTime) {
         this(name);
         this.type = ActivityType.EVENT;
         this.dateTime = new AMDate(newStartDateTime);
         this.endDateTime = new AMDate(newEndDateTime);
-        // TODO: Handle IllegalValueException in AMParser
-        if (this.dateTime.getTime() > this.endDateTime.getTime()) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
     }
     
     /**
