@@ -3,7 +3,6 @@ package seedu.manager.logic.commands;
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 /**
  * Deletes a activity identified using it's last displayed index from the address book.
@@ -37,12 +36,8 @@ public class DeleteCommand extends Command {
         }
 
         Activity activityToDelete = lastShownList.get(targetIndex - 1);
-
-        try {
-            model.deleteActivity(activityToDelete);
-        } catch (ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        }
+        
+        model.deleteActivity(activityToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, activityToDelete.getName()));
     }

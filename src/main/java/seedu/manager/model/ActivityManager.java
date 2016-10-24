@@ -102,38 +102,20 @@ public class ActivityManager implements ReadOnlyActivityManager {
 //        activity.setTags(new UniqueTagList(commonTagReferences));
 //    }
 
-    public boolean removeActivity(Activity key) throws ActivityList.ActivityNotFoundException {
-        if (activities.remove(key)) {
-            return true;
-        } else {
-            throw new ActivityList.ActivityNotFoundException();
-        }
+    public void removeActivity(Activity key) {
+        activities.remove(key);
     }
 
-    public boolean updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) throws ActivityList.ActivityNotFoundException {
-    	if (activities.update(key, newName, newDateTime, newEndDateTime)) {
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
+    public void updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) {
+    	activities.update(key, newName, newDateTime, newEndDateTime);
     }
 
-    public boolean markActivity(Activity key) throws ActivityList.ActivityNotFoundException {
-    	if (activities.mark(key)) {
-    		key.setStatus(true);
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
+    public void markActivity(Activity key) {
+    	activities.mark(key);
     }
     
-    public boolean unmarkActivity(Activity key) throws ActivityList.ActivityNotFoundException {
-    	if (activities.mark(key)) {
-    		key.setStatus(false);
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
+    public void unmarkActivity(Activity key) {
+    	activities.unmark(key);
     }
 
     

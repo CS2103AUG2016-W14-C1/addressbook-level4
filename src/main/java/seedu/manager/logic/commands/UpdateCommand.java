@@ -59,11 +59,7 @@ public class UpdateCommand extends Command {
         }
 
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
-        try {
-            model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
-        } catch (ActivityList.ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        }
+        model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
 
         return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }

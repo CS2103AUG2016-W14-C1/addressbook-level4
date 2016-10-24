@@ -695,10 +695,6 @@ public class LogicManagerTest {
         String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
         }
-        
-        AMDate getReferenceDate() throws Exception {
-            return new AMDate(getReferenceDateString());
-        }
 
         /**
          * Generates a valid activity using the given seed.

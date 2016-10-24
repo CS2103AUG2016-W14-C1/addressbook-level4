@@ -146,15 +146,16 @@ public class AMParser {
      * Extracts the new person's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
-    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-        // no tags
-        if (tagArguments.isEmpty()) {
-            return Collections.emptySet();
-        }
-        // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
-        return new HashSet<>(tagStrings);
-    }
+    // TODO: remove if tags not used in the end
+//    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
+//        // no tags
+//        if (tagArguments.isEmpty()) {
+//            return Collections.emptySet();
+//        }
+//        // replace first delimiter prefix, then split
+//        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
+//        return new HashSet<>(tagStrings);
+//    }
 
     /**
      * Parses arguments in the context of the delete activity command.
@@ -337,11 +338,7 @@ public class AMParser {
     private Command prepareStore(String args) {
     	assert args != null;
     	if (!args.equals("") && args.endsWith(".xml")) {
-    		try {
-				return new StoreCommand(args);
-			} catch (IllegalValueException e) {
-				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
-			}
+			return new StoreCommand(args);
     	}
     	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
