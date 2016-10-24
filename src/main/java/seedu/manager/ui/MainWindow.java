@@ -113,8 +113,8 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
-        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredActivitiesList());
-        floatingActivityListPanel = ActivityListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredActivitiesList());
+        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList());
+        floatingActivityListPanel = ActivityListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getActivityManagerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
