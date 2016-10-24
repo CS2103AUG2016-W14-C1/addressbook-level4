@@ -32,8 +32,14 @@ public interface Model {
     /** Unmarks the given activity */
     void unmarkActivity(Activity target);
 
-    /** Returns the filtered activity list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    /** Returns the filtered activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
+    
+    /** Returns the filtered deadline and event list as an {@code UnmodifiableObservableList<Activity>} */
+    UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList();
+    
+    /** Returns the filtered floating activity list as an {@code UnmodifiableObservableList<Activity>} */
+    UnmodifiableObservableList<Activity> getFilteredFloatingActivityList();
 
     /** Updates the filter of the filtered activity list to show all persons */
     void updateFilteredListToShowAll();
