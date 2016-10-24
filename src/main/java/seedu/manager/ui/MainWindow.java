@@ -113,8 +113,8 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
-        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList());
-        floatingActivityListPanel = ActivityListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList());
+        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
+        floatingActivityListPanel = ActivityListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getActivityManagerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -200,7 +200,7 @@ public class MainWindow extends UiPart {
     }
 
     public void loadActivityPage(Activity activity) {
-        browserPanel.loadPersonPage(activity);
+//        browserPanel.loadPersonPage(activity);
     }
 
     public void releaseResources() {
