@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
+import seedu.manager.commons.events.storage.ChangeStorageFileEvent;
 import seedu.manager.commons.events.storage.DataSavingExceptionEvent;
 import seedu.manager.commons.exceptions.DataConversionException;
 import seedu.manager.model.ReadOnlyActivityManager;
@@ -36,4 +37,6 @@ public interface Storage extends ActivityManagerStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleActivityManagerChangedEvent(ActivityManagerChangedEvent abce);
+    
+    void handleStorageFileChangedEvent(ChangeStorageFileEvent event);
 }

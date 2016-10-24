@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 import seedu.manager.commons.core.Config;
+import seedu.manager.commons.core.EventsCenter;
+import seedu.manager.commons.events.storage.ChangeStorageFileEvent;
 import seedu.manager.commons.exceptions.DataConversionException;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.ConfigUtil;
@@ -52,7 +54,8 @@ public class StoreCommand extends Command {
         } catch (Exception e) {
 			return new CommandResult(MESSAGE_STORE_FILE_FAIL);
 		}
-      
+        
+        EventsCenter.getInstance().post(new ChangeStorageFileEvent(dataFileLocation));
         return new CommandResult(String.format(MESSAGE_STORE_FILE_SUCCESS, dataFileLocation.trim()));
     }
 }
