@@ -76,15 +76,16 @@ public class AddCommand extends Command {
         // add recurring
         if (this.toAddList != null) {
             String addName = null;
-            for (Activity add : this.toAddList) {
+            for (int i = 0; i < this.toAddList.size(); i++) {
+                Activity add = this.toAddList.getInternalList().get(i);
                 addName = add.getName();
-                model.addActivity(add);
+                model.addActivity(add, i == this.toAddList.size() - 1);
             }
             return new CommandResult(String.format(MESSAGE_RECUR_SUCCESS, addName));
         // add normal
         } else {
             assert toAdd != null;
-            model.addActivity(toAdd);
+            model.addActivity(toAdd, true);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
         }
     }
