@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<activitymanager>
+    <activity>
+        <type>EVENT</type>
+        <name>event</name>
+        <epochDateTime>1477045744671</epochDateTime>
+        <epochEndDateTime>1477132144672</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>polar</name>
+        <epochDateTime>1477048269062</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>blah</name>
+        <epochDateTime>1477048321240</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>qw</name>
+        <epochDateTime>1477219586155</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>hello</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>qwe</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>balh</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+</activitymanager>

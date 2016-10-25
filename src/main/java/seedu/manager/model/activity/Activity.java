@@ -44,6 +44,16 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         this.dateTime = new AMDate(newEpochDateTime);
     }
     
+    /**
+     * Constructor which gets dateTime, offset and unit for recurrence
+     */
+    public Activity(String name, String newDateTime, int offset, String unit) {
+        this(name);
+        this.type = ActivityType.DEADLINE;
+        this.dateTime = new AMDate(newDateTime);
+        this.dateTime.addOffset(offset, unit);
+    }
+    
     // Event activity constructor
     
     /**
@@ -64,6 +74,18 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         this.type = ActivityType.EVENT;
         this.dateTime = new AMDate(newEpochStartDateTime);
         this.endDateTime = new AMDate(newEpochEndDateTime);
+    }
+    
+    /**
+     * Constructor which gets start, end dateTime, offset and unit for recurrence
+     */
+    public Activity(String name, String newStartDateTime, String newEndDateTime, int offset, String unit) {
+        this(name);
+        this.type = ActivityType.EVENT;
+        this.dateTime = new AMDate(newStartDateTime);
+        this.dateTime.addOffset(offset, unit);
+        this.endDateTime = new AMDate(newEndDateTime);
+        this.endDateTime.addOffset(offset, unit);
     }
     
     // Wrapper constructor for ReadOnlyActivity

@@ -13,7 +13,7 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.storage.DataSavingExceptionEvent;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
-import seedu.manager.commons.events.ui.FloatingTaskPanelUpdateEvent;
+import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.commons.util.StringUtil;
@@ -133,9 +133,10 @@ public class UiManager extends ComponentManager implements Ui {
     }
     
     @Subscribe
-    private void handleFloatingTaskPanelUpdateEvent(FloatingTaskPanelUpdateEvent event) {
+    private void handleActivityListPanelUpdateEvent(ActivityListPanelUpdateEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    	mainWindow.getFloatingActivityListPanel().updateFloatingTaskPanel(logic.getFilteredDeadlineAndEventList().size());
+    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
+    	mainWindow.getActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList(), 0);
     }
 
 }

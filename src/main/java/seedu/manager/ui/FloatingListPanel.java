@@ -92,7 +92,7 @@ public class FloatingListPanel extends UiPart{
         });
     }
     
-    public void updateFloatingTaskPanel(int indexOffset) {
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
     	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     

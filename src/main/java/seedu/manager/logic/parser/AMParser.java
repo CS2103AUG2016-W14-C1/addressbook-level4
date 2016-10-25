@@ -2,7 +2,7 @@ package seedu.manager.logic.parser;
 
 import static seedu.manager.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.manager.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.manager.commons.core.Messages.MESSAGE_CANNOT_PARSE_TO_DATE;
+import static seedu.manager.commons.core.Messages.MESSAGE_RECUR_NOT_POSITIVE;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -27,14 +27,24 @@ public class AMParser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
     
+    private static final Pattern EVENT_RECURRING_ARGS_FORMAT =
+            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+) ((\"?)for\\11) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
+                    Pattern.CASE_INSENSITIVE);
+    
     private static final Pattern EVENT_ARGS_FORMAT =
-            Pattern.compile("(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)");
+            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)$",
+                    Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern DEADLINE_RECURRING_ARGS_FORMAT =
+            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+) ((\"?)for\\7) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
+                    Pattern.CASE_INSENSITIVE);
     
     private static final Pattern DEADLINE_ARGS_FORMAT =
-            Pattern.compile("(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+)");
+            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+)$", 
+                    Pattern.CASE_INSENSITIVE);
     
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<name>[^/]+)"); // variable number of tags
+            Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
 
     /**
      * Various token counts
@@ -73,6 +83,9 @@ public class AMParser {
         case UpdateCommand.COMMAND_WORD:
             return prepareUpdate(arguments);
             
+        case UndoCommand.COMMAND_WORD:
+            return prepareUndo(arguments);
+            
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
             
@@ -110,12 +123,25 @@ public class AMParser {
      */
     private Command prepareAdd(String args){
         // compare with different activity types format and return AddCommand accordingly
+        final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
         final Matcher eventMatcher = EVENT_ARGS_FORMAT.matcher(args.trim());
+        final Matcher deadlineRecurringMatcher = DEADLINE_RECURRING_ARGS_FORMAT.matcher(args.trim());
         final Matcher deadlineMatcher = DEADLINE_ARGS_FORMAT.matcher(args.trim());
         final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(args.trim());
         
         try {
-            if (eventMatcher.matches()) {
+            if (eventRecurringMatcher.matches()) {
+                final String eventName = eventRecurringMatcher.group("name").trim();
+                final String eventDate = eventRecurringMatcher.group("date").trim();
+                final String eventEndDate = eventRecurringMatcher.group("endDate").trim();
+                final int eventRecurNumber = Integer.parseInt(eventRecurringMatcher.group("num").trim());
+                final String eventRecurUnit = eventRecurringMatcher.group("unit").trim();
+                
+                StringUtil.validateAMDate(eventDate, eventEndDate);
+                validateRecurNumber(eventRecurNumber);
+                
+                return new AddCommand(eventName, eventDate, eventEndDate, eventRecurNumber, eventRecurUnit);
+            } else if (eventMatcher.matches()) {
                 final String eventName = eventMatcher.group("name").trim();
                 final String eventDate = eventMatcher.group("date").trim();
                 final String eventEndDate = eventMatcher.group("endDate").trim();
@@ -123,6 +149,16 @@ public class AMParser {
                 StringUtil.validateAMDate(eventDate, eventEndDate);
                 
                 return new AddCommand(eventName, eventDate, eventEndDate);
+            } else if (deadlineRecurringMatcher.matches()) {
+                final String deadlineName = deadlineRecurringMatcher.group("name").trim();
+                final String deadlineDate = deadlineRecurringMatcher.group("date").trim();
+                final int deadlineRecurNumber = Integer.parseInt(deadlineRecurringMatcher.group("num").trim());
+                final String deadlineRecurUnit = deadlineRecurringMatcher.group("unit").trim();
+                
+                StringUtil.validateAMDate(deadlineDate);
+                validateRecurNumber(deadlineRecurNumber);
+                
+                return new AddCommand(deadlineName, deadlineDate, deadlineRecurNumber, deadlineRecurUnit);
             } else if (deadlineMatcher.matches()) {
                 final String deadlineName = deadlineMatcher.group("name").trim();
                 final String deadlineDate = deadlineMatcher.group("date").trim();
@@ -139,6 +175,12 @@ public class AMParser {
             }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
+        }
+    }
+
+    private void validateRecurNumber(int num) throws IllegalValueException {
+        if (num <= 0) {
+            throw new IllegalValueException(MESSAGE_RECUR_NOT_POSITIVE);
         }
     }
 
@@ -266,7 +308,23 @@ public class AMParser {
         return new UnmarkCommand(index.get());
     }
     
-
+    /**
+     * Parses arguments in the context of the undo command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareUndo(String args) {
+        // Validate index format
+        Optional<Integer> index = parseIndex(args);
+        if(index.isPresent()){
+            return new UndoCommand(index.get());
+        } else {
+            return new UndoCommand();
+        }
+    }
+    
     /**
      * Parses arguments in the context of the select activity command.
      *

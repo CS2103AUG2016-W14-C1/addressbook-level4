@@ -31,6 +31,12 @@ public interface Model {
     
     /** Unmarks the given activity */
     void unmarkActivity(Activity target);
+    
+    /** Undo up to n commands */
+    void undoCommand(int offset);
+    
+    /** Get index of current referenced history */
+    int getHistoryIndex();
 
     /** Returns the filtered activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
