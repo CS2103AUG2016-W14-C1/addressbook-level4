@@ -62,7 +62,6 @@ public abstract class ActivityManagerGuiTest {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
             activityListPanel = mainGui.getActivityListPanel();
-            floatingActivityListPanel = mainGui.getFloatingActivityListPanel();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
             this.stage = stage;
