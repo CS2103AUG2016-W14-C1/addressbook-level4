@@ -31,7 +31,7 @@ public class MainWindow extends UiPart {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private ActivityListPanel activityListPanel;
-    private ActivityListPanel floatingActivityListPanel;
+    private FloatingListPanel floatingActivityListPanel;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -114,7 +114,7 @@ public class MainWindow extends UiPart {
     void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
         activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
-        floatingActivityListPanel = ActivityListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
+        floatingActivityListPanel = FloatingListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getActivityManagerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -195,7 +195,7 @@ public class MainWindow extends UiPart {
         return this.activityListPanel;
     }
     
-    public ActivityListPanel getFloatingActivityListPanel() {
+    public FloatingListPanel getFloatingActivityListPanel() {
     	return this.floatingActivityListPanel;
     }
 
