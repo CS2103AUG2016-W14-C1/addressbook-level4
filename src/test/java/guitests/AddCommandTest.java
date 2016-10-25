@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AddCommandTest extends ActivityManagerGuiTest {
 
-    /*@Test
+    @Test
     public void add() {
         //add one activity
         TestActivity[] currentList = ta.getTypicalActivities();
@@ -25,12 +25,6 @@ public class AddCommandTest extends ActivityManagerGuiTest {
         assertAddSuccess(activityToAdd, currentList);
         currentList = TestUtil.addActivitiesToList(currentList, activityToAdd);
 
-        //add duplicate activity
-        // TODO: Re-implement only if duplicate entries are not allowed
-        // commandBox.runCommand(ta.groceries.getAddCommand());
-        // assertResultMessage(AddCommand.MESSAGE_DUPLICATE_ACTIVITY);
-        // assertTrue(activityListPanel.isListMatching(currentList));
-
         //add to empty list
         commandBox.runCommand("clear");
         assertAddSuccess(ta.groceries);
@@ -39,7 +33,7 @@ public class AddCommandTest extends ActivityManagerGuiTest {
         //invalid command
         commandBox.runCommand("adds Johnny");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
-    }*/
+    }
 
     private void assertAddSuccess(TestActivity activityToAdd, TestActivity... currentList) {
         commandBox.runCommand(activityToAdd.getAddCommand());
@@ -50,6 +44,7 @@ public class AddCommandTest extends ActivityManagerGuiTest {
 
         //confirm the list now contains all previous activities plus the new activities
         TestActivity[] expectedList = TestUtil.addActivitiesToList(currentList, activityToAdd);
+        // TODO: check that panel list matches exactly
         assertTrue(floatingActivityListPanel.isListMatching(expectedList));
     }
 

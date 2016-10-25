@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ClearCommandTest extends ActivityManagerGuiTest {
 
-    /*@Test
+    @Test
     public void clear() {
 
         //verify a non-empty list can be cleared
@@ -20,7 +20,7 @@ public class ClearCommandTest extends ActivityManagerGuiTest {
         assertListSize(floatingActivityListPanel.getNumberOfActivities(), 0);
         //verify clear command works when the list is empty
         assertClearCommandSuccess();
-    }*/
+    }
 
     private void assertClearCommandSuccess() {
         commandBox.runCommand("clear");

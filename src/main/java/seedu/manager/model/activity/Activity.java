@@ -186,8 +186,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public int compareTo(Activity other) {
         // Check for floating tasks
         if (this.type.equals(ActivityType.FLOATING) && other.type.equals(ActivityType.FLOATING)) {
-            // Sort by alphabetical order
-            return this.getName().compareTo(other.getName());
+            return 0;
         } else if (other.type.equals(ActivityType.FLOATING)) {
             return -1;
         } else if (this.type.equals(ActivityType.FLOATING)) {

@@ -144,11 +144,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
         managerHistory.add(savedAM);
         historyIndex++;
-        System.out.print(historyIndex);
-        for (Activity act : filteredActivities) {
-            System.out.print(" " + act.getName());
-        }
-        System.out.println();
     }
     
     public int getHistoryIndex() {
@@ -160,11 +155,6 @@ public class ModelManager extends ComponentManager implements Model {
         historyIndex -= offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
         filteredActivities = new FilteredList<>(activityManager.getActivities());
-        System.out.print(historyIndex);
-        for (Activity act : filteredActivities) {
-            System.out.print(" " + act.getName());
-        }
-        System.out.println();
         updateFilteredListToShowAll();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
