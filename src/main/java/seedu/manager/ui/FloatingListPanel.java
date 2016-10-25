@@ -14,25 +14,26 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
+import seedu.manager.ui.ActivityListPanel.ActivityListViewCell;
 
 import java.util.logging.Logger;
 
 /**
  * Panel containing the list of persons.
  */
-public class ActivityListPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(ActivityListPanel.class);
-    private static final String FXML = "ActivityListPanel.fxml";
+public class FloatingListPanel extends UiPart{
+    private final Logger logger = LogsCenter.getLogger(FloatingListPanel.class);
+    private static final String FXML = "FloatingListPanel.fxml";
     private VBox panel;
     private AnchorPane placeHolderPane;
 
     @FXML
-    private ListView<Activity> activityListView;
+    private ListView<Activity> floatingListView;
 
-    public ActivityListPanel() {
+    public FloatingListPanel() {
         super();
     }
-
+    
     @Override
     public void setNode(Node node) {
         panel = (VBox) node;
@@ -47,34 +48,34 @@ public class ActivityListPanel extends UiPart {
     public void setPlaceholder(AnchorPane pane) {
         this.placeHolderPane = pane;
     }
-
-    public static ActivityListPanel load(Stage primaryStage, AnchorPane activityListPlaceholder,
-                                       ObservableList<Activity> observableList, int indexOffset) {
-        ActivityListPanel activityListPanel =
-                UiPartLoader.loadUiPart(primaryStage, activityListPlaceholder, new ActivityListPanel());
-        activityListPanel.configure(observableList, indexOffset);
-        return activityListPanel;
-    }
-
+    
+    public static FloatingListPanel load(Stage primaryStage, AnchorPane activityListPlaceholder,
+    									ObservableList<Activity> observableList, int indexOffset) {
+		FloatingListPanel activityListPanel =
+				UiPartLoader.loadUiPart(primaryStage, activityListPlaceholder, new FloatingListPanel());
+		activityListPanel.configure(observableList, indexOffset);
+		return activityListPanel;
+	}
+    
     private void configure(ObservableList<Activity> observableList, int indexOffset) {
         setConnections(observableList, indexOffset);
         addToPlaceholder();
     }
-
-    private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
-        activityListView.setItems(observableList);
-        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-        setEventHandlerForSelectionChangeEvent();
-        setEventHandlerForUpdateEvent();
-    }
-
+    
     private void addToPlaceholder() {
         SplitPane.setResizableWithParent(placeHolderPane, false);
         placeHolderPane.getChildren().add(panel);
     }
 
+    private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
+        floatingListView.setItems(observableList);
+        floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+        setEventHandlerForSelectionChangeEvent();
+        setEventHandlerForUpdateEvent();
+    }
+    
     private void setEventHandlerForSelectionChangeEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    	floatingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                 raise(new ActivityPanelSelectionChangedEvent(newValue));
@@ -83,7 +84,7 @@ public class ActivityListPanel extends UiPart {
     }
 
     private void setEventHandlerForUpdateEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    	floatingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 logger.fine("Activity has been updated to : '" + newValue + "'");
                 raise(new ActivityPanelUpdateEvent(newValue));
@@ -92,21 +93,21 @@ public class ActivityListPanel extends UiPart {
     }
     
     public void updateFloatingTaskPanel(int indexOffset) {
-    	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
     public void updateActivityCard(Activity newActivity, int indexOffset) {
         // Refresh activity card cells to update GUI
-        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
     public void scrollTo(int index) {
         Platform.runLater(() -> {
-            activityListView.scrollTo(index);
-            activityListView.getSelectionModel().clearAndSelect(index);
+        	floatingListView.scrollTo(index);
+        	floatingListView.getSelectionModel().clearAndSelect(index);
         });
     }
-
+    
     class ActivityListViewCell extends ListCell<Activity> {
     	private int indexOffset;
 
@@ -126,5 +127,5 @@ public class ActivityListPanel extends UiPart {
             }
         }
     }
-
 }
+
