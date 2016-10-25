@@ -92,9 +92,17 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public Activity(ReadOnlyActivity source) {
         this.type = source.getType();
         this.name = source.getName();
-        this.status = source.getStatus();
-        this.dateTime = source.getDateTime();
-        this.endDateTime = source.getDateTime();
+        this.status = new Status(source.getStatus());
+        if (source.getDateTime() != null) {
+            this.dateTime = new AMDate(source.getDateTime().getTime());
+        } else {
+            this.dateTime = null;
+        }
+        if (source.getEndDateTime() != null) {
+            this.endDateTime = new AMDate(source.getEndDateTime().getTime());
+        } else {
+            this.endDateTime = null;
+        }
     }
 	
     @Override
@@ -178,7 +186,8 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public int compareTo(Activity other) {
         // Check for floating tasks
         if (this.type.equals(ActivityType.FLOATING) && other.type.equals(ActivityType.FLOATING)) {
-            return 0;
+            // Sort by alphabetical order
+            return this.getName().compareTo(other.getName());
         } else if (other.type.equals(ActivityType.FLOATING)) {
             return -1;
         } else if (this.type.equals(ActivityType.FLOATING)) {

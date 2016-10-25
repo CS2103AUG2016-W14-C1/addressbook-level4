@@ -21,7 +21,7 @@ public interface Model {
     void deleteActivity(Activity target);
 
     /** Adds the given activity */
-    void addActivity(Activity activity);
+    void addActivity(Activity activity, boolean isLastRecurring);
     
     /** Updates the given activity */
     void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime);

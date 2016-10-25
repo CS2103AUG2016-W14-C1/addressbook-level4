@@ -155,9 +155,9 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addActivity(helper.generateActivity(1));
-        model.addActivity(helper.generateActivity(2));
-        model.addActivity(helper.generateActivity(3));
+        model.addActivity(helper.generateActivity(1), false);
+        model.addActivity(helper.generateActivity(2), false);
+        model.addActivity(helper.generateActivity(3), false);
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new ActivityManager(), Collections.emptyList());
     }
@@ -355,10 +355,10 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> activityList = helper.generateActivityList(2);
 
-        // set AB state to 2 activities
+        // set AM state to 2 activities
         model.resetData(new ActivityManager());
         for (Activity p : activityList) {
-            model.addActivity(p);
+            model.addActivity(p, false);
         }
 
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getActivityManager(), activityList);
@@ -431,7 +431,7 @@ public class LogicManagerTest {
         ActivityManager expectedAM = new ActivityManager();
         
         Activity dummyEvent = new Activity("Dummy", helper.getReferenceDateString(), helper.getReferenceDateString());
-        model.addActivity(dummyEvent);
+        model.addActivity(dummyEvent, false);
         expectedAM.addActivity(dummyEvent);
         
         assertCommandBehavior("update 1 newName from " + helper.getReferenceDateString()
@@ -447,10 +447,10 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> activityList = helper.generateActivityList(2);
 
-        // set AB state to 2 activities
+        // set AM state to 2 activities
         model.resetData(new ActivityManager());
         for (Activity p : activityList) {
-            model.addActivity(p);
+            model.addActivity(p, false);
         }
 
         assertCommandBehavior("update 3 blind mice", 
@@ -479,7 +479,7 @@ public class LogicManagerTest {
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
         Activity existingActivity = new Activity("bla bla bla");
-        model.addActivity(existingActivity);
+        model.addActivity(existingActivity, false);
         
         Activity newActivity = new Activity("bla");
         expectedAM.addActivity(newActivity);
@@ -493,7 +493,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingDeadline = new Activity("deadline", helper.getReferenceDateString());
-        model.addActivity(existingDeadline);
+        model.addActivity(existingDeadline, false);
         
         Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
@@ -507,7 +507,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
-        model.addActivity(existingEvent);
+        model.addActivity(existingEvent, false);
         
         Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
@@ -528,7 +528,7 @@ public class LogicManagerTest {
     	model.resetData(emptyAM);
     	expectedAM.resetData(emptyAM);
     	Activity existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
-    	model.addActivity(existingDeadline);
+    	model.addActivity(existingDeadline, false);
         
         Activity newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
@@ -551,7 +551,7 @@ public class LogicManagerTest {
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
         Activity existingEvent = new Activity("Tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
-        model.addActivity(existingEvent);
+        model.addActivity(existingEvent, false);
         
         Activity newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
@@ -606,7 +606,7 @@ public class LogicManagerTest {
         Activity event = new Activity("Event", helper.getReferenceDateString(), helper.getReferenceDateString());
         
         // able to update from floating to deadline
-        model.addActivity(floating);
+        model.addActivity(floating, false);
         expectedAM.addActivity(deadline);
         assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
@@ -625,7 +625,7 @@ public class LogicManagerTest {
         // able to update from floating to event
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
-        model.addActivity(floating);
+        model.addActivity(floating, false);
         expectedAM.addActivity(event);
         assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
@@ -770,6 +770,11 @@ public class LogicManagerTest {
     }
     
     @Test
+    public void execute_undo_NoCommand() throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
+    }
+    
+    @Test
     public void execute_store_storeToCorrectLocation () throws Exception {
     	String testDataFileLocation = "/data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
@@ -823,6 +828,12 @@ public class LogicManagerTest {
 //
 //            return cmd.toString();
 //        }
+        /**
+         * Generate an ActivityManager with no activities
+         */
+        ActivityManager generateActivityManager() throws Exception {
+            return new ActivityManager();
+        }
 
         /**
          * Generates an ActivityManager with auto-generated activities.
@@ -872,7 +883,7 @@ public class LogicManagerTest {
          */
         void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
             for(Activity p: activtiesToAdd){
-                model.addActivity(p);
+                model.addActivity(p, true);
             }
         }
 

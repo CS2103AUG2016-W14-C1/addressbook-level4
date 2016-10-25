@@ -45,7 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         activityManager = new ActivityManager(src);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
-        recordManagerHistory(activityManager);
+        // recordManagerHistory(activityManager);
     }
 
     public ModelManager() {
@@ -89,44 +89,48 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
-        recordManagerHistory(activityManager);
+        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
+        recordManagerHistory(activityManager);
     }
 
     @Override
-    public synchronized void addActivity(Activity activity) {
+    public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
-        recordManagerHistory(activityManager);
-        indicateActivityListPanelUpdate();
         updateFilteredListToShowAll();
+        indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
+        // Record state only for the last addition (esp. for recurring tasks)
+        if (isLastRecurring) {
+            recordManagerHistory(activityManager);
+        }
     }
     
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
-        recordManagerHistory(activityManager);
         updateFilteredListToShowAll();
-        indicateActivityPanelUpdate(activity);
+        //indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate();
+        recordManagerHistory(activityManager);
     }
 
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
-        recordManagerHistory(activityManager);
         updateFilteredActivityList();
         indicateActivityManagerChanged();
+        recordManagerHistory(activityManager);
     }
 
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        recordManagerHistory(activityManager);
         updateFilteredActivityList();
         indicateActivityManagerChanged();
+        recordManagerHistory(activityManager);
     }
     
     private void recordManagerHistory(ActivityManager am) {
@@ -134,7 +138,11 @@ public class ModelManager extends ComponentManager implements Model {
         while (managerHistory.size() - 1 > historyIndex) {
             managerHistory.remove(managerHistory.size() - 1);
         }
-        managerHistory.add(new ActivityManager(am));
+        ActivityManager savedAM = new ActivityManager();
+        for (Activity activity : am.getActivities()) {
+            savedAM.addActivity(new Activity(activity));   
+        }
+        managerHistory.add(savedAM);
         historyIndex++;
     }
     

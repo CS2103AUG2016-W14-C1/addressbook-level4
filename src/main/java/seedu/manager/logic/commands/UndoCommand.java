@@ -15,10 +15,14 @@ public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Undoes a command\n"
+    public static final String USAGE = "undo\n" + "undo NUMBER_OF_TIMES";
+
+    public static final String EXAMPLES = "undo\n" + "undo 2";
+    
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reverts to-do list to a previous state.\n"
               + "\nUsage:\nundo [NUMBER_OF_COMMANDS]\n";
 
-    public static final String MESSAGE_SUCCESS = "Command succesfully undone";
+    public static final String MESSAGE_SUCCESS = "Reverted to previous state. (%d commands undone)";
     
     public static final String MESSAGE_INDEX_LESS_THAN_ZERO = "Nothing left to undo.";
     
@@ -40,11 +44,11 @@ public class UndoCommand extends Command {
         assert model != null;
         if (model.getHistoryIndex() <= 0) {
             return new CommandResult(MESSAGE_INDEX_LESS_THAN_ZERO);
-        } else if (model.getHistoryIndex() - offset < 0) {
+        } else if (model.getHistoryIndex() - offset <= 0) {
             return new CommandResult(MESSAGE_OFFSET_OUT_OF_BOUNDS);
         } else {
             model.undoCommand(offset);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, offset));
         }
     }
 

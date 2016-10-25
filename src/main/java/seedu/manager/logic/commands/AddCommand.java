@@ -14,6 +14,14 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
+    public static final String USAGE = "add TASK\n" +
+                                       "add DEADLINE on DATE_TIME\n" +
+                                       "add EVENT from DATE_TIME to DATE_TIME";
+    
+    public static final String EXAMPLES = "add buy groceries\n" +
+                                          "add do homework on 21 oct\n" +
+                                          "add attend talk from 1 oct 10am to 1 oct 12pm";
+    
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a activity to the activity manager.\n"
               + "\nUsage:\nadd ACTIVITY\n"
               + "add ACTIVITY on DATETIME"
@@ -76,15 +84,16 @@ public class AddCommand extends Command {
         // add recurring
         if (this.toAddList != null) {
             String addName = null;
-            for (Activity add : this.toAddList) {
+            for (int i = 0; i < this.toAddList.size(); i++) {
+                Activity add = this.toAddList.getInternalList().get(i);
                 addName = add.getName();
-                model.addActivity(add);
+                model.addActivity(add, i == this.toAddList.size() - 1);
             }
             return new CommandResult(String.format(MESSAGE_RECUR_SUCCESS, addName));
         // add normal
         } else {
             assert toAdd != null;
-            model.addActivity(toAdd);
+            model.addActivity(toAdd, true);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
         }
     }

@@ -14,6 +14,10 @@ public class Status{
 		this.status = false;
 	}
 	
+	public Status(Status other) {
+	    this.status = other.status;
+	}
+	
 	public Status(boolean status) {
 		this.status = status;
 	}

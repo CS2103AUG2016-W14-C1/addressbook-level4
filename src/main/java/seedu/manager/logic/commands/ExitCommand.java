@@ -9,7 +9,9 @@ import seedu.manager.commons.events.ui.ExitAppRequestEvent;
 public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "exit";
-
+    public static final String USAGE = "exit";
+    public static final String EXAMPLES = "exit";
+    
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Remindaroo as requested ...";
 
     public ExitCommand() {}

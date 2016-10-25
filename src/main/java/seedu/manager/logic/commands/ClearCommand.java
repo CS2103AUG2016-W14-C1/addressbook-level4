@@ -8,6 +8,8 @@ import seedu.manager.model.ActivityManager;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
+    public static final String USAGE = "clear";
+    public static final String EXAMPLES = "clear";
     public static final String MESSAGE_SUCCESS = "Your activities have been removed!";
 
     public ClearCommand() {}

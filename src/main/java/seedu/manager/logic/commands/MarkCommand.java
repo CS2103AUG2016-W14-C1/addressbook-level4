@@ -10,6 +10,10 @@ import seedu.manager.model.activity.Activity;
 
 public class MarkCommand extends Command {
 	public static final String COMMAND_WORD = "mark";
+	
+	public static final String USAGE = "mark ACTIVITY_ID";
+	
+	public static final String EXAMPLES = "mark 1";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the activity identified by the index number used in the last activity listing as completed.\n"
