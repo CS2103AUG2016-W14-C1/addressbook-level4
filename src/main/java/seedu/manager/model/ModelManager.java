@@ -100,6 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
+        indicateFloatingTaskPanelUpdate();
     }
 
     @Override
