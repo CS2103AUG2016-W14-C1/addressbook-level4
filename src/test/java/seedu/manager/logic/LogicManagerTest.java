@@ -539,6 +539,51 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
+    
+    @Test
+    public void execute_update_changeActivityTypeCorrectly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ActivityManager expectedAM = new ActivityManager();
+        ActivityManager emptyAM = new ActivityManager();
+        Activity floating = new Activity("Floating");
+        Activity deadline = new Activity("Deadline", helper.getReferenceDateString());
+        Activity event = new Activity("Event", helper.getReferenceDateString(), helper.getReferenceDateString());
+        
+        // able to update from floating to deadline
+        model.addActivity(floating);
+        expectedAM.addActivity(deadline);
+        assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update from deadline to event
+        expectedAM.resetData(emptyAM);
+        expectedAM.addActivity(event);
+        assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to update from floating to event
+        model.resetData(emptyAM);
+        expectedAM.resetData(emptyAM);
+        model.addActivity(floating);
+        expectedAM.addActivity(event);
+        assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update from event to deadline
+        expectedAM.resetData(emptyAM);
+        expectedAM.addActivity(deadline);
+        assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
 
     @Test
     public void execute_search_invalidArgsFormat() throws Exception {
