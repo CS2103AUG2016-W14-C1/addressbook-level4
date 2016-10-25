@@ -139,6 +139,9 @@ public class ModelManager extends ComponentManager implements Model {
             managerHistory.remove(managerHistory.size() - 1);
         }
         ActivityManager savedAM = new ActivityManager();
+        for (Activity activity : am.getActivities()) {
+            savedAM.addActivity(new Activity(activity));   
+        }
         managerHistory.add(savedAM);
         historyIndex++;
     }

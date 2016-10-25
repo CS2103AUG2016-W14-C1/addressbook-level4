@@ -14,18 +14,26 @@
     </activity>
     <activity>
         <type>DEADLINE</type>
+        <name>blah</name>
+        <epochDateTime>1477053765509</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
         <name>blah 21 oct</name>
         <epochDateTime>1477139216163</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
-        <type>FLOATING</type>
-        <name>blah</name>
+        <type>EVENT</type>
+        <name>can</name>
+        <epochDateTime>1478004181372</epochDateTime>
+        <epochEndDateTime>1478090581373</epochEndDateTime>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
         <type>FLOATING</type>
-        <name>can</name>
+        <name>i cannot</name>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>
