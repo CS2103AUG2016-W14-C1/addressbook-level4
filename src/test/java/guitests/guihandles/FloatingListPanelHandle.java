@@ -19,14 +19,14 @@ import static org.junit.Assert.assertTrue;
 /**
  * Provides a handle for the panel containing the person list.
  */
-public class ActivityListPanelHandle extends GuiHandle {
+public class FloatingListPanelHandle extends GuiHandle {
 
     public static final int NOT_FOUND = -1;
     public static final String CARD_PANE_ID = "#cardPane";
 
-    private static final String ACTIVITY_LIST_VIEW_ID = "#activityListView";
+    private static final String ACTIVITY_LIST_VIEW_ID = "#floatingListView";
 
-    public ActivityListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
+    public FloatingListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 

@@ -41,7 +41,7 @@ public abstract class ActivityManagerGuiTest {
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
     protected ActivityListPanelHandle activityListPanel;
-    protected ActivityListPanelHandle floatingActivityListPanel;
+    protected FloatingListPanelHandle floatingActivityListPanel;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;
@@ -62,6 +62,7 @@ public abstract class ActivityManagerGuiTest {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
             activityListPanel = mainGui.getActivityListPanel();
+            floatingActivityListPanel = mainGui.getFloatingListPanel();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
             this.stage = stage;
@@ -104,10 +105,9 @@ public abstract class ActivityManagerGuiTest {
     }
 
     /**
-     * Asserts the size of the person list is equal to the given number.
+     * Asserts the size of the activity list is equal to the given number.
      */
-    protected void assertListSize(int size) {
-        int numberOfActivities = activityListPanel.getNumberOfActivities();
+    protected void assertListSize(int numberOfActivities, int size) {
         assertEquals(size, numberOfActivities);
     }
 
