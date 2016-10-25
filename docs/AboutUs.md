@@ -17,7 +17,14 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/RayYan.jpg" width="150">
 <br>
 Role: Developer <br>  
-Responsibilities: UI
+* Components in charge of: UI <br>
+* Aspects/tools in charge of: Git <br>
+* Features implemented: <br>
+    * Help Command <br>
+    * Undo Command <br>
+* Other Major Contributions: <br>
+    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
+    * Set up Travis CI, Coveralls and Codacy <br>
 
 -----
 
@@ -25,8 +32,14 @@ Responsibilities: UI
 <br>
 <img src="images/Amanda.jpg" width="150">
 <br>
-Role: Developer <br>  
-Responsibilities: Storage
+Role: Developer <br>
+* Components in charge of: Storage <br>
+* Aspects/tools in charge of: Documentation <br>
+* Features implemented: <br>
+    * Mark/Unmark Command <br>
+    * Store Command <br>
+* Other Major Contributions: <br>
+    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
 
 -----
 
@@ -35,7 +48,13 @@ Responsibilities: Storage
 <img src="images/ChiThanh.jpg" width="150">
 <br>
 Role: Developer <br>  
-Responsibilities: Model
+* Components in charge of: Model <br>
+* Aspects/tools in charge of: Code Quality <br>
+* Features implemented: <br>
+    * Update Command <br>
+    * Delete Command <br>
+* Other Major Contributions: <br>
+    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
 
 -----
 
@@ -44,7 +63,13 @@ Responsibilities: Model
 <img src="images/HanCheng.jpg" width="150">
 <br>
  Role: Developer <br>  
- Responsibilities: Logic
+ * Components in charge of: Parser <br>
+ * Aspects/tools in charge of: Testing <br>
+ * Features implemented: <br>
+     * Add Command <br>
+     * Search Command <br>
+ * Other Major Contributions: <br>
+     * Contributed to initial refactoring from AddressBook to Reminadroo <br>
 
  -----
 
