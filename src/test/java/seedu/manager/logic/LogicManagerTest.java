@@ -196,7 +196,7 @@ public class LogicManagerTest {
         // able to add deadline activity with keywords (on/by) (without spaces)
         toBeAdded = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add Presentation Ruby on " + helper.getReferenceDateString(),
+        assertCommandBehavior("add Presentation Ruby oN " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -205,7 +205,7 @@ public class LogicManagerTest {
         // able to add deadline activity with keywords (on/by) (with spaces)
         toBeAdded = new Activity("read Village by the Sea", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add read Village by the Sea \"on\" " + helper.getReferenceDateString(),
+        assertCommandBehavior("add read Village by the Sea \"On\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -224,7 +224,7 @@ public class LogicManagerTest {
         toBeAdded = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add The fromance of tom and jerry from " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
+                              + " To " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -244,7 +244,7 @@ public class LogicManagerTest {
         toBeAdded = new Activity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Train to Busan from " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString(),
+                              + " \"tO\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -288,7 +288,7 @@ public class LogicManagerTest {
             toBeAdded = new Activity("Clubbing on the dance floor", helper.getReferenceDateString(), repeat, "Week");
             expectedAM.addActivity(toBeAdded);
         }
-        assertCommandBehavior("add Clubbing on the dance floor \"on\" " + helper.getReferenceDateString() + " for 2 week",
+        assertCommandBehavior("add Clubbing on the dance floor \"ON\" " + helper.getReferenceDateString() + " for 2 WEEK",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -299,7 +299,7 @@ public class LogicManagerTest {
             expectedAM.addActivity(toBeAdded);
         }
         assertCommandBehavior("add Monthly general meeting from boss \"from\" " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString() + " for 12 months",
+                              + " to " + helper.getReferenceDateString() + " For 12 months",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -310,7 +310,7 @@ public class LogicManagerTest {
             expectedAM.addActivity(toBeAdded);
         }
         assertCommandBehavior("add Birthday party from " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString() + " for 1 year",
+                              + " \"to\" " + helper.getReferenceDateString() + " foR 1 yeaR",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -533,7 +533,7 @@ public class LogicManagerTest {
         Activity newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
         
-        assertCommandBehavior("update 1 Presentation Ruby on " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1 Presentation Ruby On " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -542,7 +542,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         newDeadline = new Activity("read Village by the Sea", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
-        assertCommandBehavior("update 1 read Village by the Sea \"on\" " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1 read Village by the Sea \"oN\" " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -556,7 +556,7 @@ public class LogicManagerTest {
         Activity newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
        
-        assertCommandBehavior("update 1 The fromance of tom and jerry from " + helper.getReferenceDateString() 
+        assertCommandBehavior("update 1 The fromance of tom and jerry FROM " + helper.getReferenceDateString() 
                               + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
@@ -567,7 +567,7 @@ public class LogicManagerTest {
         newEvent = new Activity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
         
-        assertCommandBehavior("update 1 Love from Paris \"from\" " + helper.getReferenceDateString() 
+        assertCommandBehavior("update 1 Love from Paris \"froM\" " + helper.getReferenceDateString() 
                               + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
@@ -579,7 +579,7 @@ public class LogicManagerTest {
         expectedAM.addActivity(newEvent);
         
         assertCommandBehavior("update 1 Train to Busan from " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString(),
+                              + " \"To\" " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
                 expectedAM.getActivityList());

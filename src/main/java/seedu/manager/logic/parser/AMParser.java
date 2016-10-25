@@ -28,16 +28,20 @@ public class AMParser {
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
     
     private static final Pattern EVENT_RECURRING_ARGS_FORMAT =
-            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+) ((\"?)for\\11) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$");
+            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+) ((\"?)for\\11) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
+                    Pattern.CASE_INSENSITIVE);
     
     private static final Pattern EVENT_ARGS_FORMAT =
-            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)$");
+            Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)$",
+                    Pattern.CASE_INSENSITIVE);
 
     private static final Pattern DEADLINE_RECURRING_ARGS_FORMAT =
-            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+) ((\"?)for\\7) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$");
+            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+) ((\"?)for\\7) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
+                    Pattern.CASE_INSENSITIVE);
     
     private static final Pattern DEADLINE_ARGS_FORMAT =
-            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+)$");
+            Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+)$", 
+                    Pattern.CASE_INSENSITIVE);
     
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
