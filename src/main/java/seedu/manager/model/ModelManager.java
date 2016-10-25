@@ -82,11 +82,13 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ActivityPanelUpdateEvent(updatedActivity));
     }
     
+    //@@author A0139797E
     private void indicateActivityListPanelUpdate(){
     	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList()));
     }
 
     @Override
+    //@@author A0144881Y
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
         updateFilteredListToShowAll();
@@ -96,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    //@@author A0139797E
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
         updateFilteredListToShowAll();
@@ -108,6 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
+    //@@author A0144881Y
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
@@ -118,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    //@@author A0144704L
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
         updateFilteredActivityList();
@@ -126,6 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    //@@author A0144704L
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
         updateFilteredActivityList();
@@ -133,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         recordManagerHistory(activityManager);
     }
     
+    //@@author A0139797E
     private void recordManagerHistory(ActivityManager am) {
         // Overwrite alternate history
         while (managerHistory.size() - 1 > historyIndex) {
@@ -146,11 +153,13 @@ public class ModelManager extends ComponentManager implements Model {
         historyIndex++;
     }
     
+    //@@author A0139797E
     public int getHistoryIndex() {
         return historyIndex;
     }
     
     @Override
+    //@@author A0139797E
     public synchronized void undoCommand(int offset) {
         historyIndex -= offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
@@ -168,6 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
+    //@@author A0144881Y
     public UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList() {
     	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
@@ -178,6 +188,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
+    //@@author A0144881Y
     public UnmodifiableObservableList<Activity> getFilteredFloatingActivityList() {
     	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
@@ -197,6 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredActivityList(new PredicateExpression(new NameQualifier(keywords)));
     }
     
+    //@@author A0144881Y
     public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
         updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
     }
@@ -218,6 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
     	});
     }
     
+    //@@author A0144704L
     public void updateFilteredActivityList(boolean isCompleted) {
     	updateFilteredActivityList(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
@@ -282,6 +295,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
     
+    //@@author A0135730M
     private class DateQualifier implements Qualifier {
         private AMDate dateTime;
         private AMDate endDateTime;

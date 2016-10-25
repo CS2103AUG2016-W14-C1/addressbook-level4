@@ -4,8 +4,9 @@ import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.UniqueTagList;
 
 /**
- * A mutable person object. For testing only.
- */
+ * A mutable activity object. For testing only.
+ */ 
+//@@author A0135730M
 public class TestActivity implements ReadOnlyActivity {
 
     private ActivityType type;

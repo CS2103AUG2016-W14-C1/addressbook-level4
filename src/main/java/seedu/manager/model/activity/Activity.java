@@ -16,7 +16,8 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	
 	// Floating activity constructor
 	
-	public Activity(String name) {
+	//@@author A0135730M
+    public Activity(String name) {
 	    this.type = ActivityType.FLOATING;
 	    this.name = name;
 		this.status = new Status();
@@ -29,6 +30,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	/**
      * Constructor which gets dateTime in natural English from user input
      */
+	//@@author A0135730M
     public Activity(String name, String newDateTime) {
         this(name);
         this.type = ActivityType.DEADLINE;
@@ -38,6 +40,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	/**
      * Constructor which gets dateTime in epoch format from XML file
      */
+    //@@author A0135730M
     public Activity(String name, Long newEpochDateTime) {
         this(name);
         this.type = ActivityType.DEADLINE;
@@ -47,6 +50,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     /**
      * Constructor which gets dateTime, offset and unit for recurrence
      */
+    //@@author A0135730M
     public Activity(String name, String newDateTime, int offset, String unit) {
         this(name);
         this.type = ActivityType.DEADLINE;
@@ -59,6 +63,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     /**
      * Constructor which gets start and end dateTime in natural English from user input
      */
+    //@@author A0135730M
     public Activity(String name, String newStartDateTime, String newEndDateTime) {
         this(name);
         this.type = ActivityType.EVENT;
@@ -69,6 +74,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     /**
      * Constructor which gets start and end dateTime in epoch format from XML file
      */
+    //@@author A0135730M
     public Activity(String name, Long newEpochStartDateTime, Long newEpochEndDateTime) {
         this(name);
         this.type = ActivityType.EVENT;
@@ -79,6 +85,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     /**
      * Constructor which gets start, end dateTime, offset and unit for recurrence
      */
+    //@@author A0139797E
     public Activity(String name, String newStartDateTime, String newEndDateTime, int offset, String unit) {
         this(name);
         this.type = ActivityType.EVENT;
@@ -89,6 +96,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     // Wrapper constructor for ReadOnlyActivity
+    //@@author A0139797E
     public Activity(ReadOnlyActivity source) {
         this.type = source.getType();
         this.name = source.getName();
@@ -106,42 +114,51 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
 	
     @Override
+    //@@author A0135730M
     public ActivityType getType() {
         return type;
     }
     
+  //@@author A0135730M
     public void setType(ActivityType type) {
         this.type = type;
     }
     
 	@Override
-	public String getName() {
+	//@@author A0139797E
+    public String getName() {
 	    return name;
 	}
 	
-	public void setName(String newName) {
+	//@@author A0139797E
+    public void setName(String newName) {
 		this.name = newName;
 	}
 	
+	//@@author A0144704L
 	public void setStatus(boolean completed) {
 		(this.status).setStatus(completed);
 	}
 	
 	@Override
+	//@@author A0144704L
 	public Status getStatus() {
 		return this.status;
 	}
 	
 	@Override
-	public AMDate getDateTime() {
+	//@@author A0139797E
+    public AMDate getDateTime() {
         return dateTime;
     }
     
 	@Override
+	//@@author A0139797E
     public AMDate getEndDateTime() {
         return endDateTime;
     }
     
+	//@@author A0135730M
     public void setDateTime(String newDateTime) {
         assert newDateTime != null;
         assert !this.type.equals(ActivityType.FLOATING);
@@ -152,7 +169,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         }
     }
     
-    
+    //@@author A0135730M
     public void setEndDateTime(String newEndDateTime) {
         assert !this.type.equals(ActivityType.FLOATING);
         // remove endDateTime if activity is converted to deadline
@@ -183,6 +200,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	}
 	
     @Override
+    //@@author A0139797E
     public int compareTo(Activity other) {
         // Check for floating tasks
         if (this.type.equals(ActivityType.FLOATING) && other.type.equals(ActivityType.FLOATING)) {

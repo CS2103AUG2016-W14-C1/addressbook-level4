@@ -4,9 +4,10 @@ import java.util.Set;
 import seedu.manager.model.activity.AMDate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in acitvity manager whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
+//@@author A0135730M
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";

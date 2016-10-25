@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 public class ClearCommandTest extends ActivityManagerGuiTest {
 
     @Test
+    //@@author A0139797E
     public void clear() {
 
         //verify a non-empty list can be cleared

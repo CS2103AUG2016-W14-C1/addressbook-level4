@@ -9,8 +9,9 @@ import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
 
 /**
- * Adds a person to the address book.
+ * Undoes a command (or multiple commands) that changes state.
  */
+//@@author A0139797E
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";

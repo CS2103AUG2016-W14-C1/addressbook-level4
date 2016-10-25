@@ -19,7 +19,7 @@ import seedu.manager.model.activity.Activity;
 import java.util.logging.Logger;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of activities.
  */
 public class ActivityListPanel extends UiPart {
     private final Logger logger = LogsCenter.getLogger(ActivityListPanel.class);
@@ -92,11 +92,13 @@ public class ActivityListPanel extends UiPart {
         });
     }
     
+    //@@author A0139797E
     public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
         activityListView.setItems(observableList);
     	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
+    //@@author A0144881Y
     public void updateActivityCard(Activity newActivity, int indexOffset) {
         // Refresh activity card cells to update GUI
         activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
@@ -117,6 +119,7 @@ public class ActivityListPanel extends UiPart {
         }
 
         @Override
+        //@@author A0144881Y
         protected void updateItem(Activity activity, boolean empty) {
             super.updateItem(activity, empty);
 

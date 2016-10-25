@@ -7,6 +7,7 @@ import seedu.manager.model.activity.Activity;
 /**
  * Deletes a activity identified using it's last displayed index from the address book.
  */
+//@@author A0144881Y
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";

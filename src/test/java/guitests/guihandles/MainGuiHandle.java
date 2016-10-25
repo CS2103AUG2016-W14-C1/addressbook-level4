@@ -17,6 +17,7 @@ public class MainGuiHandle extends GuiHandle {
         return new ActivityListPanelHandle(guiRobot, primaryStage);
     }
     
+    //@@author A0139797E
     public FloatingListPanelHandle getFloatingListPanel() {
         return new FloatingListPanelHandle(guiRobot, primaryStage);
     }

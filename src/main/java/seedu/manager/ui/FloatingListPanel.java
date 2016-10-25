@@ -1,3 +1,4 @@
+//@@author A0144704L
 package seedu.manager.ui;
 
 import javafx.application.Platform;
@@ -92,11 +93,13 @@ public class FloatingListPanel extends UiPart{
         });
     }
     
+    //@@author A0144704L
     public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
         floatingListView.setItems(observableList);
     	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
+    //@@author A0144704L
     public void updateActivityCard(Activity newActivity, int indexOffset) {
         // Refresh activity card cells to update GUI
     	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
@@ -117,6 +120,7 @@ public class FloatingListPanel extends UiPart{
         }
 
         @Override
+        //@@author A0144881Y
         protected void updateItem(Activity activity, boolean empty) {
             super.updateItem(activity, empty);
 

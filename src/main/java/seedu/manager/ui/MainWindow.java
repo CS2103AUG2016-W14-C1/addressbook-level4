@@ -111,6 +111,7 @@ public class MainWindow extends UiPart {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
 
+    //@@author A0144881Y
     public void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
         activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
@@ -136,6 +137,7 @@ public class MainWindow extends UiPart {
         return activityListPanelPlaceholder;
     }
     
+    //@@author A0144704L
     public AnchorPane getFloatingActivityListPlaceholder() {
     	return floatingActivityListPanelPlaceholder;
     }
@@ -195,6 +197,7 @@ public class MainWindow extends UiPart {
         return this.activityListPanel;
     }
     
+    //@@author A0144704L
     public FloatingListPanel getFloatingActivityListPanel() {
     	return this.floatingActivityListPanel;
     }

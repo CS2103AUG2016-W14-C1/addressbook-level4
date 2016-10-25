@@ -13,6 +13,7 @@ import java.util.*;
  * Wraps all data at the activity-manager level
  * Duplicates are not allowed (by .equals comparison)
  */
+//@@author A0144881Y
 public class ActivityManager implements ReadOnlyActivityManager {
 
     private final ActivityList activities;

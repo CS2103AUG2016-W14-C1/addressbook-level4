@@ -3,7 +3,7 @@ package seedu.manager.model.activity;
 /**
  * Represents an activity's status in Remindaroo 
  */
-
+//@@author A0144704L
 public class Status{
 	private static final String MESSAGE_STATUS_PENDING = "pending";
 	private static final String MESSAGE_STATUS_COMPLETED = "completed";

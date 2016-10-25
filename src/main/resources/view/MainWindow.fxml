@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
+<!--  @@author A0144881Y -->
 <VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.manager.ui.MainWindow">
    <stylesheets>
       <URL value="@DarkTheme.css" />

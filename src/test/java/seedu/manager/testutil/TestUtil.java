@@ -63,6 +63,7 @@ public class TestUtil {
 
     public static final Activity[] sampleActivityData = getSampleActivityData();
 
+    //@@author A0135730M
     private static Activity[] getSampleActivityData() {
 //        try {
             return new Activity[]{

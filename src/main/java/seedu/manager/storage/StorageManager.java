@@ -86,6 +86,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     @Subscribe
+    //@@author A0144704L
     public void handleStorageFileChangedEvent(ChangeStorageFileEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event, "Data storage file location changed"));
     	setActivityManagerFilePath(event.file);

@@ -5,6 +5,7 @@ import seedu.manager.model.ActivityManager;
 /**
  * Clears the address book.
  */
+//@@author A0139797E
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";

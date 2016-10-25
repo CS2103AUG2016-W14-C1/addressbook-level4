@@ -7,7 +7,7 @@ import seedu.manager.model.activity.Activity;
 /**
  * Updates an activity in Remindaroo
  */
-
+//@@author A0144704L
 public class UnmarkCommand extends Command {
 	public static final String COMMAND_WORD = "unmark";
 	

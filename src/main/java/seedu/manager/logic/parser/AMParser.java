@@ -129,6 +129,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
+    //@@author A0135730M
     private Command prepareAdd(String args){
         // compare with different activity types format and return AddCommand accordingly
         final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
@@ -213,6 +214,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
+    //@@author A0144881Y
     private Command prepareDelete(String args) {
 
         Optional<Integer> index = parseIndex(args);
@@ -230,7 +232,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    
+    //@@author A0135730M
     private Command prepareUpdate(String args) {
         final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
@@ -286,7 +288,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    
+    //@@author A0144704L
     private Command prepareMark(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -304,7 +306,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    
+    //@@author A0144704L
     private Command prepareUnmark(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -322,7 +324,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    
+    //@@author A0139797E
     private Command prepareUndo(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -373,6 +375,7 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
+    //@@author A0144881Y
     private Command prepareSearch(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -401,6 +404,7 @@ public class AMParser {
         return searchCommand;
     }
     
+    //@@author A0144704L
     private Command prepareStore(String args) {
     	assert args != null;
     	if (!args.equals("") && args.endsWith(".xml")) {

@@ -19,6 +19,7 @@ public class ActivityBuilder {
         return this;
     }
     
+    //@@author A0144704L
     public ActivityBuilder withNameandStatus(String name, boolean status) throws IllegalValueException {
         this.activity.setName(name);
         this.activity.setStatus(status);

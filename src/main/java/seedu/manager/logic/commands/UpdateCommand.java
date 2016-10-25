@@ -7,7 +7,7 @@ import seedu.manager.model.activity.*;
 /**
  * Updates an activity in Remindaroo
  */
-
+//@@author A0144881Y
 public class UpdateCommand extends Command {
 	public static final String COMMAND_WORD = "update";
 

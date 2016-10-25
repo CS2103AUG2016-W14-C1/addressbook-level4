@@ -6,6 +6,7 @@ import java.util.List;
 import com.joestelmach.natty.*;
 
 @SuppressWarnings("deprecation")
+//@@author A0139797E
 public class AMDate {
     
     private enum TimeUnit { DAY, WEEK, MONTH, YEAR }

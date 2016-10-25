@@ -43,6 +43,7 @@ public class XmlAdaptedActivity {
      *
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
+    //@@author A0135730M
     public XmlAdaptedActivity(Activity source) {
         type = source.getType();
         name = source.getName();
@@ -69,6 +70,7 @@ public class XmlAdaptedActivity {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
+    //@@author A0135730M
     public Activity toModelType() {
 //        final List<Tag> activityTags = new ArrayList<>();
 //        for (XmlAdaptedTag tag : tagged) {

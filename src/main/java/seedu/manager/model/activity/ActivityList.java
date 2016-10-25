@@ -20,6 +20,7 @@ public class ActivityList implements Iterable<Activity> {
      * Adds a activity to the list.
      * 
      */
+	//@@author A0139797E
     public void add(Activity toAdd){
         assert toAdd != null;
         internalList.add(toAdd);
@@ -29,6 +30,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Removes the equivalent activity from the list.
      */
+    //@@author A0144881Y
     public void remove(Activity toRemove) {
         assert toRemove != null;
         assert internalList.contains(toRemove);
@@ -39,7 +41,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Updates the equivalent activity in the list.
      */
-    
+    //@@author A0144881Y
     public void update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) {
     	assert toUpdate != null;
     	assert internalList.contains(toUpdate);
@@ -67,7 +69,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Marks the equivalent activity in the list as completed.
      */
-    
+    //@@author A0144704L
     public void mark(Activity toMark) {
     	assert toMark != null;
     	assert internalList.contains(toMark);
@@ -77,7 +79,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Marks the equivalent activity in the list as pending.
      */
-    
+    //@@author A0144704L
     public void unmark(Activity toUnmark) {
     	assert toUnmark != null;
     	assert internalList.contains(toUnmark);

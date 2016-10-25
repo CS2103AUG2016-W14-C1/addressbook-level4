@@ -7,6 +7,7 @@ import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 /**
  * Format full help instructions for every command for display.
  */
+//@@author A0139797E
 public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";

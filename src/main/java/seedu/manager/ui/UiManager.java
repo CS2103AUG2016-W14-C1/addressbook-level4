@@ -42,6 +42,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
+    //@@author A0144704L
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
@@ -72,6 +73,7 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(AlertType.ERROR, "File Op Error", description, content);
     }
 
+    //@@author A0144704L
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
@@ -133,6 +135,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
     
     @Subscribe
+    //@@author A0139797E
     private void handleActivityListPanelUpdateEvent(ActivityListPanelUpdateEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event));
     	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());

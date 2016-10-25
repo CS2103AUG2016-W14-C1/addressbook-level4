@@ -1,3 +1,4 @@
+//@@author A0139797E
 package seedu.manager.commons.core;
 
 import java.util.Objects;

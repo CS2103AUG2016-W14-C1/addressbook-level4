@@ -42,6 +42,7 @@ public class ActivityCard extends UiPart{
     }
 
     @FXML
+    //@@author A0139797E
     public void initialize() {
         name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
@@ -55,6 +56,7 @@ public class ActivityCard extends UiPart{
         }
     }
     
+    //@@author A0135730M
     private String generateDateTimeString(AMDate dateTime) {
         assert dateTime == null;
         

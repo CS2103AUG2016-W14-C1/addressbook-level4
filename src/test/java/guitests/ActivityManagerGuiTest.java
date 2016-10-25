@@ -57,6 +57,7 @@ public abstract class ActivityManagerGuiTest {
     }
 
     @Before
+    //@@author A0139797E
     public void setup() throws Exception {
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);

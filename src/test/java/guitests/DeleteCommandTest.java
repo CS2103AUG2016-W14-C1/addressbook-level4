@@ -10,7 +10,8 @@ import static seedu.manager.logic.commands.DeleteCommand.MESSAGE_DELETE_ACTIVITY
 
 public class DeleteCommandTest extends ActivityManagerGuiTest {
 
-    /*@Test
+    @Test
+    //@@author A0139797E
     public void delete() {
 
         //delete the first in the list
@@ -32,14 +33,14 @@ public class DeleteCommandTest extends ActivityManagerGuiTest {
         commandBox.runCommand("delete " + currentList.length + 1);
         assertResultMessage("The activity index provided is invalid");
 
-    }*/
+    }
 
     /**
      * Runs the delete command to delete the activity at specified index and confirms the result is correct.
      * @param targetIndexOneIndexed e.g. to delete the first person in the list, 1 should be given as the target index.
      * @param currentList A copy of the current list of persons (before deletion).
      */
-    private void assertDeleteSuccess(int targetIndexOneIndexed, final TestActivity[] currentList) {
+    public void assertDeleteSuccess(int targetIndexOneIndexed, final TestActivity[] currentList) {
         TestActivity activityToDelete = currentList[targetIndexOneIndexed-1]; //-1 because array uses zero indexing
         TestActivity[] expectedRemainder = TestUtil.removeActivityFromList(currentList, targetIndexOneIndexed);
 

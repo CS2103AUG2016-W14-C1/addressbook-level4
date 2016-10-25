@@ -1,3 +1,4 @@
+//@@author A0144704L
 package seedu.manager.commons.events.ui;
 
 import seedu.manager.commons.events.BaseEvent;

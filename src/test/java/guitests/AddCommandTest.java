@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class AddCommandTest extends ActivityManagerGuiTest {
 
     @Test
+    //@@author A0139797E
     public void add() {
         //add one activity
         TestActivity[] currentList = ta.getTypicalActivities();
