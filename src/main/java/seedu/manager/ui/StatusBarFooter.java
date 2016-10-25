@@ -99,7 +99,7 @@ public class StatusBarFooter extends UiPart {
     }
     
     @Subscribe
-    public void handleActivityManagetChangedStorageFile(ChangeStorageFileDisplayEvent event){
+    public void handleActivityManagerChangedStorageFile(ChangeStorageFileDisplayEvent event){
     	logger.info(LogsCenter.getEventHandlingLogMessage(event, "Changing data storage location to: " + event.file));
     	setSaveLocation(event.file);
     }
