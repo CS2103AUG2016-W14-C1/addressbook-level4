@@ -770,6 +770,11 @@ public class LogicManagerTest {
     }
     
     @Test
+    public void execute_undo_NoCommand() throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
+    }
+    
+    @Test
     public void execute_store_storeToCorrectLocation () throws Exception {
     	String testDataFileLocation = "/data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
@@ -823,6 +828,12 @@ public class LogicManagerTest {
 //
 //            return cmd.toString();
 //        }
+        /**
+         * Generate an ActivityManager with no activities
+         */
+        ActivityManager generateActivityManager() throws Exception {
+            return new ActivityManager();
+        }
 
         /**
          * Generates an ActivityManager with auto-generated activities.
@@ -872,7 +883,7 @@ public class LogicManagerTest {
          */
         void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
             for(Activity p: activtiesToAdd){
-                model.addActivity(p, false);
+                model.addActivity(p, true);
             }
         }
 

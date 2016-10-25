@@ -40,7 +40,7 @@ public class UndoCommand extends Command {
         assert model != null;
         if (model.getHistoryIndex() <= 0) {
             return new CommandResult(MESSAGE_INDEX_LESS_THAN_ZERO);
-        } else if (model.getHistoryIndex() - offset < 0) {
+        } else if (model.getHistoryIndex() - offset <= 0) {
             return new CommandResult(MESSAGE_OFFSET_OUT_OF_BOUNDS);
         } else {
             model.undoCommand(offset);

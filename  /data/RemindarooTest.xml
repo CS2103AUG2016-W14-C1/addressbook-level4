@@ -1,39 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
-        <type>DEADLINE</type>
-        <name>deadline</name>
-        <epochDateTime>1475497955906</epochDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>DEADLINE</type>
-        <name>again</name>
-        <epochDateTime>1477053127677</epochDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>DEADLINE</type>
-        <name>blah</name>
-        <epochDateTime>1477053765509</epochDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>DEADLINE</type>
-        <name>blah 21 oct</name>
-        <epochDateTime>1477139216163</epochDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>EVENT</type>
-        <name>can</name>
-        <epochDateTime>1478004181372</epochDateTime>
-        <epochEndDateTime>1478090581373</epochEndDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
         <type>FLOATING</type>
-        <name>i cannot</name>
+        <name>hello</name>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>
