@@ -394,7 +394,7 @@ public class AMParser {
             }
         }
         
-        if ((args.trim().toLowerCase()).equals("pending") || (args.trim().toLowerCase()).equals("completed")) {
+        if ("pending".equals(args.trim().toLowerCase()) || "completed".equals(args.trim().toLowerCase())) {
         	searchCommand.addStatus(args.trim().toLowerCase());
         }
         

@@ -111,7 +111,7 @@ public class MainWindow extends UiPart {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
 
-    void fillInnerParts() {
+    public void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
         activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
         floatingActivityListPanel = FloatingListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());

@@ -823,7 +823,7 @@ public class LogicManagerTest {
      */
     class TestDataHelper {
         
-        String getReferenceDateString() {
+        public String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
         }
 
@@ -834,7 +834,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the activity data field values
          */
-        Activity generateActivity(int seed) throws Exception {
+        public Activity generateActivity(int seed) throws Exception {
             return new Activity("Activity " + seed);
         }
 
@@ -856,14 +856,14 @@ public class LogicManagerTest {
         /**
          * Generate an ActivityManager with no activities
          */
-        ActivityManager generateActivityManager() throws Exception {
+        public ActivityManager generateActivityManager() throws Exception {
             return new ActivityManager();
         }
 
         /**
          * Generates an ActivityManager with auto-generated activities.
          */
-        ActivityManager generateActivityManager(int numGenerated) throws Exception{
+        public ActivityManager generateActivityManager(int numGenerated) throws Exception{
             ActivityManager activityManager = new ActivityManager();
             addToActivityManager(activityManager, numGenerated);
             return activityManager;
@@ -872,7 +872,7 @@ public class LogicManagerTest {
         /**
          * Generates an ActivityManager based on the list of activities given.
          */
-        ActivityManager generateActivityManager(List<Activity> activities) throws Exception{
+        public ActivityManager generateActivityManager(List<Activity> activities) throws Exception{
             ActivityManager activityManager = new ActivityManager();
             addToActivityManager(activityManager, activities);
             return activityManager;
@@ -882,14 +882,14 @@ public class LogicManagerTest {
          * Adds auto-generated Activity objects to the given ActivityManager
          * @param activityManager The ActivityManager to which the activities will be added
          */
-        void addToActivityManager(ActivityManager activityManager, int numGenerated) throws Exception{
+        public void addToActivityManager(ActivityManager activityManager, int numGenerated) throws Exception{
             addToActivityManager(activityManager, generateActivityList(numGenerated));
         }
 
         /**
          * Adds the given list of activities to the given ActivityManager
          */
-        void addToActivityManager(ActivityManager activityManager, List<Activity> activitiesToAdd) throws Exception{
+        public void addToActivityManager(ActivityManager activityManager, List<Activity> activitiesToAdd) throws Exception{
             for(Activity p: activitiesToAdd){
                 activityManager.addActivity(p);
             }
@@ -899,14 +899,14 @@ public class LogicManagerTest {
          * Adds auto-generated Activity objects to the given model
          * @param model The model to which the activities will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        public void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateActivityList(numGenerated));
         }
 
         /**
          * Adds the given list of activities to the given model
          */
-        void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
+        public void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
             for(Activity p: activtiesToAdd){
                 model.addActivity(p, true);
             }
@@ -915,7 +915,7 @@ public class LogicManagerTest {
         /**
          * Generates a list of activities based on the flags.
          */
-        List<Activity> generateActivityList(int numGenerated) throws Exception{
+        public List<Activity> generateActivityList(int numGenerated) throws Exception{
             List<Activity> activity = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
                 activity.add(generateActivity(i));
@@ -923,7 +923,7 @@ public class LogicManagerTest {
             return activity;
         }
 
-        List<Activity> generateActivityList(Activity... activities) {
+        public List<Activity> generateActivityList(Activity... activities) {
             return Arrays.asList(activities);
         }
     }

@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
-        <type>FLOATING</type>
+        <type>DEADLINE</type>
         <name>hello</name>
+        <epochDateTime>1475786079510</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>not great</name>
+        <epochDateTime>1475786287438</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>great</name>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>
