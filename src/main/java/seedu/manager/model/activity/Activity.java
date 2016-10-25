@@ -44,6 +44,16 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         this.dateTime = new AMDate(newEpochDateTime);
     }
     
+    /**
+     * Constructor which gets dateTime, offset and unit for recurrence
+     */
+    public Activity(String name, String newDateTime, int offset, String unit) {
+        this(name);
+        this.type = ActivityType.DEADLINE;
+        this.dateTime = new AMDate(newDateTime);
+        this.dateTime.addOffset(offset, unit);
+    }
+    
     // Event activity constructor
     
     /**
@@ -64,6 +74,18 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         this.type = ActivityType.EVENT;
         this.dateTime = new AMDate(newEpochStartDateTime);
         this.endDateTime = new AMDate(newEpochEndDateTime);
+    }
+    
+    /**
+     * Constructor which gets start, end dateTime, offset and unit for recurrence
+     */
+    public Activity(String name, String newStartDateTime, String newEndDateTime, int offset, String unit) {
+        this(name);
+        this.type = ActivityType.EVENT;
+        this.dateTime = new AMDate(newStartDateTime);
+        this.dateTime.addOffset(offset, unit);
+        this.endDateTime = new AMDate(newEndDateTime);
+        this.endDateTime.addOffset(offset, unit);
     }
     
     // Wrapper constructor for ReadOnlyActivity
@@ -113,21 +135,28 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     public void setDateTime(String newDateTime) {
-        if (!this.type.equals(ActivityType.FLOATING)) {
+        assert newDateTime != null;
+        assert !this.type.equals(ActivityType.FLOATING);
+        if (this.dateTime == null) {
+            this.dateTime = new AMDate(newDateTime);
+        } else {
             this.dateTime.setAMDate(newDateTime);
         }
     }
     
     
     public void setEndDateTime(String newEndDateTime) {
+        assert !this.type.equals(ActivityType.FLOATING);
         // remove endDateTime if activity is converted to deadline
         if (this.type.equals(ActivityType.DEADLINE)) {
             assert newEndDateTime == null;
             this.endDateTime = null;
-        }
-        
-        if (this.type.equals(ActivityType.EVENT)) {
-            this.endDateTime.setAMDate(newEndDateTime);
+        } else if (this.type.equals(ActivityType.EVENT)) {
+            if (this.endDateTime == null) {
+                this.endDateTime = new AMDate(newEndDateTime);
+            } else {
+                this.endDateTime.setAMDate(newEndDateTime);
+            }
         }
     }
 	
