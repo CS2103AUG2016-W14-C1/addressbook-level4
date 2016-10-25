@@ -15,6 +15,10 @@ public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
 
+    public static final String USAGE = "undo\n" + "undo NUMBER_OF_TIMES";
+
+    public static final String EXAMPLES = "undo\n" + "undo 2";
+    
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reverts to-do list to a previous state.\n"
               + "\nUsage:\nundo [NUMBER_OF_COMMANDS]\n";
 

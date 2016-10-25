@@ -11,7 +11,16 @@ import seedu.manager.model.activity.*;
 public class UpdateCommand extends Command {
 	public static final String COMMAND_WORD = "update";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+	public static final String USAGE = "update ACTIVITY_ID NEW_NAME\n" +
+	                                   "update ACTIVITY_ID NEW_NAME on DATE_TIME\n" +
+	                                   "update ACTIVITY_ID NEW_NAME from DATE_TIME to DATE_TIME\n";
+
+	public static final String EXAMPLES = "update 1 Walk the dog\n" +
+                                          "update 2 New homework deadline on 17 Nov\n" +
+                                          "update 3 Postponed talk from 2 Nov 3pm to 2 Nov 5pm\n";
+
+	
+	public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the activity identified by the index number used in the last activity listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1" + " assignment1";
