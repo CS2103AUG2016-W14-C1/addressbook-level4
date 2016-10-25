@@ -524,13 +524,25 @@ public class LogicManagerTest {
     	ActivityManager expectedAM = new ActivityManager();
     	ActivityManager emptyAM = new ActivityManager();
     	
+    	// able to update deadline without name
+        Activity existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
+        model.addActivity(existingDeadline, false);
+        
+        expectedAM.resetData(emptyAM);
+        Activity newDeadline = new Activity("Presentation", "day after " + helper.getReferenceDateString());
+        expectedAM.addActivity(newDeadline);
+        assertCommandBehavior("update 1 on day after " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    	
         // able to update deadline activity with keywords (on/by) (without spaces)
     	model.resetData(emptyAM);
     	expectedAM.resetData(emptyAM);
-    	Activity existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
+    	existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
     	model.addActivity(existingDeadline, false);
         
-        Activity newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
+        newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
         
         assertCommandBehavior("update 1 Presentation Ruby On " + helper.getReferenceDateString(),
@@ -547,13 +559,26 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
         
+        // able to update event without name
+        model.resetData(emptyAM);
+        Activity existingEvent = new Activity("Presentation", helper.getReferenceDateString(), helper.getReferenceDateString());
+        model.addActivity(existingEvent, false);
+        
+        expectedAM.resetData(emptyAM);
+        Activity newEvent = new Activity("Presentation", "day after " + helper.getReferenceDateString(), "day after " + helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+        assertCommandBehavior("update 1 from day after " + helper.getReferenceDateString() + " to day after " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
         // able to update event activity with keywords (from/to) (without spaces)
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
-        Activity existingEvent = new Activity("Tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
+        existingEvent = new Activity("Tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         model.addActivity(existingEvent, false);
         
-        Activity newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
+        newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
        
         assertCommandBehavior("update 1 The fromance of tom and jerry FROM " + helper.getReferenceDateString() 
