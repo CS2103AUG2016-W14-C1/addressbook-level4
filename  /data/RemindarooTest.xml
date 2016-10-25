@@ -18,4 +18,14 @@
         <epochDateTime>1477139216163</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>blah</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>can</name>
+        <isCompleted>false</isCompleted>
+    </activity>
 </activitymanager>
