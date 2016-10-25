@@ -52,13 +52,13 @@ public class ActivityList implements Iterable<Activity> {
     	}
     	// Update task to event
     	if (newDateTime != null && newEndDateTime != null) {
+    	    toUpdateInList.setType(ActivityType.EVENT);
     	    toUpdateInList.setDateTime(newDateTime);
     	    toUpdateInList.setEndDateTime(newEndDateTime);
-    	    toUpdateInList.setType(ActivityType.EVENT);
     	// Update task to deadline
 	    } else if (newDateTime != null) {
+	        toUpdateInList.setType(ActivityType.DEADLINE);
     		toUpdateInList.setDateTime(newDateTime);
-    		toUpdateInList.setType(ActivityType.DEADLINE);
     		toUpdateInList.setEndDateTime(null);
     	}
     	Collections.sort(internalList);

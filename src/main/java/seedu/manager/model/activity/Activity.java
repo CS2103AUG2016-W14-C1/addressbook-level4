@@ -113,21 +113,28 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     public void setDateTime(String newDateTime) {
-        if (!this.type.equals(ActivityType.FLOATING)) {
+        assert newDateTime != null;
+        assert !this.type.equals(ActivityType.FLOATING);
+        if (this.dateTime == null) {
+            this.dateTime = new AMDate(newDateTime);
+        } else {
             this.dateTime.setAMDate(newDateTime);
         }
     }
     
     
     public void setEndDateTime(String newEndDateTime) {
+        assert !this.type.equals(ActivityType.FLOATING);
         // remove endDateTime if activity is converted to deadline
         if (this.type.equals(ActivityType.DEADLINE)) {
             assert newEndDateTime == null;
             this.endDateTime = null;
-        }
-        
-        if (this.type.equals(ActivityType.EVENT)) {
-            this.endDateTime.setAMDate(newEndDateTime);
+        } else if (this.type.equals(ActivityType.EVENT)) {
+            if (this.endDateTime == null) {
+                this.endDateTime = new AMDate(newEndDateTime);
+            } else {
+                this.endDateTime.setAMDate(newEndDateTime);
+            }
         }
     }
 	
