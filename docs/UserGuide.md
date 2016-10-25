@@ -50,58 +50,65 @@ Remindaroo is a customized to-do list application that can help you manage your 
 > * Relative day, e.g. `tomorrow`
 > * Specific weekday, e.g. `wednesday`
 >
-> Note: If the timing is not specified, it will be set as 2359.
+> Note: 
+> * If the timing is not specified, it will be set as the current timing.
+> * START_DATE_TIME must be earlier than or equal to END_DATE_TIME.
+> * Words in parameters are case-insensitive.
 
-#### <br>3.2.1 Add New Activity: **`add`**
-Adds an activity into Remindaroo. 3 types of activities are available:
-* _floating task_ : one without specific time
-* _deadline_ : one with just a specific time
+### <br>4.1 Add New Activity : **`add`**
+Adds an activity into Remindaroo. <br>
+
+3 types of activities are available:
+* _task_ : one without specific time
+* _deadline_ : one with a due time
 * _event_ : one with a start time and end time
 
-##### Formats:<br>
--  `add FLOATING_TASK`<br><br>
-	> Example:
-	> `add buy milk`
--  `add DEADLINE on|by DATE_TIME`<br><br>
-	> Example:
-	> `add Submit Assignment 1 on 23 Oct`
-	> `add Submit Assignment 1 by 23 Oct 0900`
+##### Formats:<br><br>
+-  `add TASK`<br>
 
-- `add EVENT from START_DATE_TIME to END_DATE_TIME`<br><br>
-	> Example:
-	> `add Football Tournament from 21 Oct 0800 to 23 Oct 2200`
-	> `add Football Tournament from 21 Oct to 23 Oct`
+	> Example: <br>
+	> `add buy milk` <br>
+-  `add DEADLINE on|by DATE_TIME`<br>
 
-#### <br>3.2.2 View Activities : **`view`**
-Displays the details of the activity / activities<br><br>
+	> Example: <br>
+	> `add Submit Assignment 1 on 23 Oct` <br>
+	> `add Submit Assignment 1 by 23 Oct 09:00` <br>
 
-##### _View an Activity_
-Displays the details of the activity, i.e. date(s), starting time, ending time
+- `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
 
-##### Format:<br><br>
-- `view ACTIVITY_ID`<br><br>
-	> Example:
-	> `view 1`
-	> Activity with ID 1 (e.g. `Football Practice`) will be displayed
+	> Example: <br>
+	> `add Football Tournament from 21 Oct 08:00 to 23 Oct 22:00` <br>
+	> `add Football Tournament from 21 Oct to 23 Oct` <br>
 
-##### <br>_View Activities on given dates_
-Displays details of activities on a given date or  over a given period
+##### Note:<br><br>
+-	Recurring deadlines / events can be added using just an `add` command, by appending ` for RECUR_NUM TIME_UNIT` to it, where `RECUR_NUM` is any positive integer, and `TIME_UNIT` is either `day`, `week`, `month`, `year` (case-insensitive, accepts both singular and plural form).
+	> Example: <br>
+	> `add transfer window closing on 31 oct for 3 years` <br>
+	> `add monthly meeting from 1 Oct 1pm to 1 Oct 3pm for 5 months` <br>
 
-##### Formats:
-- `view DATE_TIME [END_DATE_TIME]`<br><br>
-	> Example:
-	> `view 23 Oct`
-	> `view 23 Oct 30 Oct`
-- `view today`<br><br>
-	> Displays all activities for current day
-- `view tomorrow`<br><br>
-	> Displays all activities for next day
-- `view week`<br><br>
-	> Displays all activities for current week
-- `view month`<br><br>
-	> Displays all activites for current month
+-  If activity name contains keywords, add quotation marks to the keywords that separate the name and time.
+	> Example: <br>
+	> `add read All by Me "by" 23 Oct` <br>
+	> `add screening from Tokyo to Paris "from" 21 Oct "to" 23 Oct` <br>
 
-#### <br>3.2.3 Delete Activity **`delete`**
+-  Keywords in `add` command are case-insensitive.
+	> Example: <br>
+	> `add Submit Assignment BY today` <br>
+	> `add Birthday Party From Today 7pm To Tomorrow 12am` <br>
+
+### <br>4.2 List all Activities : **`list`**
+Displays all activities in Remindaroo
+
+##### Format:
+- `list`
+
+### <br>4.3 Clear all Activities : **`clear`**
+Clear all activities in Remindaroo
+
+##### Format:
+- `clear`
+
+### <br>4.4 Delete Activity : **`delete`**
 Deletes a specific activity from Remindaroo
 
 ##### Format:<br><br>
@@ -110,9 +117,8 @@ Deletes a specific activity from Remindaroo
 	> `delete 1`
 	> Activity with ID 1 (e.g. `Football Practice`) is deleted from the Remindaroo
 
-#### <br>3.2.4 Update Activity **`update`**
+### <br>4.5 Update Activity : **`update`**
 Updates name, date and/or time of specific activity to specified name, date and/or time.
-**Note**: Activity type (_floating task_, _deadline_ or _event_) cannot be changed
 
 ##### Format:<br><br>
 -  `update ACTIVITY_ID to [NEW_NAME] [DATE_TIME] [END_DATE_TIME]`<br><br>
@@ -127,8 +133,7 @@ Updates name, date and/or time of specific activity to specified name, date and/
 	> `update 3 to 11 Oct 1300 11 Oct 1400`
 	> Activity with ID 3 is updated to be on 11 October, 1300 to 1400
 
-
-#### <br>3.2.5 Mark Activity : **`mark`**
+### <br>4.6 Mark Activity : **`mark`**
 Marks an activity with status. If the activity already has a status, it will be overwritten by the status in this command.
 
 Status has to be one of the following (case-insensitive):
@@ -141,59 +146,68 @@ Status has to be one of the following (case-insensitive):
 	> `mark 1 as completed`
 	> Activity with ID 1 (e.g. `do assignment 1`) is marked as completed
 
-#### <br>3.2.6 Find Next Activity : **`next`**
+### <br>4.7 Find Next Activity : **`next`**
 Displays the activity that is scheduled next (closest to current time)
 
 ##### Format:<br><br>
 - `next`
 
-#### <br>3.2.7 Search for Activities : **`search`**
+### <br>4.8 Search for Activities : **`search`**
 Displays list of activities that match description (keyword / date / activity category / status)
 
 ##### Formats:<br><br>
-- `search KEYWORDS`<br><br>
-	> Example:
-	> `search CS2101 tutorial`
-- `search DATE`<br><br>
-	> Example:
-	> `search 23 Oct`
-- `search ACTIVITY_CATEGORY`<br><br>
-	> Example:
-	> `search events`
-- `search STATUS`<br><br>
-    > Example:
-    > `search completed`
+- `search KEYWORDS`<br>
 
-#### <br>3.2.8 Undo last command : **`undo`**
-Undo last command entered
+	> Example:<br>
+	> `search CS2101 tutorial`<br>
 
-##### Format:<br><br>
-- `undo`<br><br>
-	>  Example:
-	>  `add CS2101 Tutorial`
-	>  `undo`
-	>  CS2101 tutorial is removed from Remindaroo
+- `search DATE_TIME [to END_DATE_TIME]`<br>
 
-#### <br>3.2.9 Redo last command: **`redo`**
+	> Example:<br>
+	> `search today`<br>
+	> `search 21 Oct to 23 Oct`<br>
 
-Redo last undo command
-##### Format:<br><br>
-- `redo`<br><br>
-	>  Example:
-	>  `add CS2101 Tutorial`
-	>  `undo`
-	>  `redo`
-	>  CS2101 tutorial is re-added into Remindaroo
+- `search STATUS`<br>
 
-#### <br>3.2.10 Change Data Storage Location : **`store`**
+    > Example:<br>
+    > `search completed`<br>
 
-Specify the path of a new folder for storing the data file of Remindaroo. The user should have permissions to access the folder
+### <br>4.9 Undo last command : **`undo`**
+Undoes last N command(s) entered (default N equals 1).
 
 ##### Format:<br><br>
-- `store DATA_FILE_LOCATION`<br><br>
-	> Example:
-	> `store /User/Jim/Documents`
-	> The Data file now resides in the folder `/User/Jim/Documents`
+- `undo [NUM_OF_TIMES]`<br>
+
+	>  Example:<br>
+	>  `add CS2101 Tutorial`<br>
+	>  `add CS2103 Tutorial`<br>
+	>  `undo 2`<br>
+	>  CS2101 tutorial and CS2103 Tutorial are removed from Remindaroo
+
+### <br>4.10 Redo last command: **`redo`**
+Redoes last N undo command(s) (default N equals 1).
+
+##### Format:<br><br>
+
+- `redo [NUM_OF_TIMES]`<br>
+
+	>  Example:<br>
+	>  `add CS2101 Tutorial`<br>
+	>  `add CS2103 Tutorial`<br>
+	>  `undo 2`<br>
+	>  `redo 2`<br>
+	>  CS2101 tutorial and CS2103 Tutorial are re-added to Remindaroo
+
+### <br>4.11 Change Data Storage Location : **`store`**
+Changes the location of the data file of Remindaroo to the specified path (relative to the directory of the Remindaroo app).
+
+##### Format:<br>
+
+- `store NEW_DATA_FILE_LOCATION`<br>
+
+	> Example:<br>
+	> `store /new_data/Remindaroo.xml`<br>
+	> The Data file `Remindaroo.xml` now resides in the folder `./new_data`
 
 #### <br>3.2.11 Show Help Menu : **`help`**
 Displays the instruction for using each command
@@ -221,19 +235,20 @@ There is no need to save manually.
 
 | Commands        | Format        |
 | ----------------|:-------------:|
-| Add Floating Task | `add FLOATING_TASK` |
+| Add Task | `add TASK` |
 | Add Deadline | `add DEADLINE on|by DATE_TIME` |
-| Add Event| `add EVENT from START_DATE_TIME to END_DATE_TIME`
-| View an Activity| `view ACTIVITY_ID`|
-| View Activities in a given period| `view DATE_TIME [END_DATE_TIME]` |
+| Add Event | `add EVENT from START_DATE_TIME to END_DATE_TIME` |
+| Add Recurring Deadline / Event | `add DEADLINE_AND_TIME|EVENT_AND_TIME for RECUR_NUM TIME_UNIT` |
+| List all Activities | `list` |
+| Clear all Activities | `clear` |
 | Delete Activity | `delete ACTIVITY_ID`|
 | Update Activity | `update ACTIVITY_ID to [NEW_NAME] [DATE_TIME] [END_DATE_TIME]` |
 | Mark Activity   | `mark ACTIVITY_ID as STATUS` |
 | Next Activity   | `next` |
-| Search Activity | `search KEYWORD|DATE|CATEGORY`
-| Undo            | `undo` |
-| Redo            | `redo` |
-| Change data storage location | `store DATA FILE LOCATION` |
+| Search Activity | `search KEYWORDS | DATE_TIME [to END_DATE_TIME] | STATUS`
+| Undo            | `undo [NUMBER_OF_TIMES]` |
+| Redo            | `redo [NUMBER_OF_TIMES]` |
+| Change data storage location | `store NEW_DATA_FILE_LOCATION` |
 | Help            | `help [COMMAND]` |
 | Exit            | `exit` |
 
