@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.joestelmach.natty.*;
 
+@SuppressWarnings("deprecation")
 public class AMDate {
+    
+    private enum TimeUnit { DAY, WEEK, MONTH, YEAR }
     
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     
@@ -49,6 +52,28 @@ public class AMDate {
         this.dateTime.setHours(23);
         this.dateTime.setMinutes(59);
         this.dateTime.setSeconds(59);
+    }
+    
+    /**
+     * Adds offset number of time unit to dateTime
+     */
+    public void addOffset(int offset, String unit) {
+        TimeUnit timeUnit = TimeUnit.valueOf(unit.toUpperCase());
+        switch (timeUnit) {
+        
+        case DAY:
+            this.dateTime.setDate(this.dateTime.getDate() + offset);
+            return;
+        case WEEK:
+            this.dateTime.setDate(this.dateTime.getDate() + (offset * 7));
+            return;
+        case MONTH:
+            this.dateTime.setMonth(this.dateTime.getMonth() + offset);
+            return;
+        case YEAR:
+            this.dateTime.setYear(this.dateTime.getYear() + offset);
+            return;
+        }
     }
     
     /** dateTime accessors **/

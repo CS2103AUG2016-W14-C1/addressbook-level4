@@ -259,6 +259,62 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
+    
+    @Test
+    public void execute_add_cannotRecurZeroTimes() throws Exception {
+        assertCommandBehavior("add zero no count on today for 0 days", MESSAGE_RECUR_NOT_POSITIVE);
+        assertCommandBehavior("add zero sum game from today to tomorrow for 0 year", MESSAGE_RECUR_NOT_POSITIVE);
+    }
+    
+    @Test
+    public void execute_add_recurCorrectly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ActivityManager expectedAM = new ActivityManager();
+        Activity toBeAdded = null;
+        int repeat;
+        
+        // add recurring deadline by day
+        for (repeat = 0; repeat < 3; repeat++) {
+            toBeAdded = new Activity("Every day I'm shuffling", helper.getReferenceDateString(), repeat, "day");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Every day I'm shuffling by " + helper.getReferenceDateString() + " for 3 days",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // add recurring deadline by week
+        for (repeat = 0; repeat < 2; repeat++) {
+            toBeAdded = new Activity("Clubbing on the dance floor", helper.getReferenceDateString(), repeat, "Week");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Clubbing on the dance floor \"on\" " + helper.getReferenceDateString() + " for 2 week",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // add recurring event by month
+        for (repeat = 0; repeat < 12; repeat++) {
+            toBeAdded = new Activity("Monthly general meeting from boss", helper.getReferenceDateString(), helper.getReferenceDateString(), repeat, "MONTH");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Monthly general meeting from boss \"from\" " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString() + " for 12 months",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // add recurring event by year
+        for (repeat = 0; repeat < 1; repeat++) {
+            toBeAdded = new Activity("Birthday party", helper.getReferenceDateString(), helper.getReferenceDateString(), repeat, "year");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Birthday party from " + helper.getReferenceDateString() 
+                              + " \"to\" " + helper.getReferenceDateString() + " for 1 year",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
 
     @Test
     public void execute_list_showsAllActivities() throws Exception {
