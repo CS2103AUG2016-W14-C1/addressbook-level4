@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.events.ui.FloatingTaskPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
 
 import java.util.logging.Logger;
@@ -89,6 +90,10 @@ public class ActivityListPanel extends UiPart {
                 raise(new ActivityPanelUpdateEvent(newValue));
             }
         });
+    }
+    
+    public void updateFloatingTaskPanel(int indexOffset) {
+    	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
     public void updateActivityCard(Activity newActivity, int indexOffset) {

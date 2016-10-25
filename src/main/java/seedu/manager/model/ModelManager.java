@@ -6,6 +6,7 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.events.ui.FloatingTaskPanelUpdateEvent;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
@@ -66,22 +67,29 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateActivityManagerChanged() {
         raise(new ActivityManagerChangedEvent(activityManager));
+        
     }
     
     /** Raises an event to indicate that the list of activities need to be updated */
     private void indicateActivityPanelUpdate(Activity updatedActivity) {
         raise(new ActivityPanelUpdateEvent(updatedActivity));
     }
+    
+    private void indicateFloatingTaskPanelUpdate(){
+    	raise(new FloatingTaskPanelUpdateEvent(getFilteredFloatingActivityList()));
+    }
 
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
+        indicateFloatingTaskPanelUpdate();
         indicateActivityManagerChanged();
     }
 
     @Override
     public synchronized void addActivity(Activity activity) {
         activityManager.addActivity(activity);
+        indicateFloatingTaskPanelUpdate();
         updateFilteredListToShowAll();
         indicateActivityManagerChanged();
     }
@@ -92,6 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
+        indicateFloatingTaskPanelUpdate();
     }
 
     @Override
