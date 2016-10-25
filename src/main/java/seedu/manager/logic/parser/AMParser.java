@@ -31,16 +31,24 @@ public class AMParser {
             Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+) ((\"?)for\\11) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
                     Pattern.CASE_INSENSITIVE);
     
-    private static final Pattern EVENT_ARGS_FORMAT =
+    private static final Pattern ADD_EVENT_ARGS_FORMAT =
             Pattern.compile("^(?<name>.+) ((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)$",
+                    Pattern.CASE_INSENSITIVE);
+    
+    private static final Pattern UPDATE_EVENT_ARGS_FORMAT =
+            Pattern.compile("^(?<name>.+ )?((\"?)(from)\\3) (?<date>.+) ((\"?)(to)\\7) (?<endDate>.+)$",
                     Pattern.CASE_INSENSITIVE);
 
     private static final Pattern DEADLINE_RECURRING_ARGS_FORMAT =
             Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+) ((\"?)for\\7) (?<num>\\d+) (?<unit>(day|week|month|year))(s?)$",
                     Pattern.CASE_INSENSITIVE);
     
-    private static final Pattern DEADLINE_ARGS_FORMAT =
+    private static final Pattern ADD_DEADLINE_ARGS_FORMAT =
             Pattern.compile("^(?<name>.+) ((\"?)(on|by)\\3) (?<date>.+)$", 
+                    Pattern.CASE_INSENSITIVE);
+    
+    private static final Pattern UPDATE_DEADLINE_ARGS_FORMAT =
+            Pattern.compile("^(?<name>.+ )?((\"?)(on|by)\\3) (?<date>.+)$", 
                     Pattern.CASE_INSENSITIVE);
     
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
@@ -124,9 +132,9 @@ public class AMParser {
     private Command prepareAdd(String args){
         // compare with different activity types format and return AddCommand accordingly
         final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher eventMatcher = EVENT_ARGS_FORMAT.matcher(args.trim());
+        final Matcher eventMatcher = ADD_EVENT_ARGS_FORMAT.matcher(args.trim());
         final Matcher deadlineRecurringMatcher = DEADLINE_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher deadlineMatcher = DEADLINE_ARGS_FORMAT.matcher(args.trim());
+        final Matcher deadlineMatcher = ADD_DEADLINE_ARGS_FORMAT.matcher(args.trim());
         final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(args.trim());
         
         try {
@@ -240,13 +248,13 @@ public class AMParser {
         
         // compare with different activity types format and return UpdateCommand accordingly
         String arguments = matcher.group("arguments").trim();
-        final Matcher eventMatcher = EVENT_ARGS_FORMAT.matcher(arguments.trim());
-        final Matcher deadlineMatcher = DEADLINE_ARGS_FORMAT.matcher(arguments.trim());
+        final Matcher eventMatcher = UPDATE_EVENT_ARGS_FORMAT.matcher(arguments.trim());
+        final Matcher deadlineMatcher = UPDATE_DEADLINE_ARGS_FORMAT.matcher(arguments.trim());
         final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(arguments.trim());
         
         try {
             if (eventMatcher.matches()) {
-                final String eventName = eventMatcher.group("name").trim();
+                final String eventName = (eventMatcher.group("name") == null) ? null : eventMatcher.group("name").trim();
                 final String eventDate = eventMatcher.group("date").trim();
                 final String eventEndDate = eventMatcher.group("endDate").trim();
                 
@@ -254,7 +262,7 @@ public class AMParser {
                 
                 return new UpdateCommand(targetIndex, eventName, eventDate, eventEndDate);
             } else if (deadlineMatcher.matches()) {
-                final String deadlineName = deadlineMatcher.group("name").trim();
+                final String deadlineName = (deadlineMatcher.group("name") == null) ? null : deadlineMatcher.group("name").trim();
                 final String deadlineDate = deadlineMatcher.group("date").trim();
                 
                 StringUtil.validateAMDate(deadlineDate);
