@@ -92,7 +92,8 @@ public class ActivityListPanel extends UiPart {
         });
     }
     
-    public void updateActivityListPanel(int indexOffset) {
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
+        activityListView.setItems(observableList);
     	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     

@@ -135,8 +135,8 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleActivityListPanelUpdateEvent(ActivityListPanelUpdateEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList().size());
-    	mainWindow.getActivityListPanel().updateActivityListPanel(0);
+    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
+    	mainWindow.getActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList(), 0);
     }
 
 }
