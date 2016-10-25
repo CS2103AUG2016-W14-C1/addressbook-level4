@@ -73,6 +73,9 @@ public class AMParser {
         case UpdateCommand.COMMAND_WORD:
             return prepareUpdate(arguments);
             
+        case UndoCommand.COMMAND_WORD:
+            return prepareUndo(arguments);
+            
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
             
@@ -266,7 +269,23 @@ public class AMParser {
         return new UnmarkCommand(index.get());
     }
     
-
+    /**
+     * Parses arguments in the context of the undo command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    
+    private Command prepareUndo(String args) {
+        // Validate index format
+        Optional<Integer> index = parseIndex(args);
+        if(index.isPresent()){
+            return new UndoCommand(index.get());
+        } else {
+            return new UndoCommand();
+        }
+    }
+    
     /**
      * Parses arguments in the context of the select activity command.
      *

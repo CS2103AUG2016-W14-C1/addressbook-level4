@@ -6,11 +6,12 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
-import seedu.manager.commons.events.ui.FloatingTaskPanelUpdateEvent;
+import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -25,9 +26,12 @@ import java.util.stream.Collectors;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final ActivityManager activityManager;
-    private final FilteredList<Activity> filteredActivities;
-
+    private ActivityManager activityManager;
+    private FilteredList<Activity> filteredActivities;
+    
+    ArrayList<ActivityManager> managerHistory = new ArrayList<ActivityManager>();
+    int historyIndex = -1;
+    
     /**
      * Initializes a ModelManager with the given ActivityManager
      * ActivityManager and its variables should not be null
@@ -41,6 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         activityManager = new ActivityManager(src);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
+        recordManagerHistory(activityManager);
     }
 
     public ModelManager() {
@@ -51,11 +56,13 @@ public class ModelManager extends ComponentManager implements Model {
         activityManager = new ActivityManager(initialData);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
         updateFilteredActivityList();
+        recordManagerHistory(activityManager);
     }
 
     @Override
     public void resetData(ReadOnlyActivityManager newData) {
         activityManager.resetData(newData);
+        recordManagerHistory(activityManager);
         indicateActivityManagerChanged();
     }
 
@@ -75,21 +82,23 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ActivityPanelUpdateEvent(updatedActivity));
     }
     
-    private void indicateFloatingTaskPanelUpdate(){
-    	raise(new FloatingTaskPanelUpdateEvent(getFilteredFloatingActivityList()));
+    private void indicateActivityListPanelUpdate(){
+    	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList()));
     }
 
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
-        indicateFloatingTaskPanelUpdate();
+        recordManagerHistory(activityManager);
+        indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
 
     @Override
     public synchronized void addActivity(Activity activity) {
         activityManager.addActivity(activity);
-        indicateFloatingTaskPanelUpdate();
+        recordManagerHistory(activityManager);
+        indicateActivityListPanelUpdate();
         updateFilteredListToShowAll();
         indicateActivityManagerChanged();
     }
@@ -97,15 +106,17 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
+        recordManagerHistory(activityManager);
         updateFilteredListToShowAll();
         indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
-        indicateFloatingTaskPanelUpdate();
+        indicateActivityListPanelUpdate();
     }
 
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
+        recordManagerHistory(activityManager);
         updateFilteredActivityList();
         indicateActivityManagerChanged();
     }
@@ -113,7 +124,34 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
+        recordManagerHistory(activityManager);
         updateFilteredActivityList();
+        indicateActivityManagerChanged();
+    }
+    
+    private void recordManagerHistory(ActivityManager am) {
+        // Overwrite alternate history
+        while (managerHistory.size() - 1 > historyIndex) {
+            managerHistory.remove(managerHistory.size() - 1);
+        }
+        managerHistory.add(new ActivityManager(am));
+        historyIndex++;
+    }
+    
+    public int getHistoryIndex() {
+        return historyIndex;
+    }
+    
+    @Override
+    public synchronized void undoCommand(int offset) {
+        historyIndex -= offset;
+        activityManager = managerHistory.get(historyIndex);
+        filteredActivities = new FilteredList<>(activityManager.getActivities());
+        for (Activity act : filteredActivities) {
+            System.out.println(act.getName());
+        }
+        updateFilteredListToShowAll();
+        indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
 

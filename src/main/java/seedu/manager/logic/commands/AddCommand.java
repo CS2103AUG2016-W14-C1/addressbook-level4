@@ -9,7 +9,7 @@ import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
 
 /**
- * Adds a person to the address book.
+ * Adds an activity to the activity manager.
  */
 public class AddCommand extends Command {
 

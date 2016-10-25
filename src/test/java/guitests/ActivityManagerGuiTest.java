@@ -41,6 +41,7 @@ public abstract class ActivityManagerGuiTest {
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
     protected ActivityListPanelHandle activityListPanel;
+    protected ActivityListPanelHandle floatingActivityListPanel;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;
@@ -60,7 +61,8 @@ public abstract class ActivityManagerGuiTest {
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
-            activityListPanel = mainGui.getPersonListPanel();
+            activityListPanel = mainGui.getActivityListPanel();
+            floatingActivityListPanel = mainGui.getFloatingActivityListPanel();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
             this.stage = stage;
