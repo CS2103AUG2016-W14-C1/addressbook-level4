@@ -111,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
-        indicateActivityPanelUpdate(activity);
+        //indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate();
         recordManagerHistory(activityManager);
@@ -138,7 +138,14 @@ public class ModelManager extends ComponentManager implements Model {
         while (managerHistory.size() - 1 > historyIndex) {
             managerHistory.remove(managerHistory.size() - 1);
         }
-        managerHistory.add(new ActivityManager(am));
+        ActivityManager savedAM = new ActivityManager();
+        for (Activity activity : am.getActivities()) {
+            savedAM.addActivity(new Activity(activity));
+            System.out.print(activity.getName() + " ");
+            System.out.println();
+            
+        }
+        managerHistory.add(savedAM);
         historyIndex++;
     }
     

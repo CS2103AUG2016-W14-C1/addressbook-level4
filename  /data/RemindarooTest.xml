@@ -2,19 +2,20 @@
 <activitymanager>
     <activity>
         <type>DEADLINE</type>
-        <name>abc</name>
-        <epochDateTime>1475408107120</epochDateTime>
+        <name>deadline</name>
+        <epochDateTime>1475497955906</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
         <type>DEADLINE</type>
-        <name>blah</name>
-        <epochDateTime>1477395456149</epochDateTime>
+        <name>again</name>
+        <epochDateTime>1477053127677</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
-        <type>FLOATING</type>
-        <name>ok</name>
+        <type>DEADLINE</type>
+        <name>blah 21 oct</name>
+        <epochDateTime>1477139216163</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>

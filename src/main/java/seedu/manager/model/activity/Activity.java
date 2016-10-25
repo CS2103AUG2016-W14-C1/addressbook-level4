@@ -92,9 +92,17 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public Activity(ReadOnlyActivity source) {
         this.type = source.getType();
         this.name = source.getName();
-        this.status = source.getStatus();
-        this.dateTime = source.getDateTime();
-        this.endDateTime = source.getDateTime();
+        this.status = new Status(source.getStatus());
+        if (source.getDateTime() != null) {
+            this.dateTime = new AMDate(source.getDateTime().getTime());
+        } else {
+            this.dateTime = null;
+        }
+        if (source.getEndDateTime() != null) {
+            this.endDateTime = new AMDate(source.getEndDateTime().getTime());
+        } else {
+            this.endDateTime = null;
+        }
     }
 	
     @Override
