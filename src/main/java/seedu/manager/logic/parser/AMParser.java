@@ -94,6 +94,9 @@ public class AMParser {
         case UndoCommand.COMMAND_WORD:
             return prepareUndo(arguments);
             
+        case RedoCommand.COMMAND_WORD:
+        	return prepareRedo(arguments);
+            
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
             
@@ -336,10 +339,27 @@ public class AMParser {
     }
     
     /**
-     * Parses arguments in the context of the select activity command.
+     * Parses arguments in the context of the redo command.
      *
      * @param args full command args string
      * @return the prepared command
+     */
+    //@@author A0144881Y
+    private Command prepareRedo(String args) {
+        // Validate index format
+        Optional<Integer> index = parseIndex(args);
+        if(index.isPresent()){
+            return new RedoCommand(index.get());
+        } else {
+            return new RedoCommand();
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the select activity command.
+     *
+     * @param args full command args string
+     * @return the prepared commandLESS_THAN_ZERO
      */
     private Command prepareSelect(String args) {
         Optional<Integer> index = parseIndex(args);
