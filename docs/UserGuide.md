@@ -9,6 +9,7 @@
 4. [Summary of Commands](#4-summary-of-commands)
 5. [Troubleshooting](#5-troubleshooting)
 
+<!-- @@author A0144704L -->
 ## 2. About
 
 Remindaroo is a customized to-do list application that can help you manage your busy schedule and organize your to-dos. Whether its working on a project, buying groceries or planning a holiday, Remindaroo aims to help you get stuff done. So let's get started!
@@ -31,6 +32,7 @@ Remindaroo is a customized to-do list application that can help you manage your 
    * **`exit`** : exits the app
 6. Refer to the [Commands](#32-commands) section below for details of each command.<br>
 
+<!-- @@author A0139797E -->
 ### <br> 3.2 Commands
 
 > Format notations:
@@ -50,7 +52,7 @@ Remindaroo is a customized to-do list application that can help you manage your 
 > * Relative day, e.g. `tomorrow`
 > * Specific weekday, e.g. `wednesday`
 >
-> Note: 
+> Note:
 > * If the timing is not specified, it will be set as the current timing.
 > * START_DATE_TIME must be earlier than or equal to END_DATE_TIME.
 > * Words in parameters are case-insensitive.
@@ -80,6 +82,7 @@ Adds an activity into Remindaroo. <br>
 	> `add Football Tournament from 21 Oct 08:00 to 23 Oct 22:00` <br>
 	> `add Football Tournament from 21 Oct to 23 Oct` <br>
 
+<!-- @@author A0135730M -->
 ##### Note:<br><br>
 -	Recurring deadlines / events can be added using just an `add` command, by appending ` for RECUR_NUM TIME_UNIT` to it, where `RECUR_NUM` is any positive integer, and `TIME_UNIT` is either `day`, `week`, `month`, `year` (case-insensitive, accepts both singular and plural form).
 	> Example: <br>
@@ -108,6 +111,7 @@ Clear all activities in Remindaroo
 ##### Format:
 - `clear`
 
+<!-- @@author A0144881Y -->
 ### <br>4.4 Delete Activity : **`delete`**
 Deletes a specific activity from Remindaroo
 
@@ -133,6 +137,7 @@ Updates name, date and/or time of specific activity to specified name, date and/
 	> `update 3 to 11 Oct 1300 11 Oct 1400`
 	> Activity with ID 3 is updated to be on 11 October, 1300 to 1400
 
+<!-- @@author A0144704L -->
 ### <br>4.6 Mark Activity : **`mark`**
 Marks an activity with status. If the activity already has a status, it will be overwritten by the status in this command.
 
@@ -152,6 +157,7 @@ Displays the activity that is scheduled next (closest to current time)
 ##### Format:<br><br>
 - `next`
 
+<!-- @@author A0135730M -->
 ### <br>4.8 Search for Activities : **`search`**
 Displays list of activities that match description (keyword / date / activity category / status)
 
@@ -172,6 +178,7 @@ Displays list of activities that match description (keyword / date / activity ca
     > Example:<br>
     > `search completed`<br>
 
+<!-- @@author A0139797E -->
 ### <br>4.9 Undo last command : **`undo`**
 Undoes last N command(s) entered (default N equals 1).
 
@@ -198,6 +205,7 @@ Redoes last N undo command(s) (default N equals 1).
 	>  `redo 2`<br>
 	>  CS2101 tutorial and CS2103 Tutorial are re-added to Remindaroo
 
+<!-- @@author A0144704L -->
 ### <br>4.11 Change Data Storage Location : **`store`**
 Changes the location of the data file of Remindaroo to the specified path (relative to the directory of the Remindaroo app).
 
@@ -231,6 +239,8 @@ Exits the program
 ActivityManager data is saved in the hard disk automatically after any command changes the data.
 There is no need to save manually.
 <br>
+
+<!-- @@author A0144881Y -->
 ## 4. Summary of Commands
 
 | Commands        | Format        |

@@ -15,6 +15,7 @@
     D. [Product Survey](#d-product-survey) <br>
     E. [Glossary](#e-glossary)<br>
 
+<!-- @@author A0139797E -->
 ## 1. Introduction
 
 Remindaroo is an activity manager that helps users track tasks, deadlines, as well as events. It is a **Java CLI** application with a basic **GUI**.
@@ -51,6 +52,7 @@ This guide describes the design and implementation of Remindaroo. It aims to hel
       (This is because Gradle downloads library files from servers during the project set up process)
   > * If Eclipse auto-changed any settings files during the import process, you can discard those changes
 
+<!-- @@author A0144881Y -->
 ## 3. Design
 ### Architecture
 
@@ -92,6 +94,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 Each component is explained in greater detail below.
 
+<!-- @@author A0139797E -->
 ### UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
@@ -107,7 +110,7 @@ The `UI` component
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
-
+<!-- @@author A0144881Y -->
 ### Logic component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
@@ -126,6 +129,7 @@ The flow of `Logic` component is explained as follows.
 <img src="images/DeleteActivitySdForLogic.png" width="800"><br>
 > Figure 6: _Sequence Diagram_ for interactions within the `Logic` component for `execute("delete 1")` API call.
 
+<!-- @@author A0135730M -->
 ### Model component
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
@@ -141,6 +145,7 @@ The `Model` component
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components
 
+<!-- @@author A0144704L -->
 ### Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
@@ -157,6 +162,7 @@ The `Storage` component
 
 Classes used by multiple components are in the `seedu.manager.commons` package.
 
+<!-- @@author A0144881Y -->
 ## 4. Implementation
 
 ### Logging
@@ -180,6 +186,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`)
 
+<!-- @@author A0139797E -->
 ## 5. Testing
 
 Tests can be found in the `./src/test/java` folder.
@@ -209,6 +216,7 @@ We have two types of tests:
 **Headless GUI Testing** :
 Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running. See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
 
+<!-- @@author A0144881Y -->
 ## 6. Dev Ops
 
 ### Build Automation
@@ -236,6 +244,7 @@ a. Include those libraries in the repo (this bloats the repo size)
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 ## 7. Appendices
+<!-- @@author A0144704L -->
 ### A. User Stories
 
 <br>
@@ -263,7 +272,7 @@ b. Require developers to download those libraries manually (this creates extra w
 | ** | User | Search items by date / free time slots | Organize my schedule easily |
 
 > Table 1: User Stories of Remindaroo
-
+<-- @@author A0135730M -->
 ### B. Use Cases
 
 #### Use case: Add an activity
@@ -397,6 +406,7 @@ Use case ends.
 > System displays error message<br>
 > Use case ends.
 
+<!-- @@author A0139797E -->
 ### C. Non-Functional Requirements
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 activities.
