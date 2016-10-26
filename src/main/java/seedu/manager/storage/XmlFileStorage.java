@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores activity manager data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given activity manager data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableActivityManager addressBook)
             throws FileNotFoundException {
@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns activity manager in the file or an empty activity manager
      */
     public static XmlSerializableActivityManager loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {

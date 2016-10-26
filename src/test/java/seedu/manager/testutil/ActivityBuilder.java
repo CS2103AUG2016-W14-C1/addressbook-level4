@@ -18,13 +18,21 @@ public class ActivityBuilder {
         this.activity.setName(name);
         return this;
     }
-
-    public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
-        for (String tag: tags) {
-            activity.getTags().add(new Tag(tag));
-        }
+    
+    //@@author A0144704L
+    public ActivityBuilder withNameandStatus(String name, boolean status) throws IllegalValueException {
+        this.activity.setName(name);
+        this.activity.setStatus(status);
         return this;
     }
+    
+    //TODO: remove if not using tags
+    //    public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
+    //        for (String tag: tags) {
+    //            activity.getTags().add(new Tag(tag));
+    //        }
+    //        return this;
+    //    }
 
     public TestActivity build() {
         return this.activity;

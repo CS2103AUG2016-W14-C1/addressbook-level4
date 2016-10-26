@@ -58,11 +58,7 @@ public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
     public ActivityList getActivityList() {
         ActivityList lists = new ActivityList();
         for (XmlAdaptedActivity p : activities) {
-            try {
-                lists.add(p.toModelType());
-            } catch (IllegalValueException e) {
-
-            }
+            lists.add(p.toModelType());
         }
         return lists;
     }
@@ -70,12 +66,7 @@ public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
     @Override
     public List<Activity> getListActivity() {
         return activities.stream().map(p -> {
-            try {
-                return p.toModelType();
-            } catch (IllegalValueException e) {
-                e.printStackTrace();
-                return null;
-            }
+            return p.toModelType();
         }).collect(Collectors.toCollection(ArrayList::new));
     }
 

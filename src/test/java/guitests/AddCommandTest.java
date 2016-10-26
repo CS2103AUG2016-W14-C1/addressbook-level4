@@ -13,23 +13,18 @@ import static org.junit.Assert.assertTrue;
 public class AddCommandTest extends ActivityManagerGuiTest {
 
     @Test
+    //@@author A0139797E
     public void add() {
         //add one activity
         TestActivity[] currentList = ta.getTypicalActivities();
         TestActivity activityToAdd = ta.groceries;
         assertAddSuccess(activityToAdd, currentList);
-        currentList = TestUtil.addPersonsToList(currentList, activityToAdd);
+        currentList = TestUtil.addActivitiesToList(currentList, activityToAdd);
 
         //add another activity
         activityToAdd = ta.reading;
         assertAddSuccess(activityToAdd, currentList);
-        currentList = TestUtil.addPersonsToList(currentList, activityToAdd);
-
-        //add duplicate activity
-        // TODO: Re-implement only if duplicate entries are not allowed
-        // commandBox.runCommand(ta.groceries.getAddCommand());
-        // assertResultMessage(AddCommand.MESSAGE_DUPLICATE_ACTIVITY);
-        // assertTrue(activityListPanel.isListMatching(currentList));
+        currentList = TestUtil.addActivitiesToList(currentList, activityToAdd);
 
         //add to empty list
         commandBox.runCommand("clear");
@@ -45,12 +40,13 @@ public class AddCommandTest extends ActivityManagerGuiTest {
         commandBox.runCommand(activityToAdd.getAddCommand());
 
         //confirm the new card contains the right data
-        ActivityCardHandle addedCard = activityListPanel.navigateToPerson(activityToAdd.getName());
+        ActivityCardHandle addedCard = floatingActivityListPanel.navigateToPerson(activityToAdd.getName());
         assertMatching(activityToAdd, addedCard);
 
-        //confirm the list now contains all previous persons plus the new person
-        TestActivity[] expectedList = TestUtil.addPersonsToList(currentList, activityToAdd);
-        assertTrue(activityListPanel.isListMatching(expectedList));
+        //confirm the list now contains all previous activities plus the new activities
+        TestActivity[] expectedList = TestUtil.addActivitiesToList(currentList, activityToAdd);
+        // TODO: check that panel list matches exactly
+        assertTrue(floatingActivityListPanel.isListMatching(expectedList));
     }
 
 }

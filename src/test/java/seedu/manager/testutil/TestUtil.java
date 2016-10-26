@@ -63,18 +63,19 @@ public class TestUtil {
 
     public static final Activity[] sampleActivityData = getSampleActivityData();
 
+    //@@author A0135730M
     private static Activity[] getSampleActivityData() {
 //        try {
             return new Activity[]{
-                    new FloatingActivity("buy milk"),
-                    new FloatingActivity("buy vegetable"),
-                    new FloatingActivity("Submit Assignment 1"),
-                    new FloatingActivity("Assignment 2 deadline"),
-                    new FloatingActivity("CS2103T tutorial"),
-                    new FloatingActivity("CS2101 tutorial"),
-                    new FloatingActivity("World Cup"),
-                    new FloatingActivity("football tournament"),
-                    new FloatingActivity("Singing Competition")
+                    new Activity("buy milk"),
+                    new Activity("buy vegetable"),
+                    new Activity("Submit Assignment 1"),
+                    new Activity("Assignment 2 deadline"),
+                    new Activity("CS2103T tutorial"),
+                    new Activity("CS2101 tutorial"),
+                    new Activity("World Cup"),
+                    new Activity("football tournament"),
+                    new Activity("Singing Competition")
             };
 //        } catch (IllegalValueException e) {
 //            assert false;
@@ -275,48 +276,48 @@ public class TestUtil {
 
     /**
      * Removes a subset from the list of persons.
-     * @param persons The list of persons
-     * @param personsToRemove The subset of persons.
+     * @param activities The list of persons
+     * @param activitiesToRemove The subset of persons.
      * @return The modified persons after removal of the subset from persons.
      */
-    public static TestActivity[] removePersonsFromList(final TestActivity[] persons, TestActivity... personsToRemove) {
-        List<TestActivity> listOfPersons = asList(persons);
-        listOfPersons.removeAll(asList(personsToRemove));
-        return listOfPersons.toArray(new TestActivity[listOfPersons.size()]);
+    public static TestActivity[] removeActivitiesFromList(final TestActivity[] activities, TestActivity... activitiesToRemove) {
+        List<TestActivity> listOfActivities = asList(activities);
+        listOfActivities.removeAll(asList(activitiesToRemove));
+        return listOfActivities.toArray(new TestActivity[listOfActivities.size()]);
     }
 
 
     /**
-     * Returns a copy of the list with the person at specified index removed.
+     * Returns a copy of the list with the activity at specified index removed.
      * @param list original list to copy from
      * @param targetIndexInOneIndexedFormat e.g. if the first element to be removed, 1 should be given as index.
      */
     public static TestActivity[] removeActivityFromList(final TestActivity[] list, int targetIndexInOneIndexedFormat) {
-        return removePersonsFromList(list, list[targetIndexInOneIndexedFormat-1]);
+        return removeActivitiesFromList(list, list[targetIndexInOneIndexedFormat-1]);
     }
 
     /**
      * Replaces persons[i] with a person.
-     * @param persons The array of persons.
-     * @param person The replacement person
-     * @param index The index of the person to be replaced.
+     * @param activities The array of persons.
+     * @param activity The replacement activity
+     * @param index The index of the activity to be replaced.
      * @return
      */
-    public static TestActivity[] replacePersonFromList(TestActivity[] persons, TestActivity person, int index) {
-        persons[index] = person;
-        return persons;
+    public static TestActivity[] replaceActivityFromList(TestActivity[] activities, TestActivity activity, int index) {
+        activities[index] = activity;
+        return activities;
     }
 
     /**
-     * Appends persons to the array of persons.
-     * @param persons A array of persons.
-     * @param personsToAdd The persons that are to be appended behind the original array.
-     * @return The modified array of persons.
+     * Appends persons to the array of activities.
+     * @param activities A array of activities.
+     * @param activitiesToAdd The activities that are to be appended behind the original array.
+     * @return The modified array of activities.
      */
-    public static TestActivity[] addPersonsToList(final TestActivity[] persons, TestActivity... personsToAdd) {
-        List<TestActivity> listOfPersons = asList(persons);
-        listOfPersons.addAll(asList(personsToAdd));
-        return listOfPersons.toArray(new TestActivity[listOfPersons.size()]);
+    public static TestActivity[] addActivitiesToList(final TestActivity[] activities, TestActivity... activitiesToAdd) {
+        List<TestActivity> listOfActivities = asList(activities);
+        listOfActivities.addAll(asList(activitiesToAdd));
+        return listOfActivities.toArray(new TestActivity[listOfActivities.size()]);
     }
 
     private static <T> List<T> asList(T[] objs) {
@@ -333,7 +334,7 @@ public class TestUtil {
 
     public static Tag[] getTagList(String tags) {
 
-        if (tags.equals("")) {
+        if ("".equals(tags)) {
             return new Tag[]{};
         }
 

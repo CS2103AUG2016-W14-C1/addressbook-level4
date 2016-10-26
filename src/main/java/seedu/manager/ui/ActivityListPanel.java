@@ -13,12 +13,13 @@ import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
 
 import java.util.logging.Logger;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of activities.
  */
 public class ActivityListPanel extends UiPart {
     private final Logger logger = LogsCenter.getLogger(ActivityListPanel.class);
@@ -49,21 +50,21 @@ public class ActivityListPanel extends UiPart {
     }
 
     public static ActivityListPanel load(Stage primaryStage, AnchorPane activityListPlaceholder,
-                                       ObservableList<Activity> observableList) {
+                                       ObservableList<Activity> observableList, int indexOffset) {
         ActivityListPanel activityListPanel =
                 UiPartLoader.loadUiPart(primaryStage, activityListPlaceholder, new ActivityListPanel());
-        activityListPanel.configure(observableList);
+        activityListPanel.configure(observableList, indexOffset);
         return activityListPanel;
     }
 
-    private void configure(ObservableList<Activity> observableList) {
-        setConnections(observableList);
+    private void configure(ObservableList<Activity> observableList, int indexOffset) {
+        setConnections(observableList, indexOffset);
         addToPlaceholder();
     }
 
-    private void setConnections(ObservableList<Activity> observableList) {
+    private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
         activityListView.setItems(observableList);
-        activityListView.setCellFactory(listView -> new ActivityListViewCell());
+        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
         setEventHandlerForSelectionChangeEvent();
         setEventHandlerForUpdateEvent();
     }
@@ -91,9 +92,16 @@ public class ActivityListPanel extends UiPart {
         });
     }
     
-    public void updateActivityCard(Activity newActivity) {
+    //@@author A0139797E
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
+        activityListView.setItems(observableList);
+    	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    }
+    
+    //@@author A0144881Y
+    public void updateActivityCard(Activity newActivity, int indexOffset) {
         // Refresh activity card cells to update GUI
-        activityListView.setCellFactory(listView -> new ActivityListViewCell());
+        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
     public void scrollTo(int index) {
@@ -104,11 +112,14 @@ public class ActivityListPanel extends UiPart {
     }
 
     class ActivityListViewCell extends ListCell<Activity> {
+    	private int indexOffset;
 
-        public ActivityListViewCell() {
+        public ActivityListViewCell(int indexOffset) {
+        	this.indexOffset = indexOffset;
         }
 
         @Override
+        //@@author A0144881Y
         protected void updateItem(Activity activity, boolean empty) {
             super.updateItem(activity, empty);
 
@@ -116,7 +127,7 @@ public class ActivityListPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(ActivityCard.load(activity, getIndex() + 1).getLayout());
+                setGraphic(ActivityCard.load(activity, getIndex() + 1 + indexOffset).getLayout());
             }
         }
     }

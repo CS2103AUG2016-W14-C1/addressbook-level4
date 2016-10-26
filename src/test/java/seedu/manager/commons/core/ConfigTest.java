@@ -15,6 +15,7 @@ public class ConfigTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    //@@author A0139797E
     public void toString_defaultObject_stringReturned() {
         String defaultConfigAsString = "App title : Remindaroo\n" +
                 "Current log level : INFO\n" +
@@ -28,7 +29,7 @@ public class ConfigTest {
     @Test
     public void equalsMethod(){
         Config defaultConfig = new Config();
-        assertFalse(defaultConfig.equals(null));
+        assertFalse(defaultConfig == null);
         assertTrue(defaultConfig.equals(defaultConfig));
     }
 

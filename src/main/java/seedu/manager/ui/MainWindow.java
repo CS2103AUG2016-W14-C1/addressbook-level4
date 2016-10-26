@@ -31,6 +31,7 @@ public class MainWindow extends UiPart {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private ActivityListPanel activityListPanel;
+    private FloatingListPanel floatingActivityListPanel;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -43,8 +44,8 @@ public class MainWindow extends UiPart {
 
     private String activityManagerName;
 
-    @FXML
-    private AnchorPane browserPlaceholder;
+//    @FXML
+//    private AnchorPane browserPlaceholder;
 
     @FXML
     private AnchorPane commandBoxPlaceholder;
@@ -54,6 +55,9 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane activityListPanelPlaceholder;
+    
+    @FXML
+    private AnchorPane floatingActivityListPanelPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -107,9 +111,11 @@ public class MainWindow extends UiPart {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
 
-    void fillInnerParts() {
-        browserPanel = BrowserPanel.load(browserPlaceholder);
-        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredActivitiesList());
+    //@@author A0144881Y
+    public void fillInnerParts() {
+//        browserPanel = BrowserPanel.load(browserPlaceholder);
+        activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
+        floatingActivityListPanel = FloatingListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getActivityManagerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -129,6 +135,11 @@ public class MainWindow extends UiPart {
 
     public AnchorPane getActivityListPlaceholder() {
         return activityListPanelPlaceholder;
+    }
+    
+    //@@author A0144704L
+    public AnchorPane getFloatingActivityListPlaceholder() {
+    	return floatingActivityListPanelPlaceholder;
     }
 
     public void hide() {
@@ -185,12 +196,17 @@ public class MainWindow extends UiPart {
     public ActivityListPanel getActivityListPanel() {
         return this.activityListPanel;
     }
+    
+    //@@author A0144704L
+    public FloatingListPanel getFloatingActivityListPanel() {
+    	return this.floatingActivityListPanel;
+    }
 
     public void loadActivityPage(Activity activity) {
-        browserPanel.loadPersonPage(activity);
+//        browserPanel.loadPersonPage(activity);
     }
 
     public void releaseResources() {
-        browserPanel.freeResources();
+//        browserPanel.freeResources();
     }
 }

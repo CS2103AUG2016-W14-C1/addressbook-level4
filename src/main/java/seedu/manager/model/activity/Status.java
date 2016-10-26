@@ -3,7 +3,7 @@ package seedu.manager.model.activity;
 /**
  * Represents an activity's status in Remindaroo 
  */
-
+//@@author A0144704L
 public class Status{
 	private static final String MESSAGE_STATUS_PENDING = "pending";
 	private static final String MESSAGE_STATUS_COMPLETED = "completed";
@@ -12,6 +12,14 @@ public class Status{
 	
 	public Status() {
 		this.status = false;
+	}
+	
+	public Status(Status other) {
+	    this.status = other.status;
+	}
+	
+	public Status(boolean status) {
+		this.status = status;
 	}
 	
 	@Override
@@ -28,12 +36,8 @@ public class Status{
 		}
 	}
 	
-	public void setPending() {
-		this.status = false;
-	}
-	
-	public void setCompleted() {
-		this.status = true;
+	public void setStatus(boolean isCompleted) {
+		this.status = isCompleted;
 	}
 	
 	public boolean isCompleted() {

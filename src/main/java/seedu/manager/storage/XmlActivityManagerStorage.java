@@ -27,6 +27,11 @@ public class XmlActivityManagerStorage implements ActivityManagerStorage {
     public String getActivityManagerFilePath(){
         return filePath;
     }
+    
+    @Override
+    public void setActivityManagerFilePath(String newFilePath){
+    	this.filePath = newFilePath;
+    }
 
     /**
      * Similar to {@link #readActivityManager()}

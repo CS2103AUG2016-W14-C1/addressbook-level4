@@ -13,6 +13,7 @@ import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.storage.DataSavingExceptionEvent;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
+import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.commons.util.StringUtil;
@@ -41,6 +42,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
+    //@@author A0144704L
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
@@ -71,11 +73,12 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(AlertType.ERROR, "File Op Error", description, content);
     }
 
+    //@@author A0144704L
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
 
-    void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
+    private void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
         showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
     }
 
@@ -127,8 +130,16 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleActivityPanelUpdateEvent(ActivityPanelUpdateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getActivityListPanel().updateActivityCard(event.getNewActivity());
+        mainWindow.getActivityListPanel().updateActivityCard(event.getNewActivity(), 0);
+        mainWindow.getFloatingActivityListPanel().updateActivityCard(event.getNewActivity(), logic.getFilteredDeadlineAndEventList().size());
     }
-
+    
+    @Subscribe
+    //@@author A0139797E
+    private void handleActivityListPanelUpdateEvent(ActivityListPanelUpdateEvent event) {
+    	logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
+    	mainWindow.getActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList(), 0);
+    }
 
 }

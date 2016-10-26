@@ -42,19 +42,21 @@ public class ActivityCard extends UiPart{
     }
 
     @FXML
+    //@@author A0139797E
     public void initialize() {
         name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
         dateTime.setText(""); // default
         endDateTime.setText(""); // default
-        if (activity.getClass().equals(DeadlineActivity.class)) {
-            dateTime.setText(generateDateTimeString(((DeadlineActivity)activity).getDateTime()));
-        } else if (activity.getClass().equals(EventActivity.class)) {
-            dateTime.setText(generateDateTimeString(((EventActivity)activity).getDateTime()));
-            endDateTime.setText(generateDateTimeString(((EventActivity)activity).getEndDateTime()));
+        if (activity.getType().equals(ActivityType.DEADLINE)) {
+            dateTime.setText(generateDateTimeString(activity.getDateTime()));
+        } else if (activity.getType().equals(ActivityType.EVENT)) {
+            dateTime.setText(generateDateTimeString(activity.getDateTime()));
+            endDateTime.setText(generateDateTimeString(activity.getEndDateTime()));
         }
     }
     
+    //@@author A0135730M
     private String generateDateTimeString(AMDate dateTime) {
         assert dateTime == null;
         

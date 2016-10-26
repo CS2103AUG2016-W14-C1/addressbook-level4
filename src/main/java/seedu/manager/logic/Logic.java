@@ -17,5 +17,12 @@ public interface Logic {
 
     /** Returns the filtered list of activities */
     ObservableList<Activity> getFilteredActivitiesList();
+    
+    /** Returns the filtered list of deadlines and events */
+    ObservableList<Activity> getFilteredDeadlineAndEventList();
+    
+    /** Returns the filtered list of floating activities */
+    ObservableList<Activity> getFilteredFloatingActivityList();
+
 
 }

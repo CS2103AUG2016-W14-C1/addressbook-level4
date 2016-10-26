@@ -4,17 +4,22 @@ import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.UniqueTagList;
 
 /**
- * A mutable person object. For testing only.
- */
+ * A mutable activity object. For testing only.
+ */ 
+//@@author A0135730M
 public class TestActivity implements ReadOnlyActivity {
 
+    private ActivityType type;
     private String name;
     private AMDate dateTime;
     private AMDate endDateTime;
-    private UniqueTagList tags;
+    private Status status;
+//    private UniqueTagList tags;
 
     public TestActivity() {
-        tags = new UniqueTagList();
+//        tags = new UniqueTagList();
+        type = ActivityType.FLOATING; // default floating
+        status = new Status();
     }
 
     public void setName(String name) {
@@ -26,9 +31,9 @@ public class TestActivity implements ReadOnlyActivity {
         return name;
     }
 
-    public UniqueTagList getTags() {
-        return tags;
-    }
+//    public UniqueTagList getTags() {
+//        return tags;
+//    }
     
     @Override
     public String toString() {
@@ -44,23 +49,21 @@ public class TestActivity implements ReadOnlyActivity {
     }
 
     
-    public void setStatus(boolean completed) {
-        // TODO Auto-generated method stub
-        
-    }
+	public void setStatus(boolean completed) {
+		(this.status).setStatus(completed);
+	}
 
     @Override
     public Status getStatus() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.status;
     }
 
-    
+    @Override
     public AMDate getDateTime() {
         return dateTime;
     }
     
-    
+    @Override
     public AMDate getEndDateTime() {
         return endDateTime;
     }
@@ -73,5 +76,14 @@ public class TestActivity implements ReadOnlyActivity {
     
     public void setEndDateTime(String newEndDateTime) {
         this.dateTime.setAMDate(newEndDateTime);    
+    }
+
+    @Override
+    public ActivityType getType() {
+        return type;
+    }
+    
+    public void setType(ActivityType type) {
+        this.type = type;
     }
 }

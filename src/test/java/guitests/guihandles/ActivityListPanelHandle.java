@@ -146,7 +146,7 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     public ActivityCardHandle getActivityCardHandle(int index) {
-        return getPersonCardHandle(new FloatingActivity(getListView().getItems().get(index)));
+        return getPersonCardHandle(getListView().getItems().get(index));
     }
 
     public ActivityCardHandle getPersonCardHandle(ReadOnlyActivity activity) {

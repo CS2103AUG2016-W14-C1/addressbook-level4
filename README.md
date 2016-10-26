@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/CS2103AUG2016-W14-C1/main.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-W14-C1/main)
+[![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-W14-C1/main/badge.svg?branch=master)](https://coveralls.io/github/CS2103AUG2016-W14-C1/main?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5364063243e4cefb53992519a4dd383)](https://www.codacy.com/app/CS2103T-W14-C1/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2016-W14-C1/main&amp;utm_campaign=Badge_Grade)
+
 # Remindaroo
 
 <img src="docs/images/Ui.png" width="600"><br>

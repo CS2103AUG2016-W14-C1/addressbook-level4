@@ -61,6 +61,7 @@ public class XmlActivityManagerStorageTest {
     }
 
     @Test
+    //@@author A0144881Y
     public void readAndSaveActivityManager_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempActivityManager.xml";
         TypicalTestActivities ta = new TypicalTestActivities();
@@ -73,9 +74,13 @@ public class XmlActivityManagerStorageTest {
         assertEquals(original, new ActivityManager(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addActivity(new FloatingActivity(TypicalTestActivities.tidy));
-        original.removeActivity(new FloatingActivity(TypicalTestActivities.tidy));
-        original.updateActivity(new FloatingActivity(TypicalTestActivities.groceries), "Buy Bread", null, null);
+        original.addActivity(new Activity(TypicalTestActivities.tidy));
+        original.addActivity(new Activity(TypicalTestActivities.plane));
+        original.addActivity(new Activity(TypicalTestActivities.hotel));
+        original.removeActivity(new Activity(TypicalTestActivities.tidy));
+        original.addActivity(new Activity(TypicalTestActivities.plane));
+        original.addActivity(new Activity(TypicalTestActivities.hotel));
+        original.updateActivity(new Activity(TypicalTestActivities.groceries), "Buy Bread", null, null);
         xmlActivityManagerStorage.saveActivityManager(original, filePath);
         readBack = xmlActivityManagerStorage.readActivityManager(filePath).get();
         assertEquals(original, new ActivityManager(readBack));
@@ -83,16 +88,19 @@ public class XmlActivityManagerStorageTest {
     }
 
     @Test
+    //@@author A0144881Y
     public void saveActivityManager_nullActivityManager_assertionFailure() throws IOException {
         thrown.expect(AssertionError.class);
         saveActivityManager(null, "SomeFile.xml");
     }
-
+    
+    //@@author A0144881Y
     private void saveActivityManager(ReadOnlyActivityManager activityManager, String filePath) throws IOException {
         new XmlActivityManagerStorage(filePath).saveActivityManager(activityManager, addToTestDataPathIfNotNull(filePath));
     }
 
     @Test
+    //@@author A0144881Y
     public void saveActivityManager_nullFilePath_assertionFailure() throws IOException {
         thrown.expect(AssertionError.class);
         saveActivityManager(new ActivityManager(), null);

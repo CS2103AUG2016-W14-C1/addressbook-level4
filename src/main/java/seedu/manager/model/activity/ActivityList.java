@@ -2,9 +2,11 @@ package seedu.manager.model.activity;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class ActivityList implements Iterable<Activity> {
@@ -18,6 +20,7 @@ public class ActivityList implements Iterable<Activity> {
      * Adds a activity to the list.
      * 
      */
+	//@@author A0139797E
     public void add(Activity toAdd){
         assert toAdd != null;
         internalList.add(toAdd);
@@ -26,81 +29,73 @@ public class ActivityList implements Iterable<Activity> {
     
     /**
      * Removes the equivalent activity from the list.
-     *
-     * @throws ActivityNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(Activity toRemove) throws ActivityNotFoundException {
+    //@@author A0144881Y
+    public void remove(Activity toRemove) {
         assert toRemove != null;
-        final boolean activityFoundAndDeleted = internalList.remove(toRemove);
-        if (!activityFoundAndDeleted) {
-            throw new ActivityNotFoundException();
-        }
+        assert internalList.contains(toRemove);
+        internalList.remove(toRemove);
         Collections.sort(internalList);
-        return activityFoundAndDeleted;
     }
     
     /**
      * Updates the equivalent activity in the list.
-     *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
-     * @throws IllegalValueException if the dateTime and endDateTime are invalid
      */
-    
-    public boolean update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException {
+    //@@author A0144881Y
+    public void update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) {
     	assert toUpdate != null;
-    	final boolean activityFound = internalList.contains(toUpdate);
-    	if (activityFound) {
-    		try {
-		    	int toUpdateIndex = internalList.indexOf(toUpdate);
-		    	Activity toUpdateInList = internalList.get(toUpdateIndex);
-		    	// Update Activity name
-		    	if (newName != null && !newName.equals("")) toUpdateInList.setName(newName);
-		    	// Handle Deadline tasks
-		    	if (toUpdate instanceof DeadlineActivity) {
-		    		if (newDateTime != null) ((DeadlineActivity) toUpdateInList).setDateTime(newDateTime);
-		    	}
-		    	// Handle Event tasks
-		    	if (toUpdate instanceof EventActivity) {
-		    		if (newDateTime != null && !newDateTime.equals("")) ((EventActivity) toUpdateInList).setDateTime(newDateTime);
-		    		if (newEndDateTime != null && !newEndDateTime.equals("")) ((EventActivity) toUpdateInList).setEndDateTime(newEndDateTime);
-		    	}
-    		} catch (Exception e) {
-				throw new IllegalValueException(e.getMessage());
-			}
-    	} else {
-    		throw new ActivityNotFoundException();
+    	assert internalList.contains(toUpdate);
+    	
+    	int toUpdateIndex = internalList.indexOf(toUpdate);
+    	Activity toUpdateInList = internalList.get(toUpdateIndex);
+    	// Update Activity name (if there is new name)
+    	if (newName != null && !newName.equals("")) {
+    	    toUpdateInList.setName(newName);
+    	}
+    	// Update task to event
+    	if (newDateTime != null && newEndDateTime != null) {
+    	    toUpdateInList.setType(ActivityType.EVENT);
+    	    toUpdateInList.setDateTime(newDateTime);
+    	    toUpdateInList.setEndDateTime(newEndDateTime);
+    	// Update task to deadline
+	    } else if (newDateTime != null) {
+	        toUpdateInList.setType(ActivityType.DEADLINE);
+    		toUpdateInList.setDateTime(newDateTime);
+    		toUpdateInList.setEndDateTime(null);
     	}
     	Collections.sort(internalList);
-    	return activityFound;
     }
     
     /**
-     * Marks the equivalent activity in the list as pending or completed.
-     *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
+     * Marks the equivalent activity in the list as completed.
      */
-    
-    public boolean mark(Activity toMark, boolean status) throws ActivityNotFoundException {
+    //@@author A0144704L
+    public void mark(Activity toMark) {
     	assert toMark != null;
-    	final boolean activityFound = internalList.contains(toMark);
-    	if (activityFound) {
-    		toMark.setStatus(status);
-    	} else {
-    		throw new ActivityNotFoundException();
-    	}
-    	return activityFound;
+    	assert internalList.contains(toMark);
+    	toMark.setStatus(true);
     }
     
-    
     /**
-     * Signals that an operation targeting a specified activity in the list would fail because
-     * there is no such matching activity in the list.
+     * Marks the equivalent activity in the list as pending.
      */
-    public static class ActivityNotFoundException extends Exception {}
-    
+    //@@author A0144704L
+    public void unmark(Activity toUnmark) {
+    	assert toUnmark != null;
+    	assert internalList.contains(toUnmark);
+    	toUnmark.setStatus(false);
+    }
 	
     public ObservableList<Activity> getInternalList() {
         return internalList;
+    }
+    
+    public FilteredList<Activity> getPendingInternalList() {
+    	return internalList.filtered(new Predicate<Activity>() {
+    		public boolean test(Activity activity) {
+    			return !activity.getStatus().isCompleted();
+    		}
+    	});
     }
 
     public int size() {

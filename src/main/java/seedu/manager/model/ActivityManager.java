@@ -1,12 +1,9 @@
 package seedu.manager.model;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList;
-import seedu.manager.model.activity.DeadlineActivity;
-import seedu.manager.model.activity.EventActivity;
-import seedu.manager.model.activity.FloatingActivity;
+import seedu.manager.model.activity.*;
 import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
 
@@ -16,6 +13,7 @@ import java.util.*;
  * Wraps all data at the activity-manager level
  * Duplicates are not allowed (by .equals comparison)
  */
+//@@author A0144881Y
 public class ActivityManager implements ReadOnlyActivityManager {
 
     private final ActivityList activities;
@@ -105,33 +103,20 @@ public class ActivityManager implements ReadOnlyActivityManager {
 //        activity.setTags(new UniqueTagList(commonTagReferences));
 //    }
 
-    public boolean removeActivity(Activity key) throws ActivityList.ActivityNotFoundException {
-        if (activities.remove(key)) {
-            return true;
-        } else {
-            throw new ActivityList.ActivityNotFoundException();
-        }
+    public void removeActivity(Activity key) {
+        activities.remove(key);
     }
 
-    public boolean updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) throws ActivityList.ActivityNotFoundException, IllegalValueException {
-    	try {
-	    	if (activities.update(key, newName, newDateTime, newEndDateTime)) {
-	    		return true;
-	    	} else {
-	    		throw new ActivityList.ActivityNotFoundException();
-	    	}
-    	} catch (Exception e) {
-			throw new IllegalValueException(EventActivity.MESSAGE_DATE_CONSTRAINTS);
-		}
+    public void updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) {
+    	activities.update(key, newName, newDateTime, newEndDateTime);
     }
 
-    public boolean markActivity(Activity key, boolean status) throws ActivityList.ActivityNotFoundException {
-    	if (activities.mark(key, status)) {
-    		key.setStatus(status);
-    		return true;
-    	} else {
-    		throw new ActivityList.ActivityNotFoundException();
-    	}
+    public void markActivity(Activity key) {
+    	activities.mark(key);
+    }
+    
+    public void unmarkActivity(Activity key) {
+    	activities.unmark(key);
     }
 
     
@@ -190,5 +175,9 @@ public class ActivityManager implements ReadOnlyActivityManager {
 	@Override
 	public ActivityList getActivityList() {
 		return activities;
+	}
+	
+	public FilteredList<Activity> getPendingActivityList() {
+		return activities.getPendingInternalList();
 	}
 }
