@@ -35,8 +35,14 @@ public interface Model {
     /** Undo up to n commands */
     void undoCommand(int offset);
     
+    /** Redo up to n commands */
+    void redoCommand(int offset);
+    
     /** Get index of current referenced history */
     int getHistoryIndex();
+    
+    /** Get the highest index of current referenced history */
+    int getMaxHistoryIndex();
 
     /** Returns the filtered activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
