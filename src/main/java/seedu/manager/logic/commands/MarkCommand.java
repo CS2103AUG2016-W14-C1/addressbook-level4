@@ -2,37 +2,30 @@ package seedu.manager.logic.commands;
 
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.manager.model.activity.Status;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Updates an activity in Remindaroo
  */
-
+//@@author A0144704L
 public class MarkCommand extends Command {
 	public static final String COMMAND_WORD = "mark";
+	
+	public static final String USAGE = "mark ACTIVITY_ID";
+	
+	public static final String EXAMPLES = "mark 1";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks the activity identified by the index number used in the last activity listing as pending or completed.\n"
+            + ": Marks the activity identified by the index number used in the last activity listing as completed.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1" + " as pending\n"
-            + "Example: " + COMMAND_WORD + " 1" + " as completed";
+            + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MARK_ACTIVITY_SUCCESS = "Marked Activity as %1$s: %2$s";
+    public static final String MESSAGE_MARK_ACTIVITY_SUCCESS = "Completed Activity: %1$s";
 	public final int targetIndex;
-	public final boolean status;
 	
 	
-	public MarkCommand(int targetIndex, boolean status) {
+	public MarkCommand(int targetIndex) {
 		this.targetIndex = targetIndex;
-		this.status = status;
 	}
 	
 	@Override
@@ -45,13 +38,10 @@ public class MarkCommand extends Command {
         }
 
         Activity activityToMark = lastShownList.get(targetIndex - 1);
-        try {
-            model.markActivity(activityToMark, status);
-        } catch (ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        }
-        String stringStatus = activityToMark.getStatus().toString();
-        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, stringStatus, activityToMark.getName()));
+        
+        model.markActivity(activityToMark);
+
+        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, activityToMark.getName()));
     }
 }
 

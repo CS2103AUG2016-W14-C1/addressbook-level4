@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import seedu.manager.model.activity.ReadOnlyActivity;
 
 /**
- * Provides a handle to a person card in the person list panel.
+ * Provides a handle to a activity card in the activity list panel.
  */
 public class ActivityCardHandle extends GuiHandle {
     private static final String NAME_FIELD_ID = "#name";

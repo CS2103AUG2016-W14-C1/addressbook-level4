@@ -2,20 +2,25 @@ package seedu.manager.logic.commands;
 
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.Activity;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
+import seedu.manager.model.activity.*;
 
 /**
  * Updates an activity in Remindaroo
  */
-
+//@@author A0144881Y
 public class UpdateCommand extends Command {
 	public static final String COMMAND_WORD = "update";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+	public static final String USAGE = "update ACTIVITY_ID NEW_NAME\n" +
+	                                   "update ACTIVITY_ID NEW_NAME on DATE_TIME\n" +
+	                                   "update ACTIVITY_ID NEW_NAME from DATE_TIME to DATE_TIME\n";
+
+	public static final String EXAMPLES = "update 1 Walk the dog\n" +
+                                          "update 2 New homework deadline on 17 Nov\n" +
+                                          "update 3 Postponed talk from 2 Nov 3pm to 2 Nov 5pm\n";
+
+	
+	public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the activity identified by the index number used in the last activity listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1" + " assignment1";
@@ -27,31 +32,27 @@ public class UpdateCommand extends Command {
 	public String newEndDateTime;
 
 	/**
-	 * Constructor for floating tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name only
 	 */
-	public UpdateCommand(int targetIndex, String newName) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName) {
 		this.targetIndex = targetIndex;
 		this.newName = newName;
+		this.newDateTime = null;
+		this.newEndDateTime = null;
 	}
 	
 	/**
-	 * Constructor for deadline tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name and dateTime
 	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName, String dateTime) {
 		this(targetIndex, newName);
 		this.newDateTime = dateTime;
 	}
 	
 	/**
-	 * Constructor for event tasks
-	 * 
-	 * @throws IllegalValueException if any of the raw values are invalid
+	 * Constructor for updating name, dateTime and endDateTime
 	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) throws IllegalValueException {
+	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) {
 		this(targetIndex, newName);
 		this.newDateTime = dateTime;
 		this.newEndDateTime = endDateTime;
@@ -67,13 +68,7 @@ public class UpdateCommand extends Command {
         }
 
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
-        try {
-            model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
-        } catch (ActivityNotFoundException anfe) {
-            assert false : "The target activity cannot be found";
-        } catch (IllegalValueException ive) {
-			assert false : ive.getMessage();
-		}
+        model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
 
         return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
     }

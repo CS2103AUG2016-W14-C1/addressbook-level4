@@ -77,7 +77,7 @@ public class LogicManagerTest {
 
         latestSavedActivityManager = new ActivityManager(model.getActivityManager()); // last saved assumed to be up to date before.
         helpShown = false;
-        targetedJumpIndex = -1; // non yet
+        targetedJumpIndex = -1; // none yet
     }
 
     @After
@@ -108,6 +108,7 @@ public class LogicManagerTest {
      *      - the backing list shown by UI matches the {@code shownList} <br>
      *      - {@code expectedActivityManager} was saved to the storage file. <br>
      */
+    //@@author A0135730M
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
                                        ReadOnlyActivityManager expectedActivityManager,
                                        List<? extends Activity> expectedShownList) throws Exception {
@@ -155,22 +156,24 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addActivity(helper.generateActivity(1));
-        model.addActivity(helper.generateActivity(2));
-        model.addActivity(helper.generateActivity(3));
+        model.addActivity(helper.generateActivity(1), false);
+        model.addActivity(helper.generateActivity(2), false);
+        model.addActivity(helper.generateActivity(3), false);
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new ActivityManager(), Collections.emptyList());
     }
 
     @Test
-    public void execute_add_EventActivity_endDateEarlierThanStartDate() throws Exception {
+    //@@author A0135730M
+    public void execute_add_Activity_endDateEarlierThanStartDate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         assertCommandBehavior("add invalid event from " + helper.getReferenceDateString()
                               + " to day before " + helper.getReferenceDateString(),
-                EventActivity.MESSAGE_DATE_CONSTRAINTS);
+                Activity.MESSAGE_DATE_CONSTRAINTS);
     }
     
     @Test
+    //@@author A0135730M
     public void execute_add_invalidDate() throws Exception {
         assertCommandBehavior("add event from abc to def", 
                 String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
@@ -181,60 +184,39 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_add_successful() throws Exception {
-        // setup expectations for floating activity
-        TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = new FloatingActivity("Activity");
-        ActivityManager expectedAM = new ActivityManager();
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add Activity",
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        
-        // setup expectations for deadline activity
-        toBeAdded = new DeadlineActivity("deadline", helper.getReferenceDate());
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add deadline on " + helper.getReferenceDateString(),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-        
-        // setup expectations for event activity
-        toBeAdded = new EventActivity("some event", helper.getReferenceDate(), helper.getReferenceDate());
-        expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add some event from " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
-                expectedAM,
-                expectedAM.getActivityList());
-    }
-    
-    @Test
+    //@@author A0135730M
     public void execute_add_parseKeywordsCorrectly() throws Exception {
-        // able to add deadline activity with keywords (on/by) (without spaces)
+        // able to add floating activity
+        // note that incomplete format of deadline / event will result in activity being considered as floating
         TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = new DeadlineActivity("Presentation Ruby", helper.getReferenceDate());
+        Activity toBeAdded = new Activity("Girl from next door");
         ActivityManager expectedAM = new ActivityManager();
         expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add Presentation Ruby on " + helper.getReferenceDateString(),
+        assertCommandBehavior("add Girl from next door",
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
         
-        
-        // able to add deadline activity with keywords (on/by) (with spaces)
-        toBeAdded = new DeadlineActivity("read Village by the Sea", helper.getReferenceDate());
+        // able to add deadline activity with keywords (on/by) (without spaces)
+        toBeAdded = new Activity("Presentation Ruby", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
-        assertCommandBehavior("add read Village by the Sea \"on\" " + helper.getReferenceDateString(),
+        assertCommandBehavior("add Presentation Ruby oN " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
         
         
         // able to add deadline activity with keywords (on/by) (with spaces)
-        toBeAdded = new DeadlineActivity("learn Ruby on Rails", helper.getReferenceDate());
+        toBeAdded = new Activity("read Village by the Sea", helper.getReferenceDateString());
+        expectedAM.addActivity(toBeAdded);
+        assertCommandBehavior("add read Village by the Sea \"On\" " + helper.getReferenceDateString(),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to add deadline activity with keywords (on/by) (with spaces)
+        toBeAdded = new Activity("learn Ruby on Rails", helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add learn Ruby on Rails \"by\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
@@ -243,17 +225,17 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (without spaces)
-        toBeAdded = new EventActivity("The fromance of tom and jerry", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add The fromance of tom and jerry from " + helper.getReferenceDateString() 
-                              + " to " + helper.getReferenceDateString(),
+                              + " To " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Love from Paris", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Love from Paris \"from\" " + helper.getReferenceDateString() 
                               + " to " + helper.getReferenceDateString(),
@@ -263,17 +245,17 @@ public class LogicManagerTest {
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Train to Busan", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Train to Busan from " + helper.getReferenceDateString() 
-                              + " \"to\" " + helper.getReferenceDateString(),
+                              + " \"tO\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
         
         
         // able to add event activity with keywords (from/to) (with spaces)
-        toBeAdded = new EventActivity("Movie: from Jupiter to Mars", helper.getReferenceDate(), helper.getReferenceDate());
+        toBeAdded = new Activity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(toBeAdded);
         assertCommandBehavior("add Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
                               + " \"to\" " + helper.getReferenceDateString(),
@@ -281,31 +263,67 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList());
     }
-
-    /*
-    TODO: Use test only if duplicate activities should be prohibited
+    
     @Test
-    public void execute_addDuplicate_notAllowed() throws Exception {
-        // setup expectations
+    //@@author A0135730M
+    public void execute_add_cannotRecurZeroTimes() throws Exception {
+        assertCommandBehavior("add zero no count on today for 0 days", MESSAGE_RECUR_NOT_POSITIVE);
+        assertCommandBehavior("add zero sum game from today to tomorrow for 0 year", MESSAGE_RECUR_NOT_POSITIVE);
+    }
+    
+    @Test
+    //@@author A0135730M
+    public void execute_add_recurCorrectly() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Activity toBeAdded = helper.sampleActivity();
         ActivityManager expectedAM = new ActivityManager();
-        expectedAM.addActivity(toBeAdded);
-
-        // setup starting state
-        model.addActivity(toBeAdded); // person already in internal address book
-
-        // execute command and verify result
-        assertCommandBehavior(
-                helper.generateAddCommand(toBeAdded),
-                AddCommand.MESSAGE_DUPLICATE_ACTIVITY,
+        Activity toBeAdded = null;
+        int repeat;
+        
+        // add recurring deadline by day
+        for (repeat = 0; repeat < 3; repeat++) {
+            toBeAdded = new Activity("Every day I'm shuffling", helper.getReferenceDateString(), repeat, "day");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Every day I'm shuffling by " + helper.getReferenceDateString() + " for 3 days",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
-
+        
+        // add recurring deadline by week
+        for (repeat = 0; repeat < 2; repeat++) {
+            toBeAdded = new Activity("Clubbing on the dance floor", helper.getReferenceDateString(), repeat, "Week");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Clubbing on the dance floor \"ON\" " + helper.getReferenceDateString() + " for 2 WEEK",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // add recurring event by month
+        for (repeat = 0; repeat < 12; repeat++) {
+            toBeAdded = new Activity("Monthly general meeting from boss", helper.getReferenceDateString(), helper.getReferenceDateString(), repeat, "MONTH");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Monthly general meeting from boss \"from\" " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString() + " For 12 months",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // add recurring event by year
+        for (repeat = 0; repeat < 1; repeat++) {
+            toBeAdded = new Activity("Birthday party", helper.getReferenceDateString(), helper.getReferenceDateString(), repeat, "year");
+            expectedAM.addActivity(toBeAdded);
+        }
+        assertCommandBehavior("add Birthday party from " + helper.getReferenceDateString() 
+                              + " \"to\" " + helper.getReferenceDateString() + " foR 1 yeaR",
+                String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
     }
-    */
 
     @Test
+    //@@author A0144881Y
     public void execute_list_showsAllActivities() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -344,10 +362,10 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> activityList = helper.generateActivityList(2);
 
-        // set AB state to 2 activities
+        // set AM state to 2 activities
         model.resetData(new ActivityManager());
         for (Activity p : activityList) {
-            model.addActivity(p);
+            model.addActivity(p, false);
         }
 
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getActivityManager(), activityList);
@@ -383,17 +401,20 @@ public class LogicManagerTest {
 
 
     @Test
+    //@@author A0144881Y
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
     }
 
     @Test
+    //@@author A0144881Y
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
     @Test
+    //@@author A0144881Y
     public void execute_delete_removesCorrectActivity() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
@@ -409,17 +430,50 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0144881Y
     public void execute_updateInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("update", expectedMessage);
     }
     
     @Test
-    public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("update");
+    //@@author A0135730M
+    public void execute_update_Activity_endDateEarlierThanStartDate() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ActivityManager expectedAM = new ActivityManager();
+        
+        Activity dummyEvent = new Activity("Dummy", helper.getReferenceDateString(), helper.getReferenceDateString());
+        model.addActivity(dummyEvent, false);
+        expectedAM.addActivity(dummyEvent);
+        
+        assertCommandBehavior("update 1 newName from " + helper.getReferenceDateString()
+                              + " to day before " + helper.getReferenceDateString(),
+                Activity.MESSAGE_DATE_CONSTRAINTS,
+                expectedAM,
+                expectedAM.getActivityList());
     }
     
     @Test
+    //@@author A0135730M
+    public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
+        String expectedMessage = MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> activityList = helper.generateActivityList(2);
+
+        // set AM state to 2 activities
+        model.resetData(new ActivityManager());
+        for (Activity p : activityList) {
+            model.addActivity(p, false);
+        }
+
+        assertCommandBehavior("update 3 blind mice", 
+                expectedMessage, 
+                model.getActivityManager(), 
+                activityList);
+    }
+    
+    @Test
+    //@@author A0135730M
     public void execute_update_invalidDate() throws Exception {
         assertCommandBehavior("update 1 new from abc to def", 
                 String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
@@ -428,68 +482,370 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 new by ghi", 
                 String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
+    
+    
+    @Test
+    //@@author A0135730M
+    public void execute_update_trimArguments() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ActivityManager expectedAM = new ActivityManager();
+        ActivityManager emptyAM = new ActivityManager();
+        
+        model.resetData(emptyAM);
+        expectedAM.resetData(emptyAM);
+        Activity existingActivity = new Activity("bla bla bla");
+        model.addActivity(existingActivity, false);
+        
+        Activity newActivity = new Activity("bla");
+        expectedAM.addActivity(newActivity);
+
+        assertCommandBehavior("update 1     bla",
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newActivity.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    
+        // setup expectations for deadline activity
+        expectedAM.resetData(emptyAM);
+        model.resetData(emptyAM);
+        Activity existingDeadline = new Activity("deadline", helper.getReferenceDateString());
+        model.addActivity(existingDeadline, false);
+        
+        Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
+        expectedAM.addActivity(newDeadline);
+      
+        assertCommandBehavior("update 1    new deadline    by    " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList()); 
+        
+     // setup expectations for event activity
+        expectedAM.resetData(emptyAM);
+        model.resetData(emptyAM);
+        Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
+        model.addActivity(existingEvent, false);
+        
+        Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+      
+        assertCommandBehavior("update 1    new event   from   " + helper.getReferenceDateString() + "   to   " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
+    
+    @Test
+    //@@author A0135730M
+    public void execute_update_parseKeywordsCorrectly() throws Exception {
+    	TestDataHelper helper = new TestDataHelper();
+    	ActivityManager expectedAM = new ActivityManager();
+    	ActivityManager emptyAM = new ActivityManager();
+    	
+    	// able to update deadline without name
+        Activity existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
+        model.addActivity(existingDeadline, false);
+        
+        expectedAM.resetData(emptyAM);
+        Activity newDeadline = new Activity("Presentation", "day after " + helper.getReferenceDateString());
+        expectedAM.addActivity(newDeadline);
+        assertCommandBehavior("update 1 on day after " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    	
+        // able to update deadline activity with keywords (on/by) (without spaces)
+    	model.resetData(emptyAM);
+    	expectedAM.resetData(emptyAM);
+    	existingDeadline = new Activity("Presentation", helper.getReferenceDateString());
+    	model.addActivity(existingDeadline, false);
+        
+        newDeadline = new Activity("Presentation Ruby", helper.getReferenceDateString());
+        expectedAM.addActivity(newDeadline);
+        
+        assertCommandBehavior("update 1 Presentation Ruby On " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update deadline activity with keywords (on/by) (with spaces)
+        expectedAM.resetData(emptyAM);
+        newDeadline = new Activity("read Village by the Sea", helper.getReferenceDateString());
+        expectedAM.addActivity(newDeadline);
+        assertCommandBehavior("update 1 read Village by the Sea \"oN\" " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update event without name
+        model.resetData(emptyAM);
+        Activity existingEvent = new Activity("Presentation", helper.getReferenceDateString(), helper.getReferenceDateString());
+        model.addActivity(existingEvent, false);
+        
+        expectedAM.resetData(emptyAM);
+        Activity newEvent = new Activity("Presentation", "day after " + helper.getReferenceDateString(), "day after " + helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+        assertCommandBehavior("update 1 from day after " + helper.getReferenceDateString() + " to day after " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update event activity with keywords (from/to) (without spaces)
+        model.resetData(emptyAM);
+        expectedAM.resetData(emptyAM);
+        existingEvent = new Activity("Tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
+        model.addActivity(existingEvent, false);
+        
+        newEvent = new Activity("The fromance of tom and jerry", helper.getReferenceDateString(), helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+       
+        assertCommandBehavior("update 1 The fromance of tom and jerry FROM " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update event activity with keywords (from/to) (with spaces)
+        expectedAM.resetData(emptyAM);
+        newEvent = new Activity("Love from Paris", helper.getReferenceDateString(), helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+        
+        assertCommandBehavior("update 1 Love from Paris \"froM\" " + helper.getReferenceDateString() 
+                              + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update event activity with keywords (from/to) (with spaces)
+        expectedAM.resetData(emptyAM);
+        newEvent = new Activity("Train to Busan", helper.getReferenceDateString(), helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+        
+        assertCommandBehavior("update 1 Train to Busan from " + helper.getReferenceDateString() 
+                              + " \"To\" " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update event activity with keywords (from/to) (with spaces)
+        expectedAM.resetData(emptyAM);
+        newEvent = new Activity("Movie: from Jupiter to Mars", helper.getReferenceDateString(), helper.getReferenceDateString());
+        expectedAM.addActivity(newEvent);
+        
+        assertCommandBehavior("update 1 Movie: from Jupiter to Mars \"from\" " + helper.getReferenceDateString() 
+                              + " \"to\" " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
+    
+    @Test
+    //@@author A0135730M
+    public void execute_update_changeActivityTypeCorrectly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        ActivityManager expectedAM = new ActivityManager();
+        ActivityManager emptyAM = new ActivityManager();
+        Activity floating = new Activity("Floating");
+        Activity deadline = new Activity("Deadline", helper.getReferenceDateString());
+        Activity event = new Activity("Event", helper.getReferenceDateString(), helper.getReferenceDateString());
+        
+        // able to update from floating to deadline
+        model.addActivity(floating, false);
+        expectedAM.addActivity(deadline);
+        assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update from deadline to event
+        expectedAM.resetData(emptyAM);
+        expectedAM.addActivity(event);
+        assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        
+        // able to update from floating to event
+        model.resetData(emptyAM);
+        expectedAM.resetData(emptyAM);
+        model.addActivity(floating, false);
+        expectedAM.addActivity(event);
+        assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+        
+        // able to update from event to deadline
+        expectedAM.resetData(emptyAM);
+        expectedAM.addActivity(deadline);
+        assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
+                String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
 
     @Test
+    //@@author A0135730M
     public void execute_search_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE);
         assertCommandBehavior("search ", expectedMessage);
     }
 
     @Test
-    public void execute_search_onlyMatchesFullWordsInNames() throws Exception {
+    //@@author A0135730M
+    public void execute_search_matchNameSuccess() throws Exception {
+        // should match if only full search name is found in part of activity name, case insensitive
         TestDataHelper helper = new TestDataHelper();
-        Activity pTarget1 = new FloatingActivity("bla bla KEY bla");
-        Activity pTarget2 = new FloatingActivity("bla KEY bla bceofeia");
-        Activity p1 = new FloatingActivity("KE Y");
-        Activity p2 = new FloatingActivity("KEYKEYKEY sduauo");
+        Activity pTarget1 = new Activity("bla bla KEY bla");
+        Activity pTarget2 = new Activity("bla KEY bla bceofeia", helper.getReferenceDateString());
+        Activity pTarget3 = new Activity("bla key bla", helper.getReferenceDateString(), helper.getReferenceDateString());
+        Activity p1 = new Activity("KE Y");
+        Activity p2 = new Activity("KEYKEYKEY sduauo", helper.getReferenceDateString());
+        Activity p3 = new Activity("KEXY", helper.getReferenceDateString(), helper.getReferenceDateString());
 
-        List<Activity> fourActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
-        List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
-        helper.addToModel(model, fourActivities);
-
-        assertCommandBehavior("search KEY",
-                Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
-                expectedList);
-    }
-
-    @Test
-    public void execute_search_isNotCaseSensitive() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity p1 = new FloatingActivity("bla bla KEY bla");
-        Activity p2 = new FloatingActivity("bla KEY bla bceofeia");
-        Activity p3 = new FloatingActivity("key key");
-        Activity p4 = new FloatingActivity("KEy sduauo");
-
-        List<Activity> fourActivities = helper.generateActivityList(p3, p1, p4, p2);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
-        List<Activity> expectedList = fourActivities;
-        helper.addToModel(model, fourActivities);
-
-        assertCommandBehavior("search KEY",
-                Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
-                expectedList);
-    }
-
-    @Test
-    public void execute_search_matchesIfAnyKeywordPresent() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Activity pTarget1 = new FloatingActivity("bla bla KEY bla");
-        Activity pTarget2 = new FloatingActivity("bla rAnDoM bla bceofeia");
-        Activity pTarget3 = new FloatingActivity("key key");
-        Activity p1 = new FloatingActivity("sduauo");
-
-        List<Activity> fourActivities = helper.generateActivityList(pTarget1, p1, pTarget2, pTarget3);
-        ActivityManager expectedAB = helper.generateActivityManager(fourActivities);
+        List<Activity> sixActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2, p3, pTarget3);
+        ActivityManager expectedAB = helper.generateActivityManager(sixActivities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2, pTarget3);
-        helper.addToModel(model, fourActivities);
+        helper.addToModel(model, sixActivities);
 
-        assertCommandBehavior("search key rAnDoM",
+        assertCommandBehavior("search KEY",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
+    }
+    
+    @Test
+    //@@author A0135730M
+    public void execute_search_matchesIfWithinDateSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity pTarget1 = new Activity("deadline", "today");
+        Activity pTarget2 = new Activity("event", "yesterday", "tomorow");
+        Activity p1 = new Activity("no match");
+        Activity p2 = new Activity("deadline", "next week");
+        Activity p3 = new Activity("event", "next week", "2 week later");
+        
+        List<Activity> activities = helper.generateActivityList(pTarget1, p1, pTarget2, p2, p3);
+        ActivityManager expectedAB = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
+        helper.addToModel(model, activities);
+        
+        assertCommandBehavior("search today",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+        
+        assertCommandBehavior("search today to tomorrow",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+    }
+    
+    @Test
+    //@@author A0135730M
+    public void execute_search_matchesStatusSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.markActivity(threeActivities.get(0));
+        helper.addToModel(model, threeActivities);
+        List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
+        List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
+       
+        assertCommandBehavior("search pending",
+                Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
+                expectedAM,
+                expectedPendingList);
+        
+        assertCommandBehavior("search completed",
+                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
+                expectedAM,
+                expectedMarkList);
+    }
+    
+    @Test
+    //@@author A0144704L
+    public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("mark", expectedMessage);
+    }
+
+    @Test
+    //@@author A0144704L
+    public void execute_markIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("mark");
+    }
+
+    @Test
+    //@@author A0144704L
+    public void execute_mark_marksCorrectActivity() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.markActivity(threeActivities.get(1));
+        helper.addToModel(model, threeActivities);
+       
+        assertCommandBehavior("mark 2",
+                String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
+                expectedAM,
+                expectedAM.getPendingActivityList());
+    }
+    
+    
+    @Test
+    //@@author A0144704L
+    public void execute_unmarkInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("unmark", expectedMessage);
+    }
+
+    @Test
+    //@@author A0144704L
+    public void execute_unmarkIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("unmark");
+    }
+
+    @Test
+    //@@author A0144704L
+    public void execute_unmark_unmarksCorrectActivity() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Activity> threeActivities = helper.generateActivityList(3);
+
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.unmarkActivity(threeActivities.get(1));
+        helper.addToModel(model, threeActivities);
+       
+        assertCommandBehavior("unmark 2",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
+                expectedAM,
+                expectedAM.getActivityList());
+    }
+    
+    @Test
+    //@@author A0139797E
+    public void execute_undo_NoCommand() throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
+    }
+    
+    @Test
+    //@@author A0144704L
+    public void execute_store_storeToCorrectLocation () throws Exception {
+    	String testDataFileLocation = "/data/RemindarooTest.xml";
+    	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
+    }
+
+    @Test
+    //@@author A0144704L
+    public void execute_store_incorrectExtension () throws Exception {
+    	String testDataFileLocation = "/data/RemindarooTest.txt";
+    	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+    }
+    
+    @Test
+    //@@author A0144704L
+    public void execute_store_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE);
+        assertCommandBehavior("store", expectedMessage);
     }
 
 
@@ -498,12 +854,8 @@ public class LogicManagerTest {
      */
     class TestDataHelper {
         
-        String getReferenceDateString() {
+        public String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
-        }
-        
-        AMDate getReferenceDate() throws Exception {
-            return new AMDate(getReferenceDateString());
         }
 
         /**
@@ -513,8 +865,8 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the activity data field values
          */
-        Activity generateActivity(int seed) throws Exception {
-            return new FloatingActivity("Activity " + seed);
+        public Activity generateActivity(int seed) throws Exception {
+            return new Activity("Activity " + seed);
         }
 
         /** Generates the correct add command based on the activity given */
@@ -532,11 +884,17 @@ public class LogicManagerTest {
 //
 //            return cmd.toString();
 //        }
+        /**
+         * Generate an ActivityManager with no activities
+         */
+        public ActivityManager generateActivityManager() throws Exception {
+            return new ActivityManager();
+        }
 
         /**
          * Generates an ActivityManager with auto-generated activities.
          */
-        ActivityManager generateActivityManager(int numGenerated) throws Exception{
+        public ActivityManager generateActivityManager(int numGenerated) throws Exception{
             ActivityManager activityManager = new ActivityManager();
             addToActivityManager(activityManager, numGenerated);
             return activityManager;
@@ -545,7 +903,7 @@ public class LogicManagerTest {
         /**
          * Generates an ActivityManager based on the list of activities given.
          */
-        ActivityManager generateActivityManager(List<Activity> activities) throws Exception{
+        public ActivityManager generateActivityManager(List<Activity> activities) throws Exception{
             ActivityManager activityManager = new ActivityManager();
             addToActivityManager(activityManager, activities);
             return activityManager;
@@ -555,14 +913,14 @@ public class LogicManagerTest {
          * Adds auto-generated Activity objects to the given ActivityManager
          * @param activityManager The ActivityManager to which the activities will be added
          */
-        void addToActivityManager(ActivityManager activityManager, int numGenerated) throws Exception{
+        public void addToActivityManager(ActivityManager activityManager, int numGenerated) throws Exception{
             addToActivityManager(activityManager, generateActivityList(numGenerated));
         }
 
         /**
          * Adds the given list of activities to the given ActivityManager
          */
-        void addToActivityManager(ActivityManager activityManager, List<Activity> activitiesToAdd) throws Exception{
+        public void addToActivityManager(ActivityManager activityManager, List<Activity> activitiesToAdd) throws Exception{
             for(Activity p: activitiesToAdd){
                 activityManager.addActivity(p);
             }
@@ -572,23 +930,23 @@ public class LogicManagerTest {
          * Adds auto-generated Activity objects to the given model
          * @param model The model to which the activities will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        public void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateActivityList(numGenerated));
         }
 
         /**
          * Adds the given list of activities to the given model
          */
-        void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
+        public void addToModel(Model model, List<Activity> activtiesToAdd) throws Exception{
             for(Activity p: activtiesToAdd){
-                model.addActivity(p);
+                model.addActivity(p, true);
             }
         }
 
         /**
          * Generates a list of activities based on the flags.
          */
-        List<Activity> generateActivityList(int numGenerated) throws Exception{
+        public List<Activity> generateActivityList(int numGenerated) throws Exception{
             List<Activity> activity = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
                 activity.add(generateActivity(i));
@@ -596,7 +954,7 @@ public class LogicManagerTest {
             return activity;
         }
 
-        List<Activity> generateActivityList(Activity... activities) {
+        public List<Activity> generateActivityList(Activity... activities) {
             return Arrays.asList(activities);
         }
     }

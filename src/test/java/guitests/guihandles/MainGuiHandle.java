@@ -13,8 +13,13 @@ public class MainGuiHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
-    public ActivityListPanelHandle getPersonListPanel() {
+    public ActivityListPanelHandle getActivityListPanel() {
         return new ActivityListPanelHandle(guiRobot, primaryStage);
+    }
+    
+    //@@author A0139797E
+    public FloatingListPanelHandle getFloatingListPanel() {
+        return new FloatingListPanelHandle(guiRobot, primaryStage);
     }
 
     public ResultDisplayHandle getResultDisplay() {

@@ -6,7 +6,6 @@ import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
-import seedu.manager.model.activity.ActivityList.ActivityNotFoundException;
 
 /**
  * The API of the Model component.
@@ -19,20 +18,34 @@ public interface Model {
     ReadOnlyActivityManager getActivityManager();
 
     /** Deletes the given activity. */
-    void deleteActivity(Activity target) throws ActivityNotFoundException;
+    void deleteActivity(Activity target);
 
     /** Adds the given activity */
-    void addActivity(Activity activity);
+    void addActivity(Activity activity, boolean isLastRecurring);
     
-    /** Updates the given activity 
-     * @throws IllegalValueException */
-    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime) throws ActivityNotFoundException, IllegalValueException;
+    /** Updates the given activity */
+    void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime);
 
     /** Marks the given activity */
-    void markActivity(Activity target, boolean status) throws ActivityNotFoundException;
+    void markActivity(Activity target);
+    
+    /** Unmarks the given activity */
+    void unmarkActivity(Activity target);
+    
+    /** Undo up to n commands */
+    void undoCommand(int offset);
+    
+    /** Get index of current referenced history */
+    int getHistoryIndex();
 
-    /** Returns the filtered activity list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    /** Returns the filtered activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredActivityList();
+    
+    /** Returns the filtered deadline and event list as an {@code UnmodifiableObservableList<Activity>} */
+    UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList();
+    
+    /** Returns the filtered floating activity list as an {@code UnmodifiableObservableList<Activity>} */
+    UnmodifiableObservableList<Activity> getFilteredFloatingActivityList();
 
     /** Updates the filter of the filtered activity list to show all persons */
     void updateFilteredListToShowAll();
@@ -42,5 +55,8 @@ public interface Model {
     
     /** Updates the filter of the filtered activity list to filter by the given dateTime range*/
     void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime);
+    
+    /** Updates the filter of the filtered activity list to filter by the given status*/
+    void updateFilteredActivityList(boolean isCompleted);
 
 }

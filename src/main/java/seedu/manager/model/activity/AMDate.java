@@ -5,7 +5,11 @@ import java.util.List;
 
 import com.joestelmach.natty.*;
 
+@SuppressWarnings("deprecation")
+//@@author A0139797E
 public class AMDate {
+    
+    private enum TimeUnit { DAY, WEEK, MONTH, YEAR }
     
     public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     
@@ -51,24 +55,26 @@ public class AMDate {
         this.dateTime.setSeconds(59);
     }
     
-    public void addMonth(int offset) {
-        this.dateTime.setMonth(this.dateTime.getMonth() + offset);
-    }
-    
-    public void addDay(int offset) {
-        this.dateTime.setDate(this.dateTime.getDate() + offset);
-    }
-    
-    public void addHours(int offset) {
-        this.dateTime.setHours(this.dateTime.getHours() + offset);
-    }
-    
-    public void addMinutes(int offset) {
-        this.dateTime.setMinutes(this.dateTime.getMinutes() + offset);
-    }
-    
-    public void addSeconds(int offset) {
-        this.dateTime.setSeconds(this.dateTime.getSeconds() + offset);
+    /**
+     * Adds offset number of time unit to dateTime
+     */
+    public void addOffset(int offset, String unit) {
+        TimeUnit timeUnit = TimeUnit.valueOf(unit.toUpperCase());
+        switch (timeUnit) {
+        
+        case DAY:
+            this.dateTime.setDate(this.dateTime.getDate() + offset);
+            return;
+        case WEEK:
+            this.dateTime.setDate(this.dateTime.getDate() + (offset * 7));
+            return;
+        case MONTH:
+            this.dateTime.setMonth(this.dateTime.getMonth() + offset);
+            return;
+        case YEAR:
+            this.dateTime.setYear(this.dateTime.getYear() + offset);
+            return;
+        }
     }
     
     /** dateTime accessors **/
@@ -104,11 +110,6 @@ public class AMDate {
         } else {
             return Integer.toString(dateTime.getMinutes());
         }
-    }
-    
-    public String getSeconds() {
-        assert dateTime != null;
-        return Integer.toString(dateTime.getSeconds());
     }
     
     @Override

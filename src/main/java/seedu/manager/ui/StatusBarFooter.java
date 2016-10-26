@@ -1,3 +1,4 @@
+//@@author A0135730M
 package seedu.manager.ui;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
+import seedu.manager.commons.events.ui.ChangeStorageFileDisplayEvent;
 import seedu.manager.commons.util.FxViewUtil;
 
 import org.controlsfx.control.StatusBar;
@@ -95,5 +97,11 @@ public class StatusBarFooter extends UiPart {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
+    }
+    
+    @Subscribe
+    public void handleActivityManagerChangedStorageFile(ChangeStorageFileDisplayEvent event){
+    	logger.info(LogsCenter.getEventHandlingLogMessage(event, "Changing data storage location to: " + event.file));
+    	setSaveLocation(event.file);
     }
 }
