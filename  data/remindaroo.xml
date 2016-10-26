@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
-        <name>test2</name>
+        <type>FLOATING</type>
+        <name>blah</name>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
-        <name>deadline 2</name>
+        <type>FLOATING</type>
+        <name>hello</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>ok</name>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>
