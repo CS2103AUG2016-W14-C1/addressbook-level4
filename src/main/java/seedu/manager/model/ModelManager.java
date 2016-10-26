@@ -158,10 +158,26 @@ public class ModelManager extends ComponentManager implements Model {
         return historyIndex;
     }
     
+    //@@author A0144881Y
+    public int getMaxHistoryIndex() {
+    	return managerHistory.size() - 1;
+    }
+    
     @Override
     //@@author A0139797E
     public synchronized void undoCommand(int offset) {
         historyIndex -= offset;
+        activityManager = new ActivityManager(managerHistory.get(historyIndex));
+        filteredActivities = new FilteredList<>(activityManager.getActivities());
+        updateFilteredListToShowAll();
+        indicateActivityListPanelUpdate();
+        indicateActivityManagerChanged();
+    }
+    
+    @Override
+    //@@author A0144881Y
+    public synchronized void redoCommand(int offset) {
+        historyIndex += offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
         filteredActivities = new FilteredList<>(activityManager.getActivities());
         updateFilteredListToShowAll();
