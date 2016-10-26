@@ -4,10 +4,9 @@
 1. [Table of Contents](#1-table-of-contents)
 2. [About](#2-about)
 3. [Getting Started](#3-getting-started)
-    1. [Launch](#31-launch)
-    2. [Commands](#32-commands)
-4. [Summary of Commands](#4-summary-of-commands)
-5. [Troubleshooting](#5-troubleshooting)
+4. [Commands](#4-commands)
+5. [Summary of Commands](#5-summary-of-commands)
+6. [Troubleshooting](#6-troubleshooting)
 
 <!-- @@author A0144704L -->
 ## 2. About
@@ -15,7 +14,6 @@
 Remindaroo is a customized to-do list application that can help you manage your busy schedule and organize your to-dos. Whether its working on a project, buying groceries or planning a holiday, Remindaroo aims to help you get stuff done. So let's get started!
 
 ## 3. Getting Started
-### 3.1 Launch
 
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
    > Having any Java 8 version is not enough. <br>
@@ -30,10 +28,10 @@ Remindaroo is a customized to-do list application that can help you manage your 
 5. Some examples of commands you can try:
    * **`add`**`buy bread` : adds a task named `buy bread` to Remindaroo
    * **`exit`** : exits the app
-6. Refer to the [Commands](#32-commands) section below for details of each command.<br>
+6. Refer to the [Commands](#4-commands) section below for details of each command.<br>
 
 <!-- @@author A0139797E -->
-### <br> 3.2 Commands
+## <br> 4. Commands
 
 > Format notations:
 >
@@ -48,25 +46,22 @@ Remindaroo is a customized to-do list application that can help you manage your 
 >
 > `DATE_TIME`, `START_DATE_TIME` and `END_DATE_TIME` are parameters that can accept various inputs indicating a specific date or time. Some examples are as follows
 > * Date, e.g. `29 Oct`
-> * Date and time, e.g. `10 Nov 0900`
+> * Date and time, e.g. `10 Nov 09:00`
 > * Relative day, e.g. `tomorrow`
 > * Specific weekday, e.g. `wednesday`
 >
-> Note:
-> * If the timing is not specified, it will be set as the current timing.
-> * START_DATE_TIME must be earlier than or equal to END_DATE_TIME.
-> * Words in parameters are case-insensitive.
+
+> Note: If the timing is not specified, it will be set as the current timing.
+> Note: START_DATE_TIME must be earlier than or equal to END_DATE_TIME.
 
 ### <br>4.1 Add New Activity : **`add`**
-Adds an activity into Remindaroo. <br>
-
-3 types of activities are available:
-* _task_ : one without specific time
-* _deadline_ : one with a due time
+Adds an activity into Remindaroo. 3 types of activities are available:
+* _floating task_ : one without specific time
+* _deadline_ : one with just a specific time
 * _event_ : one with a start time and end time
 
 ##### Formats:<br><br>
--  `add TASK`<br>
+-  `add FLOATING_TASK`<br>
 
 	> Example: <br>
 	> `add buy milk` <br>
@@ -75,6 +70,20 @@ Adds an activity into Remindaroo. <br>
 	> Example: <br>
 	> `add Submit Assignment 1 on 23 Oct` <br>
 	> `add Submit Assignment 1 by 23 Oct 09:00` <br>
+
+- `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
+
+	> Example: <br>
+	> `add Football Tournament from 21 Oct 08:00 to 23 Oct 22:00` <br>
+	> `add Football Tournament from 21 Oct to 23 Oct` <br>
+
+Note: If activity name contains keywords, add quotation marks to the keywords that separate the name and time.
+> Example: <br>
+> `add read All by Me "by" 23 Oct` <br>
+> `add screening from Tokyo to paris "from" 21 Oct "to" 23 Oct`
+
+### <br>4.2 View Activities : **`view`**
+Displays the details of the activity / activities<br><br>
 
 - `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
 
@@ -116,39 +125,40 @@ Clear all activities in Remindaroo
 Deletes a specific activity from Remindaroo
 
 ##### Format:<br><br>
-- `delete ACTIVITY_ID`<br><br>
-	> Example:
-	> `delete 1`
+- `delete ACTIVITY_ID`<br>
+
+	> Example: <br>
+	> `delete 1` <br>
 	> Activity with ID 1 (e.g. `Football Practice`) is deleted from the Remindaroo
 
 ### <br>4.5 Update Activity : **`update`**
 Updates name, date and/or time of specific activity to specified name, date and/or time.
 
 ##### Format:<br><br>
--  `update ACTIVITY_ID to [NEW_NAME] [DATE_TIME] [END_DATE_TIME]`<br><br>
+-  `update ACTIVITY_ID [NEW_NAME] from [DATE_TIME] to [END_DATE_TIME]`<br>
 
-	> Examples:
-	> `update 1 to buy bread`
-	> Activity with ID 1 is updated to `buy bread`
+	> Examples:<br>
+	> `update 1 buy bread`<br>
+	> Activity with ID 1 is updated to `buy bread`<br>
 	>
-	> `update 2 to 10 Oct 1000`
-	> Activity with ID 2 is updated to be on / due by 10 October, 1000
+	> `update 2 on 10 Oct 10:00`<br>
+	> Activity with ID 2 is updated to be on / due by 10 October, 10:00<br>
 	>
-	> `update 3 to 11 Oct 1300 11 Oct 1400`
-	> Activity with ID 3 is updated to be on 11 October, 1300 to 1400
+	> `update 3 from 11 Oct 13:00 to 11 Oct 14:00`<br>
+	> Activity with ID 3 is updated to be on 11 October, 13:00 to 14:00<br>
+
 
 <!-- @@author A0144704L -->
 ### <br>4.6 Mark Activity : **`mark`**
 Marks an activity with status. If the activity already has a status, it will be overwritten by the status in this command.
 
-Status has to be one of the following (case-insensitive):
-* **pending**
-* **completed**
+Status has to be either **pending** or **completed** (case-insensitive).
 
 ##### Format:<br><br>
-- `mark ACTIVITY_ID as STATUS`<br><br>
-	> Example:
-	> `mark 1 as completed`
+- `mark ACTIVITY_ID as STATUS`<br>
+
+	> Example:<br>
+	> `mark 1 as completed`<br>
 	> Activity with ID 1 (e.g. `do assignment 1`) is marked as completed
 
 ### <br>4.7 Find Next Activity : **`next`**
@@ -217,31 +227,33 @@ Changes the location of the data file of Remindaroo to the specified path (relat
 	> `store /new_data/Remindaroo.xml`<br>
 	> The Data file `Remindaroo.xml` now resides in the folder `./new_data`
 
-#### <br>3.2.11 Show Help Menu : **`help`**
+### <br>4.12 Show Help Menu : **`help`**
 Displays the instruction for using each command
 
 ##### Format:<br><br>
-- `help [COMMAND]`<br><br>
-	> Example:
+
+- `help [COMMAND]`<br>
+
+	> Example: <br>
 	>
-	> `help | help SOME_INVALID_COMMAND`
+	> `help | help SOME_INVALID_COMMAND`<br>
 	> Displays instruction for all commands<br>
-	> `help add`
+	> `help add`<br>
 	> Displays instruction for add command
 
-#### <br>3.2.12 Exit Remindaroo : **`exit`**
+### <br>4.13 Exit Remindaroo : **`exit`**
 Exits the program
 
 ##### Format:<br><br>
 - `exit`
 
-#### <br>3.2.13 Saving the data
+### <br>4.14 Saving the data
 ActivityManager data is saved in the hard disk automatically after any command changes the data.
 There is no need to save manually.
 <br>
 
 <!-- @@author A0144881Y -->
-## 4. Summary of Commands
+## 5. Summary of Commands
 
 | Commands        | Format        |
 | ----------------|:-------------:|
@@ -252,7 +264,7 @@ There is no need to save manually.
 | List all Activities | `list` |
 | Clear all Activities | `clear` |
 | Delete Activity | `delete ACTIVITY_ID`|
-| Update Activity | `update ACTIVITY_ID to [NEW_NAME] [DATE_TIME] [END_DATE_TIME]` |
+| Update Activity | `update ACTIVITY_ID [NEW_NAME] from [DATE_TIME] to [END_DATE_TIME]` |
 | Mark Activity   | `mark ACTIVITY_ID as STATUS` |
 | Next Activity   | `next` |
 | Search Activity | `search KEYWORDS | DATE_TIME [to END_DATE_TIME] | STATUS`
@@ -264,7 +276,7 @@ There is no need to save manually.
 
 
 
-## 5. Troubleshooting
+## 6. Troubleshooting
 
-**Q:** How do I transfer my data to another Computer?
+**Q:** How do I transfer my data to another computer?<br>
 **A:** Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Remindaroo folder.
