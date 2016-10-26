@@ -31,7 +31,7 @@ Remindaroo is a customized to-do list application that can help you manage your 
 6. Refer to the [Commands](#4-commands) section below for details of each command.<br>
 
 <!-- @@author A0139797E -->
-## <br> 4. Commands
+## 4. Commands
 
 > Format notations:
 >
@@ -70,20 +70,6 @@ Adds an activity into Remindaroo. 3 types of activities are available:
 	> Example: <br>
 	> `add Submit Assignment 1 on 23 Oct` <br>
 	> `add Submit Assignment 1 by 23 Oct 09:00` <br>
-
-- `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
-
-	> Example: <br>
-	> `add Football Tournament from 21 Oct 08:00 to 23 Oct 22:00` <br>
-	> `add Football Tournament from 21 Oct to 23 Oct` <br>
-
-Note: If activity name contains keywords, add quotation marks to the keywords that separate the name and time.
-> Example: <br>
-> `add read All by Me "by" 23 Oct` <br>
-> `add screening from Tokyo to paris "from" 21 Oct "to" 23 Oct`
-
-### <br>4.2 View Activities : **`view`**
-Displays the details of the activity / activities<br><br>
 
 - `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
 
