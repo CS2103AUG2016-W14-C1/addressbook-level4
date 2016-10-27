@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
-        <type>FLOATING</type>
-        <name>blah</name>
+        <type>EVENT</type>
+        <name>event</name>
+        <epochDateTime>1477229582028</epochDateTime>
+        <epochEndDateTime>1477488782031</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>deadline</name>
+        <epochDateTime>1477487746952</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>event1</name>
+        <epochDateTime>1477496525991</epochDateTime>
+        <epochEndDateTime>1477582925992</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>deadline2</name>
+        <epochDateTime>1477499627457</epochDateTime>
+        <isCompleted>true</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>really long deadline</name>
+        <epochDateTime>1477586629797</epochDateTime>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
         <type>FLOATING</type>
-        <name>hello</name>
+        <name>task1</name>
         <isCompleted>false</isCompleted>
     </activity>
 </activitymanager>
