@@ -72,7 +72,7 @@ public class ActivityCard extends UiPart{
         }
         if (checkExpired != null) {
 	        if (isExpired(checkExpired) && !activity.getStatus().isCompleted()) { 
-	        	cardPane.setStyle("-fx-background-color: derive(indianred, 70%); -fx-border-width: 0.5; -fx-border-style: groove; -fx-border-color: grey;"); 
+	        	cardPane.setStyle("-fx-background-color: derive(indianred, 70%); -fx-border-width: 0.5; -fx-border-color: grey;"); 
 	        }
         }
     }

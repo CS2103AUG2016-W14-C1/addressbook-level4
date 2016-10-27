@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <activitymanager>
     <activity>
+        <type>DEADLINE</type>
+        <name>deadline3</name>
+        <epochDateTime>1477497300000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>deadline1</name>
+        <epochDateTime>1477583580000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
         <type>EVENT</type>
         <name>event</name>
-        <epochDateTime>1477229582028</epochDateTime>
-        <epochEndDateTime>1477488782031</epochEndDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>DEADLINE</type>
-        <name>deadline</name>
-        <epochDateTime>1477487746952</epochDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>EVENT</type>
-        <name>event1</name>
-        <epochDateTime>1477496525991</epochDateTime>
-        <epochEndDateTime>1477582925992</epochEndDateTime>
-        <isCompleted>false</isCompleted>
-    </activity>
-    <activity>
-        <type>DEADLINE</type>
-        <name>deadline2</name>
-        <epochDateTime>1477499627457</epochDateTime>
+        <epochDateTime>1477596859433</epochDateTime>
+        <epochEndDateTime>1477683259434</epochEndDateTime>
         <isCompleted>true</isCompleted>
     </activity>
     <activity>
         <type>DEADLINE</type>
-        <name>really long deadline</name>
-        <epochDateTime>1477586629797</epochDateTime>
+        <name>deadline 2</name>
+        <epochDateTime>1477670617223</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>deadline 1</name>
+        <epochDateTime>1477583339946</epochDateTime>
+        <isCompleted>true</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>task2</name>
         <isCompleted>false</isCompleted>
     </activity>
     <activity>
         <type>FLOATING</type>
         <name>task1</name>
-        <isCompleted>false</isCompleted>
+        <isCompleted>true</isCompleted>
     </activity>
 </activitymanager>
