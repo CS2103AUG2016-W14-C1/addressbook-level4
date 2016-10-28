@@ -6,16 +6,16 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class HelpWindowTest extends ActivityManagerGuiTest {
-/*
+
     @Test
     //@@author A0139797E
     public void openHelpWindow() {
 
         activityListPanel.clickOnListView();
 
-        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
+//        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
 
-        assertHelpWindowOpen(mainMenu.openHelpWindowUsingMenu());
+  //      assertHelpWindowOpen(mainMenu.openHelpWindowUsingMenu());
 
         assertHelpWindowOpen(commandBox.runHelpCommand());
 
@@ -24,5 +24,5 @@ public class HelpWindowTest extends ActivityManagerGuiTest {
     private void assertHelpWindowOpen(HelpWindowHandle helpWindowHandle) {
         assertTrue(helpWindowHandle.isWindowOpen());
         helpWindowHandle.closeWindow();
-    } */
+    } 
 }
