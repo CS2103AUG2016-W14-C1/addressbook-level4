@@ -95,7 +95,7 @@ public class ActivityCard extends UiPart{
     public boolean isExpired(AMDate date) {
     	assert date != null;
     	AMDate today = new AMDate("today");
-    	if (today.getTime() > date.getTime())
+    	if (today.getTime() > date.getTime() + 60000)
     		return true;
     	return false;
     }
