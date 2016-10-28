@@ -184,6 +184,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
+    
+    @Override
+  //@@author A0144704L
+    public void listCommand() {
+    	activityManager.listActivities();
+    	indicateActivityListPanelUpdate();
+    }
 
     //=========== Filtered Activity List Accessors ===============================================================
 

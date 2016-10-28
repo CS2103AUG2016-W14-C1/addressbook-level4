@@ -85,6 +85,10 @@ public class ActivityList implements Iterable<Activity> {
     	assert internalList.contains(toUnmark);
     	toUnmark.setStatus(false);
     }
+    
+    public void list() {
+    	Collections.sort(internalList);
+    }
 	
     public ObservableList<Activity> getInternalList() {
         return internalList;

@@ -38,6 +38,9 @@ public interface Model {
     /** Redo up to n commands */
     void redoCommand(int offset);
     
+    /** List all activities */
+    void listCommand();
+    
     /** Get index of current referenced history */
     int getHistoryIndex();
     

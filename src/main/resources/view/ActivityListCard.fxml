@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <!-- @@author A0139797E -->
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane HBox.hgrow="ALWAYS" >
+        <GridPane HBox.hgrow="ALWAYS">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <children>
@@ -24,20 +31,31 @@
                     </padding>
 
                     <children>
-                        <HBox spacing="5" alignment="CENTER_LEFT">
+                        <HBox alignment="CENTER_LEFT" spacing="5">
                             <children>
                                 <HBox>
                                     <Label fx:id="id" styleClass="cell_big_label" />
-                                    <Label fx:id="name" text="\$first" styleClass="cell_big_label"/>
+                                    <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
                                 </HBox>
-                                <Pane HBox.hgrow="ALWAYS" />
-                                <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" />
-                                <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" />
                             </children>
                         </HBox>
                     </children>
                 </VBox>
+            <VBox prefHeight="34.0" prefWidth="150.0" GridPane.columnIndex="1">
+               <children>
+                          <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" />
+                          <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" />
+               </children>
+            </VBox>
+            <HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="2">
+               <children>
+                  <Label fx:id="status" styleClass="cell_small_label" text="\$status" translateX="30.0" translateY="20.0" />
+               </children>
+            </HBox>
             </children>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </children>
 </HBox>
