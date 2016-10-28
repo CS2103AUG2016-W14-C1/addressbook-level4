@@ -785,7 +785,7 @@ public class LogicManagerTest {
         expectedAM.markActivity(threeActivities.get(1));
         helper.addToModel(model, threeActivities);
        
-        assertCommandBehavior("mark 2",
+        assertCommandBehavior("mark 3",
                 String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getPendingActivityList());
