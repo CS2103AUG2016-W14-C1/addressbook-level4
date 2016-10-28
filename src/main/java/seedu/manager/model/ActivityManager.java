@@ -118,6 +118,10 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public void unmarkActivity(Activity key) {
     	activities.unmark(key);
     }
+    
+    public void listActivities() {
+    	activities.list();
+    }
 
     
 //// tag-level operations
