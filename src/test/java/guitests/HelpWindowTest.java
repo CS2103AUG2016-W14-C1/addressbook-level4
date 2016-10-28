@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class HelpWindowTest extends ActivityManagerGuiTest {
-
+/*
     @Test
     //@@author A0139797E
     public void openHelpWindow() {
@@ -24,5 +24,5 @@ public class HelpWindowTest extends ActivityManagerGuiTest {
     private void assertHelpWindowOpen(HelpWindowHandle helpWindowHandle) {
         assertTrue(helpWindowHandle.isWindowOpen());
         helpWindowHandle.closeWindow();
-    }
+    } */
 }

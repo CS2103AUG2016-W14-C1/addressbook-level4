@@ -50,8 +50,8 @@ public class MainWindow extends UiPart {
     @FXML
     private AnchorPane commandBoxPlaceholder;
 
-    @FXML
-    private MenuItem helpMenuItem;
+//    @FXML
+//    private MenuItem helpMenuItem;
 
     @FXML
     private AnchorPane activityListPanelPlaceholder;
@@ -104,13 +104,13 @@ public class MainWindow extends UiPart {
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
 
-        setAccelerators();
+//        setAccelerators();
     }
-
+/*
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
-
+*/
     //@@author A0144881Y
     public void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
