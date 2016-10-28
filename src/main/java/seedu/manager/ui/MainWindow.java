@@ -106,11 +106,11 @@ public class MainWindow extends UiPart {
 
 //        setAccelerators();
     }
-/*
-    private void setAccelerators() {
-        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-    }
-*/
+
+//    private void setAccelerators() {
+//        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+//    }
+
     //@@author A0144881Y
     public void fillInnerParts() {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
