@@ -13,10 +13,9 @@ public class TestActivity implements ReadOnlyActivity {
     private AMDate dateTime;
     private AMDate endDateTime;
     private Status status;
-//    private UniqueTagList tags;
+    private boolean selected;
 
     public TestActivity() {
-//        tags = new UniqueTagList();
         type = ActivityType.FLOATING; // default floating
         status = new Status();
     }
@@ -30,9 +29,10 @@ public class TestActivity implements ReadOnlyActivity {
         return name;
     }
 
-//    public UniqueTagList getTags() {
-//        return tags;
-//    }
+    @Override
+    public boolean getSelected() {
+        return selected;
+    }
     
     @Override
     public String toString() {
@@ -42,8 +42,6 @@ public class TestActivity implements ReadOnlyActivity {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName());
-        // TODO: Re-implement tags when possible
-        // this.getTags().getInternalList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }
 
