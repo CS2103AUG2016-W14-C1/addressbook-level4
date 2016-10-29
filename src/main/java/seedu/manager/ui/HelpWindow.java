@@ -68,10 +68,6 @@ public class HelpWindow extends UiPart {
         dialogStage.setWidth(WINDOW_WIDTH);
         setIcon(dialogStage, ICON);
 
-        WebView browser = new WebView();
-        browser.getEngine().load(USERGUIDE_URL);
-        FxViewUtil.applyAnchorBoundaryParameters(browser, 0.0, 0.0, 0.0, 0.0);
-        
         table.setMinWidth(WINDOW_WIDTH);
         table.setMinHeight(WINDOW_HEIGHT);
         
