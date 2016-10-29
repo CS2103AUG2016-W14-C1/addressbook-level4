@@ -796,8 +796,10 @@ public class LogicManagerTest {
         assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
     }
     
-    public void execute_undo_undoAddCommand() throws Exception {
-        
+    @Test
+    //@@author A0139797E
+    public void execute_redo_NoCommand() throws Exception {
+        assertCommandBehavior("redo", RedoCommand.MESSAGE_INDEX_LARGER_THAN_MAX);
     }
     
     @Test
