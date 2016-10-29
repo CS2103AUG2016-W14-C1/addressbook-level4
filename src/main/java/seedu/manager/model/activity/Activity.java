@@ -113,6 +113,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         } else {
             this.endDateTime = null;
         }
+        this.selected = source.getSelected();
     }
 	
     @Override
