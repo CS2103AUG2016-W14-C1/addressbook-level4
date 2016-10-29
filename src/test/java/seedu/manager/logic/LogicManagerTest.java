@@ -435,11 +435,11 @@ public class LogicManagerTest {
     //@@author A0135730M
     public void execute_update_invalidDate() throws Exception {
         assertCommandBehavior("update 1 new from abc to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
         assertCommandBehavior("update 1 new from today to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
         assertCommandBehavior("update 1 new by ghi", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
     
     

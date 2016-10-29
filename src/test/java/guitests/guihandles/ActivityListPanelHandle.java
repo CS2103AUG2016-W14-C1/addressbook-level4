@@ -99,21 +99,21 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
 
-    public ActivityCardHandle navigateToPerson(String name) {
+    public ActivityCardHandle navigateToActivity(String name) {
         guiRobot.sleep(500); //Allow a bit of time for the list to be updated
-        final Optional<ReadOnlyActivity> person = getListView().getItems().stream().filter(p -> p.getName().equals(name)).findAny();
-        if (!person.isPresent()) {
+        final Optional<ReadOnlyActivity> activity = getListView().getItems().stream().filter(p -> p.getName().equals(name)).findAny();
+        if (!activity.isPresent()) {
             throw new IllegalStateException("Name not found: " + name);
         }
 
-        return navigateToPerson(person.get());
+        return navigateToActivity(activity.get());
     }
 
     /**
      * Navigates the listview to display and select the person.
      */
-    public ActivityCardHandle navigateToPerson(ReadOnlyActivity person) {
-        int index = getPersonIndex(person);
+    public ActivityCardHandle navigateToActivity(ReadOnlyActivity activity) {
+        int index = getActivityIndex(activity);
 
         guiRobot.interact(() -> {
             getListView().scrollTo(index);
@@ -121,14 +121,14 @@ public class ActivityListPanelHandle extends GuiHandle {
             getListView().getSelectionModel().select(index);
         });
         guiRobot.sleep(100);
-        return getPersonCardHandle(person);
+        return getPersonCardHandle(activity);
     }
 
 
     /**
      * Returns the position of the person given, {@code NOT_FOUND} if not found in the list.
      */
-    public int getPersonIndex(ReadOnlyActivity targetActivity) {
+    public int getActivityIndex(ReadOnlyActivity targetActivity) {
         List<ReadOnlyActivity> activitiesInList = getListView().getItems();
         for (int i = 0; i < activitiesInList.size(); i++) {
             if(activitiesInList.get(i).getName().equals(targetActivity.getName())){

@@ -39,12 +39,8 @@ public class StoreCommand extends Command {
         	FileUtil.createIfMissing(newDataFile);
         	XmlSerializableActivityManager xmlAM = new XmlSerializableActivityManager(AM);
         	XmlFileStorage.saveDataToFile(newDataFile, xmlAM);
-        } catch (IOException e) {
-        	return new CommandResult(MESSAGE_STORE_FILE_FAIL);
-        }
         
-        Config currentConfig;
-        try {
+        	Config currentConfig;
         	currentConfig = ConfigUtil.readConfig(Config.DEFAULT_CONFIG_FILE).get();
         	currentConfig.setActivityManagerFilePath(dataFileLocation);
         	ConfigUtil.saveConfig(currentConfig, Config.DEFAULT_CONFIG_FILE);	

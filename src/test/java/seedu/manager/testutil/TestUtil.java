@@ -111,7 +111,7 @@ public class TestUtil {
             FileUtil.createIfMissing(saveFileForTesting);
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
