@@ -7,7 +7,7 @@ import seedu.manager.commons.events.BaseEvent;
 import seedu.manager.model.activity.Activity;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Activity List Panel
  */
 public class ActivityListPanelUpdateEvent extends BaseEvent {
 

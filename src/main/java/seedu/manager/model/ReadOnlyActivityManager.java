@@ -9,7 +9,7 @@ import seedu.manager.model.tag.Tag;
 import seedu.manager.model.tag.UniqueTagList;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of an activity manager
  */
 public interface ReadOnlyActivityManager {
 
@@ -18,7 +18,7 @@ public interface ReadOnlyActivityManager {
     ActivityList getActivityList();
 
     /**
-     * Returns an unmodifiable view of persons list
+     * Returns an unmodifiable view of activities list
      */
     List<Activity> getListActivity();
 

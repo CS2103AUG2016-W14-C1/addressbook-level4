@@ -5,7 +5,7 @@ import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.model.activity.Activity;
 
 /**
- * Deletes a activity identified using it's last displayed index from the address book.
+ * Deletes a activity identified using it's last displayed index from the activity manager.
  */
 //@@author A0144881Y
 public class DeleteCommand extends Command {

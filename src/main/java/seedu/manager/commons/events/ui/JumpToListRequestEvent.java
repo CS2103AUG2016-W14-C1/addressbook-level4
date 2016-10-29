@@ -3,7 +3,7 @@ package seedu.manager.commons.events.ui;
 import seedu.manager.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to jump to the list of activities
  */
 public class JumpToListRequestEvent extends BaseEvent {
 

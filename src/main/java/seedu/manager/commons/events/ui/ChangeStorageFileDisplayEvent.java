@@ -4,7 +4,7 @@ package seedu.manager.commons.events.ui;
 import seedu.manager.commons.events.BaseEvent;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Activity List Panel
  */
 public class ChangeStorageFileDisplayEvent extends BaseEvent {
 

@@ -203,7 +203,7 @@ public class MainWindow extends UiPart {
     }
 
     public void loadActivityPage(Activity activity) {
-//        browserPanel.loadPersonPage(activity);
+//        browserPanel.loadActivityPage(activity);
     }
 
     public void releaseResources() {

@@ -275,10 +275,10 @@ public class TestUtil {
     }
 
     /**
-     * Removes a subset from the list of persons.
-     * @param activities The list of persons
-     * @param activitiesToRemove The subset of persons.
-     * @return The modified persons after removal of the subset from persons.
+     * Removes a subset from the list of activities.
+     * @param activities The list of activities
+     * @param activitiesToRemove The subset of activities.
+     * @return The modified activities after removal of the subset from activities.
      */
     public static TestActivity[] removeActivitiesFromList(final TestActivity[] activities, TestActivity... activitiesToRemove) {
         List<TestActivity> listOfActivities = asList(activities);
@@ -297,8 +297,8 @@ public class TestUtil {
     }
 
     /**
-     * Replaces persons[i] with a person.
-     * @param activities The array of persons.
+     * Replaces activities[i] with an activity.
+     * @param activities The array of activities.
      * @param activity The replacement activity
      * @param index The index of the activity to be replaced.
      * @return
@@ -309,7 +309,7 @@ public class TestUtil {
     }
 
     /**
-     * Appends persons to the array of activities.
+     * Appends activities to the array of activities.
      * @param activities A array of activities.
      * @param activitiesToAdd The activities that are to be appended behind the original array.
      * @return The modified array of activities.

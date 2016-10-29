@@ -2,7 +2,7 @@ package seedu.manager.logic.commands;
 
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all activities in the activity manager to the user.
  */
 public class ListCommand extends Command {
 

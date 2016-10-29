@@ -39,7 +39,7 @@ public class XmlAdaptedActivity {
 
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Activity into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
@@ -66,9 +66,9 @@ public class XmlAdaptedActivity {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted activity object into the model's Activity object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted activity
      */
     //@@author A0135730M
     public Activity toModelType() {

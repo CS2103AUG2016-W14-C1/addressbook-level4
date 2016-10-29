@@ -56,7 +56,7 @@ public interface Model {
     /** Returns the filtered floating activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredFloatingActivityList();
 
-    /** Updates the filter of the filtered activity list to show all persons */
+    /** Updates the filter of the filtered activity list to show all activities */
     void updateFilteredListToShowAll();
 
     /** Updates the filter of the filtered activity list to filter by the given keywords*/

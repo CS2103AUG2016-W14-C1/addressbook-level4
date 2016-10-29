@@ -50,7 +50,7 @@ public class BrowserPanel extends UiPart{
         return browserPanel;
     }
 
-    public void loadPersonPage(Activity activity) {
+    public void loadActivityPage(Activity activity) {
         loadPage("https://www.google.com.sg/#safe=off&q=" + activity.getName().replaceAll(" ", "+"));
     }
 

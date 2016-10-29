@@ -20,7 +20,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the activity manager data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {

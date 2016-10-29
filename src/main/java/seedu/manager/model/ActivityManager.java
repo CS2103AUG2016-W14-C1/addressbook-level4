@@ -27,14 +27,14 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public ActivityManager() {}
 
     /**
-     * Persons and Tags are copied into this activity manager
+     * Activities and Tags are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
         this(toBeCopied.getActivityList(), toBeCopied.getUniqueTagList());
     }
 
     /**
-     * Persons and Tags are copied into this activity manager
+     * Activities and Tags are copied into this activity manager
      */
     public ActivityManager(ActivityList activities, UniqueTagList tags) {
         resetData(activities.getInternalList(), tags.getInternalList());
@@ -72,7 +72,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
     /**
      * Adds an activity to the activity manager.
      * Also checks the new acitivity's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * and updates the Tag objects in the activity to point to those in {@link #tags}.
      *
      */
     public void addActivity(Activity activity) {
@@ -81,7 +81,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
     }
 
     /**
-     * Ensures that every tag in this person:
+     * Ensures that every tag in this activity:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
      */

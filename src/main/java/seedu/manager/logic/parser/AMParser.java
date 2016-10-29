@@ -197,7 +197,7 @@ public class AMParser {
     }
 
     /**
-     * Extracts the new person's tags from the add command's tag arguments string.
+     * Extracts the new activity's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
     // TODO: remove if tags not used in the end

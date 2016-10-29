@@ -7,7 +7,7 @@ import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.model.activity.Activity;
 
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Selects an activity identified using it's last displayed index from the activity manager.
  */
 public class SelectCommand extends Command {
 

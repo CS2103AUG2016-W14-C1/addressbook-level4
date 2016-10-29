@@ -15,10 +15,10 @@ public class XmlFileStorage {
     /**
      * Saves the given activity manager data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableActivityManager addressBook)
+    public static void saveDataToFile(File file, XmlSerializableActivityManager activityManager)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, addressBook);
+            XmlUtil.saveDataToFile(file, activityManager);
         } catch (JAXBException e) {
             assert false : "Unexpected exception " + e.getMessage();
         }
