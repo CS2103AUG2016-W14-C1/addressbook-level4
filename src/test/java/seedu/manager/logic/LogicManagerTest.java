@@ -828,14 +828,14 @@ public class LogicManagerTest {
     @Test
     //@@author A0144704L
     public void execute_store_storeToCorrectLocation () throws Exception {
-    	String testDataFileLocation = "/data/RemindarooTest.xml";
+    	String testDataFileLocation = "data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
     }
 
     @Test
     //@@author A0144704L
     public void execute_store_incorrectExtension () throws Exception {
-    	String testDataFileLocation = "/data/RemindarooTest.txt";
+    	String testDataFileLocation = "data/RemindarooTest.txt";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
     

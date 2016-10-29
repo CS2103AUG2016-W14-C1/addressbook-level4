@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
-import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.ui.ActivityListPanel.ActivityListViewCell;
 
@@ -72,31 +71,22 @@ public class FloatingListPanel extends UiPart{
         floatingListView.setItems(observableList);
         floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
         setEventHandlerForSelectionChangeEvent();
-        setEventHandlerForUpdateEvent();
     }
     
     private void setEventHandlerForSelectionChangeEvent() {
     	floatingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                logger.fine("Selection in activity list panel changed to : '" + newValue + "'");
                 raise(new ActivityPanelSelectionChangedEvent(newValue));
-            }
-        });
-    }
-
-    private void setEventHandlerForUpdateEvent() {
-    	floatingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Activity has been updated to : '" + newValue + "'");
-                raise(new ActivityPanelUpdateEvent(newValue));
             }
         });
     }
     
     //@@author A0144704L
-    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset, int scrollIndex) {
         floatingListView.setItems(observableList);
     	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    	this.scrollTo(scrollIndex);
     }
     
     //@@author A0144704L

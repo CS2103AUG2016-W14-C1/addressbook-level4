@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
-import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
 
@@ -66,7 +65,6 @@ public class ActivityListPanel extends UiPart {
         activityListView.setItems(observableList);
         activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
         setEventHandlerForSelectionChangeEvent();
-        setEventHandlerForUpdateEvent();
     }
 
     private void addToPlaceholder() {
@@ -82,20 +80,12 @@ public class ActivityListPanel extends UiPart {
             }
         });
     }
-
-    private void setEventHandlerForUpdateEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Activity has been updated to : '" + newValue + "'");
-                raise(new ActivityPanelUpdateEvent(newValue));
-            }
-        });
-    }
     
     //@@author A0139797E
-    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset, int scrollIndex) {
         activityListView.setItems(observableList);
     	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    	this.scrollTo(scrollIndex);
     }
     
     //@@author A0144881Y

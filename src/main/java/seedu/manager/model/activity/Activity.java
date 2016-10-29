@@ -13,6 +13,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	private Status status;
 	private AMDate dateTime;
 	private AMDate endDateTime;
+	private boolean selected;
 	
 	// Floating activity constructor
 	
@@ -23,6 +24,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 		this.status = new Status();
 		this.dateTime = null;
 		this.endDateTime = null;
+		this.selected = false;
 	}
 	
 	// Deadline activity constructor
@@ -135,6 +137,16 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 		this.name = newName;
 	}
 	
+    //@@author A0139797E
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    //@@author A0139797E
+    public void setSelected(boolean isSelected) {
+        this.selected = isSelected;
+    }
+    
 	//@@author A0144704L
 	public void setStatus(boolean completed) {
 		(this.status).setStatus(completed);

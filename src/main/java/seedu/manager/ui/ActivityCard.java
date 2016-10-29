@@ -67,10 +67,15 @@ public class ActivityCard extends UiPart{
             endDateTime.setText(generateDateTimeString(activity.getEndDateTime()));
             checkExpired = activity.getEndDateTime();
         }
+        // Overwrite colour scheme for expired event
         if (checkExpired != null) {
 	        if (isExpired(checkExpired) && !activity.getStatus().isCompleted()) { 
 	        	cardPane.setStyle("-fx-background-color: derive(indianred, 70%); -fx-border-width: 0.5; -fx-border-color: grey;"); 
 	        }
+        }
+        // Overwrite colour scheme for selected event
+        if (activity.getSelected()) {
+            cardPane.setStyle("-fx-background-color: #FAFAD2;");
         }
     }
     

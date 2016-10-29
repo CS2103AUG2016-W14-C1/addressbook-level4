@@ -14,11 +14,13 @@ public class ActivityListPanelUpdateEvent extends BaseEvent {
 
     private final ObservableList<Activity> updatedFloatingActivityList;
     private final ObservableList<Activity> updatedScheduleList;
+    private final int targetIndex;
 
     public ActivityListPanelUpdateEvent(ObservableList<Activity> observableFloatingTaskList, 
-                                        ObservableList<Activity> observableScheduleList){
+                                        ObservableList<Activity> observableScheduleList, int index){
         this.updatedFloatingActivityList = observableFloatingTaskList;
         this.updatedScheduleList = observableScheduleList;
+        this.targetIndex = index;
     }
 
     @Override
@@ -32,5 +34,9 @@ public class ActivityListPanelUpdateEvent extends BaseEvent {
     
     public ObservableList<Activity> getUpdatedScheduleList() {
         return updatedScheduleList;
+    }
+    
+    public int getTargetIndex() {
+        return targetIndex;
     }
 }

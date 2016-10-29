@@ -74,6 +74,7 @@ public class ActivityList implements Iterable<Activity> {
     	assert toMark != null;
     	assert internalList.contains(toMark);
     	toMark.setStatus(true);
+    	Collections.sort(internalList);
     }
     
     /**
@@ -84,6 +85,7 @@ public class ActivityList implements Iterable<Activity> {
     	assert toUnmark != null;
     	assert internalList.contains(toUnmark);
     	toUnmark.setStatus(false);
+    	Collections.sort(internalList);
     }
     
     public void list() {
