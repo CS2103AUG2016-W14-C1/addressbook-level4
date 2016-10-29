@@ -3,7 +3,6 @@ package seedu.manager.logic;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.manager.commons.core.EventsCenter;
-import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.logic.Logic;

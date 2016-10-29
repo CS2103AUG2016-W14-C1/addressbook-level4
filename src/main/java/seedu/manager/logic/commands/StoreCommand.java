@@ -1,7 +1,6 @@
 package seedu.manager.logic.commands;
 
 import java.io.File;
-import java.io.IOException;
 
 import seedu.manager.commons.core.Config;
 import seedu.manager.commons.core.EventsCenter;

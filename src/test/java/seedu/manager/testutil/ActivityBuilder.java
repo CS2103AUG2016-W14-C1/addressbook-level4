@@ -33,6 +33,14 @@ public class ActivityBuilder {
         return this;
     }
     
+    public ActivityBuilder withNameandStartEndTime(String name, String startDateTime, String endDateTime) throws IllegalValueException {
+        this.activity.setName(name);
+        this.activity.setType(ActivityType.EVENT);
+        this.activity.setDateTime(startDateTime);
+        this.activity.setEndDateTime(endDateTime);
+        return this;
+    }
+    
     public TestActivity build() {
         return this.activity;
     }

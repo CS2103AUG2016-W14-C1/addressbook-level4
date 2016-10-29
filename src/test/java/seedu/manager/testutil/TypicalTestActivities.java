@@ -9,7 +9,7 @@ import seedu.manager.model.activity.*;
  */
 public class TypicalTestActivities {
 
-    public TestActivity groceries, reading, guitar, tidy, paint, movie, dog, plane, hotel, assignment;
+    public TestActivity groceries, reading, guitar, tidy, paint, movie, dog, plane, hotel, assignment, talk;
 
     public TypicalTestActivities() {
         try {
@@ -23,7 +23,8 @@ public class TypicalTestActivities {
             dog =  new ActivityBuilder().withNameandStatus("Walk the dog", false).build();
             // Deadline task example
             assignment = new ActivityBuilder().withNameandTime("essay assignment", "1 Dec 2016 23:59:59").build();
-           
+           // Event task example
+            talk = new ActivityBuilder().withNameandStartEndTime("HTML5 talk", "2 Dec 2016 10:00:00", "2 Dec 2016, 12:00:00").build();
             
             // Manual activities
             tidy = new ActivityBuilder().withName("Tidy study desk").build();
@@ -44,18 +45,19 @@ public class TypicalTestActivities {
         am.addActivity(new Activity(this.movie));
         am.addActivity(new Activity(this.dog));
         am.addActivity(new Activity(this.assignment));
+        am.addActivity(new Activity(this.talk));
     }
 
     public TestActivity[] getTypicalActivities() {
-        return new TestActivity[]{groceries, reading, guitar, paint, movie, dog, assignment};
+        return new TestActivity[]{groceries, reading, guitar, paint, movie, dog, assignment, talk};
     }
     
     public TestActivity[] getTypicalFloatingActivities() {
         return new TestActivity[]{groceries, reading, guitar, paint, movie, dog};
     }
     
-    public TestActivity[] getTypicalDeadlineActivities() {
-        return new TestActivity[]{assignment};
+    public TestActivity[] getTypicalScheduleActivities() {
+        return new TestActivity[]{assignment, talk};
     }
 
     public ActivityManager getTypicalActivityManager(){

@@ -16,28 +16,33 @@ public class DeleteCommandTest extends ActivityManagerGuiTest {
 
         //delete the first in the list
         TestActivity[] currentList = ta.getTypicalFloatingActivities();
-        int targetIndex = 2;
+        int targetIndex = ta.getTypicalScheduleActivities().length + 1;
         assertDeleteSuccess(targetIndex, currentList);
 
         //delete the last in the list
         currentList = TestUtil.removeActivityFromList(currentList, getFloatingIndex(targetIndex));
-        targetIndex = currentList.length + ta.getTypicalDeadlineActivities().length;
+        targetIndex = getFloatingTargetIndex(currentList.length);
         assertDeleteSuccess(targetIndex, currentList);
 
         //delete from the middle of the list
         currentList = TestUtil.removeActivityFromList(currentList, getFloatingIndex(targetIndex));
-        targetIndex = currentList.length/2;
+        targetIndex = getFloatingTargetIndex(currentList.length/2);
         assertDeleteSuccess(targetIndex, currentList);
 
         //invalid index
-        commandBox.runCommand("delete " + (currentList.length + ta.getTypicalDeadlineActivities().length));
+        commandBox.runCommand("delete " + (currentList.length + ta.getTypicalScheduleActivities().length));
         assertResultMessage("The activity index provided is invalid");
 
     }
 
     //@@author A0139797E
     private int getFloatingIndex(int index) {
-        return index - ta.getTypicalDeadlineActivities().length;
+        return index - ta.getTypicalScheduleActivities().length;
+    }
+    
+    //@@author A0139797E
+    private int getFloatingTargetIndex(int index) {
+        return index + ta.getTypicalScheduleActivities().length;
     }
     
     /**
