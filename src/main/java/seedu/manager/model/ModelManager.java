@@ -253,10 +253,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
+        indicateActivityListPanelUpdate();
     }
     
     private void updateFilteredActivityList(Predicate<Activity> predicate) {
         filteredActivities.setPredicate(predicate);
+        indicateActivityListPanelUpdate();
     }
     
     public void updateFilteredActivityList() {

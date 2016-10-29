@@ -64,7 +64,6 @@ public class ActivityListPanel extends UiPart {
     private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
         activityListView.setItems(observableList);
         activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-        setEventHandlerForSelectionChangeEvent();
     }
 
     private void addToPlaceholder() {
@@ -72,26 +71,10 @@ public class ActivityListPanel extends UiPart {
         placeHolderPane.getChildren().add(panel);
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in activity list panel changed to : '" + newValue + "'");
-                raise(new ActivityPanelSelectionChangedEvent(newValue));
-            }
-        });
-    }
-    
     //@@author A0139797E
     public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset, int scrollIndex) {
-        activityListView.setItems(observableList);
-    	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-    	this.scrollTo(scrollIndex);
-    }
-    
-    //@@author A0144881Y
-    public void updateActivityCard(Activity newActivity, int indexOffset) {
-        // Refresh activity card cells to update GUI
-        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+        this.setConnections(observableList, indexOffset);
+        this.scrollTo(scrollIndex);
     }
     
     public void scrollTo(int index) {

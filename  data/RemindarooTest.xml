@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<activitymanager/>
+<activitymanager>
+    <activity>
+        <type>EVENT</type>
+        <name>event</name>
+        <epochDateTime>1475314702117</epochDateTime>
+        <epochEndDateTime>1475401102118</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>deadline</name>
+        <epochDateTime>1477042491523</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+</activitymanager>

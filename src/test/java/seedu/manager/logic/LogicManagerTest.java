@@ -370,35 +370,6 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
-    }
-
-    @Test
-    public void execute_selectIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("select");
-    }
-
-    /* TODO: remove select command tests if unnecessary 
-    @Test
-    public void execute_select_jumpsToCorrectActivity() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        List<Activity> threeActivities = helper.generateActivityList(3);
-
-        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
-        helper.addToModel(model, threeActivities);
-
-        assertCommandBehavior("select 2",
-                String.format(SelectCommand.MESSAGE_SELECT_ACTIVITY_SUCCESS, 2),
-                expectedAM,
-                expectedAM.getActivityList());
-        assertEquals(1, targetedJumpIndex);
-        assertEquals(model.getFilteredActivityList().get(1), threeActivities.get(1));
-    } */
-
-
-    @Test
     //@@author A0144881Y
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);

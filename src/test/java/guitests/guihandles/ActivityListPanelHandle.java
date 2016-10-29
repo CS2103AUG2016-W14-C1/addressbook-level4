@@ -30,7 +30,7 @@ public class ActivityListPanelHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
-    public List<ReadOnlyActivity> getSelectedPersons() {
+    public List<ReadOnlyActivity> getSelectedActivities() {
         ListView<ReadOnlyActivity> personList = getListView();
         return personList.getSelectionModel().getSelectedItems();
     }
@@ -58,17 +58,17 @@ public class ActivityListPanelHandle extends GuiHandle {
     /**
      * Returns true if the {@code persons} appear as the sub list (in that order) at position {@code startPosition}.
      */
-    public boolean containsInOrder(int startPosition, ReadOnlyActivity... persons) {
-        List<ReadOnlyActivity> personsInList = getListView().getItems();
+    public boolean containsInOrder(int startPosition, ReadOnlyActivity... activities) {
+        List<ReadOnlyActivity> activitiesInList = getListView().getItems();
 
         // Return false if the list in panel is too short to contain the given list
-        if (startPosition + persons.length > personsInList.size()){
+        if (startPosition + activities.length > activitiesInList.size()){
             return false;
         }
 
         // Return false if any of the persons doesn't match
-        for (int i = 0; i < persons.length; i++) {
-            if (!personsInList.get(startPosition + i).getName().equals(persons[i].getName())){
+        for (int i = 0; i < activities.length; i++) {
+            if (!activitiesInList.get(startPosition + i).getName().equals(activities[i].getName())){
                 return false;
             }
         }
@@ -77,9 +77,9 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Returns true if the list is showing the person details correctly and in correct order.
+     * Returns true if the list is showing the activity details correctly and in correct order.
      * @param startPosition The starting position of the sub list.
-     * @param activities A list of person in the correct order.
+     * @param activities A list of activity in the correct order.
      */
     public boolean isListMatching(int startPosition, ReadOnlyActivity... activities) throws IllegalArgumentException {
         if (activities.length + startPosition != getListView().getItems().size()) {
@@ -128,10 +128,10 @@ public class ActivityListPanelHandle extends GuiHandle {
     /**
      * Returns the position of the person given, {@code NOT_FOUND} if not found in the list.
      */
-    public int getPersonIndex(ReadOnlyActivity targetPerson) {
-        List<ReadOnlyActivity> personsInList = getListView().getItems();
-        for (int i = 0; i < personsInList.size(); i++) {
-            if(personsInList.get(i).getName().equals(targetPerson.getName())){
+    public int getPersonIndex(ReadOnlyActivity targetActivity) {
+        List<ReadOnlyActivity> activitiesInList = getListView().getItems();
+        for (int i = 0; i < activitiesInList.size(); i++) {
+            if(activitiesInList.get(i).getName().equals(targetActivity.getName())){
                 return i;
             }
         }
@@ -151,11 +151,11 @@ public class ActivityListPanelHandle extends GuiHandle {
 
     public ActivityCardHandle getPersonCardHandle(ReadOnlyActivity activity) {
         Set<Node> nodes = getAllCardNodes();
-        Optional<Node> personCardNode = nodes.stream()
+        Optional<Node> activityCardNode = nodes.stream()
                 .filter(n -> new ActivityCardHandle(guiRobot, primaryStage, n).isSameActivity(activity))
                 .findFirst();
-        if (personCardNode.isPresent()) {
-            return new ActivityCardHandle(guiRobot, primaryStage, personCardNode.get());
+        if (activityCardNode.isPresent()) {
+            return new ActivityCardHandle(guiRobot, primaryStage, activityCardNode.get());
         } else {
             return null;
         }

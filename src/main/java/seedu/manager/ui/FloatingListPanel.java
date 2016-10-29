@@ -70,29 +70,12 @@ public class FloatingListPanel extends UiPart{
     private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
         floatingListView.setItems(observableList);
         floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-        setEventHandlerForSelectionChangeEvent();
-    }
-    
-    private void setEventHandlerForSelectionChangeEvent() {
-    	floatingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in activity list panel changed to : '" + newValue + "'");
-                raise(new ActivityPanelSelectionChangedEvent(newValue));
-            }
-        });
     }
     
     //@@author A0144704L
     public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset, int scrollIndex) {
-        floatingListView.setItems(observableList);
-    	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+        this.setConnections(observableList, indexOffset);
     	this.scrollTo(scrollIndex);
-    }
-    
-    //@@author A0144704L
-    public void updateActivityCard(Activity newActivity, int indexOffset) {
-        // Refresh activity card cells to update GUI
-    	floatingListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
     }
     
     public void scrollTo(int index) {
