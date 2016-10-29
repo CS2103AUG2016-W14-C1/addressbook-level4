@@ -13,9 +13,6 @@ public class ClearCommand extends Command {
     public static final String EXAMPLES = "clear";
     public static final String MESSAGE_SUCCESS = "Your activities have been removed!";
 
-    public ClearCommand() {}
-
-
     @Override
     public CommandResult execute() {
         assert model != null;

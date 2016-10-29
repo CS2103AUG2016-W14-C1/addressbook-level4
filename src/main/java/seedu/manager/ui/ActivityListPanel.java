@@ -27,10 +27,6 @@ public class ActivityListPanel extends UiPart {
     @FXML
     private ListView<Activity> activityListView;
 
-    public ActivityListPanel() {
-        super();
-    }
-
     @Override
     public void setNode(Node node) {
         panel = (VBox) node;

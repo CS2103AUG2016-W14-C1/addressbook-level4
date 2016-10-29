@@ -14,8 +14,6 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all activities";
 
-    public ListCommand() {}
-
     @Override
     public CommandResult execute() {
         model.updateFilteredListToShowAll();

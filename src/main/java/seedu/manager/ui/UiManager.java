@@ -112,17 +112,6 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.handleHelp();
     }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getActivityListPanel().scrollTo(event.targetIndex);
-    }
-
-    @Subscribe
-    private void handleActivityPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    }
     
     @Subscribe
     //@@author A0139797E

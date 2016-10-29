@@ -29,10 +29,6 @@ public class ActivityCard extends UiPart{
     private Activity activity;
     private int displayedIndex;
 
-    public ActivityCard(){
-
-    }
-
     public static ActivityCard load(Activity activity, int displayedIndex){
         ActivityCard card = new ActivityCard();
         card.activity = activity;

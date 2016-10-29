@@ -59,8 +59,6 @@ public class AMParser {
      */
     private static final int SEARCH_RANGE_TOKEN_COUNT = 2;
     
-    public AMParser() {}
-
     /**
      * Parses user input into command for execution.
      *

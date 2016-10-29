@@ -4,7 +4,6 @@ import guitests.guihandles.ActivityCardHandle;
 import org.junit.Test;
 
 import seedu.manager.commons.core.Messages;
-import seedu.manager.logic.commands.AddCommand;
 import seedu.manager.testutil.TestActivity;
 import seedu.manager.testutil.TestUtil;
 

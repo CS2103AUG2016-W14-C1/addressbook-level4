@@ -28,10 +28,6 @@ public class FloatingListPanel extends UiPart{
     @FXML
     private ListView<Activity> floatingListView;
 
-    public FloatingListPanel() {
-        super();
-    }
-    
     @Override
     public void setNode(Node node) {
         panel = (VBox) node;

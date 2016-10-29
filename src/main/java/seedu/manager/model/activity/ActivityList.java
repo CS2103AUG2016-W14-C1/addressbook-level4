@@ -12,10 +12,7 @@ public class ActivityList implements Iterable<Activity> {
 	
 	private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 	
-	/* Construct an empty ActivityList */
-	public ActivityList() {}
-
-    /**
+	/**
      * Adds a activity to the list.
      * 
      */
