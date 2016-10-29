@@ -81,7 +81,7 @@ public class ActivityCard extends UiPart{
     
     //@@author A0135730M
     private String generateDateTimeString(AMDate dateTime) {
-        assert dateTime == null;
+        assert dateTime != null;
         
         return dateTime.getDayOfWeek() + DATE_DELIMITER +
                dateTime.getDay() + DATE_DELIMITER +

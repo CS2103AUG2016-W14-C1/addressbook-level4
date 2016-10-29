@@ -67,12 +67,20 @@ public class TestActivity implements ReadOnlyActivity {
 
     
     public void setDateTime(String newDateTime) {
-        this.dateTime.setAMDate(newDateTime);
+        if (this.dateTime == null) {
+            this.dateTime = new AMDate(newDateTime);
+        } else {
+            this.dateTime.setAMDate(newDateTime);
+        }
     }
 
     
     public void setEndDateTime(String newEndDateTime) {
-        this.dateTime.setAMDate(newEndDateTime);    
+        if (this.endDateTime == null) {
+            this.endDateTime = new AMDate(newEndDateTime);
+        } else {
+            this.endDateTime.setAMDate(newEndDateTime); 
+        }
     }
 
     @Override

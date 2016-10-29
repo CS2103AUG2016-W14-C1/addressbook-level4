@@ -11,7 +11,7 @@ public class ClearCommandTest extends ActivityManagerGuiTest {
     public void clear() {
 
         //verify a non-empty list can be cleared
-        assertTrue(floatingActivityListPanel.isListMatching(ta.getTypicalActivities()));
+        assertTrue(floatingActivityListPanel.isListMatching(ta.getTypicalFloatingActivities()));
         assertClearCommandSuccess();
 
         //verify other commands can work after a clear command

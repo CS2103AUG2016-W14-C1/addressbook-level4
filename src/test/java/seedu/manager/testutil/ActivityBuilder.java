@@ -1,6 +1,7 @@
 package seedu.manager.testutil;
 
 import seedu.manager.commons.exceptions.IllegalValueException;
+import seedu.manager.model.activity.ActivityType;
 
 /**
  *
@@ -22,6 +23,13 @@ public class ActivityBuilder {
     public ActivityBuilder withNameandStatus(String name, boolean status) throws IllegalValueException {
         this.activity.setName(name);
         this.activity.setStatus(status);
+        return this;
+    }
+    
+    public ActivityBuilder withNameandTime(String name, String dateTime) throws IllegalValueException {
+        this.activity.setName(name);
+        this.activity.setType(ActivityType.DEADLINE);
+        this.activity.setDateTime(dateTime);
         return this;
     }
     

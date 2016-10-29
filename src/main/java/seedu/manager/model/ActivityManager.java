@@ -67,32 +67,8 @@ public class ActivityManager implements ReadOnlyActivityManager {
      *
      */
     public void addActivity(Activity activity) {
-//        syncTagsWithMasterList(activity);
         activities.add(activity);
     }
-
-    /**
-     * Ensures that every tag in this activity:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     */
-//    private void syncTagsWithMasterList(Activity activity) {
-//        final UniqueTagList personTags = activity.getTags();
-//        tags.mergeFrom(personTags);
-//
-//        // Create map with values = tag object references in the master list
-//        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-//        for (Tag tag : tags) {
-//            masterTagObjects.put(tag, tag);
-//        }
-//
-//        // Rebuild the list of person tags using references from the master list
-//        final Set<Tag> commonTagReferences = new HashSet<>();
-//        for (Tag tag : personTags) {
-//            commonTagReferences.add(masterTagObjects.get(tag));
-//        }
-//        activity.setTags(new UniqueTagList(commonTagReferences));
-//    }
 
     public void removeActivity(Activity key) {
         activities.remove(key);
@@ -132,9 +108,8 @@ public class ActivityManager implements ReadOnlyActivityManager {
         return other == this // short circuit if same object
                 || (other instanceof ActivityManager // instanceof handles nulls
                 && this.toString().equals(other.toString()));
-                // TODO: Re-implement correct equality when tags are corrected
-                /*this.activities.equals(((ActivityManager) other).activities)
-                 && this.tags.equals(((ActivityManager) other).tags) );*/               
+                // TODO: check if activities are actually equal
+                /* this.activities.equals(((ActivityManager) other).getActivities()); */       
                 
     }
 
