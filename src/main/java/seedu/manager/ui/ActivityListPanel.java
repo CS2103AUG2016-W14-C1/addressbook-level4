@@ -11,9 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
-import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
-import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
-import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.model.activity.Activity;
 
 import java.util.logging.Logger;
@@ -29,10 +26,6 @@ public class ActivityListPanel extends UiPart {
 
     @FXML
     private ListView<Activity> activityListView;
-
-    public ActivityListPanel() {
-        super();
-    }
 
     @Override
     public void setNode(Node node) {
@@ -65,8 +58,6 @@ public class ActivityListPanel extends UiPart {
     private void setConnections(ObservableList<Activity> observableList, int indexOffset) {
         activityListView.setItems(observableList);
         activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-        setEventHandlerForSelectionChangeEvent();
-        setEventHandlerForUpdateEvent();
     }
 
     private void addToPlaceholder() {
@@ -74,34 +65,10 @@ public class ActivityListPanel extends UiPart {
         placeHolderPane.getChildren().add(panel);
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                raise(new ActivityPanelSelectionChangedEvent(newValue));
-            }
-        });
-    }
-
-    private void setEventHandlerForUpdateEvent() {
-        activityListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Activity has been updated to : '" + newValue + "'");
-                raise(new ActivityPanelUpdateEvent(newValue));
-            }
-        });
-    }
-    
     //@@author A0139797E
-    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset) {
-        activityListView.setItems(observableList);
-    	activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
-    }
-    
-    //@@author A0144881Y
-    public void updateActivityCard(Activity newActivity, int indexOffset) {
-        // Refresh activity card cells to update GUI
-        activityListView.setCellFactory(listView -> new ActivityListViewCell(indexOffset));
+    public void updateActivityListPanel(ObservableList<Activity> observableList, int indexOffset, int scrollIndex) {
+        this.setConnections(observableList, indexOffset);
+        this.scrollTo(scrollIndex);
     }
     
     public void scrollTo(int index) {

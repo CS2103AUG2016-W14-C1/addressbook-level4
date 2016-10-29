@@ -13,6 +13,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	private Status status;
 	private AMDate dateTime;
 	private AMDate endDateTime;
+	private boolean selected;
 	
 	// Floating activity constructor
 	
@@ -23,6 +24,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 		this.status = new Status();
 		this.dateTime = null;
 		this.endDateTime = null;
+		this.selected = false;
 	}
 	
 	// Deadline activity constructor
@@ -111,6 +113,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         } else {
             this.endDateTime = null;
         }
+        this.selected = source.getSelected();
     }
 	
     @Override
@@ -135,6 +138,16 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 		this.name = newName;
 	}
 	
+    //@@author A0139797E
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    //@@author A0139797E
+    public void setSelected(boolean isSelected) {
+        this.selected = isSelected;
+    }
+    
 	//@@author A0144704L
 	public void setStatus(boolean completed) {
 		(this.status).setStatus(completed);
@@ -144,6 +157,11 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	//@@author A0144704L
 	public Status getStatus() {
 		return this.status;
+	}
+	
+	public boolean isExpired(AMDate date) {
+		AMDate today = new AMDate("today");
+		return today.getTime() > date.getTime();
 	}
 	
 	@Override
@@ -204,27 +222,38 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public int compareTo(Activity other) {
         // Check for floating tasks
         if (this.type.equals(ActivityType.FLOATING) && other.type.equals(ActivityType.FLOATING)) {
-            return 0;
+            if (!this.getStatus().isCompleted() && other.getStatus().isCompleted()) {
+                return -1;
+            } else if (this.getStatus().isCompleted() && !other.getStatus().isCompleted()) {
+                return 1;
+            } else { 
+                return 0; 
+            }
         } else if (other.type.equals(ActivityType.FLOATING)) {
             return -1;
         } else if (this.type.equals(ActivityType.FLOATING)) {
             return 1;
-        // Comparison between 2 deadlines
-        } else if (this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.DEADLINE)) {
-            return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());
-        // Comparisons between a deadline and an event
-        } else if (this.type.equals(ActivityType.EVENT) && other.type.equals(ActivityType.DEADLINE)) {
-            return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());     
-        } else if (this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.EVENT)) {
-            return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());   
-        // Comparisons between 2 events
+        } else if (!this.getStatus().isCompleted() && other.getStatus().isCompleted()) {
+        	return -1; 
+        } else if (this.getStatus().isCompleted() && !other.getStatus().isCompleted()) { 
+        	return 1; 
         } else {
-           long startTimeDifference = this.getDateTime().getTime() - other.getDateTime().getTime();     
-           if (startTimeDifference == 0) {
-               return (int)(this.getEndDateTime().getTime() - other.getEndDateTime().getTime());
-           } else {
-               return ((int) startTimeDifference);
-           }
-        }
+	        // Comparison between 2 deadlines
+	        if (this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.DEADLINE)) {
+	           return this.getDateTime().getTime().compareTo(other.getDateTime().getTime());	
+	        // Comparisons between a deadline and an event
+	        } else if (this.type.equals(ActivityType.EVENT) && other.type.equals(ActivityType.DEADLINE) ||
+	                this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.EVENT)) {
+	            return this.getDateTime().getTime().compareTo(other.getDateTime().getTime());
+	        // Comparisons between 2 events
+	        } else {
+	           int startTimeCompare = this.getDateTime().getTime().compareTo(other.getDateTime().getTime());     
+	           if (startTimeCompare == 0) {
+	               return this.getEndDateTime().getTime().compareTo(other.getEndDateTime().getTime());
+	           } else {
+	               return startTimeCompare;
+	           }
+	        }
+    	}
     }
 }

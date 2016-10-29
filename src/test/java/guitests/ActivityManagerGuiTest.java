@@ -81,7 +81,7 @@ public abstract class ActivityManagerGuiTest {
      */
     protected ActivityManager getInitialData() {
         ActivityManager am = TestUtil.generateEmptyActivityManager();
-        TypicalTestActivities.loadActivityManagerWithSampleData(am);
+        ta.loadActivityManagerWithSampleData(am);
         return am;
     }
 

@@ -56,7 +56,6 @@ public class XmlUtilTest {
     public void getDataFromFile_validFile_validResult() throws Exception {
         XmlSerializableActivityManager dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableActivityManager.class);
         assertEquals(5, dataFromFile.getActivityList().size());
-        assertEquals(0, dataFromFile.getTagList().size());
     }
 
     @Test
@@ -87,7 +86,7 @@ public class XmlUtilTest {
         //TODO: use equality instead of string comparisons
 
         ActivityManagerBuilder builder = new ActivityManagerBuilder(new ActivityManager());
-        dataToWrite = new XmlSerializableActivityManager(builder.withActivity(TestUtil.generateSampleActivityData().get(0)).withTag("Friends").build());
+        dataToWrite = new XmlSerializableActivityManager(builder.withActivity(TestUtil.generateSampleActivityData().get(0)).build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableActivityManager.class);

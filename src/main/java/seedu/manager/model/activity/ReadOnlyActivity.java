@@ -12,5 +12,5 @@ public interface ReadOnlyActivity {
     Status getStatus();
     AMDate getDateTime();
     AMDate getEndDateTime();
-    
+    boolean getSelected();
 }

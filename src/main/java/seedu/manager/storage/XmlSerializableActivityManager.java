@@ -3,15 +3,11 @@ package seedu.manager.storage;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,14 +18,7 @@ import java.util.stream.Collectors;
 public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
 
     @XmlElement(name = "activity")
-    private List<XmlAdaptedActivity> activities;
-    @XmlElement
-    private List<Tag> tags;
-
-    {
-        activities = new ArrayList<>();
-        tags = new ArrayList<>();
-    }
+    private List<XmlAdaptedActivity> activities = new ArrayList<>();
 
     /**
      * Empty constructor required for marshalling
@@ -41,17 +30,6 @@ public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
      */
     public XmlSerializableActivityManager(ReadOnlyActivityManager src) {
         activities.addAll(src.getListActivity().stream().map(XmlAdaptedActivity::new).collect(Collectors.toList()));
-        tags = src.getTagList();
-    }
-
-    @Override
-    public UniqueTagList getUniqueTagList() {
-        try {
-            return new UniqueTagList(tags);
-        } catch (UniqueTagList.DuplicateTagException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     @Override
@@ -69,10 +47,4 @@ public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
             return p.toModelType();
         }).collect(Collectors.toCollection(ArrayList::new));
     }
-
-    @Override
-    public List<Tag> getTagList() {
-        return Collections.unmodifiableList(tags);
-    }
-
 }

@@ -24,7 +24,7 @@ Role: Developer <br>
     * Help Command <br>
     * Undo Command <br>
 * Other Major Contributions: <br>
-    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
+    * Contributed to initial refactoring from AddressBook to Remindaroo <br>
     * Set up Travis CI, Coveralls and Codacy <br>
 
 -----
@@ -40,7 +40,7 @@ Role: Developer <br>
     * Mark/Unmark Command <br>
     * Store Command <br>
 * Other Major Contributions: <br>
-    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
+    * Contributed to initial refactoring from AddressBook to Remindaroo <br>
 
 -----
 
@@ -55,7 +55,7 @@ Role: Developer <br>
     * Update Command <br>
     * Delete Command <br>
 * Other Major Contributions: <br>
-    * Contributed to initial refactoring from AddressBook to Reminadroo <br>
+    * Contributed to initial refactoring from AddressBook to Remindaroo <br>
 
 -----
 
@@ -70,7 +70,7 @@ Role: Developer <br>
      * Add Command <br>
      * Search Command <br>
  * Other Major Contributions: <br>
-     * Contributed to initial refactoring from AddressBook to Reminadroo <br>
+     * Contributed to initial refactoring from AddressBook to Remindaroo <br>
 
  -----
 

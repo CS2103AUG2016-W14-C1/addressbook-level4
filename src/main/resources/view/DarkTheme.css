@@ -96,6 +96,11 @@
     -fx-text-fill: #010504;
 }
 
+.list_cell_color {
+	-fx-background-color: derive(lightsteelblue, 70%);
+}
+
+
 .cell_big_label {
     -fx-font-size: 16px;
     -fx-text-fill: #010504;
@@ -126,7 +131,7 @@
 }
 
 .result-display .label {
-    -fx-text-fill: black !important;
+    -fx-text-fill: black;
 }
 
 .status-bar .label {

@@ -2,10 +2,7 @@ package seedu.manager.model;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 
 import java.util.*;
 
@@ -16,28 +13,22 @@ import java.util.*;
 //@@author A0144881Y
 public class ActivityManager implements ReadOnlyActivityManager {
 
-    private final ActivityList activities;
-    private final UniqueTagList tags;
-
-    {
-        activities = new ActivityList();
-        tags = new UniqueTagList();
-    }
+    private final ActivityList activities = new ActivityList();
 
     public ActivityManager() {}
 
     /**
-     * Persons and Tags are copied into this activity manager
+     * Activities and Tags are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
-        this(toBeCopied.getActivityList(), toBeCopied.getUniqueTagList());
+        this(toBeCopied.getActivityList());
     }
 
     /**
-     * Persons and Tags are copied into this activity manager
+     * Activities and Tags are copied into this activity manager
      */
-    public ActivityManager(ActivityList activities, UniqueTagList tags) {
-        resetData(activities.getInternalList(), tags.getInternalList());
+    public ActivityManager(ActivityList activities) {
+        resetData(activities.getInternalList());
     }
 
     public static ReadOnlyActivityManager getEmptyActivityManager() {
@@ -54,17 +45,12 @@ public class ActivityManager implements ReadOnlyActivityManager {
         this.activities.getInternalList().setAll(activities);
     }
 
-    public void setTags(Collection<Tag> tags) {
-        this.tags.getInternalList().setAll(tags);
-    }
-
-    public void resetData(Collection<? extends Activity> newActivities, Collection<Tag> newTags) {
+    public void resetData(Collection<? extends Activity> newActivities) {
         setActivties(new ArrayList<Activity>(newActivities));
-        setTags(newTags);
     }
 
     public void resetData(ReadOnlyActivityManager newData) {
-        resetData(newData.getActivityList().getInternalList(), newData.getTagList());
+        resetData(newData.getActivityList().getInternalList());
     }
 
 //// activity-level operations
@@ -72,36 +58,12 @@ public class ActivityManager implements ReadOnlyActivityManager {
     /**
      * Adds an activity to the activity manager.
      * Also checks the new acitivity's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * and updates the Tag objects in the activity to point to those in {@link #tags}.
      *
      */
     public void addActivity(Activity activity) {
-//        syncTagsWithMasterList(activity);
         activities.add(activity);
     }
-
-    /**
-     * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     */
-//    private void syncTagsWithMasterList(Activity activity) {
-//        final UniqueTagList personTags = activity.getTags();
-//        tags.mergeFrom(personTags);
-//
-//        // Create map with values = tag object references in the master list
-//        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-//        for (Tag tag : tags) {
-//            masterTagObjects.put(tag, tag);
-//        }
-//
-//        // Rebuild the list of person tags using references from the master list
-//        final Set<Tag> commonTagReferences = new HashSet<>();
-//        for (Tag tag : personTags) {
-//            commonTagReferences.add(masterTagObjects.get(tag));
-//        }
-//        activity.setTags(new UniqueTagList(commonTagReferences));
-//    }
 
     public void removeActivity(Activity key) {
         activities.remove(key);
@@ -118,19 +80,16 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public void unmarkActivity(Activity key) {
     	activities.unmark(key);
     }
-
     
-//// tag-level operations
-
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    public void listActivities() {
+    	activities.list();
     }
 
 //// util methods
 
     @Override
     public String toString() {
-        return activities.getInternalList().size() + " activities, " + tags.getInternalList().size() +  " tags";
+        return activities.getInternalList().size() + " activities";
         // TODO: refine later
     }
 
@@ -140,36 +99,19 @@ public class ActivityManager implements ReadOnlyActivityManager {
     }
 
     @Override
-    public List<Tag> getTagList() {
-        return Collections.unmodifiableList(tags.getInternalList());
-    }
-
-//    @Override
-//    public UniquePersonList getUniquePersonList() {
-//        return this.activities;
-//    }
-
-    @Override
-    public UniqueTagList getUniqueTagList() {
-        return this.tags;
-    }
-
-
-    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ActivityManager // instanceof handles nulls
                 && this.toString().equals(other.toString()));
-                // TODO: Re-implement correct equality when tags are corrected
-                /*this.activities.equals(((ActivityManager) other).activities)
-                 && this.tags.equals(((ActivityManager) other).tags) );*/               
+                // TODO: check if activities are actually equal
+                /* this.activities.equals(((ActivityManager) other).getActivities()); */       
                 
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(activities, tags);
+        return Objects.hash(activities);
     }
 
 	@Override

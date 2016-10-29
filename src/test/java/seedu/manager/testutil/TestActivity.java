@@ -1,7 +1,6 @@
 package seedu.manager.testutil;
 
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.UniqueTagList;
 
 /**
  * A mutable activity object. For testing only.
@@ -14,10 +13,9 @@ public class TestActivity implements ReadOnlyActivity {
     private AMDate dateTime;
     private AMDate endDateTime;
     private Status status;
-//    private UniqueTagList tags;
+    private boolean selected;
 
     public TestActivity() {
-//        tags = new UniqueTagList();
         type = ActivityType.FLOATING; // default floating
         status = new Status();
     }
@@ -31,9 +29,10 @@ public class TestActivity implements ReadOnlyActivity {
         return name;
     }
 
-//    public UniqueTagList getTags() {
-//        return tags;
-//    }
+    @Override
+    public boolean getSelected() {
+        return selected;
+    }
     
     @Override
     public String toString() {
@@ -43,8 +42,6 @@ public class TestActivity implements ReadOnlyActivity {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName());
-        // TODO: Re-implement tags when possible
-        // this.getTags().getInternalList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }
 
@@ -70,12 +67,20 @@ public class TestActivity implements ReadOnlyActivity {
 
     
     public void setDateTime(String newDateTime) {
-        this.dateTime.setAMDate(newDateTime);
+        if (this.dateTime == null) {
+            this.dateTime = new AMDate(newDateTime);
+        } else {
+            this.dateTime.setAMDate(newDateTime);
+        }
     }
 
     
     public void setEndDateTime(String newEndDateTime) {
-        this.dateTime.setAMDate(newEndDateTime);    
+        if (this.endDateTime == null) {
+            this.endDateTime = new AMDate(newEndDateTime);
+        } else {
+            this.endDateTime.setAMDate(newEndDateTime); 
+        }
     }
 
     @Override

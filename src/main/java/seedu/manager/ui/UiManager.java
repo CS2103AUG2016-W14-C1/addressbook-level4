@@ -11,10 +11,7 @@ import seedu.manager.commons.core.ComponentManager;
 import seedu.manager.commons.core.Config;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.events.storage.DataSavingExceptionEvent;
-import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
-import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
-import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.logic.Logic;
@@ -65,7 +62,6 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -114,32 +110,13 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.handleHelp();
     }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getActivityListPanel().scrollTo(event.targetIndex);
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadActivityPage(event.getNewSelection());
-    }
-    
-    @Subscribe
-    private void handleActivityPanelUpdateEvent(ActivityPanelUpdateEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getActivityListPanel().updateActivityCard(event.getNewActivity(), 0);
-        mainWindow.getFloatingActivityListPanel().updateActivityCard(event.getNewActivity(), logic.getFilteredDeadlineAndEventList().size());
-    }
     
     @Subscribe
     //@@author A0139797E
     private void handleActivityListPanelUpdateEvent(ActivityListPanelUpdateEvent event) {
     	logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
-    	mainWindow.getActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList(), 0);
+    	mainWindow.getFloatingActivityListPanel().updateActivityListPanel(logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size(), event.getTargetIndex());
+    	mainWindow.getActivityListPanel().updateActivityListPanel(logic.getFilteredDeadlineAndEventList(), 0, event.getTargetIndex());
     }
 
 }

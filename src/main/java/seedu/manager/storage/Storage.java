@@ -29,10 +29,10 @@ public interface Storage extends ActivityManagerStorage, UserPrefsStorage {
     Optional<ReadOnlyActivityManager> readActivityManager() throws DataConversionException, FileNotFoundException;
 
     @Override
-    void saveActivityManager(ReadOnlyActivityManager addressBook) throws IOException;
+    void saveActivityManager(ReadOnlyActivityManager activityManager) throws IOException;
 
     /**
-     * Saves the current version of the Address Book to the hard disk.
+     * Saves the current version of the activity manager to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */

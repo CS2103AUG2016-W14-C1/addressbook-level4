@@ -7,16 +7,12 @@ import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class ActivityList implements Iterable<Activity> {
 	
 	private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 	
-	/* Construct an empty ActivityList */
-	public ActivityList() {}
-
-    /**
+	/**
      * Adds a activity to the list.
      * 
      */
@@ -74,6 +70,7 @@ public class ActivityList implements Iterable<Activity> {
     	assert toMark != null;
     	assert internalList.contains(toMark);
     	toMark.setStatus(true);
+    	Collections.sort(internalList);
     }
     
     /**
@@ -84,6 +81,11 @@ public class ActivityList implements Iterable<Activity> {
     	assert toUnmark != null;
     	assert internalList.contains(toUnmark);
     	toUnmark.setStatus(false);
+    	Collections.sort(internalList);
+    }
+    
+    public void list() {
+    	Collections.sort(internalList);
     }
 	
     public ObservableList<Activity> getInternalList() {

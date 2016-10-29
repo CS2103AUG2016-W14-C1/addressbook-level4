@@ -2,12 +2,9 @@ package seedu.manager.logic;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import seedu.manager.commons.core.EventsCenter;
 import seedu.manager.commons.core.Messages;
-import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
-import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.logic.Logic;
 import seedu.manager.logic.LogicManager;
@@ -17,8 +14,6 @@ import seedu.manager.model.Model;
 import seedu.manager.model.ModelManager;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 import seedu.manager.storage.StorageManager;
 
 import org.junit.After;
@@ -50,8 +45,7 @@ public class LogicManagerTest {
     //These are for checking the correctness of the events raised
     private ReadOnlyActivityManager latestSavedActivityManager;
     private boolean helpShown;
-    private int targetedJumpIndex;
-
+    
     @Subscribe
     private void handleLocalModelChangedEvent(ActivityManagerChangedEvent abce) {
         latestSavedActivityManager = new ActivityManager(abce.data);
@@ -61,12 +55,7 @@ public class LogicManagerTest {
     private void handleShowHelpRequestEvent(ShowHelpRequestEvent she) {
         helpShown = true;
     }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent je) {
-        targetedJumpIndex = je.targetIndex;
-    }
-
+    
     @Before
     public void setup() {
         model = new ModelManager();
@@ -77,7 +66,6 @@ public class LogicManagerTest {
 
         latestSavedActivityManager = new ActivityManager(model.getActivityManager()); // last saved assumed to be up to date before.
         helpShown = false;
-        targetedJumpIndex = -1; // none yet
     }
 
     @After
@@ -176,11 +164,11 @@ public class LogicManagerTest {
     //@@author A0135730M
     public void execute_add_invalidDate() throws Exception {
         assertCommandBehavior("add event from abc to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
         assertCommandBehavior("add event from today to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
         assertCommandBehavior("add deadline by ghi", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
     
     @Test
@@ -372,35 +360,6 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
-    }
-
-    @Test
-    public void execute_selectIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("select");
-    }
-
-    /* TODO: remove select command tests if unnecessary 
-    @Test
-    public void execute_select_jumpsToCorrectActivity() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        List<Activity> threeActivities = helper.generateActivityList(3);
-
-        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
-        helper.addToModel(model, threeActivities);
-
-        assertCommandBehavior("select 2",
-                String.format(SelectCommand.MESSAGE_SELECT_ACTIVITY_SUCCESS, 2),
-                expectedAM,
-                expectedAM.getActivityList());
-        assertEquals(1, targetedJumpIndex);
-        assertEquals(model.getFilteredActivityList().get(1), threeActivities.get(1));
-    } */
-
-
-    @Test
     //@@author A0144881Y
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -476,11 +435,11 @@ public class LogicManagerTest {
     //@@author A0135730M
     public void execute_update_invalidDate() throws Exception {
         assertCommandBehavior("update 1 new from abc to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
         assertCommandBehavior("update 1 new from today to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
         assertCommandBehavior("update 1 new by ghi", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
     
     
@@ -785,7 +744,7 @@ public class LogicManagerTest {
         expectedAM.markActivity(threeActivities.get(1));
         helper.addToModel(model, threeActivities);
        
-        assertCommandBehavior("mark 2",
+        assertCommandBehavior("mark 3",
                 String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getPendingActivityList());
@@ -828,16 +787,22 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0139797E
+    public void execute_redo_NoCommand() throws Exception {
+        assertCommandBehavior("redo", RedoCommand.MESSAGE_INDEX_LARGER_THAN_MAX);
+    }
+    
+    @Test
     //@@author A0144704L
     public void execute_store_storeToCorrectLocation () throws Exception {
-    	String testDataFileLocation = "/data/RemindarooTest.xml";
+    	String testDataFileLocation = "data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
     }
 
     @Test
     //@@author A0144704L
     public void execute_store_incorrectExtension () throws Exception {
-    	String testDataFileLocation = "/data/RemindarooTest.txt";
+    	String testDataFileLocation = "data/RemindarooTest.txt";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
     

@@ -57,12 +57,8 @@ public class AMParser {
     /**
      * Various token counts
      */
-    private static final int DEADLINE_TOKEN_COUNT = 2;
-    private static final int EVENT_TOKEN_COUNT = 2;
     private static final int SEARCH_RANGE_TOKEN_COUNT = 2;
     
-    public AMParser() {}
-
     /**
      * Parses user input into command for execution.
      *
@@ -75,15 +71,12 @@ public class AMParser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-            return prepareSelect(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
@@ -195,21 +188,6 @@ public class AMParser {
             throw new IllegalValueException(MESSAGE_RECUR_NOT_POSITIVE);
         }
     }
-
-    /**
-     * Extracts the new person's tags from the add command's tag arguments string.
-     * Merges duplicate tag strings.
-     */
-    // TODO: remove if tags not used in the end
-//    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-//        // no tags
-//        if (tagArguments.isEmpty()) {
-//            return Collections.emptySet();
-//        }
-//        // replace first delimiter prefix, then split
-//        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
-//        return new HashSet<>(tagStrings);
-//    }
 
     /**
      * Parses arguments in the context of the delete activity command.
@@ -356,22 +334,6 @@ public class AMParser {
     }
     
     /**
-     * Parses arguments in the context of the select activity command.
-     *
-     * @param args full command args string
-     * @return the prepared commandLESS_THAN_ZERO
-     */
-    private Command prepareSelect(String args) {
-        Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
-            return new IncorrectCommand(
-				String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        }
-
-        return new SelectCommand(index.get());
-    }
-
-    /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.
      */
@@ -427,7 +389,7 @@ public class AMParser {
     //@@author A0144704L
     private Command prepareStore(String args) {
     	assert args != null;
-    	if (!args.equals("") && args.endsWith(".xml")) {
+    	if (!"".equals(args) && args.endsWith(".xml")) {
 			return new StoreCommand(args);
     	}
     	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));

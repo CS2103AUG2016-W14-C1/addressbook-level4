@@ -23,16 +23,11 @@ public class ActivityCard extends UiPart{
     private Label dateTime;
     @FXML
     private Label endDateTime;
-// TODO: re-instate tags or equivalent when implementation is complete    
-//    @FXML
-//    private Label tags;
+    @FXML
+    private Label status;
 
     private Activity activity;
     private int displayedIndex;
-
-    public ActivityCard(){
-
-    }
 
     public static ActivityCard load(Activity activity, int displayedIndex){
         ActivityCard card = new ActivityCard();
@@ -48,17 +43,36 @@ public class ActivityCard extends UiPart{
         id.setText(displayedIndex + ". ");
         dateTime.setText(""); // default
         endDateTime.setText(""); // default
+        String statusText = activity.getStatus().toString();
+        status.setText(statusText);
+        if (activity.getStatus().isCompleted()) { 
+        	status.setStyle("-fx-text-fill: darkcyan");
+        } else {
+        	status.setStyle("-fx-text-fill: maroon");
+        }
+        
+        AMDate checkExpired = null;
         if (activity.getType().equals(ActivityType.DEADLINE)) {
             dateTime.setText(generateDateTimeString(activity.getDateTime()));
+            checkExpired = activity.getDateTime();
         } else if (activity.getType().equals(ActivityType.EVENT)) {
             dateTime.setText(generateDateTimeString(activity.getDateTime()));
             endDateTime.setText(generateDateTimeString(activity.getEndDateTime()));
+            checkExpired = activity.getEndDateTime();
+        }
+        // Overwrite colour scheme for expired event
+        if (checkExpired != null && isExpired(checkExpired) && !activity.getStatus().isCompleted()) { 
+            cardPane.setStyle("-fx-background-color: derive(indianred, 70%); -fx-border-width: 0.5; -fx-border-color: grey;"); 
+        }
+        // Overwrite colour scheme for selected event
+        if (activity.getSelected()) {
+            cardPane.setStyle("-fx-background-color: #FAFAD2;");
         }
     }
     
     //@@author A0135730M
     private String generateDateTimeString(AMDate dateTime) {
-        assert dateTime == null;
+        assert dateTime != null;
         
         return dateTime.getDayOfWeek() + DATE_DELIMITER +
                dateTime.getDay() + DATE_DELIMITER +
@@ -69,6 +83,12 @@ public class ActivityCard extends UiPart{
 
     public HBox getLayout() {
         return cardPane;
+    }
+    
+    public boolean isExpired(AMDate date) {
+    	assert date != null;
+    	AMDate today = new AMDate("today");
+    	return today.getTime() > date.getTime() + 60000;
     }
 
     @Override

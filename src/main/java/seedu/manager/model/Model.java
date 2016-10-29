@@ -3,7 +3,6 @@ package seedu.manager.model;
 import java.util.Set;
 
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
 
@@ -38,6 +37,9 @@ public interface Model {
     /** Redo up to n commands */
     void redoCommand(int offset);
     
+    /** List all activities */
+    void listCommand();
+    
     /** Get index of current referenced history */
     int getHistoryIndex();
     
@@ -53,7 +55,7 @@ public interface Model {
     /** Returns the filtered floating activity list as an {@code UnmodifiableObservableList<Activity>} */
     UnmodifiableObservableList<Activity> getFilteredFloatingActivityList();
 
-    /** Updates the filter of the filtered activity list to show all persons */
+    /** Updates the filter of the filtered activity list to show all activities */
     void updateFilteredListToShowAll();
 
     /** Updates the filter of the filtered activity list to filter by the given keywords*/

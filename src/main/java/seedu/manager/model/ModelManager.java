@@ -5,22 +5,17 @@ import seedu.manager.commons.core.ComponentManager;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
-import seedu.manager.commons.events.ui.ActivityPanelUpdateEvent;
 import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the activity manager data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -29,8 +24,8 @@ public class ModelManager extends ComponentManager implements Model {
     private ActivityManager activityManager;
     private FilteredList<Activity> filteredActivities;
     
-    ArrayList<ActivityManager> managerHistory = new ArrayList<ActivityManager>();
-    int historyIndex = -1;
+    private ArrayList<ActivityManager> managerHistory = new ArrayList<ActivityManager>();
+    private int historyIndex = -1;
     
     /**
      * Initializes a ModelManager with the given ActivityManager
@@ -77,14 +72,28 @@ public class ModelManager extends ComponentManager implements Model {
         
     }
     
-    /** Raises an event to indicate that the list of activities need to be updated */
-    private void indicateActivityPanelUpdate(Activity updatedActivity) {
-        raise(new ActivityPanelUpdateEvent(updatedActivity));
-    }
-    
     //@@author A0139797E
     private void indicateActivityListPanelUpdate(){
-    	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList()));
+        raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), -1));
+    }
+
+    
+    //@@author A0139797E
+    private void indicateActivityListPanelUpdate(Activity newActivity){
+    	// Find index of new/updated activity and set it as our target to scroll to
+    	int index = -1;
+        UnmodifiableObservableList<Activity> activities = getFilteredActivityList();
+    	for (int i = activities.size() - 1; i >= 0; i--) {
+    	    Activity activity = activities.get(i);
+    	    if (activity.equals(newActivity)) {
+    	        index = i;
+    	        activity.setSelected(true);
+    	    } else {
+    	        // clear previous selection status (on UI)
+    	        activity.setSelected(false);
+    	    }
+    	}
+    	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), index));
     }
 
     @Override
@@ -102,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
         updateFilteredListToShowAll();
-        indicateActivityListPanelUpdate();
+        indicateActivityListPanelUpdate(activity);
         indicateActivityManagerChanged();
         // Record state only for the last addition (esp. for recurring tasks)
         if (isLastRecurring) {
@@ -115,9 +124,8 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
-        //indicateActivityPanelUpdate(activity);
         indicateActivityManagerChanged();
-        indicateActivityListPanelUpdate();
+        indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
     }
 
@@ -184,6 +192,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
+    
+    @Override
+  //@@author A0144704L
+    public void listCommand() {
+    	activityManager.listActivities();
+    	indicateActivityListPanelUpdate();
+    }
 
     //=========== Filtered Activity List Accessors ===============================================================
 
@@ -232,10 +247,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
+        indicateActivityListPanelUpdate();
     }
     
     private void updateFilteredActivityList(Predicate<Activity> predicate) {
         filteredActivities.setPredicate(predicate);
+        indicateActivityListPanelUpdate();
     }
     
     public void updateFilteredActivityList() {

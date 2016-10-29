@@ -7,31 +7,31 @@ import seedu.manager.testutil.TestActivity;
 
 import static org.junit.Assert.assertTrue;
 
-public class FindCommandTest extends ActivityManagerGuiTest {
+public class SearchCommandTest extends ActivityManagerGuiTest {
 
     @Test
-    public void find_nonEmptyList() {
-        assertFindResult("search None"); //no results
-        assertFindResult("search buy", ta.groceries); //multiple results
+    public void search_nonEmptyList() {
+        assertSearchResult("search None"); //no results
+        assertSearchResult("search buy", ta.groceries); //multiple results
 
         //find after deleting one result
         commandBox.runCommand("delete 1");
-        assertFindResult("search buy");
+        assertSearchResult("search buy");
     }
 
     @Test
-    public void find_emptyList(){
+    public void search_emptyList(){
         commandBox.runCommand("clear");
-        assertFindResult("search None"); //no results
+        assertSearchResult("search None"); //no results
     }
 
     @Test
-    public void find_invalidCommand_fail() {
+    public void search_invalidCommand_fail() {
         commandBox.runCommand("searchactivity");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
 
-    private void assertFindResult(String command, TestActivity... expectedHits ) {
+    private void assertSearchResult(String command, TestActivity... expectedHits ) {
         commandBox.runCommand(command);
         assertListSize(floatingActivityListPanel.getNumberOfActivities(), expectedHits.length);
         assertResultMessage(expectedHits.length + " activities listed!");

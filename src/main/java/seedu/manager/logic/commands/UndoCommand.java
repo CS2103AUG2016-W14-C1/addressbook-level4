@@ -1,13 +1,5 @@
 package seedu.manager.logic.commands;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
-
 /**
  * Undoes a command (or multiple commands) that changes state.
  */

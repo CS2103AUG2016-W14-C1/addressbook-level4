@@ -14,13 +14,10 @@ import org.loadui.testfx.GuiTest;
 import org.testfx.api.FxToolkit;
 
 import seedu.manager.TestApp;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.FileUtil;
 import seedu.manager.commons.util.XmlUtil;
 import seedu.manager.model.ActivityManager;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 import seedu.manager.storage.XmlSerializableActivityManager;
 
 import java.io.File;
@@ -41,6 +38,14 @@ public class TestUtil {
 
     public static String LS = System.lineSeparator();
 
+    /**
+     * Folder used for temp files created during testing. Ignored by Git.
+     */
+    public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+
+    public static final Activity[] sampleActivityData = getSampleActivityData();
+
+    
     public static void assertThrows(Class<? extends Throwable> expected, Runnable executable) {
         try {
             executable.run();
@@ -55,13 +60,6 @@ public class TestUtil {
         throw new AssertionFailedError(
                 String.format("Expected %s to be thrown, but nothing was thrown.", expected.getName()));
     }
-
-    /**
-     * Folder used for temp files created during testing. Ignored by Git.
-     */
-    public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
-
-    public static final Activity[] sampleActivityData = getSampleActivityData();
 
     //@@author A0135730M
     private static Activity[] getSampleActivityData() {
@@ -82,21 +80,6 @@ public class TestUtil {
 //            //not possible
 //            return null;
 //        }
-    }
-
-    public static final Tag[] sampleTagData = getSampleTagData();
-
-    private static Tag[] getSampleTagData() {
-        try {
-            return new Tag[]{
-                    new Tag("relatives"),
-                    new Tag("friends")
-            };
-        } catch (IllegalValueException e) {
-            assert false;
-            return null;
-            //not possible
-        }
     }
 
     public static List<Activity> generateSampleActivityData() {
@@ -128,7 +111,7 @@ public class TestUtil {
             FileUtil.createIfMissing(saveFileForTesting);
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 
@@ -137,7 +120,7 @@ public class TestUtil {
     }
 
     public static ActivityManager generateEmptyActivityManager() {
-        return new ActivityManager(new ActivityList(), new UniqueTagList());
+        return new ActivityManager(new ActivityList());
     }
 
     public static XmlSerializableActivityManager generateSampleStorageActivityManager() {
@@ -275,10 +258,10 @@ public class TestUtil {
     }
 
     /**
-     * Removes a subset from the list of persons.
-     * @param activities The list of persons
-     * @param activitiesToRemove The subset of persons.
-     * @return The modified persons after removal of the subset from persons.
+     * Removes a subset from the list of activities.
+     * @param activities The list of activities
+     * @param activitiesToRemove The subset of activities.
+     * @return The modified activities after removal of the subset from activities.
      */
     public static TestActivity[] removeActivitiesFromList(final TestActivity[] activities, TestActivity... activitiesToRemove) {
         List<TestActivity> listOfActivities = asList(activities);
@@ -297,8 +280,8 @@ public class TestUtil {
     }
 
     /**
-     * Replaces persons[i] with a person.
-     * @param activities The array of persons.
+     * Replaces activities[i] with an activity.
+     * @param activities The array of activities.
      * @param activity The replacement activity
      * @param index The index of the activity to be replaced.
      * @return
@@ -309,7 +292,7 @@ public class TestUtil {
     }
 
     /**
-     * Appends persons to the array of activities.
+     * Appends activities to the array of activities.
      * @param activities A array of activities.
      * @param activitiesToAdd The activities that are to be appended behind the original array.
      * @return The modified array of activities.
@@ -331,26 +314,4 @@ public class TestUtil {
     public static boolean compareCardAndActivity(ActivityCardHandle card, ReadOnlyActivity activity) {
         return card.isSameActivity(activity);
     }
-
-    public static Tag[] getTagList(String tags) {
-
-        if ("".equals(tags)) {
-            return new Tag[]{};
-        }
-
-        final String[] split = tags.split(", ");
-
-        final List<Tag> collect = Arrays.asList(split).stream().map(e -> {
-            try {
-                return new Tag(e.replaceFirst("Tag: ", ""));
-            } catch (IllegalValueException e1) {
-                //not possible
-                assert false;
-                return null;
-            }
-        }).collect(Collectors.toList());
-
-        return collect.toArray(new Tag[split.length]);
-    }
-
 }

@@ -19,9 +19,6 @@ public class Config {
     private String appName = "Remindaroo";
 
 
-    public Config() {
-    }
-
     public String getAppTitle() {
         return appTitle;
     }

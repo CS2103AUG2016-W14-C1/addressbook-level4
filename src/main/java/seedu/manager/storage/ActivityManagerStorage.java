@@ -26,10 +26,10 @@ public interface ActivityManagerStorage {
 
     /**
      * Saves the given {@link ReadOnlyActivityManager} to the storage.
-     * @param addressBook cannot be null.
+     * @param activityManager cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveActivityManager(ReadOnlyActivityManager addressBook) throws IOException;
+    void saveActivityManager(ReadOnlyActivityManager activityManager) throws IOException;
     
     /**
      * Sets new storage location for activity manager

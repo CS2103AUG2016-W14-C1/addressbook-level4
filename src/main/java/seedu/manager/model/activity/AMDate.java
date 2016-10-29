@@ -61,19 +61,21 @@ public class AMDate {
     public void addOffset(int offset, String unit) {
         TimeUnit timeUnit = TimeUnit.valueOf(unit.toUpperCase());
         switch (timeUnit) {
-        
-        case DAY:
-            this.dateTime.setDate(this.dateTime.getDate() + offset);
-            return;
-        case WEEK:
-            this.dateTime.setDate(this.dateTime.getDate() + (offset * 7));
-            return;
-        case MONTH:
-            this.dateTime.setMonth(this.dateTime.getMonth() + offset);
-            return;
-        case YEAR:
-            this.dateTime.setYear(this.dateTime.getYear() + offset);
-            return;
+            case DAY:
+                this.dateTime.setDate(this.dateTime.getDate() + offset);
+                return;
+            case WEEK:
+                this.dateTime.setDate(this.dateTime.getDate() + (offset * 7));
+                return;
+            case MONTH:
+                this.dateTime.setMonth(this.dateTime.getMonth() + offset);
+                return;
+            case YEAR:
+                this.dateTime.setYear(this.dateTime.getYear() + offset);
+                return;
+            default:
+                this.dateTime.setDate(this.dateTime.getDate());
+                break;
         }
     }
     
