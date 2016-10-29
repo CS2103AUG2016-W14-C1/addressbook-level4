@@ -9,7 +9,7 @@ import seedu.manager.model.activity.*;
  */
 public class TypicalTestActivities {
 
-    public static TestActivity groceries, reading, guitar, tidy, paint, movie, dog, plane, hotel, assignment;
+    public TestActivity groceries, reading, guitar, tidy, paint, movie, dog, plane, hotel, assignment;
 
     public TypicalTestActivities() {
         try {
@@ -36,14 +36,14 @@ public class TypicalTestActivities {
         }
     }
 
-    public static void loadActivityManagerWithSampleData(ActivityManager am) {
-        am.addActivity(new Activity(groceries));
-        am.addActivity(new Activity(reading));
-        am.addActivity(new Activity(guitar));
-        am.addActivity(new Activity(paint));
-        am.addActivity(new Activity(movie));
-        am.addActivity(new Activity(dog));
-        am.addActivity(new Activity(assignment));
+    public void loadActivityManagerWithSampleData(ActivityManager am) {
+        am.addActivity(new Activity(this.groceries));
+        am.addActivity(new Activity(this.reading));
+        am.addActivity(new Activity(this.guitar));
+        am.addActivity(new Activity(this.paint));
+        am.addActivity(new Activity(this.movie));
+        am.addActivity(new Activity(this.dog));
+        am.addActivity(new Activity(this.assignment));
     }
 
     public TestActivity[] getTypicalActivities() {

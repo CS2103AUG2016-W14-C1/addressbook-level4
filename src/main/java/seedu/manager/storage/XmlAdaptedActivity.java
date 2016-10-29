@@ -5,9 +5,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * JAXB-friendly version of an Activity.
  */

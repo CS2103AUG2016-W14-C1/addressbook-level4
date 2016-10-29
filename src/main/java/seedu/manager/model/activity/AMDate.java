@@ -75,6 +75,7 @@ public class AMDate {
                 return;
             default:
                 this.dateTime.setDate(this.dateTime.getDate());
+                break;
         }
     }
     

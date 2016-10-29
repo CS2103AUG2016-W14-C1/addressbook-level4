@@ -13,11 +13,7 @@ import java.util.*;
 //@@author A0144881Y
 public class ActivityManager implements ReadOnlyActivityManager {
 
-    private final ActivityList activities;
-    
-    {
-        activities = new ActivityList();
-    }
+    private final ActivityList activities = new ActivityList();
 
     public ActivityManager() {}
 

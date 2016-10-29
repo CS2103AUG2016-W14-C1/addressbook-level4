@@ -3,13 +3,11 @@ package seedu.manager.storage;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.ActivityList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +18,7 @@ import java.util.stream.Collectors;
 public class XmlSerializableActivityManager implements ReadOnlyActivityManager {
 
     @XmlElement(name = "activity")
-    private List<XmlAdaptedActivity> activities;
-    
-    {
-        activities = new ArrayList<>();
-    }
+    private List<XmlAdaptedActivity> activities = new ArrayList<>();
 
     /**
      * Empty constructor required for marshalling
