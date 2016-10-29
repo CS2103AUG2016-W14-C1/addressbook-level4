@@ -223,9 +223,13 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     public int compareTo(Activity other) {
         // Check for floating tasks
         if (this.type.equals(ActivityType.FLOATING) && other.type.equals(ActivityType.FLOATING)) {
-            if (!this.getStatus().isCompleted() && other.getStatus().isCompleted()) { return -1; }
-            else if (this.getStatus().isCompleted() && !other.getStatus().isCompleted()) { return 1; }
-            else { return 0; }
+            if (!this.getStatus().isCompleted() && other.getStatus().isCompleted()) {
+                return -1;
+            } else if (this.getStatus().isCompleted() && !other.getStatus().isCompleted()) {
+                return 1;
+            } else { 
+                return 0; 
+            }
         } else if (other.type.equals(ActivityType.FLOATING)) {
             return -1;
         } else if (this.type.equals(ActivityType.FLOATING)) {
@@ -237,19 +241,18 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         } else {
 	        // Comparison between 2 deadlines
 	        if (this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.DEADLINE)) {
-	           return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());	
+	           return this.getDateTime().getTime().compareTo(other.getDateTime().getTime());	
 	        // Comparisons between a deadline and an event
-	        } else if (this.type.equals(ActivityType.EVENT) && other.type.equals(ActivityType.DEADLINE)) {
-	            return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());     
-	        } else if (this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.EVENT)) {
-	            return (int)(this.getDateTime().getTime() - other.getDateTime().getTime());   
+	        } else if (this.type.equals(ActivityType.EVENT) && other.type.equals(ActivityType.DEADLINE) ||
+	                this.type.equals(ActivityType.DEADLINE) && other.type.equals(ActivityType.EVENT)) {
+	            return this.getDateTime().getTime().compareTo(other.getDateTime().getTime());
 	        // Comparisons between 2 events
 	        } else {
-	           long startTimeDifference = this.getDateTime().getTime() - other.getDateTime().getTime();     
-	           if (startTimeDifference == 0) {
-	               return (int)(this.getEndDateTime().getTime() - other.getEndDateTime().getTime());
+	           int startTimeCompare = this.getDateTime().getTime().compareTo(other.getDateTime().getTime());     
+	           if (startTimeCompare == 0) {
+	               return this.getEndDateTime().getTime().compareTo(other.getEndDateTime().getTime());
 	           } else {
-	               return ((int) startTimeDifference);
+	               return startTimeCompare;
 	           }
 	        }
     	}
