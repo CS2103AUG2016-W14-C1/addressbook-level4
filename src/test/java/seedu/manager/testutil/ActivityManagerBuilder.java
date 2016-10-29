@@ -1,6 +1,5 @@
 package seedu.manager.testutil;
 
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.ActivityManager;
 import seedu.manager.model.activity.Activity;
 

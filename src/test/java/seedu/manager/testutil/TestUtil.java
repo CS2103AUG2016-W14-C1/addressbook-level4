@@ -14,7 +14,6 @@ import org.loadui.testfx.GuiTest;
 import org.testfx.api.FxToolkit;
 
 import seedu.manager.TestApp;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.FileUtil;
 import seedu.manager.commons.util.XmlUtil;
 import seedu.manager.model.ActivityManager;

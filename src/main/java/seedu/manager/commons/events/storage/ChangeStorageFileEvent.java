@@ -5,7 +5,7 @@ import seedu.manager.commons.events.BaseEvent;
 
 public class ChangeStorageFileEvent extends BaseEvent {
 
-    public static String file;
+    public String file;
 
     public ChangeStorageFileEvent(String file) {
         this.file = file;

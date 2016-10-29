@@ -1,8 +1,5 @@
 package seedu.manager.ui;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -97,9 +94,7 @@ public class ActivityCard extends UiPart{
     public boolean isExpired(AMDate date) {
     	assert date != null;
     	AMDate today = new AMDate("today");
-    	if (today.getTime() > date.getTime() + 60000)
-    		return true;
-    	return false;
+    	return today.getTime() > date.getTime() + 60000;
     }
 
     @Override

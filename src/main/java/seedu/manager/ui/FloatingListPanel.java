@@ -12,9 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
-import seedu.manager.commons.events.ui.ActivityPanelSelectionChangedEvent;
 import seedu.manager.model.activity.Activity;
-import seedu.manager.ui.ActivityListPanel.ActivityListViewCell;
 
 import java.util.logging.Logger;
 

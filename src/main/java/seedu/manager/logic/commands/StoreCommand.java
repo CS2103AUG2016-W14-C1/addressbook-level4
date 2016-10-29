@@ -1,19 +1,14 @@
 package seedu.manager.logic.commands;
 
-import static seedu.manager.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.io.File;
 import java.io.IOException;
 
 import seedu.manager.commons.core.Config;
 import seedu.manager.commons.core.EventsCenter;
 import seedu.manager.commons.events.storage.ChangeStorageFileEvent;
-import seedu.manager.commons.exceptions.DataConversionException;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.ConfigUtil;
 import seedu.manager.commons.util.FileUtil;
 import seedu.manager.model.ReadOnlyActivityManager;
-import seedu.manager.storage.XmlActivityManagerStorage;
 import seedu.manager.storage.XmlFileStorage;
 import seedu.manager.storage.XmlSerializableActivityManager;
 

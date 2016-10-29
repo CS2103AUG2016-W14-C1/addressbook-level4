@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 
 public class ActivityList implements Iterable<Activity> {
 	

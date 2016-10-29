@@ -3,7 +3,6 @@ package seedu.manager.model;
 import java.util.Set;
 
 import seedu.manager.commons.core.UnmodifiableObservableList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.Activity;
 import seedu.manager.model.activity.AMDate;
 

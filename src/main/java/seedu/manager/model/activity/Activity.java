@@ -161,8 +161,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	
 	public boolean isExpired(AMDate date) {
 		AMDate today = new AMDate("today");
-		if (today.getTime() > date.getTime()) return true;
-		return false;
+		return today.getTime() > date.getTime();
 	}
 	
 	@Override

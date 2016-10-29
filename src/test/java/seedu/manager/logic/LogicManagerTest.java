@@ -2,12 +2,9 @@ package seedu.manager.logic;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import seedu.manager.commons.core.EventsCenter;
 import seedu.manager.commons.core.Messages;
-import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
-import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.logic.Logic;
 import seedu.manager.logic.LogicManager;
@@ -48,8 +45,7 @@ public class LogicManagerTest {
     //These are for checking the correctness of the events raised
     private ReadOnlyActivityManager latestSavedActivityManager;
     private boolean helpShown;
-    private int targetedJumpIndex;
-
+    
     @Subscribe
     private void handleLocalModelChangedEvent(ActivityManagerChangedEvent abce) {
         latestSavedActivityManager = new ActivityManager(abce.data);
@@ -59,12 +55,7 @@ public class LogicManagerTest {
     private void handleShowHelpRequestEvent(ShowHelpRequestEvent she) {
         helpShown = true;
     }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent je) {
-        targetedJumpIndex = je.targetIndex;
-    }
-
+    
     @Before
     public void setup() {
         model = new ModelManager();
@@ -75,7 +66,6 @@ public class LogicManagerTest {
 
         latestSavedActivityManager = new ActivityManager(model.getActivityManager()); // last saved assumed to be up to date before.
         helpShown = false;
-        targetedJumpIndex = -1; // none yet
     }
 
     @After
@@ -174,11 +164,11 @@ public class LogicManagerTest {
     //@@author A0135730M
     public void execute_add_invalidDate() throws Exception {
         assertCommandBehavior("add event from abc to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
         assertCommandBehavior("add event from today to def", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
         assertCommandBehavior("add deadline by ghi", 
-                String.format(Messages.MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
     
     @Test

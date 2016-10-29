@@ -2,23 +2,17 @@ package seedu.manager.model;
 
 import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.core.ComponentManager;
-import seedu.manager.commons.core.EventsCenter;
 import seedu.manager.commons.core.LogsCenter;
 import seedu.manager.commons.core.UnmodifiableObservableList;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
-import seedu.manager.commons.events.ui.JumpToListRequestEvent;
 import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.model.activity.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * Represents the in-memory model of the activity manager data.
@@ -30,8 +24,8 @@ public class ModelManager extends ComponentManager implements Model {
     private ActivityManager activityManager;
     private FilteredList<Activity> filteredActivities;
     
-    ArrayList<ActivityManager> managerHistory = new ArrayList<ActivityManager>();
-    int historyIndex = -1;
+    private ArrayList<ActivityManager> managerHistory = new ArrayList<ActivityManager>();
+    private int historyIndex = -1;
     
     /**
      * Initializes a ModelManager with the given ActivityManager

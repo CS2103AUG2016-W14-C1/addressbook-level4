@@ -7,7 +7,7 @@ import seedu.manager.testutil.TestActivity;
 
 import static org.junit.Assert.assertTrue;
 
-public class FindCommandTest extends ActivityManagerGuiTest {
+public class SearchCommandTest extends ActivityManagerGuiTest {
 
     @Test
     public void find_nonEmptyList() {

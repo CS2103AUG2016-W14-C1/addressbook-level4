@@ -2,7 +2,6 @@ package seedu.manager.model;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
 
 import java.util.*;

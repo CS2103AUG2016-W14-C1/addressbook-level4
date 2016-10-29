@@ -9,10 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.manager.commons.core.LogsCenter;
-import seedu.manager.commons.util.FxViewUtil;
 import seedu.manager.logic.commands.*;
 
 import java.util.logging.Logger;
@@ -26,9 +24,7 @@ public class HelpWindow extends UiPart {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
-    private static final String USERGUIDE_URL =
-            "https://github.com/CS2103AUG2016-W14-C1/main/blob/master/docs/UserGuide.md";
-
+    
     private AnchorPane mainPane;
 
     private Stage dialogStage;
@@ -40,7 +36,7 @@ public class HelpWindow extends UiPart {
     private static final int USAGE_WIDTH = 350;
     private static final int EXAMPLES_WIDTH = 300;
     
-    TableView<HelpWindowCommand> table = new TableView<HelpWindowCommand>();
+    private TableView<HelpWindowCommand> table = new TableView<HelpWindowCommand>();
     
     
     public static HelpWindow load(Stage primaryStage) {

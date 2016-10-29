@@ -1,8 +1,5 @@
 package seedu.manager.logic.commands;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.manager.model.activity.*;
 
 /**

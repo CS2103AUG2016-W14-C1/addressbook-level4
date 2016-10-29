@@ -57,8 +57,6 @@ public class AMParser {
     /**
      * Various token counts
      */
-    private static final int DEADLINE_TOKEN_COUNT = 2;
-    private static final int EVENT_TOKEN_COUNT = 2;
     private static final int SEARCH_RANGE_TOKEN_COUNT = 2;
     
     public AMParser() {}
@@ -393,7 +391,7 @@ public class AMParser {
     //@@author A0144704L
     private Command prepareStore(String args) {
     	assert args != null;
-    	if (!args.equals("") && args.endsWith(".xml")) {
+    	if (!"".equals(args) && args.endsWith(".xml")) {
 			return new StoreCommand(args);
     	}
     	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
