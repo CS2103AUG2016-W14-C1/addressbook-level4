@@ -197,21 +197,6 @@ public class AMParser {
     }
 
     /**
-     * Extracts the new activity's tags from the add command's tag arguments string.
-     * Merges duplicate tag strings.
-     */
-    // TODO: remove if tags not used in the end
-//    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-//        // no tags
-//        if (tagArguments.isEmpty()) {
-//            return Collections.emptySet();
-//        }
-//        // replace first delimiter prefix, then split
-//        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
-//        return new HashSet<>(tagStrings);
-//    }
-
-    /**
      * Parses arguments in the context of the delete activity command.
      *
      * @param args full command args string

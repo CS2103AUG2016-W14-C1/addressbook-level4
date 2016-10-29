@@ -1,7 +1,6 @@
 package seedu.manager.testutil;
 
 import seedu.manager.commons.exceptions.IllegalValueException;
-import seedu.manager.model.tag.Tag;
 
 /**
  *
@@ -26,14 +25,6 @@ public class ActivityBuilder {
         return this;
     }
     
-    //TODO: remove if not using tags
-    //    public ActivityBuilder withTags(String ... tags) throws IllegalValueException {
-    //        for (String tag: tags) {
-    //            activity.getTags().add(new Tag(tag));
-    //        }
-    //        return this;
-    //    }
-
     public TestActivity build() {
         return this.activity;
     }

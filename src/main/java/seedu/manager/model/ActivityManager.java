@@ -4,8 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 
 import java.util.*;
 
@@ -17,11 +15,9 @@ import java.util.*;
 public class ActivityManager implements ReadOnlyActivityManager {
 
     private final ActivityList activities;
-    private final UniqueTagList tags;
-
+    
     {
         activities = new ActivityList();
-        tags = new UniqueTagList();
     }
 
     public ActivityManager() {}
@@ -30,14 +26,14 @@ public class ActivityManager implements ReadOnlyActivityManager {
      * Activities and Tags are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
-        this(toBeCopied.getActivityList(), toBeCopied.getUniqueTagList());
+        this(toBeCopied.getActivityList());
     }
 
     /**
      * Activities and Tags are copied into this activity manager
      */
-    public ActivityManager(ActivityList activities, UniqueTagList tags) {
-        resetData(activities.getInternalList(), tags.getInternalList());
+    public ActivityManager(ActivityList activities) {
+        resetData(activities.getInternalList());
     }
 
     public static ReadOnlyActivityManager getEmptyActivityManager() {
@@ -54,17 +50,12 @@ public class ActivityManager implements ReadOnlyActivityManager {
         this.activities.getInternalList().setAll(activities);
     }
 
-    public void setTags(Collection<Tag> tags) {
-        this.tags.getInternalList().setAll(tags);
-    }
-
-    public void resetData(Collection<? extends Activity> newActivities, Collection<Tag> newTags) {
+    public void resetData(Collection<? extends Activity> newActivities) {
         setActivties(new ArrayList<Activity>(newActivities));
-        setTags(newTags);
     }
 
     public void resetData(ReadOnlyActivityManager newData) {
-        resetData(newData.getActivityList().getInternalList(), newData.getTagList());
+        resetData(newData.getActivityList().getInternalList());
     }
 
 //// activity-level operations
@@ -123,18 +114,11 @@ public class ActivityManager implements ReadOnlyActivityManager {
     	activities.list();
     }
 
-    
-//// tag-level operations
-
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
-    }
-
 //// util methods
 
     @Override
     public String toString() {
-        return activities.getInternalList().size() + " activities, " + tags.getInternalList().size() +  " tags";
+        return activities.getInternalList().size() + " activities";
         // TODO: refine later
     }
 
@@ -142,22 +126,6 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public List<Activity> getListActivity() {
         return Collections.unmodifiableList(activities.getInternalList());
     }
-
-    @Override
-    public List<Tag> getTagList() {
-        return Collections.unmodifiableList(tags.getInternalList());
-    }
-
-//    @Override
-//    public UniquePersonList getUniquePersonList() {
-//        return this.activities;
-//    }
-
-    @Override
-    public UniqueTagList getUniqueTagList() {
-        return this.tags;
-    }
-
 
     @Override
     public boolean equals(Object other) {
@@ -173,7 +141,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(activities, tags);
+        return Objects.hash(activities);
     }
 
 	@Override

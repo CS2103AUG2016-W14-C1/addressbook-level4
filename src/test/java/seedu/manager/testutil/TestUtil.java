@@ -19,8 +19,6 @@ import seedu.manager.commons.util.FileUtil;
 import seedu.manager.commons.util.XmlUtil;
 import seedu.manager.model.ActivityManager;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 import seedu.manager.storage.XmlSerializableActivityManager;
 
 import java.io.File;
@@ -84,21 +82,6 @@ public class TestUtil {
 //        }
     }
 
-    public static final Tag[] sampleTagData = getSampleTagData();
-
-    private static Tag[] getSampleTagData() {
-        try {
-            return new Tag[]{
-                    new Tag("relatives"),
-                    new Tag("friends")
-            };
-        } catch (IllegalValueException e) {
-            assert false;
-            return null;
-            //not possible
-        }
-    }
-
     public static List<Activity> generateSampleActivityData() {
         return Arrays.asList(sampleActivityData);
     }
@@ -137,7 +120,7 @@ public class TestUtil {
     }
 
     public static ActivityManager generateEmptyActivityManager() {
-        return new ActivityManager(new ActivityList(), new UniqueTagList());
+        return new ActivityManager(new ActivityList());
     }
 
     public static XmlSerializableActivityManager generateSampleStorageActivityManager() {
@@ -331,26 +314,4 @@ public class TestUtil {
     public static boolean compareCardAndActivity(ActivityCardHandle card, ReadOnlyActivity activity) {
         return card.isSameActivity(activity);
     }
-
-    public static Tag[] getTagList(String tags) {
-
-        if ("".equals(tags)) {
-            return new Tag[]{};
-        }
-
-        final String[] split = tags.split(", ");
-
-        final List<Tag> collect = Arrays.asList(split).stream().map(e -> {
-            try {
-                return new Tag(e.replaceFirst("Tag: ", ""));
-            } catch (IllegalValueException e1) {
-                //not possible
-                assert false;
-                return null;
-            }
-        }).collect(Collectors.toList());
-
-        return collect.toArray(new Tag[split.length]);
-    }
-
 }

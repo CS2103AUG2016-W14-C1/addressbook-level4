@@ -29,8 +29,7 @@ public class AddCommandTest extends ActivityManagerGuiTest {
         //add to empty list
         commandBox.runCommand("clear");
         assertAddSuccess(ta.groceries);
-        // TODO: check if groceries is correct
-
+        
         //invalid command
         commandBox.runCommand("adds Johnny");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
@@ -45,7 +44,6 @@ public class AddCommandTest extends ActivityManagerGuiTest {
 
         //confirm the list now contains all previous activities plus the new activities
         TestActivity[] expectedList = TestUtil.addActivitiesToList(currentList, activityToAdd);
-        // TODO: check that panel list matches exactly
         assertTrue(floatingActivityListPanel.isListMatching(expectedList));
     }
 

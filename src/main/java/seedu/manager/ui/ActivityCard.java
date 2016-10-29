@@ -28,9 +28,6 @@ public class ActivityCard extends UiPart{
     private Label endDateTime;
     @FXML
     private Label status;
-// TODO: re-instate tags or equivalent when implementation is complete    
-//    @FXML
-//    private Label tags;
 
     private Activity activity;
     private int displayedIndex;

@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 
 /**
  * Adds an activity to the activity manager.

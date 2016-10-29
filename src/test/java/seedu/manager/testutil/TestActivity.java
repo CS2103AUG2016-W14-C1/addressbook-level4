@@ -1,7 +1,6 @@
 package seedu.manager.testutil;
 
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.UniqueTagList;
 
 /**
  * A mutable activity object. For testing only.

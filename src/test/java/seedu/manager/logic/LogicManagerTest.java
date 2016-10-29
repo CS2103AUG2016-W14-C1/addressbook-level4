@@ -17,8 +17,6 @@ import seedu.manager.model.Model;
 import seedu.manager.model.ModelManager;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.model.activity.*;
-import seedu.manager.model.tag.Tag;
-import seedu.manager.model.tag.UniqueTagList;
 import seedu.manager.storage.StorageManager;
 
 import org.junit.After;
