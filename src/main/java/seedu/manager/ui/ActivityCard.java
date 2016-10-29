@@ -80,16 +80,19 @@ public class ActivityCard extends UiPart{
                dateTime.getHour() + TIME_DELIMITER +
                dateTime.getMinutes();
     }
+    //@@author 
 
     public HBox getLayout() {
         return cardPane;
     }
     
+    //@@author A0144704L
     public boolean isExpired(AMDate date) {
     	assert date != null;
     	AMDate today = new AMDate("today");
     	return today.getTime() > date.getTime() + 60000;
     }
+    //@@author 
 
     @Override
     public void setNode(Node node) {

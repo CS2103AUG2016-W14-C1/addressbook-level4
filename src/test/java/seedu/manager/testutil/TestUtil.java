@@ -63,28 +63,23 @@ public class TestUtil {
 
     //@@author A0135730M
     private static Activity[] getSampleActivityData() {
-//        try {
-            return new Activity[]{
-                    new Activity("buy milk"),
-                    new Activity("buy vegetable"),
-                    new Activity("Submit Assignment 1"),
-                    new Activity("Assignment 2 deadline"),
-                    new Activity("CS2103T tutorial"),
-                    new Activity("CS2101 tutorial"),
-                    new Activity("World Cup"),
-                    new Activity("football tournament"),
-                    new Activity("Singing Competition")
-            };
-//        } catch (IllegalValueException e) {
-//            assert false;
-//            //not possible
-//            return null;
-//        }
+        return new Activity[]{
+                new Activity("buy milk"),
+                new Activity("buy vegetable"),
+                new Activity("Submit Assignment 1"),
+                new Activity("Assignment 2 deadline"),
+                new Activity("CS2103T tutorial"),
+                new Activity("CS2101 tutorial"),
+                new Activity("World Cup"),
+                new Activity("football tournament"),
+                new Activity("Singing Competition")
+        };
     }
 
     public static List<Activity> generateSampleActivityData() {
         return Arrays.asList(sampleActivityData);
     }
+    //@@author 
 
     /**
      * Appends the file name to the sandbox folder path.

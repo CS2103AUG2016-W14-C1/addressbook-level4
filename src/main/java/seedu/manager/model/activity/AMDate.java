@@ -41,6 +41,8 @@ public class AMDate {
         this.dateTime = dateGroups.get(0).getDates().get(0); 
     }
     
+    //@@author A0135730M
+    
     /** dateTime manipulation methods **/
     
     public void toStartOfDay() {
@@ -78,6 +80,8 @@ public class AMDate {
                 break;
         }
     }
+    
+    //@@author A0139797E
     
     /** dateTime accessors **/
     

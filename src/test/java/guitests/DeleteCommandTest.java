@@ -8,10 +8,10 @@ import seedu.manager.testutil.TestUtil;
 import static org.junit.Assert.assertTrue;
 import static seedu.manager.logic.commands.DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS;
 
+//@@author A0139797E
 public class DeleteCommandTest extends ActivityManagerGuiTest {
 
     @Test
-    //@@author A0139797E
     public void delete() {
 
         //delete the first in the list
@@ -35,12 +35,10 @@ public class DeleteCommandTest extends ActivityManagerGuiTest {
 
     }
 
-    //@@author A0139797E
     private int getFloatingIndex(int index) {
         return index - ta.getTypicalScheduleActivities().length;
     }
     
-    //@@author A0139797E
     private int getFloatingTargetIndex(int index) {
         return index + ta.getTypicalScheduleActivities().length;
     }

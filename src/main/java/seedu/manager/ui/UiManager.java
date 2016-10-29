@@ -38,8 +38,8 @@ public class UiManager extends ComponentManager implements Ui {
         this.prefs = prefs;
     }
 
-    @Override
     //@@author A0144704L
+    @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
@@ -69,7 +69,6 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(AlertType.ERROR, "File Op Error", description, content);
     }
 
-    //@@author A0144704L
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }

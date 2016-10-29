@@ -16,7 +16,7 @@ import seedu.manager.logic.commands.*;
  * Parses user input.
  */
 public class AMParser {
-
+    //@@author A0135730M
     /**
      * Used for initial separation of command word and args.
      */
@@ -125,7 +125,6 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0135730M
     private Command prepareAdd(String args){
         // compare with different activity types format and return AddCommand accordingly
         final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
@@ -189,13 +188,13 @@ public class AMParser {
         }
     }
 
+    //@@author A0144881Y
     /**
      * Parses arguments in the context of the delete activity command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0144881Y
     private Command prepareDelete(String args) {
 
         Optional<Integer> index = parseIndex(args);
@@ -207,13 +206,13 @@ public class AMParser {
         return new DeleteCommand(index.get());
     }
     
+    //@@author A0135730M
     /**
      * Parses arguments in the context of the update activity command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0135730M
     private Command prepareUpdate(String args) {
         final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
@@ -263,13 +262,13 @@ public class AMParser {
         }
     }
 
+    //@@author A0144704L
     /**
      * Parses arguments in the context of the mark activity command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0144704L
     private Command prepareMark(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -287,7 +286,6 @@ public class AMParser {
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0144704L
     private Command prepareUnmark(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -299,13 +297,13 @@ public class AMParser {
         return new UnmarkCommand(index.get());
     }
     
+    //@@author A0139797E
     /**
      * Parses arguments in the context of the undo command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0139797E
     private Command prepareUndo(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -316,13 +314,13 @@ public class AMParser {
         }
     }
     
+    //@@author A0144881Y
     /**
      * Parses arguments in the context of the redo command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0144881Y
     private Command prepareRedo(String args) {
         // Validate index format
         Optional<Integer> index = parseIndex(args);
@@ -351,13 +349,13 @@ public class AMParser {
 
     }
 
+    //@@author A0135730M
     /**
      * Parses arguments in the context of the search command.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    //@@author A0144881Y
     private Command prepareSearch(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -387,6 +385,12 @@ public class AMParser {
     }
     
     //@@author A0144704L
+    /**
+     * Parses arguments in the context of the store command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareStore(String args) {
     	assert args != null;
     	if (!"".equals(args) && args.endsWith(".xml")) {

@@ -5,17 +5,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
+//@@author A0139797E
 public class HelpWindowTest extends ActivityManagerGuiTest {
 
     @Test
-    //@@author A0139797E
     public void openHelpWindow() {
 
         activityListPanel.clickOnListView();
-
-//        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
-
-  //      assertHelpWindowOpen(mainMenu.openHelpWindowUsingMenu());
 
         assertHelpWindowOpen(commandBox.runHelpCommand());
 

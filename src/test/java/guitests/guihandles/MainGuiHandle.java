@@ -21,6 +21,7 @@ public class MainGuiHandle extends GuiHandle {
     public FloatingListPanelHandle getFloatingListPanel() {
         return new FloatingListPanelHandle(guiRobot, primaryStage);
     }
+    //@@author 
 
     public ResultDisplayHandle getResultDisplay() {
         return new ResultDisplayHandle(guiRobot, primaryStage);

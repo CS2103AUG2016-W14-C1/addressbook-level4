@@ -10,7 +10,7 @@ import seedu.manager.commons.util.FileUtil;
 import seedu.manager.model.ReadOnlyActivityManager;
 import seedu.manager.storage.XmlFileStorage;
 import seedu.manager.storage.XmlSerializableActivityManager;
-
+//@@author A0144704L
 public class StoreCommand extends Command {
 
     public static final String COMMAND_WORD = "store";
