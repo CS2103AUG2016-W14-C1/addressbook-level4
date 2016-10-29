@@ -206,14 +206,20 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	@Override
 	public boolean equals(Object o) {
 	    return o == this
-	                // Activity equality
+	                // basic Activity equality
 	            || (o instanceof Activity
 	                && this.name.equals(((Activity)o).name)
 	                && this.status.equals(((Activity)o).status)
-	                && (this.dateTime == null && ((Activity)o).dateTime == null
-	                   || this.dateTime.equals(((Activity)o).dateTime))
-	                && (this.endDateTime == null && ((Activity)o).endDateTime == null 
-	                   || this.endDateTime.equals(((Activity)o).endDateTime))
+	                && this.type.equals(((Activity)o).type)
+	                   // floating equality
+	                && (this.type.equals(ActivityType.FLOATING)
+	                   // deadline equality
+	                   || (this.type.equals(ActivityType.DEADLINE)
+	                      && this.dateTime.equals(((Activity)o).dateTime))
+	                   // event equality
+	                   || (this.type.equals(ActivityType.EVENT)
+	                      && this.dateTime.equals(((Activity)o).dateTime)
+	                      && this.endDateTime.equals(((Activity)o).endDateTime)))
 	                );
 	}
 	
