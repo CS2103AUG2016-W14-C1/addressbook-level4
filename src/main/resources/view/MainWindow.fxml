@@ -19,6 +19,15 @@
    <children>
       <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" orientation="vertical" VBox.vgrow="ALWAYS">
          <items>
+         	<MenuBar VBox.vgrow="NEVER" visible="false" managed="false" maxHeight="0">
+         		<menus>
+		            <Menu mnemonicParsing="false" text="Help">
+		                <items>
+		                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+		                </items>
+		            </Menu>
+	            </menus>
+        	</MenuBar>
             <VBox fx:id="activityList" prefWidth="340">
 				<children>
 					<Label fx:id="label1" style="-fx-text-fill: #0D47A1" text="Schedule" wrapText="true" />    

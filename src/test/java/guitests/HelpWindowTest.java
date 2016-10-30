@@ -12,7 +12,9 @@ public class HelpWindowTest extends ActivityManagerGuiTest {
     public void openHelpWindow() {
 
         activityListPanel.clickOnListView();
-
+        
+        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
+        
         assertHelpWindowOpen(commandBox.runHelpCommand());
 
     }
