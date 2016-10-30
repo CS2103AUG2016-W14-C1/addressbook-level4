@@ -111,6 +111,15 @@
     -fx-text-fill: #010504;
 }
 
+.cell_status_label {
+	-fx-background-color: #5cb85c;
+	-fx-padding: .2em .6em .3em .6em;
+	-fx-background-radius: .5em;
+	-fx-font-size: 85%;
+	-fx-font-weight: 700;
+	-fx-text-align: center;
+}
+
 .anchor-pane {
      -fx-background-color: derive(#FFFFFF, 20%);
 }
