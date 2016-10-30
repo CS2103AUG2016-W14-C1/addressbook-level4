@@ -48,7 +48,7 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
                	<children>
-                  <AnchorPane fx:id="floatingActivityListPanelPlaceholder" prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="floatingActivityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
               	 </children>
             </VBox>
          </items>
