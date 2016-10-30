@@ -300,3 +300,15 @@
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
+
+#resultDisplay {
+	-fx-background-color: #FFF;
+	-fx-border-color: #FFF;
+	-fx-font-size: 16px;
+	-fx-text-fill: #0D47A1;
+}
+
+#resultDisplay .content {
+	-fx-background-color: #FFF;
+	-fx-border-color: #FFF;
+}
