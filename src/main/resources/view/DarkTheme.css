@@ -312,3 +312,13 @@
 	-fx-background-color: #FFF;
 	-fx-border-color: #FFF;
 }
+
+.split-pane-divider {
+   -fx-background-color: transparent;
+}
+
+#welcomeText {
+	-fx-font-family: "Calibri";
+	-fx-font-size: 20px;
+	-fx-text-fill: #333;
+}

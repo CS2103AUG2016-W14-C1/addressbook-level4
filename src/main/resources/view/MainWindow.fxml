@@ -29,7 +29,12 @@
 		            </Menu>
 	            </menus>
         	</MenuBar>
-            <VBox fx:id="activityList" prefWidth="340">
+        	<VBox prefHeight="40" maxHeight="40" alignment="CENTER">
+         		<children>
+         			<Label id="welcomeText" text = "31st October 2016, Monday" />
+         		</children>
+         	</VBox>
+            <VBox fx:id="activityList" prefWidth="340" minHeight="250">
 				<children>
 					<Label fx:id="label1" style="-fx-text-fill: #0D47A1" text="Schedule" wrapText="true" />    
 				</children>
@@ -40,7 +45,7 @@
                   <AnchorPane fx:id="activityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <VBox fx:id="floatingActivityList" prefWidth="340">
+            <VBox fx:id="floatingActivityList" prefWidth="340" minHeight="150">
             	<children>
             		<Label fx:id="label2" style="-fx-text-fill: #0D47A1" text="Task" wrapText="true" />  
             	</children>
@@ -55,12 +60,12 @@
       </SplitPane>
       <AnchorPane fx:id="resultDisplayPlaceholder" styleClass="anchor-pane" VBox.vgrow="NEVER">
            <padding>
-               <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               <Insets bottom="0.0" left="0.0" right="0.0" top="2.0" />
            </padding>
        </AnchorPane>
       <AnchorPane fx:id="commandBoxPlaceholder" styleClass="anchor-pane" VBox.vgrow="NEVER">
          <padding>
-            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+            <Insets bottom="5.0" left="10.0" right="10.0" top="2.0" />
          </padding>
       </AnchorPane>
       <AnchorPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

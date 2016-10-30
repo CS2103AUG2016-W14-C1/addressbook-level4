@@ -3,6 +3,7 @@ package seedu.manager.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
@@ -50,7 +51,7 @@ public class MainWindow extends UiPart {
     
     @FXML
     private SplitPane splitPane;
-
+    
     @FXML
     private MenuItem exitMenuItem;
     
