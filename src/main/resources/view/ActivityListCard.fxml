@@ -49,7 +49,7 @@
             </VBox>
             <HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="2">
                <children>
-                  <Label fx:id="status" styleClass="cell_small_label" text="\$status" translateX="10.0" translateY="12.0" />
+                  <Label fx:id="status" styleClass="cell_status_label" text="\$status" translateX="0.0" translateY="12.0" />
                </children>
             </HBox>
             </children>
