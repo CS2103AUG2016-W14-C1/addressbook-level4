@@ -23,6 +23,7 @@
          		<menus>
 		            <Menu mnemonicParsing="false" text="Help">
 		                <items>
+		                    <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
 		                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
 		                </items>
 		            </Menu>
