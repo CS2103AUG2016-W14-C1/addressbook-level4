@@ -32,7 +32,6 @@ public abstract class ActivityManagerGuiTest {
     public TestName name = new TestName();
 
     TestApp testApp;
-    TestApp testApp2;
 
     protected TypicalTestActivities ta = new TypicalTestActivities();
 
@@ -72,7 +71,6 @@ public abstract class ActivityManagerGuiTest {
         });
         EventsCenter.clearSubscribers();
         testApp = (TestApp) FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
-        testApp2 = (TestApp) FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
