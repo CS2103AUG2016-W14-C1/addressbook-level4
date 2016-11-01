@@ -23,7 +23,7 @@ public interface Model {
     ReadOnlyActivityManager getActivityManager();
 
     /** Deletes the given activity. */
-    void deleteActivity(Activity target);
+    void deleteActivity(Activity target, boolean isLastActivity);
 
     /** Adds the given activity */
     void addActivity(Activity activity, boolean isLastRecurring);

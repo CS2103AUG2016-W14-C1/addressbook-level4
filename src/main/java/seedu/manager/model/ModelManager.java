@@ -111,11 +111,13 @@ public class ModelManager extends ComponentManager implements Model {
     
     //@@author A0144881Y
     @Override
-    public synchronized void deleteActivity(Activity target) {
+    public synchronized void deleteActivity(Activity target, boolean isLastActivity) {
         activityManager.removeActivity(target);
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
-        recordManagerHistory(activityManager);
+        if (isLastActivity) {
+            recordManagerHistory(activityManager);
+        }
     }
     
     @Override

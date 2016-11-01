@@ -192,13 +192,19 @@ public class AMParser {
      */
     private Command prepareDelete(String args) {
 
-        Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
-            return new IncorrectCommand(
-            	String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        String[] argsSeperated = args.trim().split(" ");
+        ArrayList<Integer> argIndexes = new ArrayList<Integer>();
+        for (int i = 0; i < argsSeperated.length; i++) {
+            Optional<Integer> index = parseIndex(argsSeperated[i]);
+            if(!index.isPresent()){
+                return new IncorrectCommand(
+                	String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            } else {
+                argIndexes.add(index.get());
+            }
         }
-
-        return new DeleteCommand(index.get());
+        
+        return new DeleteCommand(argIndexes);
     }
     
     //@@author A0135730M

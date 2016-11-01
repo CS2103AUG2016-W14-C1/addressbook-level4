@@ -2,6 +2,7 @@ package guitests;
 
 import org.junit.Test;
 
+import seedu.manager.logic.commands.DeleteCommand;
 import seedu.manager.testutil.TestActivity;
 import seedu.manager.testutil.TestUtil;
 
@@ -59,7 +60,7 @@ public class DeleteCommandTest extends ActivityManagerGuiTest {
         assertTrue(floatingActivityListPanel.isListMatching(expectedRemainder));
 
         //confirm the result message is correct
-        assertResultMessage(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, activityToDelete));
+        assertResultMessage(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, DeleteCommand.ACTIVITY_SEPERATOR + activityToDelete));
     }
 
 }
