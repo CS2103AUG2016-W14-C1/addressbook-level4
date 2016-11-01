@@ -15,9 +15,9 @@
 	    <GridPane HBox.hgrow="ALWAYS">
 	    	<columnConstraints>
 	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-	                <ColumnConstraints hgrow="ALWAYS" />
-	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="200.0" prefWidth="200.0" />
-	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+	                <ColumnConstraints hgrow="ALWAYS" minWidth = "100.0" />
+	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
 	                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
 	            </columnConstraints>
 	        <children>
@@ -29,7 +29,7 @@
 	            		<Label text = "ID" styleClass="column_header_text" />
 	            	</children>
 	            </HBox>	
-		    	<HBox prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="1" styleClass="column_header">
+		    	<HBox prefHeight="0.0" GridPane.columnIndex="1" styleClass="column_header">
 	           		<padding>
                         <Insets bottom="0" left="15" right="0" top="0" />
                     </padding>
@@ -37,12 +37,12 @@
 	            		<Label text = "Activity" styleClass="column_header_text"/>
 	            	</children>
 	            </HBox>
-	            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="2" styleClass="column_header">
+	            <HBox prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="2" styleClass="column_header">
 	           		<children>
 	            		<Label text = "Start Date" styleClass="column_header_text" />
 	            	</children>
 	            </HBox>	
-	            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="3" styleClass="column_header">
+	            <HBox prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="3" styleClass="column_header">
 	           		<children>
 	            		<Label text = "End Date" styleClass="column_header_text" />
 	            	</children>
