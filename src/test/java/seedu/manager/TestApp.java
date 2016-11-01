@@ -25,9 +25,6 @@ public class TestApp extends MainApp {
     protected Supplier<ReadOnlyActivityManager> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
-    public TestApp() {
-    }
-
     public TestApp(Supplier<ReadOnlyActivityManager> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;

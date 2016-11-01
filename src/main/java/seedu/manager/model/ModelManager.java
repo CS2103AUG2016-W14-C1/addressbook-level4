@@ -50,7 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyActivityManager initialData, UserPrefs userPrefs) {
         activityManager = new ActivityManager(initialData);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         recordManagerHistory(activityManager);
     }
 
@@ -87,10 +87,12 @@ public class ModelManager extends ComponentManager implements Model {
     	    if (activity.equals(newActivity)) {
     	        index = i;
     	        activity.setSelected(true);
-    	    } else {
-    	        // clear previous selection status (on UI)
-    	        activity.setSelected(false);
+    	        break;
     	    }
+    	}
+    	for (int i = 0; i < activities.size(); i++) {
+    	    if (index == i) continue;
+    	    activities.get(i).setSelected(false);
     	}
     	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), index));
     }
@@ -121,7 +123,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
-        updateFilteredListToShowAll();
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
@@ -131,7 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
     }
@@ -139,7 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
     }
@@ -251,14 +252,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredActivityList(Predicate<Activity> predicate) {
         filteredActivities.setPredicate(predicate);
         indicateActivityListPanelUpdate();
-    }
-    
-    public void updateFilteredActivityList() {
-    	updateFilteredActivityList(new Predicate<Activity>() {
-    		public boolean test(Activity activity) {
-    			return !activity.getStatus().isCompleted();
-    		}
-    	});
     }
     
     //@@author A0144704L

@@ -19,6 +19,8 @@ public class AMDate {
     
     public static final String[] FULLMONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     
+    public static final String[] EXTENSION = {"th", "st", "nd", "rd"};
+    
     private Date dateTime;
     
     private Parser dateTimeParser = new Parser();
@@ -110,15 +112,13 @@ public class AMDate {
     
     public String getDayWithExtension() {
         assert dateTime != null;
-        String day = Integer.toString(dateTime.getDate());
-        if (day.endsWith("1")) {
-        	return day + "st";
-        } else if (day.endsWith("2")) {
-        	return day + "nd";
-        } else if (day.endsWith("3")) {
-        	return day + "rd";
+        String dayString = Integer.toString(dateTime.getDate());
+        int day = Integer.parseInt(dayString);
+        int lastDigit = day % 10;
+        if (lastDigit <= 3) {
+            return dayString + EXTENSION[lastDigit];
         } else {
-        	return day + "th";
+            return dayString + EXTENSION[0];
         }
     }
     

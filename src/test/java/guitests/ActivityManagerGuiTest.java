@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
@@ -31,6 +32,7 @@ public abstract class ActivityManagerGuiTest {
     public TestName name = new TestName();
 
     TestApp testApp;
+    TestApp testApp2;
 
     protected TypicalTestActivities ta = new TypicalTestActivities();
 
@@ -70,11 +72,12 @@ public abstract class ActivityManagerGuiTest {
         });
         EventsCenter.clearSubscribers();
         testApp = (TestApp) FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
+        testApp2 = (TestApp) FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
     }
-
+    
     /**
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
