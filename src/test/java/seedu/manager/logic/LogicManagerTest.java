@@ -650,13 +650,56 @@ public class LogicManagerTest {
         Activity p3 = new Activity("KEXY", helper.getReferenceDateString(), helper.getReferenceDateString());
 
         List<Activity> sixActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2, p3, pTarget3);
-        ActivityManager expectedAB = helper.generateActivityManager(sixActivities);
+        ActivityManager expectedAM = helper.generateActivityManager(sixActivities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2, pTarget3);
         helper.addToModel(model, sixActivities);
 
-        assertCommandBehavior("search KEY",
+        assertCommandBehavior("search \"KEY\"",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_search_multipleKeywords() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity p1 = new Activity("come home");
+        Activity p2 = new Activity("come");
+        Activity p3 = new Activity("home");
+        Activity p4 = new Activity("back");
+        
+        List<Activity> activities = helper.generateActivityList(p1, p2, p3, p4);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(p1, p2, p3);
+        helper.addToModel(model, activities);
+
+        assertCommandBehavior("search \"come home\"",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_search_useQuotationMarksForKeywords() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity pFirstTarget = new Activity("read TODAY newspaper");
+        Activity pSecondTarget = new Activity("something", "today");
+        
+        List<Activity> activities = helper.generateActivityList(pFirstTarget, pSecondTarget);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(pFirstTarget);
+        helper.addToModel(model, activities);
+        
+        assertCommandBehavior("search \'today\'",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
+                expectedList);
+        
+        expectedList = helper.generateActivityList(pSecondTarget);
+        
+        assertCommandBehavior("search today",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
                 expectedList);
     }
     
@@ -670,18 +713,23 @@ public class LogicManagerTest {
         Activity p3 = new Activity("event", "next week", "2 week later");
         
         List<Activity> activities = helper.generateActivityList(pTarget1, p1, pTarget2, p2, p3);
-        ActivityManager expectedAB = helper.generateActivityManager(activities);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
         helper.addToModel(model, activities);
         
         assertCommandBehavior("search today",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
                 expectedList);
         
         assertCommandBehavior("search today to tomorrow",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
+                expectedList);
+        
+        assertCommandBehavior("search past 2 days",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
                 expectedList);
     }
     
@@ -690,20 +738,20 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
 
-        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
-        expectedAM.markActivity(threeActivities.get(0));
+        ActivityManager expectedAB = helper.generateActivityManager(threeActivities);
+        expectedAB.markActivity(threeActivities.get(0));
         helper.addToModel(model, threeActivities);
         List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
         List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
        
         assertCommandBehavior("search pending",
                 Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
-                expectedAM,
+                expectedAB,
                 expectedPendingList);
         
         assertCommandBehavior("search completed",
                 Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
-                expectedAM,
+                expectedAB,
                 expectedMarkList);
     }
     

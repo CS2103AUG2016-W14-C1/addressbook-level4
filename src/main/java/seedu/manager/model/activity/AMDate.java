@@ -32,11 +32,11 @@ public class AMDate {
     }
     
     /**
-     * Reconstruct from epoch time to load from storage
+     * Reconstruct from epoch time to load from storage and for search
      * 
      * @param newDateTime
      */
-    AMDate(Long newEpochTime) {
+    public AMDate(Long newEpochTime) {
         this.dateTime = new Date(newEpochTime);
     }
     
