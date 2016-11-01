@@ -811,13 +811,98 @@ public class LogicManagerTest {
     
     //@@author A0139797E
     @Test
-    public void execute_undo_NoCommand() throws Exception {
+    public void execute_undo_noCommand() throws Exception {
         assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
     }
     
     @Test
-    public void execute_redo_NoCommand() throws Exception {
+    public void execute_undo_outOfBounds() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 2);
+        ActivityManager expectedAM = helper.generateActivityManager(2);
+        List<Activity> expectedList = helper.generateActivityList(2);
+        
+        // failed undo should not modify AM and list
+        assertCommandBehavior("undo 3", 
+                UndoCommand.MESSAGE_OFFSET_OUT_OF_BOUNDS,
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_undo_normally() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 4);
+        
+        // able to undo (no offset means default 1)
+        ActivityManager expectedAM = helper.generateActivityManager(3);
+        List<Activity> expectedList = helper.generateActivityList(3);
+        assertCommandBehavior("undo", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+        // able to undo multiple times
+        expectedAM = helper.generateActivityManager(1);
+        expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo 2", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 2), 
+                expectedAM, 
+                expectedList);
+    }
+    
+    @Test
+    public void execute_redo_noCommand() throws Exception {
         assertCommandBehavior("redo", RedoCommand.MESSAGE_INDEX_LARGER_THAN_MAX);
+    }
+    
+    @Test
+    public void execute_redo_outOfBounds() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 2);
+        
+        // undo first before redo
+        ActivityManager expectedAM = helper.generateActivityManager(1);
+        List<Activity> expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+        assertCommandBehavior("redo 3", 
+                String.format(RedoCommand.MESSAGE_OFFSET_OUT_OF_BOUNDS, 1), 
+                expectedAM, 
+                expectedList);
+    }
+    
+    @Test
+    public void execute_redo_normally() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 4);
+        
+        // undo first before redo
+        ActivityManager expectedAM = helper.generateActivityManager(1);
+        List<Activity> expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo 3", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 3), 
+                expectedAM, 
+                expectedList);
+        
+        // able to redo (on offset means default 1)
+        expectedAM = helper.generateActivityManager(2);
+        expectedList = helper.generateActivityList(2);
+        assertCommandBehavior("redo", 
+                String.format(RedoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+       // able to multiple redo
+        expectedAM = helper.generateActivityManager(4);
+        expectedList = helper.generateActivityList(4);
+        assertCommandBehavior("redo 2", 
+                String.format(RedoCommand.MESSAGE_SUCCESS, 2), 
+                expectedAM, 
+                expectedList);
     }
     
     //@@author A0144704L
@@ -859,13 +944,6 @@ public class LogicManagerTest {
          */
         public Activity generateActivity(int seed) throws Exception {
             return new Activity("Activity " + seed);
-        }
-
-        /**
-         * Generate an ActivityManager with no activities
-         */
-        public ActivityManager generateActivityManager() throws Exception {
-            return new ActivityManager();
         }
 
         /**
