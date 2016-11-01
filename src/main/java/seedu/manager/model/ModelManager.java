@@ -132,20 +132,18 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
-        if(!activity.getStatus().isCompleted()) {
-            updateFilteredActivityList(false);
-        }
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
+        indicateActivityListPanelUpdate();
         recordManagerHistory(activityManager);
     }
 
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        if(activity.getStatus().isCompleted()) {
-            updateFilteredActivityList(true);
-        }
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
+        indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
     }
     
