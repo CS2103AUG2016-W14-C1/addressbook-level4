@@ -2,11 +2,11 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -16,12 +16,15 @@
     <children>
         <GridPane HBox.hgrow="ALWAYS">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
             </columnConstraints>
             <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="30.0" prefHeight="40.0" GridPane.columnIndex="0">
+                <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="30.0" prefHeight="40.0" prefWidth="150.0" GridPane.columnIndex="0">
                     <stylesheets>
                         <URL value="@DarkTheme.css" />
                         <URL value="@Extensions.css" />
@@ -41,15 +44,31 @@
                         </HBox>
                     </children>
                 </VBox>
-            <VBox prefHeight="34.0" prefWidth="150.0" GridPane.columnIndex="1">
+            <HBox prefHeight="0.0" GridPane.columnIndex="0">
                <children>
-                          <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" />
-                          <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" />
                </children>
-            </VBox>
-            <HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="2">
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="status" styleClass="cell_small_label" text="\$status" translateX="30.0" translateY="20.0" />
+                    <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" translateY="12.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="50.0" GridPane.columnIndex="2">
+               <children>
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="3">
+               <children>
+               	   <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" translateY="12.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="50.0" GridPane.columnIndex="4">
+               <children>
+               </children>
+            </HBox>
+            <HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="5">
+               <children>
+                  <Label fx:id="status" styleClass="cell_status_label" text="\$status" translateX="0.0" translateY="12.0" />
                </children>
             </HBox>
             </children>

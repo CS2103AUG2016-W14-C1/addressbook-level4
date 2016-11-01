@@ -46,9 +46,10 @@ public class ActivityCard extends UiPart{
         String statusText = activity.getStatus().toString();
         status.setText(statusText);
         if (activity.getStatus().isCompleted()) { 
-        	status.setStyle("-fx-text-fill: darkcyan");
+        	status.setStyle("-fx-background-color: #5cb85c;");
         } else {
-        	status.setStyle("-fx-text-fill: maroon");
+        	status.setStyle("-fx-background-color: #f0ad4e;");
+        	status.setTranslateX(8);
         }
         
         AMDate checkExpired = null;

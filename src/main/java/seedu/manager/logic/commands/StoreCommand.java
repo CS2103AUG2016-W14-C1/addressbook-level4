@@ -18,7 +18,7 @@ public class StoreCommand extends Command {
     public static final String EXAMPLES = "store Users/Documents/Remindaroo.xml";
     public static final String MESSAGE_STORE_FILE_SUCCESS = "Remindaroo data have been saved to %1$s";
     public static final String MESSAGE_STORE_FILE_FAIL= "An error has ocurred while saving";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Saves Remindaroo data to the specified storage file path. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Saves Remindaroo data to the specified XML storage file path. \n"
              + "Example: " + COMMAND_WORD + " Users/Documents/Remindaroo.xml";
 
     private final String dataFileLocation;

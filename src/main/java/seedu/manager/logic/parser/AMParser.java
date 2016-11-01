@@ -393,8 +393,8 @@ public class AMParser {
      */
     private Command prepareStore(String args) {
     	assert args != null;
-    	if (!"".equals(args) && args.endsWith(".xml")) {
-			return new StoreCommand(args);
+    	if (!"".equals(args.trim()) && args.endsWith(".xml")) {
+			return new StoreCommand(args.trim());
     	}
     	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
