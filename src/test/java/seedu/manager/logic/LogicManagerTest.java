@@ -446,7 +446,7 @@ public class LogicManagerTest {
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
         Activity existingActivity = new Activity("bla bla bla");
-        model.addActivity(existingActivity, false);
+        model.addActivity(existingActivity, true);
         
         Activity newActivity = new Activity("bla");
         expectedAM.addActivity(newActivity);
@@ -460,7 +460,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingDeadline = new Activity("deadline", helper.getReferenceDateString());
-        model.addActivity(existingDeadline, false);
+        model.addActivity(existingDeadline, true);
         
         Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
@@ -474,7 +474,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
-        model.addActivity(existingEvent, false);
+        model.addActivity(existingEvent, true);
         
         Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);

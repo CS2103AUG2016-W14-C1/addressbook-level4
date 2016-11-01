@@ -175,8 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void undoCommand(int offset) {
         historyIndex -= offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
-        filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredListToShowAll();
+        filteredActivities = new FilteredList<>(activityManager.getActivities(), filteredActivities.getPredicate());
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
@@ -186,8 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void redoCommand(int offset) {
         historyIndex += offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
-        filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredListToShowAll();
+        filteredActivities = new FilteredList<>(activityManager.getActivities(), filteredActivities.getPredicate());
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }

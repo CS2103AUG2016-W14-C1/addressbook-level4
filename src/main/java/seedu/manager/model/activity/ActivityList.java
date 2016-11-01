@@ -44,21 +44,32 @@ public class ActivityList implements Iterable<Activity> {
     	
     	int toUpdateIndex = internalList.indexOf(toUpdate);
     	Activity toUpdateInList = internalList.get(toUpdateIndex);
-    	// Update Activity name (if there is new name)
-    	if (newName != null && !newName.equals("")) {
-    	    toUpdateInList.setName(newName);
+    	
+    	Activity newActivity = new Activity(toUpdateInList.getName());
+    	newActivity.setType(toUpdateInList.getType());
+        if (newActivity.getDateTime() != null) {
+            newActivity.setDateTime(toUpdateInList.getDateTime().getTime());
+        }
+        if (newActivity.getEndDateTime() != null) {
+            newActivity.setEndDateTime(toUpdateInList.getEndDateTime().getTime());
+        }
+        
+        // Update Activity name (if there is new name)
+    	if (newName != null && !"".equals(newName)) {
+    	    newActivity.setName(newName);
     	}
     	// Update task to event
     	if (newDateTime != null && newEndDateTime != null) {
-    	    toUpdateInList.setType(ActivityType.EVENT);
-    	    toUpdateInList.setDateTime(newDateTime);
-    	    toUpdateInList.setEndDateTime(newEndDateTime);
+    	    newActivity.setType(ActivityType.EVENT);
+    	    newActivity.setDateTime(newDateTime);
+    	    newActivity.setEndDateTime(newEndDateTime);
     	// Update task to deadline
 	    } else if (newDateTime != null) {
-	        toUpdateInList.setType(ActivityType.DEADLINE);
-    		toUpdateInList.setDateTime(newDateTime);
-    		toUpdateInList.setEndDateTime(null);
+	        newActivity.setType(ActivityType.DEADLINE);
+    		newActivity.setDateTime(newDateTime);
+    		newActivity.removeEndDateTime();
     	}
+    	internalList.set(toUpdateIndex, newActivity);
     	Collections.sort(internalList);
     }
     
