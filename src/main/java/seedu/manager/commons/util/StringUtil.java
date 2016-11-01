@@ -40,7 +40,6 @@ public class StringUtil {
         return s != null && s.matches("^0*[1-9]\\d*$");
     }
     
-    //@@author A0135730M
     /**
      * Attempts to validate an AMDate type
      * @param dateTime input string to be validated

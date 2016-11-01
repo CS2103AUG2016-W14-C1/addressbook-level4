@@ -21,9 +21,6 @@ import java.util.logging.Logger;
  * A ui for the status bar that is displayed at the footer of the application.
  */
 public class StatusBarFooter extends UiPart {
-    private static final String INFO_CHANGE_STORAGE = "Changing data storage location to: %1$s";
-    private static final String INFO_LAST_UPDATED = "Setting last updated status to %1$s";
-    private static final String MESSAGE_NOT_UPDATED_YET = "Not updated yet in this session";
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
     private StatusBar syncStatus;
     private StatusBar saveLocationStatus;
@@ -49,7 +46,7 @@ public class StatusBarFooter extends UiPart {
     public void configure(String saveLocation) {
         addMainPane();
         addSyncStatus();
-        setSyncStatus(MESSAGE_NOT_UPDATED_YET);
+        setSyncStatus("Not updated yet in this session");
         addSaveLocation();
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
@@ -98,13 +95,13 @@ public class StatusBarFooter extends UiPart {
     @Subscribe
     public void handleActivityManagerChangedEvent(ActivityManagerChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, String.format(INFO_LAST_UPDATED, lastUpdated)));
+        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
     }
     
     @Subscribe
     public void handleActivityManagerChangedStorageFile(ChangeStorageFileDisplayEvent event){
-    	logger.info(LogsCenter.getEventHandlingLogMessage(event, String.format(INFO_CHANGE_STORAGE, event.file)));
+    	logger.info(LogsCenter.getEventHandlingLogMessage(event, "Changing data storage location to: " + event.file));
     	setSaveLocation(event.file);
     }
 }

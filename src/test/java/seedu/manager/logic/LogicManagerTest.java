@@ -3,6 +3,7 @@ package seedu.manager.logic;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.manager.commons.core.EventsCenter;
+import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
 import seedu.manager.logic.Logic;
@@ -88,7 +89,6 @@ public class LogicManagerTest {
         assertCommandBehavior(inputCommand, expectedMessage, new ActivityManager(), Collections.emptyList());
     }
 
-    //@@author A0135730M
     /**
      * Executes the command and confirms that the result message is correct and
      * also confirms that the following three parts of the LogicManager object's state are as expected:<br>
@@ -96,6 +96,7 @@ public class LogicManagerTest {
      *      - the backing list shown by UI matches the {@code shownList} <br>
      *      - {@code expectedActivityManager} was saved to the storage file. <br>
      */
+    //@@author A0135730M
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
                                        ReadOnlyActivityManager expectedActivityManager,
                                        List<? extends Activity> expectedShownList) throws Exception {
@@ -121,7 +122,6 @@ public class LogicManagerTest {
             ActivityList expectedShownList) throws Exception {
         assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends Activity>)expectedShownList.getInternalList());
     }
-    //@@author 
 
 
     @Test
@@ -151,8 +151,8 @@ public class LogicManagerTest {
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new ActivityManager(), Collections.emptyList());
     }
 
-    //@@author A0135730M
     @Test
+    //@@author A0135730M
     public void execute_add_Activity_endDateEarlierThanStartDate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         assertCommandBehavior("add invalid event from " + helper.getReferenceDateString()
@@ -161,6 +161,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_add_invalidDate() throws Exception {
         assertCommandBehavior("add event from abc to def", 
                 String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
@@ -170,8 +171,8 @@ public class LogicManagerTest {
                 String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
     }
     
-    // TODO: extract out similar code into utility methods, or break into smaller test cases
     @Test
+    //@@author A0135730M
     public void execute_add_parseKeywordsCorrectly() throws Exception {
         // able to add floating activity
         // note that incomplete format of deadline / event will result in activity being considered as floating
@@ -252,12 +253,14 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_add_cannotRecurZeroTimes() throws Exception {
         assertCommandBehavior("add zero no count on today for 0 days", MESSAGE_RECUR_NOT_POSITIVE);
         assertCommandBehavior("add zero sum game from today to tomorrow for 0 year", MESSAGE_RECUR_NOT_POSITIVE);
     }
     
     @Test
+    //@@author A0135730M
     public void execute_add_recurCorrectly() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = new ActivityManager();
@@ -307,8 +310,8 @@ public class LogicManagerTest {
                 expectedAM.getActivityList());
     }
 
-    //@@author A0144881Y
     @Test
+    //@@author A0144881Y
     public void execute_list_showsAllActivities() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -322,7 +325,6 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedList);
     }
-    //@@author 
 
 
     /**
@@ -357,19 +359,21 @@ public class LogicManagerTest {
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getActivityManager(), activityList);
     }
 
-    //@@author A0144881Y
     @Test
+    //@@author A0144881Y
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
     }
 
     @Test
+    //@@author A0144881Y
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
     @Test
+    //@@author A0144881Y
     public void execute_delete_removesCorrectActivity() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
@@ -385,13 +389,14 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0144881Y
     public void execute_updateInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("update", expectedMessage);
     }
     
-    //@@author A0135730M
     @Test
+    //@@author A0135730M
     public void execute_update_Activity_endDateEarlierThanStartDate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = new ActivityManager();
@@ -408,6 +413,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
         String expectedMessage = MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX;
         TestDataHelper helper = new TestDataHelper();
@@ -426,6 +432,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_update_invalidDate() throws Exception {
         assertCommandBehavior("update 1 new from abc to def", 
                 String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
@@ -437,6 +444,7 @@ public class LogicManagerTest {
     
     
     @Test
+    //@@author A0135730M
     public void execute_update_trimArguments() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = new ActivityManager();
@@ -485,6 +493,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_update_parseKeywordsCorrectly() throws Exception {
     	TestDataHelper helper = new TestDataHelper();
     	ActivityManager expectedAM = new ActivityManager();
@@ -588,6 +597,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_update_changeActivityTypeCorrectly() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         ActivityManager expectedAM = new ActivityManager();
@@ -633,12 +643,14 @@ public class LogicManagerTest {
     }
 
     @Test
+    //@@author A0135730M
     public void execute_search_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE);
         assertCommandBehavior("search ", expectedMessage);
     }
 
     @Test
+    //@@author A0135730M
     public void execute_search_matchNameSuccess() throws Exception {
         // should match if only full search name is found in part of activity name, case insensitive
         TestDataHelper helper = new TestDataHelper();
@@ -661,6 +673,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_search_matchesIfWithinDateSuccess() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Activity pTarget1 = new Activity("deadline", "today");
@@ -686,6 +699,7 @@ public class LogicManagerTest {
     }
     
     @Test
+    //@@author A0135730M
     public void execute_search_matchesStatusSuccess() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
@@ -707,19 +721,21 @@ public class LogicManagerTest {
                 expectedMarkList);
     }
     
-    //@@author A0144704L
     @Test
+    //@@author A0144704L
     public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("mark", expectedMessage);
     }
 
     @Test
+    //@@author A0144704L
     public void execute_markIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("mark");
     }
 
     @Test
+    //@@author A0144704L
     public void execute_mark_marksCorrectActivity() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
@@ -736,17 +752,20 @@ public class LogicManagerTest {
     
     
     @Test
+    //@@author A0144704L
     public void execute_unmarkInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("unmark", expectedMessage);
     }
 
     @Test
+    //@@author A0144704L
     public void execute_unmarkIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("unmark");
     }
 
     @Test
+    //@@author A0144704L
     public void execute_unmark_unmarksCorrectActivity() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
@@ -761,31 +780,34 @@ public class LogicManagerTest {
                 expectedAM.getActivityList());
     }
     
-    //@@author A0139797E
     @Test
+    //@@author A0139797E
     public void execute_undo_NoCommand() throws Exception {
         assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
     }
     
     @Test
+    //@@author A0139797E
     public void execute_redo_NoCommand() throws Exception {
         assertCommandBehavior("redo", RedoCommand.MESSAGE_INDEX_LARGER_THAN_MAX);
     }
     
-    //@@author A0144704L
     @Test
+    //@@author A0144704L
     public void execute_store_storeToCorrectLocation () throws Exception {
     	String testDataFileLocation = "data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
     }
 
     @Test
+    //@@author A0144704L
     public void execute_store_incorrectExtension () throws Exception {
     	String testDataFileLocation = "data/RemindarooTest.txt";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
     
     @Test
+    //@@author A0144704L
     public void execute_store_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE);
         assertCommandBehavior("store", expectedMessage);
@@ -796,11 +818,10 @@ public class LogicManagerTest {
      * A utility class to generate test data.
      */
     class TestDataHelper {
-        //@@author A0135730M
+        
         public String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
         }
-        //@@author 
 
         /**
          * Generates a valid activity using the given seed.
@@ -813,6 +834,21 @@ public class LogicManagerTest {
             return new Activity("Activity " + seed);
         }
 
+        /** Generates the correct add command based on the activity given */
+//        String generateAddCommand(Activity activity) {
+//            StringBuffer cmd = new StringBuffer();
+//
+//            cmd.append("add ");
+//
+//            cmd.append(activity.getName().toString());
+//
+////            UniqueTagList tags = p.getTags();
+////            for(Tag t: tags){
+////                cmd.append(" t/").append(t.tagName);
+////            }
+//
+//            return cmd.toString();
+//        }
         /**
          * Generate an ActivityManager with no activities
          */

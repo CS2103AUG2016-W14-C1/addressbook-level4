@@ -34,18 +34,20 @@ public class LogicManager extends ComponentManager implements Logic {
         return command.execute();
     }
 
-    //@@author A0144881Y
     @Override
+    //@@author A0144881Y
     public ObservableList<Activity> getFilteredActivitiesList() {
         return model.getFilteredActivityList();
     }
 
 	@Override
+	//@@author A0144881Y
 	public ObservableList<Activity> getFilteredDeadlineAndEventList() {
 		return model.getFilteredDeadlineAndEventList();
 	}
 
 	@Override
+	//@@author A0144881Y
 	public ObservableList<Activity> getFilteredFloatingActivityList() {
 		return model.getFilteredFloatingActivityList();
 	}

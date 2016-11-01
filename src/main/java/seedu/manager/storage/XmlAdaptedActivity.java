@@ -1,6 +1,8 @@
 package seedu.manager.storage;
 
 import javax.xml.bind.annotation.XmlElement;
+
+import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.model.activity.*;
 
 /**
@@ -22,18 +24,22 @@ public class XmlAdaptedActivity {
     
     @XmlElement(required = true)
     private boolean isCompleted;
+    
+    // @XmlElement
+    // private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * No-arg constructor for JAXB use.
      */
     public XmlAdaptedActivity() {}
 
-    //@@author A0135730M
+
     /**
      * Converts a given Activity into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedActivity
      */
+    //@@author A0135730M
     public XmlAdaptedActivity(Activity source) {
         type = source.getType();
         name = source.getName();
@@ -50,8 +56,9 @@ public class XmlAdaptedActivity {
     /**
      * Converts this jaxb-friendly adapted activity object into the model's Activity object.
      *
-     * @return model's Activity object converted from jaxb
+     * @throws IllegalValueException if there were any data constraints violated in the adapted activity
      */
+    //@@author A0135730M
     public Activity toModelType() {
         Activity newActivity;
         if (type.equals(ActivityType.EVENT)) {
@@ -65,5 +72,4 @@ public class XmlAdaptedActivity {
     	
         return newActivity;
     }
-    //@@author 
 }

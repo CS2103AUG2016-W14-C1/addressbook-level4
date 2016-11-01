@@ -60,8 +60,8 @@ public class XmlActivityManagerStorageTest {
          */
     }
 
-    //@@author A0144881Y
     @Test
+    //@@author A0144881Y
     public void readAndSaveActivityManager_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempActivityManager.xml";
         TypicalTestActivities ta = new TypicalTestActivities();
@@ -88,16 +88,19 @@ public class XmlActivityManagerStorageTest {
     }
 
     @Test
+    //@@author A0144881Y
     public void saveActivityManager_nullActivityManager_assertionFailure() throws IOException {
         thrown.expect(AssertionError.class);
         saveActivityManager(null, "SomeFile.xml");
     }
     
+    //@@author A0144881Y
     private void saveActivityManager(ReadOnlyActivityManager activityManager, String filePath) throws IOException {
         new XmlActivityManagerStorage(filePath).saveActivityManager(activityManager, addToTestDataPathIfNotNull(filePath));
     }
 
     @Test
+    //@@author A0144881Y
     public void saveActivityManager_nullFilePath_assertionFailure() throws IOException {
         thrown.expect(AssertionError.class);
         saveActivityManager(new ActivityManager(), null);

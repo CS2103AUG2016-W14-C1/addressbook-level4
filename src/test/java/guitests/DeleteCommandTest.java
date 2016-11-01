@@ -8,39 +8,36 @@ import seedu.manager.testutil.TestUtil;
 import static org.junit.Assert.assertTrue;
 import static seedu.manager.logic.commands.DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS;
 
-//@@author A0139797E
 public class DeleteCommandTest extends ActivityManagerGuiTest {
 
     @Test
+    //@@author A0139797E
     public void delete() {
 
         //delete the first in the list
         TestActivity[] currentList = ta.getTypicalFloatingActivities();
-        int targetIndex = ta.getTypicalScheduleActivities().length + 1;
+        int targetIndex = 2;
         assertDeleteSuccess(targetIndex, currentList);
 
         //delete the last in the list
         currentList = TestUtil.removeActivityFromList(currentList, getFloatingIndex(targetIndex));
-        targetIndex = getFloatingTargetIndex(currentList.length);
+        targetIndex = currentList.length + ta.getTypicalDeadlineActivities().length;
         assertDeleteSuccess(targetIndex, currentList);
 
         //delete from the middle of the list
         currentList = TestUtil.removeActivityFromList(currentList, getFloatingIndex(targetIndex));
-        targetIndex = getFloatingTargetIndex(currentList.length/2);
+        targetIndex = currentList.length/2;
         assertDeleteSuccess(targetIndex, currentList);
 
         //invalid index
-        commandBox.runCommand("delete " + (currentList.length + ta.getTypicalScheduleActivities().length));
+        commandBox.runCommand("delete " + (currentList.length + ta.getTypicalDeadlineActivities().length));
         assertResultMessage("The activity index provided is invalid");
 
     }
 
+    //@@author A0139797E
     private int getFloatingIndex(int index) {
-        return index - ta.getTypicalScheduleActivities().length;
-    }
-    
-    private int getFloatingTargetIndex(int index) {
-        return index + ta.getTypicalScheduleActivities().length;
+        return index - ta.getTypicalDeadlineActivities().length;
     }
     
     /**

@@ -111,15 +111,6 @@
     -fx-text-fill: #010504;
 }
 
-.cell_status_label {
-	-fx-background-color: #5cb85c;
-	-fx-padding: .2em .6em .3em .6em;
-	-fx-background-radius: .5em;
-	-fx-font-size: 85%;
-	-fx-font-weight: 700;
-	-fx-text-align: center;
-}
-
 .anchor-pane {
      -fx-background-color: derive(#FFFFFF, 20%);
 }
@@ -188,10 +179,6 @@
 
 .menu .left-container {
     -fx-background-color: black;
-}
-
-.dateTimeLabel {
-	-fx-font-size: 11pt;
 }
 
 /*
@@ -303,26 +290,4 @@
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
-}
-
-#resultDisplay {
-	-fx-background-color: #FFF;
-	-fx-border-color: #FFF;
-	-fx-font-size: 16px;
-	-fx-text-fill: #0D47A1;
-}
-
-#resultDisplay .content {
-	-fx-background-color: #FFF;
-	-fx-border-color: #FFF;
-}
-
-.split-pane-divider {
-   -fx-background-color: transparent;
-}
-
-#welcomeText {
-	-fx-font-family: "Calibri";
-	-fx-font-size: 20px;
-	-fx-text-fill: #333;
 }

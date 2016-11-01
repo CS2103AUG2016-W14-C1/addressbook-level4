@@ -42,11 +42,6 @@ public class TestActivity implements ReadOnlyActivity {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName());
-        if (this.type.equals(ActivityType.DEADLINE)) {
-        	sb.append(" by " + this.getDateTime());
-        } else if (this.type.equals(ActivityType.EVENT)) {
-        	sb.append(" from " + this.getDateTime() + " to " + this.getEndDateTime());
-        }
         return sb.toString();
     }
 

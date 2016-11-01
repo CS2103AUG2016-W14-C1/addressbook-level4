@@ -32,10 +32,10 @@ public class AddCommand extends Command {
     private Activity toAdd;
     private ActivityList toAddList;
 
-    //@@author A0135730M
     /**
      * Constructor for floating tasks
      */
+    //@@author A0135730M
     public AddCommand(String name) {
         this.toAdd = new Activity(name);
     }
@@ -43,6 +43,7 @@ public class AddCommand extends Command {
     /**
      * Constructor for deadlines
      */
+    //@@author A0135730M
     public AddCommand(String name, String dateTime) {
         this.toAdd = new Activity(name, dateTime);
     }
@@ -50,6 +51,7 @@ public class AddCommand extends Command {
     /**
      * Constructor for recurring deadlines
      */
+    //@@author A0135730M
     public AddCommand(String name, String dateTime, int recurNum, String recurUnit) {
         this.toAddList = new ActivityList();
         for (int numLater=0; numLater<recurNum; numLater++) {
@@ -60,6 +62,7 @@ public class AddCommand extends Command {
     /**
      * Constructor for events
      */
+    //@@author A0135730M
     public AddCommand(String name, String startDateTime, String endDateTime) {
         this.toAdd = new Activity(name, startDateTime, endDateTime);
     }
@@ -67,6 +70,7 @@ public class AddCommand extends Command {
     /**
      * Constructor for recurring events
      */
+    //@@author A0135730M
     public AddCommand(String name, String startDateTime, String endDateTime, int recurNum, String recurUnit) {
         this.toAddList = new ActivityList();
         for (int numLater=0; numLater<recurNum; numLater++) {
@@ -74,8 +78,8 @@ public class AddCommand extends Command {
         }
     }
     
-    //@@author A0139797E
     @Override
+    //@@author A0139797E
     public CommandResult execute() {
         assert model != null;
         // add recurring

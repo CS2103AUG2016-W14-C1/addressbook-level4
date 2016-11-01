@@ -3,11 +3,7 @@ package seedu.manager.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -17,7 +13,6 @@ import seedu.manager.commons.core.GuiSettings;
 import seedu.manager.commons.events.ui.ExitAppRequestEvent;
 import seedu.manager.logic.Logic;
 import seedu.manager.model.UserPrefs;
-import seedu.manager.model.activity.AMDate;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -46,21 +41,12 @@ public class MainWindow extends UiPart {
     private Scene scene;
 
     private String activityManagerName;
-    
-    @FXML
-    private Label currentTime;
-    
+
     @FXML
     private AnchorPane commandBoxPlaceholder;
-    
-    @FXML
-    private SplitPane splitPane;
-    
-    @FXML
-    private MenuItem exitMenuItem;
-    
-    @FXML
-    private MenuItem helpMenuItem;
+
+//    @FXML
+//    private MenuItem helpMenuItem;
 
     @FXML
     private AnchorPane activityListPanelPlaceholder;
@@ -113,19 +99,15 @@ public class MainWindow extends UiPart {
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
 
-        setAccelerators();
+//        setAccelerators();
     }
 
-    private void setAccelerators() {
-        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-        exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE, KeyCombination.CONTROL_DOWN));
-    }
+//    private void setAccelerators() {
+//        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+//    }
 
     //@@author A0144881Y
     public void fillInnerParts() {
-    	splitPane.setDividerPosition(1, 0.5);
-    	AMDate today = new AMDate("today");
-    	currentTime.setText(today.getDayWithExtension() +" "+ today.getMonthFull() + ", " + today.getDayOfWeekFull());
         activityListPanel = ActivityListPanel.load(primaryStage, getActivityListPlaceholder(), logic.getFilteredDeadlineAndEventList(), 0);
         floatingActivityListPanel = FloatingListPanel.load(primaryStage, getFloatingActivityListPlaceholder(), logic.getFilteredFloatingActivityList(), logic.getFilteredDeadlineAndEventList().size());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
@@ -153,8 +135,7 @@ public class MainWindow extends UiPart {
     public AnchorPane getFloatingActivityListPlaceholder() {
     	return floatingActivityListPanelPlaceholder;
     }
-    //@author 
-    
+
     public void hide() {
         primaryStage.hide();
     }
@@ -214,5 +195,4 @@ public class MainWindow extends UiPart {
     public FloatingListPanel getFloatingActivityListPanel() {
     	return this.floatingActivityListPanel;
     }
-    //@author 
 }

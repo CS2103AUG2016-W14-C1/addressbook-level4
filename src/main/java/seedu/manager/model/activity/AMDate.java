@@ -15,10 +15,6 @@ public class AMDate {
     
     public static final String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     
-    public static final String[] FULLDAYS = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    
-    public static final String[] FULLMONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    
     private Date dateTime;
     
     private Parser dateTimeParser = new Parser();
@@ -44,8 +40,6 @@ public class AMDate {
         List<DateGroup> dateGroups = dateTimeParser.parse(newDateTime);
         this.dateTime = dateGroups.get(0).getDates().get(0); 
     }
-    
-    //@@author A0135730M
     
     /** dateTime manipulation methods **/
     
@@ -85,8 +79,6 @@ public class AMDate {
         }
     }
     
-    //@@author A0139797E
-    
     /** dateTime accessors **/
     
     public Long getTime() {
@@ -98,38 +90,14 @@ public class AMDate {
         return MONTHS[dateTime.getMonth()];
     }
     
-    public String getMonthFull() {
-        assert dateTime != null;
-        return FULLMONTHS[dateTime.getMonth()];
-    }
-    
     public String getDay() {
         assert dateTime != null;
         return Integer.toString(dateTime.getDate());
     }
     
-    public String getDayWithExtension() {
-        assert dateTime != null;
-        String day = Integer.toString(dateTime.getDate());
-        if (day.endsWith("1")) {
-        	return day + "st";
-        } else if (day.endsWith("2")) {
-        	return day + "nd";
-        } else if (day.endsWith("3")) {
-        	return day + "rd";
-        } else {
-        	return day + "th";
-        }
-    }
-    
     public String getDayOfWeek() {
         assert dateTime != null;
         return DAYS[dateTime.getDay()];
-    }
-    
-    public String getDayOfWeekFull() {
-        assert dateTime != null;
-        return FULLDAYS[dateTime.getDay()];
     }
     
     public String getHour() {
