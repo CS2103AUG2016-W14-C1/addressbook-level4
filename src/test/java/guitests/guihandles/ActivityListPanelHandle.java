@@ -40,8 +40,8 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Returns true if the list is showing the person details correctly and in correct order.
-     * @param activities A list of person in the correct order.
+     * Returns true if the list is showing the activity details correctly and in correct order.
+     * @param activities A list of activities in the correct order.
      */
     public boolean isListMatching(ReadOnlyActivity... activities) {
         return this.isListMatching(0, activities);
@@ -56,7 +56,7 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Returns true if the {@code persons} appear as the sub list (in that order) at position {@code startPosition}.
+     * Returns true if the {@code activities} appear as the sub list (in that order) at position {@code startPosition}.
      */
     public boolean containsInOrder(int startPosition, ReadOnlyActivity... activities) {
         List<ReadOnlyActivity> activitiesInList = getListView().getItems();
@@ -121,12 +121,12 @@ public class ActivityListPanelHandle extends GuiHandle {
             getListView().getSelectionModel().select(index);
         });
         guiRobot.sleep(100);
-        return getPersonCardHandle(activity);
+        return getPersonActivityHandle(activity);
     }
 
 
     /**
-     * Returns the position of the person given, {@code NOT_FOUND} if not found in the list.
+     * Returns the position of the activity given, {@code NOT_FOUND} if not found in the list.
      */
     public int getActivityIndex(ReadOnlyActivity targetActivity) {
         List<ReadOnlyActivity> activitiesInList = getListView().getItems();
@@ -146,10 +146,10 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     public ActivityCardHandle getActivityCardHandle(int index) {
-        return getPersonCardHandle(getListView().getItems().get(index));
+        return getPersonActivityHandle(getListView().getItems().get(index));
     }
 
-    public ActivityCardHandle getPersonCardHandle(ReadOnlyActivity activity) {
+    public ActivityCardHandle getPersonActivityHandle(ReadOnlyActivity activity) {
         Set<Node> nodes = getAllCardNodes();
         Optional<Node> activityCardNode = nodes.stream()
                 .filter(n -> new ActivityCardHandle(guiRobot, primaryStage, n).isSameActivity(activity))

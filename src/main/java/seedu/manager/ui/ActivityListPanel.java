@@ -77,6 +77,7 @@ public class ActivityListPanel extends UiPart {
             activityListView.getSelectionModel().clearAndSelect(index);
         });
     }
+    //@@author 
 
     class ActivityListViewCell extends ListCell<Activity> {
     	private int indexOffset;
@@ -85,8 +86,8 @@ public class ActivityListPanel extends UiPart {
         	this.indexOffset = indexOffset;
         }
 
-        @Override
         //@@author A0144881Y
+        @Override
         protected void updateItem(Activity activity, boolean empty) {
             super.updateItem(activity, empty);
 
@@ -97,6 +98,7 @@ public class ActivityListPanel extends UiPart {
                 setGraphic(ActivityCard.load(activity, getIndex() + 1 + indexOffset).getLayout());
             }
         }
+        //@@author 
     }
 
 }
