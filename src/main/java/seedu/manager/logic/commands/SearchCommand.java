@@ -1,5 +1,6 @@
 package seedu.manager.logic.commands;
 
+import java.util.List;
 import java.util.Set;
 import seedu.manager.model.activity.AMDate;
 
@@ -10,74 +11,74 @@ import seedu.manager.model.activity.AMDate;
 //@@author A0135730M
 public class SearchCommand extends Command {
 
+    private enum SearchType { KEYWORDS, STATUS, DATE };
+    
     public static final String COMMAND_WORD = "search";
 
-    public static final String USAGE = "search KEYWORDS\n" + "search DATE_TIME\n" + "search STATUS";
+    public static final String USAGE = "search \"KEYWORDS\"\n" + "search DATE_TIME\n" + "search STATUS";
 
-    public static final String EXAMPLES = "search buy\n" + "search 21 Oct\n" + "search completed";   
+    public static final String EXAMPLES = "search \"buy\"\n" + "search 21 Oct\n" + "search completed";   
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches all activities whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Example: " + COMMAND_WORD + " \"alice bob charlie\"";
 
-    private final Set<String> keywords;
+    private SearchType type;
+    private Set<String> keywords;
     private AMDate dateTime;
     private AMDate endDateTime;
     private String status;
 
+    /**
+     * Constructor to search by keywords
+     */
     public SearchCommand(Set<String> keywords) {
+        this.type = SearchType.KEYWORDS;
         this.keywords = keywords;
-        this.dateTime = null;
-        this.endDateTime = null;
-        this.status = null;
     }
     
     /**
-     * Add the start/end dateTime range for search, use default end (end of the same day)
-     * 
-     * @param searchDateTime specified by user
+     * Constructor to search by status
+     * @param status either "completed" or "pending"
      */
-    public void addDateTimeRange(String searchDateTime) {
-        addDateTimeRange(searchDateTime, searchDateTime);
+    public SearchCommand(String status) {
+        this.type = SearchType.STATUS;
+        this.status = status;
     }
     
     /**
-     * Add the start/end dateTime range for search
-     * 
-     * @param searchDateTime, searchEndDateTime specified by user
+     * Constructor to search by date ranges
+     * @param ranges contains exactly a start and end date
      */
-    public void addDateTimeRange(String searchDateTime, String searchEndDateTime) {
-        this.dateTime = new AMDate(searchDateTime);
-        this.endDateTime = new AMDate(searchEndDateTime);
+    public SearchCommand(List<Long> ranges) {
+        assert ranges.size() == 2;
+        this.type = SearchType.DATE;
+        this.dateTime = new AMDate(ranges.get(0));
+        this.endDateTime = new AMDate(ranges.get(1));
+        
+        // expand range from start of dateTime to end of endDateTime
         this.dateTime.toStartOfDay();
         this.endDateTime.toEndOfDay();
     }
     
-    /**
-     * Add the status for search
-     * 
-     * @param status specified by user
-     */
-    public void addStatus(String status) {
-    	this.status = status.toLowerCase();
-    }
-    
     @Override
     public CommandResult execute() {
-        model.updateFilteredActivityList(keywords);
-        if (this.dateTime != null && this.endDateTime != null) {
+        switch (this.type) {
+        case KEYWORDS:
+            assert keywords != null;
+            model.updateFilteredActivityList(keywords);
+            break;
+        case STATUS:
+            assert status != null;
+            boolean isCompleted = "completed".equals(status);
+            model.updateFilteredActivityList(isCompleted);
+            break;
+        case DATE:
+            assert dateTime != null;
+            assert endDateTime != null;
             model.updateFilteredActivityList(dateTime, endDateTime);
-        }
-        
-        if (this.status != null) {
-        	boolean isCompleted;
-        	if ((this.status).equals("pending")) {
-        		isCompleted = false;
-        	} else {
-        		isCompleted = true;
-        	}    
-        	model.updateFilteredActivityList(isCompleted);
+            break;
         }
         	
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));

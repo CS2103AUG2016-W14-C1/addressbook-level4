@@ -53,11 +53,6 @@ public class AMParser {
     
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
-
-    /**
-     * Various token counts
-     */
-    private static final int SEARCH_RANGE_TOKEN_COUNT = 2;
     
     /**
      * Parses user input into command for execution.
@@ -357,31 +352,52 @@ public class AMParser {
      * @return the prepared command
      */
     private Command prepareSearch(String args) {
-        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
+        args = args.trim();
+        // search by keywords if args is wrapped with quotation marks
+        if (StringUtil.hasQuotationMarks(args)) {
+            return prepareSearchByKeywords(StringUtil.trimQuotationMarks(args));
+        // search by status if args contains status
+        } else if (StringUtil.hasStatus(args)) {
+            return prepareSearchByStatus(StringUtil.getStatus(args));
+        // search by dates if args contains dates    
+        } else if (StringUtil.hasAMDates(args)) {
+            return prepareSearchByDate(StringUtil.getDateRange(args));
+        } else {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-        
+    }
+    
+    /**
+     * Parses arguments in the context of the search by keywords command.
+     *
+     * @param keywordsArg the keywords portion of args
+     * @return the prepared command
+     */
+    private Command prepareSearchByKeywords(String keywordsArg) {
         // keywords delimited by whitespace
-        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final String[] keywords = keywordsArg.split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        SearchCommand searchCommand = new SearchCommand(keywordSet);
-        
-        // add dateTime range if dateTime is indicated in part of search
-        if (StringUtil.isAMDate(args.trim())) {
-            String[] searchTimeTokens = args.trim().split(" to ");
-            if (searchTimeTokens.length == SEARCH_RANGE_TOKEN_COUNT) {
-                searchCommand.addDateTimeRange(searchTimeTokens[0].trim(), searchTimeTokens[1].trim());
-            } else {
-                searchCommand.addDateTimeRange(searchTimeTokens[0].trim());
-            }
-        }
-        
-        if ("pending".equals(args.trim().toLowerCase()) || "completed".equals(args.trim().toLowerCase())) {
-        	searchCommand.addStatus(args.trim().toLowerCase());
-        }
-        
-        return searchCommand;
+        return new SearchCommand(keywordSet);
+    }
+    
+    /**
+     * Parses arguments in the context of the search by status command.
+     *
+     * @param status either "pending" or "completed"
+     * @return the prepared command
+     */
+    private Command prepareSearchByStatus(String status) {
+        return new SearchCommand(status);
+    }
+    
+    /**
+     * Parses arguments in the context of the search by date command.
+     *
+     * @param range a list of dates in epoch time
+     * @return the prepared command
+     */
+    private Command prepareSearchByDate(List<Long> range) {
+        return new SearchCommand(range);
     }
     
     //@@author A0144704L
