@@ -73,12 +73,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     //@@author A0139797E
-    private void indicateActivityListPanelUpdate(){
-        raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), -1));
+    public void indicateActivityListPanelUpdate(){
+        raise(new ActivityListPanelUpdateEvent(-1));
     }
 
     
-    private void indicateActivityListPanelUpdate(Activity newActivity){
+    public void indicateActivityListPanelUpdate(Activity newActivity){
     	// Find index of new/updated activity and set it as our target to scroll to
     	int index = -1;
         UnmodifiableObservableList<Activity> activities = getFilteredActivityList();
@@ -94,14 +94,13 @@ public class ModelManager extends ComponentManager implements Model {
     	    if (index == i) continue;
     	    activities.get(i).setSelected(false);
     	}
-    	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), index));
+    	raise(new ActivityListPanelUpdateEvent(index));
     }
 
     //@@author A0139797E
     @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
-        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate(activity);
         indicateActivityManagerChanged();
         // Record state only for the last addition (esp. for recurring tasks)
@@ -114,7 +113,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
-        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
@@ -132,7 +130,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
-        updateFilteredActivityList(false);
+        if(!activity.getStatus().isCompleted()) {
+            updateFilteredActivityList(false);
+        }
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
     }
@@ -140,7 +140,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        updateFilteredActivityList(false);
+        if(activity.getStatus().isCompleted()) {
+            updateFilteredActivityList(true);
+        }
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
     }
@@ -246,12 +248,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
-        indicateActivityListPanelUpdate();
     }
     
     private void updateFilteredActivityList(Predicate<Activity> predicate) {
         filteredActivities.setPredicate(predicate);
-        indicateActivityListPanelUpdate();
     }
     
     //@@author A0144704L

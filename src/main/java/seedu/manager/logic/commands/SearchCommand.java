@@ -2,6 +2,8 @@ package seedu.manager.logic.commands;
 
 import java.util.List;
 import java.util.Set;
+
+import seedu.manager.commons.events.ui.ActivityListPanelUpdateEvent;
 import seedu.manager.model.activity.AMDate;
 
 /**
@@ -80,7 +82,7 @@ public class SearchCommand extends Command {
             model.updateFilteredActivityList(dateTime, endDateTime);
             break;
         }
-        	
+        model.indicateActivityListPanelUpdate();	
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 

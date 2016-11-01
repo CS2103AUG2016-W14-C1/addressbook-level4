@@ -48,6 +48,7 @@ public class StoreCommand extends Command {
 		}
         
         EventsCenter.getInstance().post(new ChangeStorageFileEvent(dataFileLocation));
+        model.indicateActivityListPanelUpdate();    
         return new CommandResult(String.format(MESSAGE_STORE_FILE_SUCCESS, dataFileLocation.trim()));
     }
 }
