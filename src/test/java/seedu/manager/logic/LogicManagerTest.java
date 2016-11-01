@@ -322,7 +322,27 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedList);
     }
-    //@@author 
+    
+    //@@author A0135730M
+    @Test
+    public void execute_list_sortActivitiesCorrectly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity p1 = new Activity("deadline", "yesterday");
+        Activity p2 = new Activity("event", "today", "tomorrow");
+        Activity p3 = new Activity("completed deadline", "two days ago");
+        Activity p4 = new Activity("floating bottom");
+        
+        List<Activity> unorderedList = helper.generateActivityList(p4, p3, p2, p1);
+        ActivityManager expectedAM = helper.generateActivityManager(unorderedList);
+        expectedAM.markActivity(unorderedList.get(2)); // mark p3
+        helper.addToModel(model, unorderedList);
+        
+        List<Activity> orderedList = helper.generateActivityList(p1, p2, p3, p4);
+        assertCommandBehavior("list",
+                ListCommand.MESSAGE_SUCCESS,
+                expectedAM,
+                orderedList);
+    }
 
 
     /**
@@ -739,20 +759,20 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Activity> threeActivities = helper.generateActivityList(3);
 
-        ActivityManager expectedAB = helper.generateActivityManager(threeActivities);
-        expectedAB.markActivity(threeActivities.get(0));
+        ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
+        expectedAM.markActivity(threeActivities.get(0));
         helper.addToModel(model, threeActivities);
         List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
         List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
        
         assertCommandBehavior("search pending",
                 Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
-                expectedAB,
+                expectedAM,
                 expectedPendingList);
         
         assertCommandBehavior("search completed",
                 Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
-                expectedAB,
+                expectedAM,
                 expectedMarkList);
     }
     
