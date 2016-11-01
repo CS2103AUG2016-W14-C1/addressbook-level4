@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
+import seedu.manager.commons.util.CollectionUtil;
 import seedu.manager.model.activity.Activity;
 
 /**
@@ -42,6 +43,7 @@ public class DeleteCommand extends Command {
         UnmodifiableObservableList<Activity> lastShownList = model.getFilteredActivityList();
         Collections.sort(targetIndexes);
         Collections.reverse(targetIndexes);
+        CollectionUtil.assertNoNullElements(targetIndexes);
         
         StringBuilder activitiesDeleted = new StringBuilder();
         for (int i = 0; i < targetIndexes.size(); i++) {
