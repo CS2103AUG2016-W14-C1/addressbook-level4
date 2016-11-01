@@ -99,7 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
-        updateFilteredActivityList();
+        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate(activity);
         indicateActivityManagerChanged();
         // Record state only for the last addition (esp. for recurring tasks)
@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
-        updateFilteredActivityList();
+        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
@@ -121,7 +121,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
-        updateFilteredActivityList();
+        updateFilteredListToShowAll();
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
