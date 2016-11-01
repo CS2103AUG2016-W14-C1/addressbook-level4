@@ -190,6 +190,10 @@
     -fx-background-color: black;
 }
 
+.dateTimeLabel {
+	-fx-font-size: 11pt;
+}
+
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
