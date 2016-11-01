@@ -99,7 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
-        updateFilteredListToShowAll();
+        updateFilteredActivityList();
         indicateActivityListPanelUpdate(activity);
         indicateActivityManagerChanged();
         // Record state only for the last addition (esp. for recurring tasks)
@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteActivity(Activity target) {
         activityManager.removeActivity(target);
-        updateFilteredListToShowAll();
+        updateFilteredActivityList();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
         recordManagerHistory(activityManager);
@@ -121,7 +121,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
-        updateFilteredListToShowAll();
+        updateFilteredActivityList();
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
@@ -207,7 +207,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     //@@author A0144881Y
     public UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList() {
-    	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
+        FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
     			return activity.getType() != ActivityType.FLOATING;
     		}
