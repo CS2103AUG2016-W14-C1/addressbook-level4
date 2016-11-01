@@ -22,7 +22,7 @@ public class SearchCommand extends Command {
     public static final String EXAMPLES = "search \"buy\"\n" + "search 21 Oct\n" + "search completed";   
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches all activities whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "the specified keywords (in quotes, case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " \"alice bob charlie\"";
 
