@@ -78,7 +78,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     
-    //@@author A0139797E
     private void indicateActivityListPanelUpdate(Activity newActivity){
     	// Find index of new/updated activity and set it as our target to scroll to
     	int index = -1;
@@ -96,18 +95,8 @@ public class ModelManager extends ComponentManager implements Model {
     	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), index));
     }
 
-    @Override
-    //@@author A0144881Y
-    public synchronized void deleteActivity(Activity target) {
-        activityManager.removeActivity(target);
-        updateFilteredListToShowAll();
-        indicateActivityListPanelUpdate();
-        indicateActivityManagerChanged();
-        recordManagerHistory(activityManager);
-    }
-
-    @Override
     //@@author A0139797E
+    @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
         updateFilteredListToShowAll();
@@ -119,8 +108,17 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
     
-    @Override
     //@@author A0144881Y
+    @Override
+    public synchronized void deleteActivity(Activity target) {
+        activityManager.removeActivity(target);
+        updateFilteredListToShowAll();
+        indicateActivityListPanelUpdate();
+        indicateActivityManagerChanged();
+        recordManagerHistory(activityManager);
+    }
+    
+    @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         updateFilteredListToShowAll();
@@ -129,8 +127,8 @@ public class ModelManager extends ComponentManager implements Model {
         recordManagerHistory(activityManager);
     }
 
-    @Override
     //@@author A0144704L
+    @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
         updateFilteredActivityList();
@@ -139,7 +137,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    //@@author A0144704L
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
         updateFilteredActivityList();
@@ -161,7 +158,6 @@ public class ModelManager extends ComponentManager implements Model {
         historyIndex++;
     }
     
-    //@@author A0139797E
     public int getHistoryIndex() {
         return historyIndex;
     }
@@ -171,8 +167,8 @@ public class ModelManager extends ComponentManager implements Model {
     	return managerHistory.size() - 1;
     }
     
-    @Override
     //@@author A0139797E
+    @Override
     public synchronized void undoCommand(int offset) {
         historyIndex -= offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
@@ -182,8 +178,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityManagerChanged();
     }
     
-    @Override
     //@@author A0144881Y
+    @Override
     public synchronized void redoCommand(int offset) {
         historyIndex += offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
@@ -193,12 +189,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateActivityManagerChanged();
     }
     
+    //@@author A0144704L
     @Override
-  //@@author A0144704L
     public void listCommand() {
     	activityManager.listActivities();
     	indicateActivityListPanelUpdate();
     }
+    //@@author 
 
     //=========== Filtered Activity List Accessors ===============================================================
 
@@ -219,7 +216,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    //@@author A0144881Y
     public UnmodifiableObservableList<Activity> getFilteredFloatingActivityList() {
     	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
@@ -228,6 +224,7 @@ public class ModelManager extends ComponentManager implements Model {
 		});
     	return new UnmodifiableObservableList<>(deadlineAndEventList);
     }
+    //@@author 
 
     @Override
     public void updateFilteredListToShowAll() {
@@ -239,10 +236,11 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredActivityList(new PredicateExpression(new NameQualifier(keywords)));
     }
     
-    //@@author A0144881Y
+    //@@author A0135730M
     public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
         updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
     }
+    //@@author 
     
 
     private void updateFilteredActivityList(Expression expression) {
@@ -275,6 +273,7 @@ public class ModelManager extends ComponentManager implements Model {
     		}
     	});
     }
+    //@author 
 
     //========== Inner classes/interfaces used for filtering ==================================================
 
@@ -322,10 +321,6 @@ public class ModelManager extends ComponentManager implements Model {
                     .isPresent();
         }
 
-        @Override
-        public String toString() {
-            return "name=" + String.join(", ", nameKeyWords);
-        }
     }
     
     //@@author A0135730M
@@ -357,15 +352,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
 
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("dateTime=");
-            sb.append(dateTime.toString());
-            sb.append("\nendDateTime=");
-            sb.append(endDateTime.toString());
-            return sb.toString();
-        }
     }
+    //@@author 
 
 }
