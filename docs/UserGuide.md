@@ -39,6 +39,7 @@ Remindaroo is a customized to-do list application that can help you manage your 
 > * Items in `[SQUARE_BRACKETS]` are optional
 > * Keywords with `|` in between indicates that either one can be used
 > * Order of parameters are fixed
+> * Keywords are case-insensitive
 
 <br>
 
@@ -56,12 +57,12 @@ Remindaroo is a customized to-do list application that can help you manage your 
 
 ### <br>4.1 Add New Activity : **`add`**
 Adds an activity into Remindaroo. 3 types of activities are available:
-* _floating task_ : one without specific time
+* _task_ : one without specific time
 * _deadline_ : one with just a specific time
 * _event_ : one with a start time and end time
 
 ##### Formats:<br><br>
--  `add FLOATING_TASK`<br>
+-  `add TASK`<br>
 
 	> Example: <br>
 	> `add buy milk` <br>
@@ -89,11 +90,7 @@ Adds an activity into Remindaroo. 3 types of activities are available:
 	> `add read All by Me "by" 23 Oct` <br>
 	> `add screening from Tokyo to Paris "from" 21 Oct "to" 23 Oct` <br>
 
--  Keywords in `add` command are case-insensitive.
-	> Example: <br>
-	> `add Submit Assignment BY today` <br>
-	> `add Birthday Party From Today 7pm To Tomorrow 12am` <br>
-
+<!-- @@author A0144881Y -->
 ### <br>4.2 List all Activities : **`list`**
 Displays all activities in Remindaroo
 
@@ -106,7 +103,6 @@ Clear all activities in Remindaroo
 ##### Format:
 - `clear`
 
-<!-- @@author A0144881Y -->
 ### <br>4.4 Delete Activity : **`delete`**
 Deletes a specific activity from Remindaroo
 
@@ -136,32 +132,36 @@ Updates name, date and/or time of specific activity to specified name, date and/
 
 <!-- @@author A0144704L -->
 ### <br>4.6 Mark Activity : **`mark`**
-Marks an activity with status. If the activity already has a status, it will be overwritten by the status in this command.
-
-Status has to be either **pending** or **completed** (case-insensitive).
+Marks an activity as completed. If the activity already has a status, it will be overwritten by the status in this command.
 
 ##### Format:<br><br>
-- `mark ACTIVITY_ID as STATUS`<br>
+- `mark ACTIVITY_ID`<br>
 
 	> Example:<br>
-	> `mark 1 as completed`<br>
+	> `mark 1`<br>
 	> Activity with ID 1 (e.g. `do assignment 1`) is marked as completed
 
-### <br>4.7 Find Next Activity : **`next`**
-Displays the activity that is scheduled next (closest to current time)
+### <br>4.7 Unmark Activity : **`unmark`**
+Unmarks an activity as pending. If the activity already has a status, it will be overwritten by the status in this command.
 
 ##### Format:<br><br>
-- `next`
+- `unmark ACTIVITY_ID`<br>
+
+	> Example:<br>
+	> `unmark 1`<br>
+	> Activity with ID 1 (e.g. `do assignment 1`) is unmarked as pending
 
 <!-- @@author A0135730M -->
 ### <br>4.8 Search for Activities : **`search`**
-Displays list of activities that match description (keyword / date / activity category / status)
+Displays list of activities that match description (keywords / date / status)
+If search by keywords, add quotation marks (either ' or ") around keywords.
 
 ##### Formats:<br><br>
 - `search KEYWORDS`<br>
 
 	> Example:<br>
-	> `search CS2101 tutorial`<br>
+	> `search "CS2101 tutorial"`<br>
+	> `search 'Assignment 1'`<br>
 
 - `search DATE_TIME [to END_DATE_TIME]`<br>
 
@@ -172,6 +172,7 @@ Displays list of activities that match description (keyword / date / activity ca
 - `search STATUS`<br>
 
     > Example:<br>
+    > `search pending`<br>
     > `search completed`<br>
 
 <!-- @@author A0139797E -->
@@ -210,22 +211,15 @@ Changes the location of the data file of Remindaroo to the specified path (relat
 - `store NEW_DATA_FILE_LOCATION`<br>
 
 	> Example:<br>
-	> `store /new_data/Remindaroo.xml`<br>
-	> The Data file `Remindaroo.xml` now resides in the folder `./new_data`
+	> `store new_data/Remindaroo.xml`<br>
+	> The Data file `Remindaroo.xml` now resides in the folder `new_data`
 
 ### <br>4.12 Show Help Menu : **`help`**
-Displays the instruction for using each command
+Displays the help window, which contains instructions for using each of the commands
 
 ##### Format:<br><br>
 
-- `help [COMMAND]`<br>
-
-	> Example: <br>
-	>
-	> `help | help SOME_INVALID_COMMAND`<br>
-	> Displays instruction for all commands<br>
-	> `help add`<br>
-	> Displays instruction for add command
+- `help`<br>
 
 ### <br>4.13 Exit Remindaroo : **`exit`**
 Exits the program
@@ -251,13 +245,13 @@ There is no need to save manually.
 | Clear all Activities | `clear` |
 | Delete Activity | `delete ACTIVITY_ID`|
 | Update Activity | `update ACTIVITY_ID [NEW_NAME] from [DATE_TIME] to [END_DATE_TIME]` |
-| Mark Activity   | `mark ACTIVITY_ID as STATUS` |
-| Next Activity   | `next` |
+| Mark Activity   | `mark ACTIVITY_ID` |
+| Unmark Activity   | `unmark ACTIVITY_ID` |
 | Search Activity | `search KEYWORDS | DATE_TIME [to END_DATE_TIME] | STATUS`
 | Undo            | `undo [NUMBER_OF_TIMES]` |
 | Redo            | `redo [NUMBER_OF_TIMES]` |
 | Change data storage location | `store NEW_DATA_FILE_LOCATION` |
-| Help            | `help [COMMAND]` |
+| Help            | `help` |
 | Exit            | `exit` |
 
 
