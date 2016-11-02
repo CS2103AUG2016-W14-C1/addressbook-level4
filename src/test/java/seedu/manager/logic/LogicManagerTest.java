@@ -485,7 +485,7 @@ public class LogicManagerTest {
         Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
       
-        assertCommandBehavior("update 1    new deadline    by    " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new deadline    ",
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
                 expectedAM.getActivityList()); 
@@ -499,7 +499,7 @@ public class LogicManagerTest {
         Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
       
-        assertCommandBehavior("update 1    new event   from   " + helper.getReferenceDateString() + "   to   " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new event   ",
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
