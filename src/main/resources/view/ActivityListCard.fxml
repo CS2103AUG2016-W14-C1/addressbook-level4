@@ -17,13 +17,12 @@
         <GridPane HBox.hgrow="ALWAYS">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
             </columnConstraints>
             <children>
+            	
                 <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="30.0" prefHeight="40.0" prefWidth="150.0" GridPane.columnIndex="0">
                     <stylesheets>
                         <URL value="@DarkTheme.css" />
@@ -37,40 +36,32 @@
                         <HBox alignment="CENTER_LEFT" spacing="5">
                             <children>
                                 <HBox>
-                                    <Label fx:id="id" styleClass="cell_big_label" />
+                                    <Label fx:id="id" styleClass="cell_big_label" minWidth="50.0" prefWidth="50.0" />
                                     <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
                                 </HBox>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-            <HBox prefHeight="0.0" GridPane.columnIndex="0">
-               <children>
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                    <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" translateY="12.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="50.0" GridPane.columnIndex="2">
-               <children>
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="200.0" GridPane.columnIndex="3">
-               <children>
-               	   <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" translateY="12.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="50.0" GridPane.columnIndex="4">
-               <children>
-               </children>
-            </HBox>
-            <HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="5">
-               <children>
-                  <Label fx:id="status" styleClass="cell_status_label" text="\$status" translateX="0.0" translateY="12.0" />
-               </children>
-            </HBox>
+            	<HBox prefHeight="0.0" GridPane.columnIndex="0">
+            	   <children>
+            	   </children>
+            	</HBox>
+            	<HBox prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="1">
+            	   <children>
+            	        <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" translateY="12.0" />
+            	   </children>
+            	</HBox>
+            	<HBox prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="2">
+            	   <children>
+            	   	   <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$endDateTime" translateY="12.0" />
+            	   </children>
+            	</HBox>
+            	<HBox prefHeight="34.0" prefWidth="100.0" GridPane.columnIndex="3">
+            	   <children>
+            	      <Label fx:id="status" styleClass="cell_status_label" text="\$status" translateX="0.0" translateY="12.0" />
+            	   </children>
+            	</HBox>
             </children>
          <rowConstraints>
             <RowConstraints />

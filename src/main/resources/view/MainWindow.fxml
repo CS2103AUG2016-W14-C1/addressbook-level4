@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <!--  @@author A0144881Y -->
-<VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.manager.ui.MainWindow">
+
+<VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.manager.ui.MainWindow">
    <stylesheets>
       <URL value="@DarkTheme.css" />
       <URL value="@Extensions.css" />
    </stylesheets>
    <children>
-      <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" orientation="vertical" VBox.vgrow="ALWAYS">
+      <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5, 0.5, 0.5" orientation="vertical" prefWidth="342.0" VBox.vgrow="ALWAYS">
          <items>
-         	<MenuBar VBox.vgrow="NEVER" visible="false" managed="false" maxHeight="0">
+         	<MenuBar managed="false" maxHeight="0" visible="false" VBox.vgrow="NEVER">
          		<menus>
 		            <Menu mnemonicParsing="false" text="Help">
 		                <items>
@@ -29,31 +33,32 @@
 		            </Menu>
 	            </menus>
         	</MenuBar>
-        	<VBox prefHeight="40" maxHeight="40" alignment="CENTER">
-         		<children>
-         			<Label id="welcomeText" text = "31st October 2016, Monday" />
-         		</children>
-         	</VBox>
-            <VBox fx:id="activityList" prefWidth="340" minHeight="250">
-				<children>
-					<Label fx:id="label1" style="-fx-text-fill: #0D47A1" text="Schedule" wrapText="true" />    
-				</children>
-                <padding>
+            <HBox alignment="CENTER" maxHeight="5.0" prefHeight="50.0" prefWidth="340.0">
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="75.0" preserveRatio="true" scaleX="0.7" scaleY="0.7" translateY="5.0" HBox.hgrow="NEVER">
+                     <image>
+                        <Image url="@/images/logo.png" />
+                     </image>
+                  </ImageView>
+         			<Label fx:id="currentTime" style="-fx-text-fill:black" alignment="CENTER" text="\$currentTime" translateY="5.0" />			
+               </children>
+            </HBox>
+            <VBox fx:id="activityList" minHeight="250" prefWidth="340.0" alignment="CENTER">
+				<padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
                <children>
-                  <AnchorPane fx:id="activityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+               	   <Label fx:id="label1" style="-fx-text-fill:#0D47A1;-fx-font-weight: bold;-fx-font-size:15pt" text="Schedule" wrapText="true" alignment="CENTER" />    
+				   <AnchorPane fx:id="activityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <VBox fx:id="floatingActivityList" prefWidth="340" minHeight="150">
-            	<children>
-            		<Label fx:id="label2" style="-fx-text-fill: #0D47A1" text="Task" wrapText="true" />  
-            	</children>
+            <VBox fx:id="floatingActivityList" minHeight="150" prefWidth="340" alignment="CENTER">
             	<padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
                	<children>
-                  <AnchorPane fx:id="floatingActivityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                	<Label fx:id="label2" style="-fx-text-fill: #0D47A1;-fx-font-weight:bold;-fx-font-size:15pt" text="Tasks" wrapText="true" alignment="CENTER" />  
+            	  <AnchorPane fx:id="floatingActivityListPanelPlaceholder" VBox.vgrow="ALWAYS" />
               	 </children>
             </VBox>
          </items>

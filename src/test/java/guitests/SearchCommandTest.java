@@ -11,18 +11,18 @@ public class SearchCommandTest extends ActivityManagerGuiTest {
 
     @Test
     public void search_nonEmptyList() {
-        assertSearchResult("search None"); //no results
-        assertSearchResult("search buy", ta.groceries); //multiple results
+        assertSearchResult("search \"None\""); //no results
+        assertSearchResult("search 'buy'", ta.groceries); //multiple results
 
         //find after deleting one result
         commandBox.runCommand("delete 1");
-        assertSearchResult("search buy");
+        assertSearchResult("search \"buy\"");
     }
 
     @Test
     public void search_emptyList(){
         commandBox.runCommand("clear");
-        assertSearchResult("search None"); //no results
+        assertSearchResult("search \"None\""); //no results
     }
 
     @Test

@@ -13,11 +13,17 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyActivityManager newData);
 
+    /** Removes all selections from the list of activities */
+    void indicateActivityListPanelUpdate();
+    
+    /** Selects a particular activity from a list of activities */
+    void indicateActivityListPanelUpdate(Activity activity);
+    
     /** Returns the ActivityManager */
     ReadOnlyActivityManager getActivityManager();
 
     /** Deletes the given activity. */
-    void deleteActivity(Activity target);
+    void deleteActivity(Activity target, boolean isLastActivity);
 
     /** Adds the given activity */
     void addActivity(Activity activity, boolean isLastRecurring);

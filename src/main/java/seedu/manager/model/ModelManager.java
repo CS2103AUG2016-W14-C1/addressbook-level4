@@ -50,7 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyActivityManager initialData, UserPrefs userPrefs) {
         activityManager = new ActivityManager(initialData);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         recordManagerHistory(activityManager);
     }
 
@@ -73,12 +73,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     //@@author A0139797E
-    private void indicateActivityListPanelUpdate(){
-        raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), -1));
+    public void indicateActivityListPanelUpdate(){
+        raise(new ActivityListPanelUpdateEvent(-1));
     }
 
     
-    private void indicateActivityListPanelUpdate(Activity newActivity){
+    public void indicateActivityListPanelUpdate(Activity newActivity){
     	// Find index of new/updated activity and set it as our target to scroll to
     	int index = -1;
         UnmodifiableObservableList<Activity> activities = getFilteredActivityList();
@@ -87,19 +87,20 @@ public class ModelManager extends ComponentManager implements Model {
     	    if (activity.equals(newActivity)) {
     	        index = i;
     	        activity.setSelected(true);
-    	    } else {
-    	        // clear previous selection status (on UI)
-    	        activity.setSelected(false);
+    	        break;
     	    }
     	}
-    	raise(new ActivityListPanelUpdateEvent(getFilteredFloatingActivityList(), getFilteredDeadlineAndEventList(), index));
+    	for (int i = 0; i < activities.size(); i++) {
+    	    if (index == i) continue;
+    	    activities.get(i).setSelected(false);
+    	}
+    	raise(new ActivityListPanelUpdateEvent(index));
     }
 
     //@@author A0139797E
     @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
-        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate(activity);
         indicateActivityManagerChanged();
         // Record state only for the last addition (esp. for recurring tasks)
@@ -110,18 +111,18 @@ public class ModelManager extends ComponentManager implements Model {
     
     //@@author A0144881Y
     @Override
-    public synchronized void deleteActivity(Activity target) {
+    public synchronized void deleteActivity(Activity target, boolean isLastActivity) {
         activityManager.removeActivity(target);
-        updateFilteredListToShowAll();
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
-        recordManagerHistory(activityManager);
+        if (isLastActivity) {
+            recordManagerHistory(activityManager);
+        }
     }
     
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
         activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
-        updateFilteredListToShowAll();
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
@@ -131,16 +132,18 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markActivity(Activity activity) {
         activityManager.markActivity(activity);
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
+        indicateActivityListPanelUpdate();
         recordManagerHistory(activityManager);
     }
 
     @Override
     public synchronized void unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        updateFilteredActivityList();
+        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
+        indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
     }
     
@@ -172,8 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void undoCommand(int offset) {
         historyIndex -= offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
-        filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredListToShowAll();
+        filteredActivities = new FilteredList<>(activityManager.getActivities(), filteredActivities.getPredicate());
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
@@ -183,8 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void redoCommand(int offset) {
         historyIndex += offset;
         activityManager = new ActivityManager(managerHistory.get(historyIndex));
-        filteredActivities = new FilteredList<>(activityManager.getActivities());
-        updateFilteredListToShowAll();
+        filteredActivities = new FilteredList<>(activityManager.getActivities(), filteredActivities.getPredicate());
         indicateActivityListPanelUpdate();
         indicateActivityManagerChanged();
     }
@@ -207,7 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     //@@author A0144881Y
     public UnmodifiableObservableList<Activity> getFilteredDeadlineAndEventList() {
-    	FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
+        FilteredList<Activity> deadlineAndEventList = filteredActivities.filtered(new Predicate<Activity>() {
     		public boolean test(Activity activity) {
     			return activity.getType() != ActivityType.FLOATING;
     		}
@@ -245,20 +246,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredActivityList(Expression expression) {
         filteredActivities.setPredicate(expression::satisfies);
-        indicateActivityListPanelUpdate();
     }
     
     private void updateFilteredActivityList(Predicate<Activity> predicate) {
         filteredActivities.setPredicate(predicate);
-        indicateActivityListPanelUpdate();
-    }
-    
-    public void updateFilteredActivityList() {
-    	updateFilteredActivityList(new Predicate<Activity>() {
-    		public boolean test(Activity activity) {
-    			return !activity.getStatus().isCompleted();
-    		}
-    	});
     }
     
     //@@author A0144704L

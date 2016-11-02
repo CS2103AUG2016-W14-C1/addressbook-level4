@@ -1,7 +1,12 @@
 package seedu.manager.logic.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import seedu.manager.commons.core.Messages;
 import seedu.manager.commons.core.UnmodifiableObservableList;
+import seedu.manager.commons.util.CollectionUtil;
 import seedu.manager.model.activity.Activity;
 
 /**
@@ -21,30 +26,38 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity: %1$s";
+    public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity / Activities:%1$s";
+    
+    public static final String ACTIVITY_SEPERATOR = " ";
 
-    public final int targetIndex;
+    public final ArrayList<Integer> targetIndexes;
 
-    public DeleteCommand(int targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(ArrayList<Integer> targetIndexes) {
+        this.targetIndexes = targetIndexes;
     }
 
 
     @Override
     public CommandResult execute() {
-
-        UnmodifiableObservableList<Activity> lastShownList = model.getFilteredActivityList();
-
-        if (lastShownList.size() < targetIndex) {
-            indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
-        }
-
-        Activity activityToDelete = lastShownList.get(targetIndex - 1);
         
-        model.deleteActivity(activityToDelete);
+        UnmodifiableObservableList<Activity> lastShownList = model.getFilteredActivityList();
+        Collections.sort(targetIndexes);
+        Collections.reverse(targetIndexes);
+        CollectionUtil.assertNoNullElements(targetIndexes);
+        
+        StringBuilder activitiesDeleted = new StringBuilder();
+        for (int i = 0; i < targetIndexes.size(); i++) {
+            int targetIndex = targetIndexes.get(i);
+            if (lastShownList.size() < targetIndex) {
+                indicateAttemptToExecuteIncorrectCommand();
+                return new CommandResult(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+            }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, activityToDelete.getName()));
+            Activity activityToDelete = lastShownList.get(targetIndex - 1); 
+            activitiesDeleted.append(ACTIVITY_SEPERATOR + activityToDelete.getName());
+            model.deleteActivity(activityToDelete, i == targetIndexes.size() - 1);
+        }
+        return new CommandResult(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, activitiesDeleted.toString()));
     }
 
 }

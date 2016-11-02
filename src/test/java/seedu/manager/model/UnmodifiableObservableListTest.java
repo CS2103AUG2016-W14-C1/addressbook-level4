@@ -10,7 +10,10 @@ import org.junit.rules.ExpectedException;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static seedu.manager.testutil.TestUtil.assertThrows;
 
 public class UnmodifiableObservableListTest {
@@ -20,12 +23,14 @@ public class UnmodifiableObservableListTest {
 
     public List<Integer> backing;
     public UnmodifiableObservableList<Integer> list;
+    public UnmodifiableObservableList<Integer> list2;
 
     @Before
     public void setup() {
         backing = new ArrayList<>();
         backing.add(10);
         list = new UnmodifiableObservableList<>(FXCollections.observableList(backing));
+        list2 = new UnmodifiableObservableList<>(FXCollections.observableList(backing));
     }
 
     @Test
@@ -70,12 +75,64 @@ public class UnmodifiableObservableListTest {
         final Iterator<Integer> iter = list.iterator();
         iter.next();
         assertThrows(ex, iter::remove);
-
+        
         final ListIterator<Integer> liter = list.listIterator();
+        
         liter.next();
         assertThrows(ex, liter::remove);
         assertThrows(ex, () -> liter.add(5));
         assertThrows(ex, () -> liter.set(3));
         assertThrows(ex, () -> list.removeIf(i -> true));
+    }
+    
+    //@@author A0139797E
+    @Test
+    public void listIterator_NextAndPrevious() {
+        final ListIterator<Integer> liter = list.listIterator();
+        
+        while(liter.hasNext()) {
+            liter.nextIndex();
+            liter.next();
+        }
+        
+        while(liter.hasPrevious()) {
+            liter.previousIndex();
+            liter.previous();
+        }
+    }
+    
+    @Test
+    public void unmodifiableList_Equals() {
+        assertEquals(list, list2);
+        assertEquals(list.hashCode(), list2.hashCode());
+    }
+    
+    @Test
+    public void unmodifiableList_indexAccess() {
+        assertEquals(0, list.indexOf(10));
+        assertEquals(0, list.lastIndexOf(10));
+    }
+    
+    @Test
+    public void unmodifiableList_streamConversion() {
+        Optional<Integer> firstIndex = list.stream().map(e -> 2 * e).findFirst();
+        assertTrue(firstIndex.isPresent());
+        assertSame(20, firstIndex.get());
+    }
+    
+    @Test
+    public void unmodifiableList_arrayTest() {
+        Object[] objArray = list.toArray();
+        assertSame(10, objArray[0]);
+    }
+    
+    @Test
+    public void unmodifiableList_emptyTest() {
+        assertFalse(list.isEmpty());
+    }
+    
+    @Test
+    public void unmodifiableList_containTest() {
+        assertTrue(list.contains(10));
     }
 }

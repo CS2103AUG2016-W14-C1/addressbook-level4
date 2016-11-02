@@ -5,6 +5,9 @@ import static seedu.manager.commons.core.Messages.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.joestelmach.natty.*;
@@ -15,6 +18,7 @@ import seedu.manager.commons.exceptions.IllegalValueException;
  * Helper functions for handling strings.
  */
 public class StringUtil {
+    
     public static boolean containsIgnoreCase(String source, String query) {
         String[] split = source.toLowerCase().split("\\s+");
         List<String> strings = Arrays.asList(split);
@@ -82,14 +86,73 @@ public class StringUtil {
             throw new IllegalValueException(MESSAGE_EVENT_DATE_CONSTRAINTS);
         }
     }
+
+    /**
+     * Returns true if s has quotation marks at the start and end, with string inside
+     * @param s String to check
+     */
+    public static boolean hasQuotationMarks(String s) {
+        return s.length() > 2
+               && ((s.charAt(0) == '"' && s.charAt(s.length()-1) == '"')
+                   || (s.charAt(0) == '\'' && s.charAt(s.length()-1) == '\''));
+    }
+
+    /**
+     * Returns string with begin and end quotation marks trimmed
+     * @param s String to trim, assumed to have quotation marks at the start and end
+     */
+    public static String trimQuotationMarks(String s) {
+        return s.substring(1, s.length()-1);
+    }
+
+    /**
+     * Returns true if s contains status
+     * @param s String to check
+     */
+    public static boolean hasStatus(String s) {
+        return "pending".equals(s.toLowerCase()) 
+                || "completed".equals(s.toLowerCase());
+    }
+
+    /**
+     * Returns either status based on s's content
+     * @param s String which contains a status
+     */
+    public static String getStatus(String s) {
+        if ("pending".equals(s.toLowerCase())) {
+            return "pending";
+        } else {
+            return "completed";
+        }
+    }
     
     /**
      * Returns true if s can be parsed as an AMDate type
      * @param s Should be trimmed
      */
-    public static boolean isAMDate(String dateTime) {
+    public static boolean hasAMDates(String s) {
         Parser parser = new Parser();
-        List<DateGroup> groups = parser.parse(dateTime);
+        List<DateGroup> groups = parser.parse(s);
         return groups.size() > 0;
+    }
+
+    /**
+     * Extracts the start and end date from s
+     * @param s String which contains date(s)
+     * @return list with a start and end date
+     */
+    public static List<Long> getDateRange(String s) {
+        Parser parser = new Parser();
+        DateGroup group = parser.parse(s).get(0);
+        List<Date> dates = group.getDates();
+        List<Long> ranges = new ArrayList<Long>();
+        
+        // get the first and last date and use it as the range
+        // if there is only one date, first date == last date
+        ranges.add(dates.get(0).getTime());
+        ranges.add(dates.get(dates.size() - 1).getTime());
+        // sort to ensure start always earlier than end
+        Collections.sort(ranges);
+        return ranges;
     }
 }

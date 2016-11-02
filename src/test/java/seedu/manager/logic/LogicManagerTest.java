@@ -322,7 +322,27 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedList);
     }
-    //@@author 
+    
+    //@@author A0135730M
+    @Test
+    public void execute_list_sortActivitiesCorrectly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity p1 = new Activity("deadline", "yesterday");
+        Activity p2 = new Activity("event", "today", "tomorrow");
+        Activity p3 = new Activity("completed deadline", "two days ago");
+        Activity p4 = new Activity("floating bottom");
+        
+        List<Activity> unorderedList = helper.generateActivityList(p4, p3, p2, p1);
+        ActivityManager expectedAM = helper.generateActivityManager(unorderedList);
+        expectedAM.markActivity(unorderedList.get(2)); // mark p3
+        helper.addToModel(model, unorderedList);
+        
+        List<Activity> orderedList = helper.generateActivityList(p1, p2, p3, p4);
+        assertCommandBehavior("list",
+                ListCommand.MESSAGE_SUCCESS,
+                expectedAM,
+                orderedList);
+    }
 
 
     /**
@@ -379,7 +399,8 @@ public class LogicManagerTest {
         helper.addToModel(model, threeActivities);
 
         assertCommandBehavior("delete 2",
-                String.format(DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
+                String.format(DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS, 
+                              DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getActivityList());
     }
@@ -445,7 +466,7 @@ public class LogicManagerTest {
         model.resetData(emptyAM);
         expectedAM.resetData(emptyAM);
         Activity existingActivity = new Activity("bla bla bla");
-        model.addActivity(existingActivity, false);
+        model.addActivity(existingActivity, true);
         
         Activity newActivity = new Activity("bla");
         expectedAM.addActivity(newActivity);
@@ -459,7 +480,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingDeadline = new Activity("deadline", helper.getReferenceDateString());
-        model.addActivity(existingDeadline, false);
+        model.addActivity(existingDeadline, true);
         
         Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
@@ -473,7 +494,7 @@ public class LogicManagerTest {
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
-        model.addActivity(existingEvent, false);
+        model.addActivity(existingEvent, true);
         
         Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
@@ -650,13 +671,56 @@ public class LogicManagerTest {
         Activity p3 = new Activity("KEXY", helper.getReferenceDateString(), helper.getReferenceDateString());
 
         List<Activity> sixActivities = helper.generateActivityList(p1, pTarget1, p2, pTarget2, p3, pTarget3);
-        ActivityManager expectedAB = helper.generateActivityManager(sixActivities);
+        ActivityManager expectedAM = helper.generateActivityManager(sixActivities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2, pTarget3);
         helper.addToModel(model, sixActivities);
 
-        assertCommandBehavior("search KEY",
+        assertCommandBehavior("search \"KEY\"",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_search_multipleKeywords() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity p1 = new Activity("come home");
+        Activity p2 = new Activity("come");
+        Activity p3 = new Activity("home");
+        Activity p4 = new Activity("back");
+        
+        List<Activity> activities = helper.generateActivityList(p1, p2, p3, p4);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(p1, p2, p3);
+        helper.addToModel(model, activities);
+
+        assertCommandBehavior("search \"come home\"",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_search_useQuotationMarksForKeywords() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Activity pFirstTarget = new Activity("read TODAY newspaper");
+        Activity pSecondTarget = new Activity("something", "today");
+        
+        List<Activity> activities = helper.generateActivityList(pFirstTarget, pSecondTarget);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
+        List<Activity> expectedList = helper.generateActivityList(pFirstTarget);
+        helper.addToModel(model, activities);
+        
+        assertCommandBehavior("search \'today\'",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
+                expectedList);
+        
+        expectedList = helper.generateActivityList(pSecondTarget);
+        
+        assertCommandBehavior("search today",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
                 expectedList);
     }
     
@@ -670,18 +734,23 @@ public class LogicManagerTest {
         Activity p3 = new Activity("event", "next week", "2 week later");
         
         List<Activity> activities = helper.generateActivityList(pTarget1, p1, pTarget2, p2, p3);
-        ActivityManager expectedAB = helper.generateActivityManager(activities);
+        ActivityManager expectedAM = helper.generateActivityManager(activities);
         List<Activity> expectedList = helper.generateActivityList(pTarget1, pTarget2);
         helper.addToModel(model, activities);
         
         assertCommandBehavior("search today",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
                 expectedList);
         
         assertCommandBehavior("search today to tomorrow",
                 Command.getMessageForActivityListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedAM,
+                expectedList);
+        
+        assertCommandBehavior("search past 2 days",
+                Command.getMessageForActivityListShownSummary(expectedList.size()),
+                expectedAM,
                 expectedList);
     }
     
@@ -763,13 +832,98 @@ public class LogicManagerTest {
     
     //@@author A0139797E
     @Test
-    public void execute_undo_NoCommand() throws Exception {
+    public void execute_undo_noCommand() throws Exception {
         assertCommandBehavior("undo", UndoCommand.MESSAGE_INDEX_LESS_THAN_ZERO);
     }
     
     @Test
-    public void execute_redo_NoCommand() throws Exception {
+    public void execute_undo_outOfBounds() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 2);
+        ActivityManager expectedAM = helper.generateActivityManager(2);
+        List<Activity> expectedList = helper.generateActivityList(2);
+        
+        // failed undo should not modify AM and list
+        assertCommandBehavior("undo 3", 
+                UndoCommand.MESSAGE_OFFSET_OUT_OF_BOUNDS,
+                expectedAM,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_undo_normally() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 4);
+        
+        // able to undo (no offset means default 1)
+        ActivityManager expectedAM = helper.generateActivityManager(3);
+        List<Activity> expectedList = helper.generateActivityList(3);
+        assertCommandBehavior("undo", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+        // able to undo multiple times
+        expectedAM = helper.generateActivityManager(1);
+        expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo 2", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 2), 
+                expectedAM, 
+                expectedList);
+    }
+    
+    @Test
+    public void execute_redo_noCommand() throws Exception {
         assertCommandBehavior("redo", RedoCommand.MESSAGE_INDEX_LARGER_THAN_MAX);
+    }
+    
+    @Test
+    public void execute_redo_outOfBounds() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 2);
+        
+        // undo first before redo
+        ActivityManager expectedAM = helper.generateActivityManager(1);
+        List<Activity> expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+        assertCommandBehavior("redo 3", 
+                String.format(RedoCommand.MESSAGE_OFFSET_OUT_OF_BOUNDS, 1), 
+                expectedAM, 
+                expectedList);
+    }
+    
+    @Test
+    public void execute_redo_normally() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        helper.addToModel(model, 4);
+        
+        // undo first before redo
+        ActivityManager expectedAM = helper.generateActivityManager(1);
+        List<Activity> expectedList = helper.generateActivityList(1);
+        assertCommandBehavior("undo 3", 
+                String.format(UndoCommand.MESSAGE_SUCCESS, 3), 
+                expectedAM, 
+                expectedList);
+        
+        // able to redo (on offset means default 1)
+        expectedAM = helper.generateActivityManager(2);
+        expectedList = helper.generateActivityList(2);
+        assertCommandBehavior("redo", 
+                String.format(RedoCommand.MESSAGE_SUCCESS, 1), 
+                expectedAM, 
+                expectedList);
+        
+       // able to multiple redo
+        expectedAM = helper.generateActivityManager(4);
+        expectedList = helper.generateActivityList(4);
+        assertCommandBehavior("redo 2", 
+                String.format(RedoCommand.MESSAGE_SUCCESS, 2), 
+                expectedAM, 
+                expectedList);
     }
     
     //@@author A0144704L
@@ -811,13 +965,6 @@ public class LogicManagerTest {
          */
         public Activity generateActivity(int seed) throws Exception {
             return new Activity("Activity " + seed);
-        }
-
-        /**
-         * Generate an ActivityManager with no activities
-         */
-        public ActivityManager generateActivityManager() throws Exception {
-            return new ActivityManager();
         }
 
         /**

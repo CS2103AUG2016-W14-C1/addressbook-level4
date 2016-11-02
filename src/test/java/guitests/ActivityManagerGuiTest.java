@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
@@ -74,7 +75,7 @@ public abstract class ActivityManagerGuiTest {
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
     }
-
+    
     /**
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}

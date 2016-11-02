@@ -41,8 +41,8 @@ public class ActivityCard extends UiPart{
     public void initialize() {
         name.setText(activity.getName());
         id.setText(displayedIndex + ". ");
-        dateTime.setText(""); // default
-        endDateTime.setText(""); // default
+        dateTime.setText(" "); // default
+        endDateTime.setText(" "); // default
         String statusText = activity.getStatus().toString();
         status.setText(statusText);
         if (activity.getStatus().isCompleted()) { 
@@ -54,7 +54,7 @@ public class ActivityCard extends UiPart{
         
         AMDate checkExpired = null;
         if (activity.getType().equals(ActivityType.DEADLINE)) {
-            dateTime.setText(generateDateTimeString(activity.getDateTime()));
+            endDateTime.setText(generateDateTimeString(activity.getDateTime()));
             checkExpired = activity.getDateTime();
         } else if (activity.getType().equals(ActivityType.EVENT)) {
             dateTime.setText(generateDateTimeString(activity.getDateTime()));

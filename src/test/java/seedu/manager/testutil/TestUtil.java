@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
@@ -295,6 +296,28 @@ public class TestUtil {
     public static TestActivity[] addActivitiesToList(final TestActivity[] activities, TestActivity... activitiesToAdd) {
         List<TestActivity> listOfActivities = asList(activities);
         listOfActivities.addAll(asList(activitiesToAdd));
+        return listOfActivities.toArray(new TestActivity[listOfActivities.size()]);
+    }
+    
+    public static TestActivity[] addActivitiesToSchedule(final TestActivity[] activities, TestActivity... activitiesToAdd) {
+        List<TestActivity> listOfActivities = asList(activities);
+        listOfActivities.addAll(asList(activitiesToAdd));
+        
+        Comparator<TestActivity> cmp = new Comparator<TestActivity>() {
+            public int compare(TestActivity t1, TestActivity t2) {
+                if (t1.getType().equals(ActivityType.DEADLINE) && t2.getType().equals(ActivityType.DEADLINE)) {
+                	return t1.getDateTime().getTime().compareTo(t2.getDateTime().getTime());
+                } else if (t1.getType().equals(ActivityType.EVENT) && t2.getType().equals(ActivityType.EVENT)) {
+                	return t1.getEndDateTime().getTime().compareTo(t2.getEndDateTime().getTime());
+                } else if (t1.getType().equals(ActivityType.DEADLINE) && t2.getType().equals(ActivityType.EVENT)) {
+                	return t1.getDateTime().getTime().compareTo(t2.getEndDateTime().getTime());
+                } else {
+                	return t1.getEndDateTime().getTime().compareTo(t2.getDateTime().getTime());
+                }
+            }
+        };
+        
+        listOfActivities.sort(cmp);
         return listOfActivities.toArray(new TestActivity[listOfActivities.size()]);
     }
 

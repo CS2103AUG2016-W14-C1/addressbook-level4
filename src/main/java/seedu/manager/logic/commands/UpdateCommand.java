@@ -69,8 +69,8 @@ public class UpdateCommand extends Command {
 
         Activity activityToUpdate = lastShownList.get(targetIndex - 1);
         model.updateActivity(activityToUpdate, newName, newDateTime, newEndDateTime);
-
-        return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, activityToUpdate.getName()));
+        Activity updatedActivity = model.getFilteredActivityList().get(targetIndex - 1);
+        return new CommandResult(String.format(MESSAGE_UPDATE_ACTIVITY_SUCCESS, updatedActivity.getName()));
     }
 }
 

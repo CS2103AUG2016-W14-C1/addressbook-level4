@@ -48,10 +48,6 @@ public class TypicalTestActivities {
         am.addActivity(new Activity(this.assignment));
         am.addActivity(new Activity(this.talk));
     }
-
-    public TestActivity[] getTypicalActivities() {
-        return new TestActivity[]{groceries, reading, guitar, paint, movie, dog, assignment, talk};
-    }
     
     public TestActivity[] getTypicalFloatingActivities() {
         return new TestActivity[]{groceries, reading, guitar, paint, movie, dog};

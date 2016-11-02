@@ -176,6 +176,11 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         }
     }
     
+    //@@author A0139797E
+    public void setDateTime(Long epochDateTime) {
+        this.dateTime = new AMDate(epochDateTime);
+    }
+    
     public void setEndDateTime(String newEndDateTime) {
         assert !this.type.equals(ActivityType.FLOATING);
         // remove endDateTime if activity is converted to deadline
@@ -191,6 +196,16 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         }
     }
 	
+  //@@author A0139797E
+    public void removeEndDateTime() {
+        this.endDateTime = null;
+    }
+    
+    //@@author A0139797E
+    public void setEndDateTime(Long epochEndDateTime) {
+        this.endDateTime = new AMDate(epochEndDateTime);
+    }
+    
 	@Override
 	public boolean equals(Object o) {
 	    return o == this

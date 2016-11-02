@@ -15,6 +15,12 @@ public class AMDate {
     
     public static final String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     
+    public static final String[] FULLDAYS = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    
+    public static final String[] FULLMONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    
+    public static final String[] EXTENSION = {"th", "st", "nd", "rd"};
+    
     private Date dateTime;
     
     private Parser dateTimeParser = new Parser();
@@ -28,11 +34,11 @@ public class AMDate {
     }
     
     /**
-     * Reconstruct from epoch time to load from storage
+     * Reconstruct from epoch time to load from storage and for search
      * 
      * @param newDateTime
      */
-    AMDate(Long newEpochTime) {
+    public AMDate(Long newEpochTime) {
         this.dateTime = new Date(newEpochTime);
     }
     
@@ -94,14 +100,36 @@ public class AMDate {
         return MONTHS[dateTime.getMonth()];
     }
     
+    public String getMonthFull() {
+        assert dateTime != null;
+        return FULLMONTHS[dateTime.getMonth()];
+    }
+    
     public String getDay() {
         assert dateTime != null;
         return Integer.toString(dateTime.getDate());
     }
     
+    public String getDayWithExtension() {
+        assert dateTime != null;
+        String dayString = Integer.toString(dateTime.getDate());
+        int day = Integer.parseInt(dayString);
+        int lastDigit = day % 10;
+        if (lastDigit <= 3) {
+            return dayString + EXTENSION[lastDigit];
+        } else {
+            return dayString + EXTENSION[0];
+        }
+    }
+    
     public String getDayOfWeek() {
         assert dateTime != null;
         return DAYS[dateTime.getDay()];
+    }
+    
+    public String getDayOfWeekFull() {
+        assert dateTime != null;
+        return FULLDAYS[dateTime.getDay()];
     }
     
     public String getHour() {

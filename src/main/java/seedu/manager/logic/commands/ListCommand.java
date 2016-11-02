@@ -18,6 +18,7 @@ public class ListCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredListToShowAll();
         model.listCommand();
+        model.indicateActivityListPanelUpdate();    
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
