@@ -6,7 +6,7 @@ import seedu.manager.commons.core.Messages;
 import seedu.manager.testutil.TestActivity;
 
 import static org.junit.Assert.assertTrue;
-
+//@@author A0135730M
 public class SearchCommandTest extends ActivityManagerGuiTest {
 
     @Test

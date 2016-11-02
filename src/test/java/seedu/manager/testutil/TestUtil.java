@@ -287,6 +287,7 @@ public class TestUtil {
         return activities;
     }
 
+    //@@author A0144881Y
     /**
      * Appends activities to the array of activities.
      * @param activities A array of activities.

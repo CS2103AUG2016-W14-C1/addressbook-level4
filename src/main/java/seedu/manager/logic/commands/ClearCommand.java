@@ -5,7 +5,7 @@ import seedu.manager.model.ActivityManager;
 /**
  * Clears the activity manager.
  */
-//@@author A0139797E
+//@@author A0144881Y
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";

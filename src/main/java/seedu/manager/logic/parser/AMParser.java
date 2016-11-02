@@ -54,6 +54,7 @@ public class AMParser {
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
     
+    //@@author A0144881Y
     /**
      * Parses user input into command for execution.
      *
@@ -114,6 +115,7 @@ public class AMParser {
         }
     }
 
+    //@@author A0135730M
     /**
      * Parses arguments in the context of the add activity command.
      *

@@ -114,7 +114,6 @@ public class ActivityList implements Iterable<Activity> {
     		}
     	});
     }
-    //@@author 
 
     public int size() {
         return internalList.size();

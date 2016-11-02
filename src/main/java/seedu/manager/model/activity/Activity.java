@@ -206,6 +206,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         this.endDateTime = new AMDate(epochEndDateTime);
     }
     
+    //@@author A0135730M
 	@Override
 	public boolean equals(Object o) {
 	    return o == this

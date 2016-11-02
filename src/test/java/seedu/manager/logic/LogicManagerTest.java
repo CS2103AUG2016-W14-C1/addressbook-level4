@@ -121,9 +121,9 @@ public class LogicManagerTest {
             ActivityList expectedShownList) throws Exception {
         assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends Activity>)expectedShownList.getInternalList());
     }
-    //@@author 
+    
 
-
+    //@@author A0144881Y
     @Test
     public void execute_unknownCommandWord() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -344,7 +344,7 @@ public class LogicManagerTest {
                 orderedList);
     }
 
-
+    //@@author A0144881Y
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
      * targeting a single activity in the shown list, using visible index.
@@ -377,7 +377,6 @@ public class LogicManagerTest {
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getActivityManager(), activityList);
     }
 
-    //@@author A0144881Y
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -490,7 +489,7 @@ public class LogicManagerTest {
                 expectedAM,
                 expectedAM.getActivityList()); 
         
-     // setup expectations for event activity
+        // setup expectations for event activity
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
@@ -954,7 +953,7 @@ public class LogicManagerTest {
         public String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
         }
-        //@@author 
+        
 
         /**
          * Generates a valid activity using the given seed.
