@@ -21,14 +21,17 @@ Remindaroo is a customized to-do list application that can help you manage your 
 
 2. Download the latest `remindaroo.jar` from the [releases](../../../releases) tab.
 3. Copy the file to the folder you want to use as the home folder for Remindaroo.
-4. Double-click the file to start the app. The GUI should appear in a few seconds.
+4. Double-click the file to start the app. The Graphical User Interface (GUI) should appear in a few seconds.
 
-4. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
+> <img src="images/screenshots/Ui.png"><br>
+> Figure 1: GUI of Remindaroo
+
+5. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
    e.g. type **`help`** and press <kbd>Enter</kbd> to open the help window.
-5. Some examples of commands you can try:
+6. Some examples of commands you can try:
    * **`add`**`buy bread` : adds a task named `buy bread` to Remindaroo
    * **`exit`** : exits the app
-6. Refer to the [Commands](#4-commands) section below for details of each command.<br>
+7. Refer to the [Commands](#4-commands) section below for details of each command.<br>
 
 <!-- @@author A0139797E -->
 ## 4. Commands
@@ -66,17 +69,30 @@ Adds an activity into Remindaroo. 3 types of activities are available:
 
 	> Example: <br>
 	> `add buy milk` <br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/add_task_after.png"><br><br>
+	> Figure 2: After entered command `add buy toilet paper`<br><br>
+
 -  `add DEADLINE on|by DATE_TIME`<br>
 
 	> Example: <br>
 	> `add Submit Assignment 1 on 23 Oct` <br>
 	> `add Submit Assignment 1 by 23 Oct 09:00` <br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/add_deadline_after.png"><br><br>
+	> Figure 3: After entered command `add project submission by next tues 23:59`<br><br>
 
 - `add EVENT from START_DATE_TIME to END_DATE_TIME`<br>
 
 	> Example: <br>
 	> `add Football Tournament from 21 Oct 08:00 to 23 Oct 22:00` <br>
 	> `add Football Tournament from 21 Oct to 23 Oct` <br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/add_event_after.png"><br><br>
+	> Figure 4: After entered command `add football competition from 21st nov 9am to 21st nov 5pm`<br><br>
 
 <!-- @@author A0135730M -->
 ##### Note:<br><br>
@@ -84,6 +100,10 @@ Adds an activity into Remindaroo. 3 types of activities are available:
 	> Example: <br>
 	> `add transfer window closing on 31 oct for 3 years` <br>
 	> `add monthly meeting from 1 Oct 1pm to 1 Oct 3pm for 5 months` <br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/add_recurring_after.png"><br><br>
+	> Figure 5: After entered command `add afternoon run from today 5pm to today 6pm for 5 days`<br><br>
 
 -  If activity name contains keywords, add quotation marks to the keywords that separate the name and time.
 	> Example: <br>
@@ -112,6 +132,13 @@ Deletes a specific activity from Remindaroo
 	> Example: <br>
 	> `delete 1` <br>
 	> Activity with ID 1 (e.g. `Football Practice`) is deleted from the Remindaroo
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/delete_before.png"><br><br>
+	> Figure 6: Command to type in order to delete event "Project Meeting"<br><br>
+	>
+	> <img src="images/screenshots/delete_after.png"><br><br>
+	> Figure 7: After entered command `delete 3`<br><br>
 
 ### <br>4.5 Update Activity : **`update`**
 Updates name, date and/or time of specific activity to specified name, date and/or time.
@@ -128,11 +155,18 @@ Updates name, date and/or time of specific activity to specified name, date and/
 	>
 	> `update 3 from 11 Oct 13:00 to 11 Oct 14:00`<br>
 	> Activity with ID 3 is updated to be on 11 October, 13:00 to 14:00<br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/update_event_before.png"><br><br>
+	> Figure 8: Command to type in order to update event "football competition"<br><br>
+	>
+	> <img src="images/screenshots/update_event_after.png"><br><br>
+	> Figure 9: After entered command `update 9 football tournament from 21 nov 9am to 23 nov 5pm`<br><br>
 
 
 <!-- @@author A0144704L -->
 ### <br>4.6 Mark Activity : **`mark`**
-Marks an activity as completed. If the activity already has a status, it will be overwritten by the status in this command.
+Marks an activity as completed. Displays remaining pending activities.
 
 ##### Format:<br><br>
 - `mark ACTIVITY_ID`<br>
@@ -140,9 +174,16 @@ Marks an activity as completed. If the activity already has a status, it will be
 	> Example:<br>
 	> `mark 1`<br>
 	> Activity with ID 1 (e.g. `do assignment 1`) is marked as completed
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/mark_before.png"><br><br>
+	> Figure 10: Command to type in order to mark task "buy toilet paper"<br><br>
+	>
+	> <img src="images/screenshots/mark_after.png"><br><br>
+	> Figure 11: After entered command `mark 12`<br><br>
 
 ### <br>4.7 Unmark Activity : **`unmark`**
-Unmarks an activity as pending. If the activity already has a status, it will be overwritten by the status in this command.
+Unmarks an activity as pending. Displays remaining pending activities.
 
 ##### Format:<br><br>
 - `unmark ACTIVITY_ID`<br>
@@ -162,12 +203,26 @@ If search by keywords, add quotation marks (either ' or ") around keywords.
 	> Example:<br>
 	> `search "CS2101 tutorial"`<br>
 	> `search 'Assignment 1'`<br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/search_keywords_before.png"><br><br>
+	> Figure 12: Command to type in order to search for activity with "assignment"<br><br>
+	>
+	> <img src="images/screenshots/search_keywords_after.png"><br><br>
+	> Figure 13: After entered command `search 'assignment'`<br><br>
 
 - `search DATE_TIME [to END_DATE_TIME]`<br>
 
 	> Example:<br>
 	> `search today`<br>
 	> `search 21 Oct to 23 Oct`<br>
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/search_date_before.png"><br><br>
+	> Figure 14: Command to type in order to search for activities between today (Wednesday) and Friday<br><br>
+	>
+	> <img src="images/screenshots/search_date_after.png"><br><br>
+	> Figure 15: After entered command `search today to fri`<br><br>
 
 - `search STATUS`<br>
 
@@ -187,6 +242,13 @@ Undoes last N command(s) entered (default N equals 1).
 	>  `add CS2103 Tutorial`<br>
 	>  `undo 2`<br>
 	>  CS2101 tutorial and CS2103 Tutorial are removed from Remindaroo
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/undo_before.png"><br><br>
+	> Figure 16: Command to type in order to undo previous command<br><br>
+	>
+	> <img src="images/screenshots/undo_after.png"><br><br>
+	> Figure 17: After entered command `undo`<br><br>
 
 ### <br>4.10 Redo last command: **`redo`**
 Redoes last N undo command(s) (default N equals 1).
@@ -201,6 +263,10 @@ Redoes last N undo command(s) (default N equals 1).
 	>  `undo 2`<br>
 	>  `redo 2`<br>
 	>  CS2101 tutorial and CS2103 Tutorial are re-added to Remindaroo
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/redo_after.png"><br><br>
+	> Figure 18: After entered command `undo` from Figure 17<br><br>
 
 <!-- @@author A0144704L -->
 ### <br>4.11 Change Data Storage Location : **`store`**
@@ -213,6 +279,10 @@ Changes the location of the data file of Remindaroo to the specified path (relat
 	> Example:<br>
 	> `store new_data/Remindaroo.xml`<br>
 	> The Data file `Remindaroo.xml` now resides in the folder `new_data`
+	>
+	> Screenshot: <br>
+	> <img src="images/screenshots/store_after.png"><br><br>
+	> Figure 19: After entered command `store data/otherRemindaroo.xml`<br><br>
 
 ### <br>4.12 Show Help Menu : **`help`**
 Displays the help window, which contains instructions for using each of the commands
@@ -220,6 +290,10 @@ Displays the help window, which contains instructions for using each of the comm
 ##### Format:<br><br>
 
 - `help`<br>
+
+	> Screenshot: <br>
+	> <img src="images/screenshots/help_after.png"><br><br>
+	> Figure 20: After entered command `help`<br><br>
 
 ### <br>4.13 Exit Remindaroo : **`exit`**
 Exits the program
