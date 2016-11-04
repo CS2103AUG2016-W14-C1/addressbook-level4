@@ -129,21 +129,22 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author A0144704L
     @Override
-    public synchronized void markActivity(Activity activity) {
+    public synchronized String markActivity(Activity activity) {
         activityManager.markActivity(activity);
         updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate();
         recordManagerHistory(activityManager);
+        return activity.getName();
     }
 
     @Override
-    public synchronized void unmarkActivity(Activity activity) {
+    public synchronized String unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
+        return activity.getName();
     }
     
     //@@author A0139797E

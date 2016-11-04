@@ -38,10 +38,9 @@ public class UnmarkCommand extends Command {
         }
 
         Activity activityToUnmark = lastShownList.get(targetIndex - 1);
+        String unmarkedActivityName = model.unmarkActivity(activityToUnmark);
         
-        model.unmarkActivity(activityToUnmark);
-
-        return new CommandResult(String.format(MESSAGE_UNMARK_ACTIVITY_SUCCESS, activityToUnmark.getName()));
+        return new CommandResult(String.format(MESSAGE_UNMARK_ACTIVITY_SUCCESS, unmarkedActivityName));
     }
 }
 

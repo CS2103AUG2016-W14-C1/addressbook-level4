@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
+import com.google.common.base.Function;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -85,8 +87,24 @@ public class ActivityList implements Iterable<Activity> {
     public void mark(Activity toMark) {
     	assert toMark != null;
     	assert internalList.contains(toMark);
-    	toMark.setStatus(true);
+    	Activity newActivity;
+    	switch (toMark.getType()) {
+            case DEADLINE:
+                newActivity = new Activity(toMark.getName(), toMark.getDateTime().getTime());
+                break;
+            case EVENT:
+                newActivity = new Activity(toMark.getName(), toMark.getDateTime().getTime(), toMark.getEndDateTime().getTime());
+                break;
+            case FLOATING:
+            default:
+                newActivity = new Activity(toMark.getName());
+                break;
+        }
+    	newActivity.setStatus(true);
+    	int toMarkIndex = internalList.indexOf(toMark);
+    	internalList.set(toMarkIndex, newActivity);
     	Collections.sort(internalList);
+    	
     }
     
     /**
@@ -95,8 +113,23 @@ public class ActivityList implements Iterable<Activity> {
     public void unmark(Activity toUnmark) {
     	assert toUnmark != null;
     	assert internalList.contains(toUnmark);
-    	toUnmark.setStatus(false);
-    	Collections.sort(internalList);
+    	Activity newActivity;
+        switch (toUnmark.getType()) {
+            case DEADLINE:
+                newActivity = new Activity(toUnmark.getName(), toUnmark.getDateTime().getTime());
+                break;
+            case EVENT:
+                newActivity = new Activity(toUnmark.getName(), toUnmark.getDateTime().getTime(), toUnmark.getEndDateTime().getTime());
+                break;
+            case FLOATING:
+            default:
+                newActivity = new Activity(toUnmark.getName());
+                break;
+        }
+        newActivity.setStatus(false);
+        int toUnmarkIndex = internalList.indexOf(toUnmark);
+        internalList.set(toUnmarkIndex, newActivity);
+        Collections.sort(internalList);
     }
     
     public void list() {
