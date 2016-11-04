@@ -27,36 +27,31 @@ public class UpdateCommand extends Command {
 
     public static final String MESSAGE_UPDATE_ACTIVITY_SUCCESS = "Updated Activity: %1$s";
 	public final int targetIndex;
-	public final String newName;
+	public String newName;
 	public String newDateTime;
 	public String newEndDateTime;
 
 	/**
-	 * Constructor for updating name only
+	 * Constructor for required field (targetIndex)
 	 */
-	public UpdateCommand(int targetIndex, String newName) {
-		this.targetIndex = targetIndex;
-		this.newName = newName;
-		this.newDateTime = null;
-		this.newEndDateTime = null;
+	public UpdateCommand(int targetIndex) {
+	    this.targetIndex = targetIndex;
 	}
 	
 	/**
-	 * Constructor for updating name and dateTime
-	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime) {
-		this(targetIndex, newName);
-		this.newDateTime = dateTime;
+     * Setters to add in optional fields
+     */
+	public void setNewName(String name) {
+	    this.newName = name;
 	}
-	
-	/**
-	 * Constructor for updating name, dateTime and endDateTime
-	 */
-	public UpdateCommand(int targetIndex, String newName, String dateTime, String endDateTime) {
-		this(targetIndex, newName);
-		this.newDateTime = dateTime;
-		this.newEndDateTime = endDateTime;
-	}
+
+    public void setNewDateTime(String date) {
+        this.newDateTime = date;
+    }
+
+    public void setNewEndDateTime(String endDate) {
+        this.newEndDateTime = endDate;
+    }
 	
 	@Override
 	public CommandResult execute() {

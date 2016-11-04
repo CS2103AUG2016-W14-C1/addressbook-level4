@@ -177,8 +177,8 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0139797E
-    public void setDateTime(Long epochDateTime) {
-        this.dateTime = new AMDate(epochDateTime);
+    public void setDateTime(AMDate dateTime) {
+        this.dateTime = dateTime;
     }
     
     public void setEndDateTime(String newEndDateTime) {
@@ -202,8 +202,8 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0139797E
-    public void setEndDateTime(Long epochEndDateTime) {
-        this.endDateTime = new AMDate(epochEndDateTime);
+    public void setEndDateTime(AMDate endDateTime) {
+        this.endDateTime = endDateTime;
     }
     
     //@@author A0135730M

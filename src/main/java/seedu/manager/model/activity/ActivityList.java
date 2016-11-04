@@ -47,19 +47,8 @@ public class ActivityList implements Iterable<Activity> {
     	int toUpdateIndex = internalList.indexOf(toUpdate);
     	Activity toUpdateInList = internalList.get(toUpdateIndex);
     	
-    	Activity newActivity;
-    	switch (toUpdateInList.getType()) {
-    	case DEADLINE:
-    	    newActivity = new Activity(toUpdateInList.getName(), toUpdateInList.getDateTime().getTime());
-    	    break;
-    	case EVENT:
-    	    newActivity = new Activity(toUpdateInList.getName(), toUpdateInList.getDateTime().getTime(), toUpdateInList.getEndDateTime().getTime());
-    	    break;
-    	case FLOATING:
-    	default:
-            newActivity = new Activity(toUpdateInList.getName());
-            break;
-    	}
+    	// construct the existing activity on a new activity
+    	Activity newActivity = new Activity(toUpdateInList);
         
         // Update Activity name (if there is new name)
     	if (newName != null && !"".equals(newName)) {
