@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.logic.commands.*;
+import seedu.manager.model.activity.ActivityType;
 
 /**
  * Parses user input.
@@ -123,62 +124,76 @@ public class AMParser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        // compare with different activity types format and return AddCommand accordingly
-        final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher eventMatcher = ADD_EVENT_ARGS_FORMAT.matcher(args.trim());
-        final Matcher deadlineRecurringMatcher = DEADLINE_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher deadlineMatcher = ADD_DEADLINE_ARGS_FORMAT.matcher(args.trim());
-        final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(args.trim());
         
+        final Pattern[] addCommandPatterns = { EVENT_RECURRING_ARGS_FORMAT, ADD_EVENT_ARGS_FORMAT, 
+                DEADLINE_RECURRING_ARGS_FORMAT, ADD_DEADLINE_ARGS_FORMAT, FLOATING_ARGS_FORMAT };
         try {
-            if (eventRecurringMatcher.matches()) {
-                final String eventName = eventRecurringMatcher.group("name").trim();
-                final String eventDate = eventRecurringMatcher.group("date").trim();
-                final String eventEndDate = eventRecurringMatcher.group("endDate").trim();
-                final int eventRecurNumber = Integer.parseInt(eventRecurringMatcher.group("num").trim());
-                final String eventRecurUnit = eventRecurringMatcher.group("unit").trim();
-                
-                StringUtil.validateAMDate(eventDate, eventEndDate);
-                validateRecurNumber(eventRecurNumber);
-                
-                return new AddCommand(eventName, eventDate, eventEndDate, eventRecurNumber, eventRecurUnit);
-            } else if (eventMatcher.matches()) {
-                final String eventName = eventMatcher.group("name").trim();
-                final String eventDate = eventMatcher.group("date").trim();
-                final String eventEndDate = eventMatcher.group("endDate").trim();
-                
-                StringUtil.validateAMDate(eventDate, eventEndDate);
-                
-                return new AddCommand(eventName, eventDate, eventEndDate);
-            } else if (deadlineRecurringMatcher.matches()) {
-                final String deadlineName = deadlineRecurringMatcher.group("name").trim();
-                final String deadlineDate = deadlineRecurringMatcher.group("date").trim();
-                final int deadlineRecurNumber = Integer.parseInt(deadlineRecurringMatcher.group("num").trim());
-                final String deadlineRecurUnit = deadlineRecurringMatcher.group("unit").trim();
-                
-                StringUtil.validateAMDate(deadlineDate);
-                validateRecurNumber(deadlineRecurNumber);
-                
-                return new AddCommand(deadlineName, deadlineDate, deadlineRecurNumber, deadlineRecurUnit);
-            } else if (deadlineMatcher.matches()) {
-                final String deadlineName = deadlineMatcher.group("name").trim();
-                final String deadlineDate = deadlineMatcher.group("date").trim();
-                
-                StringUtil.validateAMDate(deadlineDate);
-                
-                return new AddCommand(deadlineName, deadlineDate);
-            } else if (floatingMatcher.matches()) {
-                final String floatingName = floatingMatcher.group("name").trim();
-                
-                return new AddCommand(floatingName);
-            } else {
-                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            // find the right matcher and parse args accordingly
+            for (Pattern pattern : addCommandPatterns) {
+                final Matcher matcher = pattern.matcher(args.trim());
+                if (matcher.matches()) {
+                    return prepareAddByGroupingMatcher(matcher);
+                }
             }
+            // unable to find matcher which matches add command, throw exception
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
+
     }
 
+    /**
+     * Builds Command based on args in matcher
+     * 
+     * @param matcher which matches the command format
+     * @return commandToReturn with correct properties
+     * @throws IllegalValueException if date or recurNum is not valid
+     */
+    private Command prepareAddByGroupingMatcher(Matcher matcher) throws IllegalValueException {
+        String regex = matcher.pattern().pattern();
+        final String name = matcher.group("name").trim();
+        AddCommand commandToReturn = new AddCommand(name);
+        
+        // add event properties
+        if (regex.contains("date") && regex.contains("endDate")) {
+            final String date = matcher.group("date").trim();
+            final String endDate = matcher.group("endDate").trim();
+            
+            StringUtil.validateAMDate(date, endDate);
+            
+            commandToReturn.setType(ActivityType.EVENT);
+            commandToReturn.setDateTime(date);
+            commandToReturn.setEndDateTime(endDate);
+        // add deadline properties    
+        } else if (regex.contains("date")) {
+            final String date = matcher.group("date").trim();
+            
+            StringUtil.validateAMDate(date);
+            
+            commandToReturn.setType(ActivityType.DEADLINE);
+            commandToReturn.setDateTime(date);
+        }
+        
+        // add recurring properties (if any)
+        if (regex.contains("num") && regex.contains("unit")) {
+            final int recurNum = Integer.parseInt(matcher.group("num").trim());
+            final String recurUnit = matcher.group("unit").trim();
+            
+            validateRecurNumber(recurNum);
+            
+            commandToReturn.setRecurring(recurNum, recurUnit);
+        }
+        
+        return commandToReturn;
+    }
+
+    /**
+     * Validates recur number is between 1 and 30
+     * 
+     * @param num recurring number
+     * @throws IllegalValueException if out of range
+     */
     private void validateRecurNumber(int num) throws IllegalValueException {
         if (num < 1 || num > 30) {
             throw new IllegalValueException(MESSAGE_RECUR_OUT_OF_RANGE);

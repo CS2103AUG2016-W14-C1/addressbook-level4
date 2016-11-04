@@ -207,6 +207,15 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0135730M
+    public void setOffset(int offset, String unit) {
+        assert !this.type.equals(ActivityType.FLOATING);
+        this.dateTime.addOffset(offset, unit);
+        if (this.endDateTime != null) {
+            this.endDateTime.addOffset(offset, unit);
+        }
+    }
+    
+    
 	@Override
 	public boolean equals(Object o) {
 	    return o == this
