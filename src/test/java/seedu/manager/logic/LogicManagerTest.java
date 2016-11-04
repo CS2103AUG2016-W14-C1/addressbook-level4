@@ -252,9 +252,9 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_add_cannotRecurZeroTimes() throws Exception {
-        assertCommandBehavior("add zero no count on today for 0 days", MESSAGE_RECUR_NOT_POSITIVE);
-        assertCommandBehavior("add zero sum game from today to tomorrow for 0 year", MESSAGE_RECUR_NOT_POSITIVE);
+    public void execute_add_cannotRecurIfOutOfRange() throws Exception {
+        assertCommandBehavior("add zero no count on today for 0 year", MESSAGE_RECUR_OUT_OF_RANGE);
+        assertCommandBehavior("add thirty-one golden rings from today to tomorrow for 31 days", MESSAGE_RECUR_OUT_OF_RANGE);
     }
     
     @Test

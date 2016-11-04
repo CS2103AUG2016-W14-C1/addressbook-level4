@@ -2,7 +2,7 @@ package seedu.manager.logic.parser;
 
 import static seedu.manager.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.manager.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.manager.commons.core.Messages.MESSAGE_RECUR_NOT_POSITIVE;
+import static seedu.manager.commons.core.Messages.MESSAGE_RECUR_OUT_OF_RANGE;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -180,8 +180,8 @@ public class AMParser {
     }
 
     private void validateRecurNumber(int num) throws IllegalValueException {
-        if (num <= 0) {
-            throw new IllegalValueException(MESSAGE_RECUR_NOT_POSITIVE);
+        if (num < 1 || num > 30) {
+            throw new IllegalValueException(MESSAGE_RECUR_OUT_OF_RANGE);
         }
     }
 
