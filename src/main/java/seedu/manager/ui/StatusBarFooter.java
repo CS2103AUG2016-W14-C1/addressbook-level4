@@ -1,4 +1,4 @@
-//@@author A0135730M
+//@@author A0144881Y
 package seedu.manager.ui;
 
 import com.google.common.eventbus.Subscribe;

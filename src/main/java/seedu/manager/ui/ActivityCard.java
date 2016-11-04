@@ -81,7 +81,6 @@ public class ActivityCard extends UiPart{
                dateTime.getHour() + TIME_DELIMITER +
                dateTime.getMinutes();
     }
-    //@@author 
 
     public HBox getLayout() {
         return cardPane;
@@ -93,7 +92,6 @@ public class ActivityCard extends UiPart{
     	AMDate today = new AMDate("today");
     	return today.getTime() > date.getTime() + 60000;
     }
-    //@@author 
 
     @Override
     public void setNode(Node node) {

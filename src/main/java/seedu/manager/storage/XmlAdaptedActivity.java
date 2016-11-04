@@ -3,6 +3,7 @@ package seedu.manager.storage;
 import javax.xml.bind.annotation.XmlElement;
 import seedu.manager.model.activity.*;
 
+//@@author A0135730M
 /**
  * JAXB-friendly version of an Activity.
  */
@@ -28,7 +29,6 @@ public class XmlAdaptedActivity {
      */
     public XmlAdaptedActivity() {}
 
-    //@@author A0135730M
     /**
      * Converts a given Activity into this class for JAXB use.
      *
@@ -65,5 +65,4 @@ public class XmlAdaptedActivity {
     	
         return newActivity;
     }
-    //@@author 
 }

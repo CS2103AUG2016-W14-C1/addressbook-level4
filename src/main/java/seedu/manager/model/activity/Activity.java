@@ -177,8 +177,8 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0139797E
-    public void setDateTime(Long epochDateTime) {
-        this.dateTime = new AMDate(epochDateTime);
+    public void setDateTime(AMDate dateTime) {
+        this.dateTime = dateTime;
     }
     
     public void setEndDateTime(String newEndDateTime) {
@@ -202,9 +202,19 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0139797E
-    public void setEndDateTime(Long epochEndDateTime) {
-        this.endDateTime = new AMDate(epochEndDateTime);
+    public void setEndDateTime(AMDate endDateTime) {
+        this.endDateTime = endDateTime;
     }
+    
+    //@@author A0135730M
+    public void setOffset(int offset, String unit) {
+        assert !this.type.equals(ActivityType.FLOATING);
+        this.dateTime.addOffset(offset, unit);
+        if (this.endDateTime != null) {
+            this.endDateTime.addOffset(offset, unit);
+        }
+    }
+    
     
 	@Override
 	public boolean equals(Object o) {

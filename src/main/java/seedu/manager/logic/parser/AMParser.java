@@ -2,7 +2,7 @@ package seedu.manager.logic.parser;
 
 import static seedu.manager.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.manager.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.manager.commons.core.Messages.MESSAGE_RECUR_NOT_POSITIVE;
+import static seedu.manager.commons.core.Messages.MESSAGE_RECUR_OUT_OF_RANGE;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import seedu.manager.commons.exceptions.IllegalValueException;
 import seedu.manager.commons.util.StringUtil;
 import seedu.manager.logic.commands.*;
+import seedu.manager.model.activity.ActivityType;
 
 /**
  * Parses user input.
@@ -54,6 +55,7 @@ public class AMParser {
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
     
+    //@@author A0144881Y
     /**
      * Parses user input into command for execution.
      *
@@ -114,6 +116,7 @@ public class AMParser {
         }
     }
 
+    //@@author A0135730M
     /**
      * Parses arguments in the context of the add activity command.
      *
@@ -121,65 +124,79 @@ public class AMParser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        // compare with different activity types format and return AddCommand accordingly
-        final Matcher eventRecurringMatcher = EVENT_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher eventMatcher = ADD_EVENT_ARGS_FORMAT.matcher(args.trim());
-        final Matcher deadlineRecurringMatcher = DEADLINE_RECURRING_ARGS_FORMAT.matcher(args.trim());
-        final Matcher deadlineMatcher = ADD_DEADLINE_ARGS_FORMAT.matcher(args.trim());
-        final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(args.trim());
         
+        final Pattern[] addCommandPatterns = { EVENT_RECURRING_ARGS_FORMAT, ADD_EVENT_ARGS_FORMAT, 
+                DEADLINE_RECURRING_ARGS_FORMAT, ADD_DEADLINE_ARGS_FORMAT, FLOATING_ARGS_FORMAT };
         try {
-            if (eventRecurringMatcher.matches()) {
-                final String eventName = eventRecurringMatcher.group("name").trim();
-                final String eventDate = eventRecurringMatcher.group("date").trim();
-                final String eventEndDate = eventRecurringMatcher.group("endDate").trim();
-                final int eventRecurNumber = Integer.parseInt(eventRecurringMatcher.group("num").trim());
-                final String eventRecurUnit = eventRecurringMatcher.group("unit").trim();
-                
-                StringUtil.validateAMDate(eventDate, eventEndDate);
-                validateRecurNumber(eventRecurNumber);
-                
-                return new AddCommand(eventName, eventDate, eventEndDate, eventRecurNumber, eventRecurUnit);
-            } else if (eventMatcher.matches()) {
-                final String eventName = eventMatcher.group("name").trim();
-                final String eventDate = eventMatcher.group("date").trim();
-                final String eventEndDate = eventMatcher.group("endDate").trim();
-                
-                StringUtil.validateAMDate(eventDate, eventEndDate);
-                
-                return new AddCommand(eventName, eventDate, eventEndDate);
-            } else if (deadlineRecurringMatcher.matches()) {
-                final String deadlineName = deadlineRecurringMatcher.group("name").trim();
-                final String deadlineDate = deadlineRecurringMatcher.group("date").trim();
-                final int deadlineRecurNumber = Integer.parseInt(deadlineRecurringMatcher.group("num").trim());
-                final String deadlineRecurUnit = deadlineRecurringMatcher.group("unit").trim();
-                
-                StringUtil.validateAMDate(deadlineDate);
-                validateRecurNumber(deadlineRecurNumber);
-                
-                return new AddCommand(deadlineName, deadlineDate, deadlineRecurNumber, deadlineRecurUnit);
-            } else if (deadlineMatcher.matches()) {
-                final String deadlineName = deadlineMatcher.group("name").trim();
-                final String deadlineDate = deadlineMatcher.group("date").trim();
-                
-                StringUtil.validateAMDate(deadlineDate);
-                
-                return new AddCommand(deadlineName, deadlineDate);
-            } else if (floatingMatcher.matches()) {
-                final String floatingName = floatingMatcher.group("name").trim();
-                
-                return new AddCommand(floatingName);
-            } else {
-                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            // find the right matcher and parse args accordingly
+            for (Pattern pattern : addCommandPatterns) {
+                final Matcher matcher = pattern.matcher(args.trim());
+                if (matcher.matches()) {
+                    return prepareAddByGroupingMatcher(matcher);
+                }
             }
+            // unable to find matcher which matches add command, throw exception
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
+
     }
 
+    /**
+     * Builds AddCommand based on args in matcher
+     * 
+     * @param matcher which matches the command format
+     * @return commandToReturn with correct properties
+     * @throws IllegalValueException if date or recurNum is not valid
+     */
+    private Command prepareAddByGroupingMatcher(Matcher matcher) throws IllegalValueException {
+        String regex = matcher.pattern().pattern();
+        final String name = matcher.group("name").trim();
+        AddCommand commandToReturn = new AddCommand(name);
+        
+        // add event properties
+        if (regex.contains("date") && regex.contains("endDate")) {
+            final String date = matcher.group("date").trim();
+            final String endDate = matcher.group("endDate").trim();
+            
+            StringUtil.validateAMDate(date, endDate);
+            
+            commandToReturn.setType(ActivityType.EVENT);
+            commandToReturn.setDateTime(date);
+            commandToReturn.setEndDateTime(endDate);
+        // add deadline properties    
+        } else if (regex.contains("date")) {
+            final String date = matcher.group("date").trim();
+            
+            StringUtil.validateAMDate(date);
+            
+            commandToReturn.setType(ActivityType.DEADLINE);
+            commandToReturn.setDateTime(date);
+        }
+        
+        // add recurring properties (if any)
+        if (regex.contains("num") && regex.contains("unit")) {
+            final int recurNum = Integer.parseInt(matcher.group("num").trim());
+            final String recurUnit = matcher.group("unit").trim();
+            
+            validateRecurNumber(recurNum);
+            
+            commandToReturn.setRecurring(recurNum, recurUnit);
+        }
+        
+        return commandToReturn;
+    }
+
+    /**
+     * Validates recur number is between 1 and 30
+     * 
+     * @param num recurring number
+     * @throws IllegalValueException if out of range
+     */
     private void validateRecurNumber(int num) throws IllegalValueException {
-        if (num <= 0) {
-            throw new IllegalValueException(MESSAGE_RECUR_NOT_POSITIVE);
+        if (num < 1 || num > 30) {
+            throw new IllegalValueException(MESSAGE_RECUR_OUT_OF_RANGE);
         }
     }
 
@@ -215,7 +232,7 @@ public class AMParser {
      * @return the prepared command
      */
     private Command prepareUpdate(String args) {
-        final Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
+        Matcher matcher = ACTIVITY_INDEX_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
@@ -229,38 +246,61 @@ public class AMParser {
         }
         final Integer targetIndex = index.get();
         
-        // compare with different activity types format and return UpdateCommand accordingly
-        String arguments = matcher.group("arguments").trim();
-        final Matcher eventMatcher = UPDATE_EVENT_ARGS_FORMAT.matcher(arguments.trim());
-        final Matcher deadlineMatcher = UPDATE_DEADLINE_ARGS_FORMAT.matcher(arguments.trim());
-        final Matcher floatingMatcher = FLOATING_ARGS_FORMAT.matcher(arguments.trim());
-        
+        String arguments = matcher.group("arguments").trim();        
+        final Pattern[] updateCommandPatterns = { UPDATE_EVENT_ARGS_FORMAT, UPDATE_DEADLINE_ARGS_FORMAT, 
+                FLOATING_ARGS_FORMAT };
         try {
-            if (eventMatcher.matches()) {
-                final String eventName = (eventMatcher.group("name") == null) ? null : eventMatcher.group("name").trim();
-                final String eventDate = eventMatcher.group("date").trim();
-                final String eventEndDate = eventMatcher.group("endDate").trim();
-                
-                StringUtil.validateAMDate(eventDate, eventEndDate);
-                
-                return new UpdateCommand(targetIndex, eventName, eventDate, eventEndDate);
-            } else if (deadlineMatcher.matches()) {
-                final String deadlineName = (deadlineMatcher.group("name") == null) ? null : deadlineMatcher.group("name").trim();
-                final String deadlineDate = deadlineMatcher.group("date").trim();
-                
-                StringUtil.validateAMDate(deadlineDate);
-                
-                return new UpdateCommand(targetIndex, deadlineName, deadlineDate);
-            } else if (floatingMatcher.matches()) {
-                final String floatingName = floatingMatcher.group("name").trim();
-                
-                return new UpdateCommand(targetIndex, floatingName);
-            } else {
-                throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+            // find the right matcher and parse args accordingly
+            for (Pattern pattern : updateCommandPatterns) {
+                matcher = pattern.matcher(arguments);
+                if (matcher.matches()) {
+                    return prepareUpdateByGroupingMatcher(matcher, targetIndex);
+                }
             }
+            // unable to find matcher which matches update command, throw exception
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
+        
+    }
+
+    /**
+     * Builds UpdateCommand based on args in matcher
+     * 
+     * @param matcher which matches the command format
+     * @return commandToReturn with correct properties
+     * @throws IllegalValueException if date is not valid
+     */
+    private Command prepareUpdateByGroupingMatcher(Matcher matcher, int targetIndex) throws IllegalValueException {
+        String regex = matcher.pattern().pattern();
+        UpdateCommand commandToReturn = new UpdateCommand(targetIndex);
+        
+        // update name (if any)
+        final String name = matcher.group("name");
+        if (name != null && !"".equals(name)) {
+            commandToReturn.setNewName(name.trim());
+        }
+        
+        // update event properties
+        if (regex.contains("date") && regex.contains("endDate")) {
+            final String date = matcher.group("date").trim();
+            final String endDate = matcher.group("endDate").trim();
+            
+            StringUtil.validateAMDate(date, endDate);
+            
+            commandToReturn.setNewDateTime(date);
+            commandToReturn.setNewEndDateTime(endDate);
+        // update deadline properties    
+        } else if (regex.contains("date")) {
+            final String date = matcher.group("date").trim();
+            
+            StringUtil.validateAMDate(date);
+            
+            commandToReturn.setNewDateTime(date);
+        }
+        
+        return commandToReturn;
     }
 
     //@@author A0144704L

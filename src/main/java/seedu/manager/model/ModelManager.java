@@ -97,7 +97,6 @@ public class ModelManager extends ComponentManager implements Model {
     	raise(new ActivityListPanelUpdateEvent(index));
     }
 
-    //@@author A0139797E
     @Override
     public synchronized void addActivity(Activity activity, boolean isLastRecurring) {
         activityManager.addActivity(activity);
@@ -130,21 +129,22 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author A0144704L
     @Override
-    public synchronized void markActivity(Activity activity) {
+    public synchronized String markActivity(Activity activity) {
         activityManager.markActivity(activity);
         updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate();
         recordManagerHistory(activityManager);
+        return activity.getName();
     }
 
     @Override
-    public synchronized void unmarkActivity(Activity activity) {
+    public synchronized String unmarkActivity(Activity activity) {
         activityManager.unmarkActivity(activity);
-        updateFilteredActivityList(false);
         indicateActivityManagerChanged();
         indicateActivityListPanelUpdate(activity);
         recordManagerHistory(activityManager);
+        return activity.getName();
     }
     
     //@@author A0139797E
@@ -196,7 +196,6 @@ public class ModelManager extends ComponentManager implements Model {
     	activityManager.listActivities();
     	indicateActivityListPanelUpdate();
     }
-    //@@author 
 
     //=========== Filtered Activity List Accessors ===============================================================
 
@@ -225,8 +224,8 @@ public class ModelManager extends ComponentManager implements Model {
 		});
     	return new UnmodifiableObservableList<>(deadlineAndEventList);
     }
-    //@@author 
 
+    
     @Override
     public void updateFilteredListToShowAll() {
         filteredActivities.setPredicate(null);
@@ -241,7 +240,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredActivityList(AMDate dateTime, AMDate endDateTime){
         updateFilteredActivityList(new PredicateExpression(new DateQualifier(dateTime, endDateTime)));
     }
-    //@@author 
     
 
     private void updateFilteredActivityList(Expression expression) {
@@ -264,7 +262,6 @@ public class ModelManager extends ComponentManager implements Model {
     		}
     	});
     }
-    //@author 
 
     //========== Inner classes/interfaces used for filtering ==================================================
 
@@ -344,6 +341,5 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
     }
-    //@@author 
 
 }

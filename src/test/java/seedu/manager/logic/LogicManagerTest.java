@@ -121,9 +121,9 @@ public class LogicManagerTest {
             ActivityList expectedShownList) throws Exception {
         assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends Activity>)expectedShownList.getInternalList());
     }
-    //@@author 
+    
 
-
+    //@@author A0144881Y
     @Test
     public void execute_unknownCommandWord() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -252,9 +252,9 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_add_cannotRecurZeroTimes() throws Exception {
-        assertCommandBehavior("add zero no count on today for 0 days", MESSAGE_RECUR_NOT_POSITIVE);
-        assertCommandBehavior("add zero sum game from today to tomorrow for 0 year", MESSAGE_RECUR_NOT_POSITIVE);
+    public void execute_add_cannotRecurIfOutOfRange() throws Exception {
+        assertCommandBehavior("add zero no count on today for 0 year", MESSAGE_RECUR_OUT_OF_RANGE);
+        assertCommandBehavior("add thirty-one golden rings from today to tomorrow for 31 days", MESSAGE_RECUR_OUT_OF_RANGE);
     }
     
     @Test
@@ -344,7 +344,7 @@ public class LogicManagerTest {
                 orderedList);
     }
 
-
+    //@@author A0144881Y
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
      * targeting a single activity in the shown list, using visible index.
@@ -377,7 +377,6 @@ public class LogicManagerTest {
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getActivityManager(), activityList);
     }
 
-    //@@author A0144881Y
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -485,12 +484,12 @@ public class LogicManagerTest {
         Activity newDeadline = new Activity("new deadline", helper.getReferenceDateString());
         expectedAM.addActivity(newDeadline);
       
-        assertCommandBehavior("update 1    new deadline    by    " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new deadline    ",
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
                 expectedAM.getActivityList()); 
         
-     // setup expectations for event activity
+        // setup expectations for event activity
         expectedAM.resetData(emptyAM);
         model.resetData(emptyAM);
         Activity existingEvent = new Activity("event", helper.getReferenceDateString(), helper.getReferenceDateString());
@@ -499,7 +498,7 @@ public class LogicManagerTest {
         Activity newEvent = new Activity("new event", helper.getReferenceDateString(), helper.getReferenceDateString());
         expectedAM.addActivity(newEvent);
       
-        assertCommandBehavior("update 1    new event   from   " + helper.getReferenceDateString() + "   to   " + helper.getReferenceDateString(),
+        assertCommandBehavior("update 1    new event   ",
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
                 expectedAM.getActivityList());
@@ -761,19 +760,22 @@ public class LogicManagerTest {
 
         ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
         expectedAM.markActivity(threeActivities.get(0));
+        threeActivities.get(0).setStatus(true);
         helper.addToModel(model, threeActivities);
         List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
         List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
        
+        assertCommandBehavior("search completed",
+                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
+                expectedAM,
+                expectedMarkList);
+        
         assertCommandBehavior("search pending",
                 Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
                 expectedAM,
                 expectedPendingList);
         
-        assertCommandBehavior("search completed",
-                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
-                expectedAM,
-                expectedMarkList);
+        
     }
     
     //@@author A0144704L
@@ -797,7 +799,7 @@ public class LogicManagerTest {
         expectedAM.markActivity(threeActivities.get(1));
         helper.addToModel(model, threeActivities);
        
-        assertCommandBehavior("mark 3",
+        assertCommandBehavior("mark 2",
                 String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getPendingActivityList());
@@ -954,7 +956,7 @@ public class LogicManagerTest {
         public String getReferenceDateString() {
             return "28 Feb 2016 00:00:00";
         }
-        //@@author 
+        
 
         /**
          * Generates a valid activity using the given seed.

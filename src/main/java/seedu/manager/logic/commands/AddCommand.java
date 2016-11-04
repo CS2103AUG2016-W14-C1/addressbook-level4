@@ -34,43 +34,37 @@ public class AddCommand extends Command {
 
     //@@author A0135730M
     /**
-     * Constructor for floating tasks
+     * Constructor for required field (name)
      */
     public AddCommand(String name) {
         this.toAdd = new Activity(name);
     }
     
     /**
-     * Constructor for deadlines
+     * Setters to add in optional/derived fields
      */
-    public AddCommand(String name, String dateTime) {
-        this.toAdd = new Activity(name, dateTime);
+    public void setType(ActivityType type) {
+        this.toAdd.setType(type);
+    }
+    
+    public void setDateTime(String dateTime) {
+        this.toAdd.setDateTime(dateTime);
+    }
+    
+    public void setEndDateTime(String endDateTime) {
+        this.toAdd.setEndDateTime(endDateTime);
     }
     
     /**
-     * Constructor for recurring deadlines
+     * Creates a list of recurring activities to be added
      */
-    public AddCommand(String name, String dateTime, int recurNum, String recurUnit) {
+    public void setRecurring(int recurNum, String recurUnit) {
         this.toAddList = new ActivityList();
         for (int numLater=0; numLater<recurNum; numLater++) {
-            this.toAddList.add(new Activity(name, dateTime, numLater, recurUnit));
-        }
-    }
-
-    /**
-     * Constructor for events
-     */
-    public AddCommand(String name, String startDateTime, String endDateTime) {
-        this.toAdd = new Activity(name, startDateTime, endDateTime);
-    }
-    
-    /**
-     * Constructor for recurring events
-     */
-    public AddCommand(String name, String startDateTime, String endDateTime, int recurNum, String recurUnit) {
-        this.toAddList = new ActivityList();
-        for (int numLater=0; numLater<recurNum; numLater++) {
-            this.toAddList.add(new Activity(name, startDateTime, endDateTime, numLater, recurUnit));
+            // use toAdd as the base activity for each recurring activity
+            Activity newActivity = new Activity(this.toAdd);
+            newActivity.setOffset(numLater, recurUnit);
+            this.toAddList.add(newActivity);
         }
     }
     

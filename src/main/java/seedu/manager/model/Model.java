@@ -31,11 +31,11 @@ public interface Model {
     /** Updates the given activity */
     void updateActivity(Activity target, String newName, String newDateTime, String newEndDateTime);
 
-    /** Marks the given activity */
-    void markActivity(Activity target);
+    /** Marks the given activity and returns the name of the activity marked */
+    String markActivity(Activity target);
     
     /** Unmarks the given activity */
-    void unmarkActivity(Activity target);
+    String unmarkActivity(Activity target);
     
     /** Undo up to n commands */
     void undoCommand(int offset);

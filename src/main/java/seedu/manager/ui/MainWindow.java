@@ -153,7 +153,6 @@ public class MainWindow extends UiPart {
     public AnchorPane getFloatingActivityListPlaceholder() {
     	return floatingActivityListPanelPlaceholder;
     }
-    //@author 
     
     public void hide() {
         primaryStage.hide();
@@ -210,9 +209,7 @@ public class MainWindow extends UiPart {
         return this.activityListPanel;
     }
     
-    //@@author A0144704L
     public FloatingListPanel getFloatingActivityListPanel() {
     	return this.floatingActivityListPanel;
     }
-    //@author 
 }
