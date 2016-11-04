@@ -76,20 +76,11 @@ public class ActivityList implements Iterable<Activity> {
     public void mark(Activity toMark) {
     	assert toMark != null;
     	assert internalList.contains(toMark);
-    	Activity newActivity;
-    	switch (toMark.getType()) {
-            case DEADLINE:
-                newActivity = new Activity(toMark.getName(), toMark.getDateTime().getTime());
-                break;
-            case EVENT:
-                newActivity = new Activity(toMark.getName(), toMark.getDateTime().getTime(), toMark.getEndDateTime().getTime());
-                break;
-            case FLOATING:
-            default:
-                newActivity = new Activity(toMark.getName());
-                break;
-        }
+    	
+    	// construct the existing activity on a new activity
+    	Activity newActivity = new Activity(toMark);
     	newActivity.setStatus(true);
+    	
     	int toMarkIndex = internalList.indexOf(toMark);
     	internalList.set(toMarkIndex, newActivity);
     	Collections.sort(internalList);
@@ -102,20 +93,11 @@ public class ActivityList implements Iterable<Activity> {
     public void unmark(Activity toUnmark) {
     	assert toUnmark != null;
     	assert internalList.contains(toUnmark);
-    	Activity newActivity;
-        switch (toUnmark.getType()) {
-            case DEADLINE:
-                newActivity = new Activity(toUnmark.getName(), toUnmark.getDateTime().getTime());
-                break;
-            case EVENT:
-                newActivity = new Activity(toUnmark.getName(), toUnmark.getDateTime().getTime(), toUnmark.getEndDateTime().getTime());
-                break;
-            case FLOATING:
-            default:
-                newActivity = new Activity(toUnmark.getName());
-                break;
-        }
+    	
+    	// construct the existing activity on a new activity
+    	Activity newActivity = new Activity(toUnmark);
         newActivity.setStatus(false);
+        
         int toUnmarkIndex = internalList.indexOf(toUnmark);
         internalList.set(toUnmarkIndex, newActivity);
         Collections.sort(internalList);
