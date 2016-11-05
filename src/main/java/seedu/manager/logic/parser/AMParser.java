@@ -461,7 +461,7 @@ public class AMParser {
         if (!"".equals(args.trim()) && args.endsWith(".xml")) {
             return new LoadCommand(args.trim());
         }
-        return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
+        return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoadCommand.MESSAGE_USAGE));
     }
     
     //@@author A0144704L

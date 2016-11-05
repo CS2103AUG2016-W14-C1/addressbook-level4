@@ -930,13 +930,13 @@ public class LogicManagerTest {
     
     //@@author A0144704L
     @Test
-    public void execute_store_storeToCorrectLocation () throws Exception {
+    public void execute_store_storeToCorrectLocation() throws Exception {
     	String testDataFileLocation = "data/RemindarooTest.xml";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(StoreCommand.MESSAGE_STORE_FILE_SUCCESS, testDataFileLocation));
     }
 
     @Test
-    public void execute_store_incorrectExtension () throws Exception {
+    public void execute_store_incorrectExtension() throws Exception {
     	String testDataFileLocation = "data/RemindarooTest.txt";
     	assertCommandBehavior("store " + testDataFileLocation, String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
@@ -946,8 +946,18 @@ public class LogicManagerTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE);
         assertCommandBehavior("store", expectedMessage);
     }
-
-
+    
+    @Test
+    public void execute_load_invalidFile() throws Exception {
+        String testDataFileLocation = "data/ThisShouldNotExist.xml";
+        assertCommandBehavior("load " + testDataFileLocation, LoadCommand.MESSAGE_LOAD_FILE_INVALID);
+    }
+    
+    @Test
+    public void execute_load_invalidArgsFormat() throws Exception {
+        assertCommandBehavior("load", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoadCommand.MESSAGE_USAGE));
+    }
+    
     /**
      * A utility class to generate test data.
      */

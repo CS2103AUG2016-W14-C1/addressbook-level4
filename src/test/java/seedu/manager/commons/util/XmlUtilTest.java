@@ -55,7 +55,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         XmlSerializableActivityManager dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableActivityManager.class);
-        assertEquals(5, dataFromFile.getActivityList().size());
+        assertEquals(3, dataFromFile.getActivityList().size());
     }
 
     @Test
