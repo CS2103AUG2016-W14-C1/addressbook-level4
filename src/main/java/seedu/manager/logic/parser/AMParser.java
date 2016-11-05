@@ -93,6 +93,9 @@ public class AMParser {
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
 
+        case LoadCommand.COMMAND_WORD:
+            return prepareLoad(arguments);
+            
         case StoreCommand.COMMAND_WORD:
             return prepareStore(arguments);
         	
@@ -444,6 +447,21 @@ public class AMParser {
      */
     private Command prepareSearchByDate(List<Long> range) {
         return new SearchCommand(range);
+    }
+    
+    //@@author A0139797E
+    /**
+     * Parses arguments in the context of the load command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareLoad(String args) {
+        assert args != null;
+        if (!"".equals(args.trim()) && args.endsWith(".xml")) {
+            return new LoadCommand(args.trim());
+        }
+        return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE));
     }
     
     //@@author A0144704L
