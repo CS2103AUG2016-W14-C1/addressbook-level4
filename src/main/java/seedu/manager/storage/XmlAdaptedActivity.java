@@ -53,14 +53,13 @@ public class XmlAdaptedActivity {
      * @return model's Activity object converted from jaxb
      */
     public Activity toModelType() {
-        Activity newActivity;
+        Activity newActivity = new Activity(this.name);
         if (type.equals(ActivityType.EVENT)) {
-            newActivity = new Activity(this.name, epochDateTime, epochEndDateTime);
-        } else if(type.equals(ActivityType.DEADLINE)) {
-            newActivity = new Activity(this.name, epochDateTime);    
-        } else {
-            newActivity = new Activity(this.name);
-        }
+            newActivity.setDateTime(this.epochDateTime);
+            newActivity.setEndDateTime(this.epochEndDateTime);
+        } else if (type.equals(ActivityType.DEADLINE)) {
+            newActivity.setDateTime(this.epochDateTime); 
+        } 
     	newActivity.setStatus(this.isCompleted);
     	
         return newActivity;
