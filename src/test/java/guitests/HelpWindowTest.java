@@ -1,7 +1,6 @@
 package guitests;
 
 import guitests.guihandles.HelpWindowHandle;
-import guitests.guihandles.MainGuiHandle;
 
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

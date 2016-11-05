@@ -23,7 +23,7 @@ public class TypicalTestActivities {
             // TODO: set to true to test for mark when GUI is more stable
             dog =  new ActivityBuilder().withNameAndStatus("Walk the dog", false).build();
             // Deadline task example
-            assignment = new ActivityBuilder().withNameAndTime("essay assignment", "1 Dec 2016 23:59:59").build();
+            assignment = new ActivityBuilder().withNameAndTime("essay assignment", "1 Sep 2016 23:59:59").build();
            // Event task example
             talk = new ActivityBuilder().withNameAndStartEndTime("HTML5 talk", "2 Dec 2016 10:00:00", "2 Dec 2016, 12:00:00").build();
             
