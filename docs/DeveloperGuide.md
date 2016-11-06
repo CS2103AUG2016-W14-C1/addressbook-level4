@@ -4,23 +4,23 @@
 
 1. [Introduction](#1-introduction)
 2. [Setup](#2-setup)
-3. [Design](#3-design)
+3. [Design](#3-design) <br>
     3.1 [Architecture](#3.1-architecture)<br>
     3.2 [UI Component](#3.2-UI-component)<br>
     3.3 [Logic Component](#3.3-logic-component)<br>
     3.4 [Model Component](#3.4-model-component)<br>
     3.5 [Storage Component](#3.5-storage-component)<br>
     3.6 [CommonClasses](#3.6-common-classes)<br>
-4. [Implementation](#4-implementation)
+4. [Implementation](#4-implementation) <br>
     4.1 [Logging](#4.1-logging)<br>
     4.2 [Configuration](#4.2-configuration) <br>
 5. [Testing](#5-testing)
-6. [Dev Ops](#6-dev-ops)
+6. [Dev Ops](#6-dev-ops) <br>
     6.1 [Build Automation](#6.1-build-automation)<br>
     6.2 [Continuous Integration](#6.2-continuous-integration)<br>
     6.3 [Making a release](#6.3-making-a-release)<br>
     6.4 [Managing dependencies](#6.4-managing-dependencies)<br>
-7. [Appendices](#7-appendices)
+7. [Appendices](#7-appendices) <br>
     A. [User Stories](#a-user-stories)<br>
     B. [Use Cases](#b-use-cases)<br>
     C. [Non-Functional Requirements](#c-non-functional-requirements)<br>
@@ -77,7 +77,7 @@ In order to import the project into Eclipse, proceed with the following steps:
 ### 3.1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
-Figure 1: _Architecture Diagram_ 
+Figure 1: _Architecture Diagram_  <br>
 
 With reference to Figure 1, the application is initialized via the `Main` component, which contains only the `MainApp` class. When the user starts up the program, `MainApp` initializes the components in the correct sequence and connects them up with each other. When the user exists the program, `MainApp` shuts down the components and invokes clean-up method(s) where necessary.
 
@@ -98,13 +98,13 @@ Each of the four components
 
 <img src="images/SDforDeleteActivity.png" width="800">
 
-Figure 2: Sequence diagram of component interactions for command `delete 1`
+Figure 2: Sequence diagram of component interactions for command `delete 1` <br>
 
 In figure 2, Model simply raises an ActivityManagerChangedEvent when data in ActivityManager is changed. It does not ask Storage to save any updates to the hard disk.
 
 <img src="images/SDforDeleteActivityEventHandling.png" width="800">
 
-Figure 3: Sequence diagram of handling `ActivityManagerChangedEvent`
+Figure 3: Sequence diagram of handling `ActivityManagerChangedEvent` <br>
 
 In Figure 3, the event is propagated through the EventsCenter to the Storage. Figures 2 and 3 exemplifies how an event-driven approach reduces direct coupling between Model and Storage components.
 
@@ -221,7 +221,7 @@ We have 2 types of tests as follows:
 
 1. **GUI Tests** - These are system tests that test the entire application by simulation user actions on the GUI. These tests are found in the `guitest` package.
 
-> Note:
+> Note: <br>
 > Thanks to the TestFX library, GUI tests can be run in headless mode. In headless mode, GUI tests do not show up on the screen. Please refer to the guide on using Gradle for running tests in headless mode.
 
 2. **Non-GUI Tests** - These are tests that do not involve the GUI. They include:
@@ -303,15 +303,15 @@ MSS: <br>
 4. System ensures activities with date and time are sorted in chronological order <br>
 5. System displays newly added activity in appropriate panel (schedule / task) <br>
 6. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. A recurring activity is detected <br>
-1. System generates a list of activities with appropriate dates and times <br>
-2. Repeat steps 3-5 in MSS for each single activity <br>
-3. System records the current state of all activities <br>
-Use case ends <br>
+	1. System generates a list of activities with appropriate dates and times <br>
+	2. Repeat steps 3-5 in MSS for each single activity <br>
+	3. System records the current state of all activities <br>
+	   Use case ends <br>
 
 
 #### Use Case 2: Remove all activities
@@ -321,7 +321,7 @@ MSS: <br>
 2. System deletes all activities from storage file<br>
 3. System reflects this change to user by displaying empty schedule and task panels<br>
 4. System records the current state of all activities (i.e. blank)<br>
-Use case ends<br>
+   Use case ends<br>
 
 #### Use Case 3: View all activities
 
@@ -329,7 +329,7 @@ MSS:<br>
 1. User types command <b>list</b> <br>
 2. System ensures activities with date and time are sorted in chronological order <br>
 3. System displays all activities in the respective panels (schedule / task) <br>
-Use case ends <br>
+   Use case ends <br>
 
 #### Use case 4: Update an activity
 
@@ -340,26 +340,26 @@ MSS: <br>
 and ending date time (if any) of the activity <br>
 4. System ensures activities with date and time are sorted in chronological order <br>
 5. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 #### Use case 5: Access the help menu
 
 MSS: <br>
 1. User types command <b>help</b> <br>
 2. System displays a help window showing a list of commands and examples <br>
-Use case ends <br>
+   Use case ends <br>
 
 #### Use case 6: Exit the application
 MSS: <br>
 1. User types command <b>exit</b> <br>
 2. System closes the main window of the application and terminates the process <br>
-Use case ends <br>
+   Use case ends <br>
 
 #### Use case 7: Delete an activity
 MSS: <br>
@@ -368,30 +368,30 @@ MSS: <br>
 3. System deletes the activity <br>
 4. If more than `ACTIVITY_ID` is present, repeat steps 2-3 for each `ACTIVITY_ID` <br>
 5. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
  
 #### Use case 8: Search for activities <br>
 MSS: <br>
 1. User types command <b>search</b> `...` <br>
 2. System searches activities that match corresponding keywords, occur during a specified date/time or have a specific status (pending or completed) <br>
 3. System displays all activities fulfilling the search criteria in the respective panels (schedule / task) <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions
 
 2a. User specified keywords without using quotation marks (“” or ‘’) <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 2b. User specified an unknown status (neither pending nor completed) <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 #### Use case 9: Undo a command
 MSS: <br>
@@ -399,13 +399,13 @@ MSS: <br>
 2. System reverts to the previous state. If `NUMBER_OF_TIMES` is specified, System reverts to the previous state for `NUMBER_OF_TIMES`<br>
 3. System displays all activities in the respective panels (schedule / task) <br>
 4. System indicates that it is currently in a previous state <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No previous state was found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 #### Use case 10: Redo a command
 MSS: <br>
@@ -413,13 +413,13 @@ MSS: <br>
 2. System reverts to a future state. If `NUMBER_OF_TIMES` is specified, System reverts to the future state for `NUMBER_OF_TIMES` <br>
 3. System displays all activities in the respective panels (schedule / task) <br>
 4. System indicates that it is currently in a future state <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No future state was found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 #### Use case 11: Change the storage file
 MSS: <br>
@@ -427,14 +427,14 @@ MSS: <br>
 2. System attempts to locate the specified `.xml` file <br>
 3. System writes the list of activities into the specified `.xml` file <br>
 4. System displays `NEW_DATA_FILE_PATH` as storage location in the status bar <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions
 
 2a. Specified `.xml` file is not found <br>
-1. Systems creates a new `.xml` file with the specified name <br>
-2. Proceed with steps 3 and 4 in MSS <br>
-Use case ends <br>
+	1. Systems creates a new `.xml` file with the specified name <br>
+	2. Proceed with steps 3 and 4 in MSS <br>
+	   Use case ends <br>
 
 #### Use case 12: Load schedule from a file
 MSS: <br>
@@ -445,13 +445,13 @@ MSS: <br>
 5. System ensures activities with date and time are sorted in chronological order <br> 
 6. System displays the corresponding list of activities in appropriate panels <br>
 7. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. Specified `.xml` file is not found or invalid <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+	   Use case ends <br>
 
 #### Use case 13: Mark an activity as done
 MSS: <br>
@@ -460,13 +460,13 @@ MSS: <br>
 3. System changes the status of that activity from pending to completed <br>
 4. System displays a list remaining activities that are pending <br>
 5. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+       Use case ends <br>
 
 #### Use case 14: Unmark an activity as done
 MSS: <br>
@@ -474,13 +474,13 @@ MSS: <br>
 2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
 3. System changes the status of that activity from completed to pending <br>
 4. System records the current state of all activities <br>
-Use case ends <br>
+   Use case ends <br>
 
 Extensions <br>
 
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
-1. System displays error message <br>
-Use case ends <br>
+	1. System displays error message <br>
+ 	   Use case ends <br>
 
 ### C. Non-Functional Requirements
 Non-functional requirements (NFRs) are requirements that define how Remindaroo should function as a system, independent of user behaviour. We have identified the following NFRs as essential for Remindaroo:
