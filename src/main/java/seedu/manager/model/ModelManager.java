@@ -31,27 +31,16 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given ActivityManager
      * ActivityManager and its variables should not be null
      */
-    public ModelManager(ActivityManager src, UserPrefs userPrefs) {
-        super();
-        assert src != null;
-        assert userPrefs != null;
-
-        logger.fine("Initializing with activity manager: " + src + " and user prefs " + userPrefs);
-
-        activityManager = new ActivityManager(src);
-        filteredActivities = new FilteredList<>(activityManager.getActivities());
-        // recordManagerHistory(activityManager);
-    }
-
-    public ModelManager() {
-        this(new ActivityManager(), new UserPrefs());
-    }
-
-    public ModelManager(ReadOnlyActivityManager initialData, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyActivityManager initialData) {
+        logger.fine("Initializing with activity manager: " + initialData);
         activityManager = new ActivityManager(initialData);
         filteredActivities = new FilteredList<>(activityManager.getActivities());
         updateFilteredActivityList(false);
         recordManagerHistory(activityManager);
+    }
+    
+    public ModelManager() {
+        this(new ActivityManager());
     }
 
     @Override

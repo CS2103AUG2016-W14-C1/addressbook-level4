@@ -32,12 +32,6 @@ import static seedu.manager.commons.core.Messages.*;
 
 public class LogicManagerTest {
 
-    /**
-     * See https://github.com/junit-team/junit4/wiki/rules#temporaryfolder-rule
-     */
-    @Rule
-    public TemporaryFolder saveFolder = new TemporaryFolder();
-
     private Model model;
     private Logic logic;
     private TestDataHelper helper;
@@ -47,8 +41,8 @@ public class LogicManagerTest {
     private boolean helpShown;
     
     @Subscribe
-    private void handleLocalModelChangedEvent(ActivityManagerChangedEvent abce) {
-        latestSavedActivityManager = new ActivityManager(abce.data);
+    private void handleLocalModelChangedEvent(ActivityManagerChangedEvent amce) {
+        latestSavedActivityManager = new ActivityManager(amce.data);
     }
 
     @Subscribe
@@ -59,9 +53,7 @@ public class LogicManagerTest {
     @Before
     public void setup() {
         model = new ModelManager();
-        String tempActivityManagerFile = saveFolder.getRoot().getPath() + "TempActivityManager.xml";
-        String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempActivityManagerFile, tempPreferencesFile));
+        logic = new LogicManager(model);
         EventsCenter.getInstance().registerHandler(this);
         helper = new TestDataHelper();
 
@@ -72,13 +64,6 @@ public class LogicManagerTest {
     @After
     public void teardown() {
         EventsCenter.clearSubscribers();
-    }
-
-    @Test
-    public void execute_invalid() throws Exception {
-        String invalidCommand = "       ";
-        assertCommandBehavior(invalidCommand,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
     }
 
     /**
