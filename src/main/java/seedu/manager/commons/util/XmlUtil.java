@@ -72,6 +72,9 @@ public class XmlUtil {
      * Returns true if both files have the same content
      */
     public static boolean contentEquals(String filename1, String filename2) throws Exception {
+        assert filename1 != null;
+        assert filename2 != null;
+        
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
         dbf.setCoalescing(true);

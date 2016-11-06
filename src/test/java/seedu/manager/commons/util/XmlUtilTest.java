@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class XmlUtilTest {
 
@@ -91,5 +93,37 @@ public class XmlUtilTest {
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableActivityManager.class);
         assertEquals((new ActivityManager(dataToWrite)).toString(),(new ActivityManager(dataFromFile)).toString());
+    }
+    
+    @Test
+    public void contentEquals_nullFilename1_AssertionError() throws Exception {
+        thrown.expect(AssertionError.class);
+        XmlUtil.contentEquals(null, VALID_FILE.getPath());
+    }
+    
+    @Test
+    public void contentEquals_nullFilename2_AssertionError() throws Exception {
+        thrown.expect(AssertionError.class);
+        XmlUtil.contentEquals(VALID_FILE.getPath(), null);
+    }
+    
+    @Test
+    public void contentEquals_missingFilename1_FileNotFoundException() throws Exception {
+        thrown.expect(FileNotFoundException.class);
+        XmlUtil.contentEquals(MISSING_FILE.getPath(), VALID_FILE.getPath());
+    }
+    
+    @Test
+    public void contentEquals_missingFilename2_FileNotFoundException() throws Exception {
+        thrown.expect(FileNotFoundException.class);
+        XmlUtil.contentEquals(VALID_FILE.getPath(), MISSING_FILE.getPath());
+    }
+    
+    @Test
+    public void contentEquals_compareCorrectly() throws Exception {
+        assertTrue(XmlUtil.contentEquals(VALID_FILE.getPath(), VALID_FILE.getPath()));
+        
+        TEMP_FILE.createNewFile();
+        assertFalse(XmlUtil.contentEquals(VALID_FILE.getPath(), TEMP_FILE.getPath()));
     }
 }
