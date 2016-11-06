@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<activitymanager>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1476072000000</epochDateTime>
+        <epochEndDateTime>1476079200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>v0.2</name>
+        <epochDateTime>1476252000000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Tutorial</name>
+        <epochDateTime>1476252000000</epochDateTime>
+        <epochEndDateTime>1476255600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2101 Presentation 1</name>
+        <epochDateTime>1476331200000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1476331200000</epochDateTime>
+        <epochEndDateTime>1476338400000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA</name>
+        <epochDateTime>1476439200000</epochDateTime>
+        <epochEndDateTime>1476450000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2105 Assignment 2</name>
+        <epochDateTime>1476460740000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>visit grandma</name>
+        <epochDateTime>1476504000000</epochDateTime>
+        <epochEndDateTime>1476511200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>do homework</name>
+        <epochDateTime>1476529200000</epochDateTime>
+        <epochEndDateTime>1476540000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>date with Kelly</name>
+        <epochDateTime>1476583200000</epochDateTime>
+        <epochEndDateTime>1476597600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1476676800000</epochDateTime>
+        <epochEndDateTime>1476684000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>v0.3</name>
+        <epochDateTime>1476856800000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Tutorial</name>
+        <epochDateTime>1476856800000</epochDateTime>
+        <epochEndDateTime>1476860400000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2101 Presentation 1</name>
+        <epochDateTime>1476936000000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1476936000000</epochDateTime>
+        <epochEndDateTime>1476943200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA</name>
+        <epochDateTime>1477044000000</epochDateTime>
+        <epochEndDateTime>1477054800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2106 Lab 3</name>
+        <epochDateTime>1477065540000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>visit grandpa</name>
+        <epochDateTime>1477108800000</epochDateTime>
+        <epochEndDateTime>1477116000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>do homework</name>
+        <epochDateTime>1477134000000</epochDateTime>
+        <epochEndDateTime>1477144800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1477281600000</epochDateTime>
+        <epochEndDateTime>1477288800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>v0.4</name>
+        <epochDateTime>1477461600000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Tutorial</name>
+        <epochDateTime>1477461600000</epochDateTime>
+        <epochEndDateTime>1477465200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>tutorial</name>
+        <epochDateTime>1477461600000</epochDateTime>
+        <epochEndDateTime>1477468800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>Math Tuition</name>
+        <epochDateTime>1477479600000</epochDateTime>
+        <epochEndDateTime>1477486800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1477540800000</epochDateTime>
+        <epochEndDateTime>1477548000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA</name>
+        <epochDateTime>1477648800000</epochDateTime>
+        <epochEndDateTime>1477659600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA extra training</name>
+        <epochDateTime>1477713600000</epochDateTime>
+        <epochEndDateTime>1477720800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>do homework</name>
+        <epochDateTime>1477738800000</epochDateTime>
+        <epochEndDateTime>1477749600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>date</name>
+        <epochDateTime>1477792800000</epochDateTime>
+        <epochEndDateTime>1477800000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1477886400000</epochDateTime>
+        <epochEndDateTime>1477893600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>v0.5</name>
+        <epochDateTime>1478066400000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>tutorial</name>
+        <epochDateTime>1478066400000</epochDateTime>
+        <epochEndDateTime>1478073600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Tutorial</name>
+        <epochDateTime>1478066400000</epochDateTime>
+        <epochEndDateTime>1478934000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2101 Presentation 2</name>
+        <epochDateTime>1478145600000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1478145600000</epochDateTime>
+        <epochEndDateTime>1478152800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA</name>
+        <epochDateTime>1478253600000</epochDateTime>
+        <epochEndDateTime>1478264400000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2105 Assignment 3</name>
+        <epochDateTime>1478275140000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>visit grandma</name>
+        <epochDateTime>1478318400000</epochDateTime>
+        <epochEndDateTime>1478325600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>do housework</name>
+        <epochDateTime>1478343600000</epochDateTime>
+        <epochEndDateTime>1479211200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Project Meeting</name>
+        <epochDateTime>1478397600000</epochDateTime>
+        <epochEndDateTime>1478430000000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1478491200000</epochDateTime>
+        <epochEndDateTime>1478498400000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2101 CS2103T FINAL SUBMISSION</name>
+        <epochDateTime>1478534340000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2103T Tutorial</name>
+        <epochDateTime>1478671200000</epochDateTime>
+        <epochEndDateTime>1478674800000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>CS2101 Essay</name>
+        <epochDateTime>1478750400000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CS2101 Tutorial</name>
+        <epochDateTime>1478750400000</epochDateTime>
+        <epochEndDateTime>1478757600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>CCA Rehearsal</name>
+        <epochDateTime>1478858400000</epochDateTime>
+        <epochEndDateTime>1478869200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>DEADLINE</type>
+        <name>end of sem!</name>
+        <epochDateTime>1478879940000</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>visit grandma</name>
+        <epochDateTime>1478923200000</epochDateTime>
+        <epochEndDateTime>1478930400000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>mugging</name>
+        <epochDateTime>1478948400000</epochDateTime>
+        <epochEndDateTime>1478959200000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>family jogging</name>
+        <epochDateTime>1479002400000</epochDateTime>
+        <epochEndDateTime>1479009600000</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>buy watch</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>update passport</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>arrange meetup with Joe</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>memorise concert songs</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>owes John $10</name>
+        <isCompleted>true</isCompleted>
+    </activity>
+</activitymanager>
