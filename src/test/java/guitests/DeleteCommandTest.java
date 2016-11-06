@@ -46,8 +46,8 @@ public class DeleteCommandTest extends ActivityManagerGuiTest {
     
     /**
      * Runs the delete command to delete the activity at specified index and confirms the result is correct.
-     * @param targetIndexOneIndexed e.g. to delete the first person in the list, 1 should be given as the target index.
-     * @param currentList A copy of the current list of persons (before deletion).
+     * @param targetIndexOneIndexed e.g. to delete the first activity in the list, 1 should be given as the target index.
+     * @param currentList A copy of the current list of activities (before deletion).
      */
     public void assertDeleteSuccess(int targetIndexOneIndexed, final TestActivity[] currentList) {
         int floatingIndex = getFloatingIndex(targetIndexOneIndexed);
