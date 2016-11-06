@@ -849,7 +849,7 @@ public class LogicManagerTest {
     
     @Test
     public void execute_load_fileLoadedCorrectly() throws Exception {
-        String testDataFileLocation = "data/seed.xml";
+        String testDataFileLocation = "src/test/data/LoadTest/seed.xml";
         String existingDataFileLocation = ConfigUtil.readConfig(Config.DEFAULT_CONFIG_FILE).get()
                                           .getActivityManagerFilePath();
         logic.execute("clear");
