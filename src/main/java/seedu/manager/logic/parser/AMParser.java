@@ -53,7 +53,7 @@ public class AMParser {
                     Pattern.CASE_INSENSITIVE);
     
     private static final Pattern FLOATING_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("^(?<name>[^/]+)$"); // variable number of tags
+            Pattern.compile("^(?<name>[^/]+)$"); 
     
     //@@author A0144881Y
     /**
