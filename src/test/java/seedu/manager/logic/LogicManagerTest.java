@@ -370,9 +370,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_delete_removesCorrectActivity() throws Exception {
-        
         List<Activity> threeActivities = helper.generateActivityList(3);
-
         ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
         expectedAM.removeActivity(threeActivities.get(1));
         helper.addToModel(model, threeActivities);
@@ -382,6 +380,23 @@ public class LogicManagerTest {
                               DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getActivityList().getInternalList());
+    }
+    
+    @Test
+    public void execute_delete_removesMultipleActivities() throws Exception {
+        List<Activity> threeActivities = helper.generateActivityList(4);
+        List<Activity> expectedList = helper.generateActivityList(1);
+        ActivityManager expectedAM = helper.generateActivityManager(expectedList);
+        helper.addToModel(model, threeActivities);
+
+        // delete from largest index to smallest index
+        assertCommandBehavior("delete 4 2 3",
+                String.format(DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS, 
+                              DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(3).getName()
+                              + DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(2).getName()
+                              + DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(1).getName()),
+                expectedAM,
+                expectedList);
     }
     
     @Test
