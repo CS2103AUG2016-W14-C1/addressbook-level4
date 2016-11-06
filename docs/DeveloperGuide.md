@@ -5,26 +5,26 @@
 1. [Introduction](#1-introduction)
 2. [Setup](#2-setup)
 3. [Design](#3-design)
-    3.1 [Architecture](#3.1-architecture)
-    3.2 [UI Component](#3.2-UI-component)
-    3.3 [Logic Component](#3.3-logic-component)
-    3.4 [Model Component](#3.4-model-component)
-    3.5 [Storage Component](#3.5-storage-component)
-    3.6 [CommonClasses](#3.6-common-classes)
+    3.1 [Architecture](#3.1-architecture)<br>
+    3.2 [UI Component](#3.2-UI-component)<br>
+    3.3 [Logic Component](#3.3-logic-component)<br>
+    3.4 [Model Component](#3.4-model-component)<br>
+    3.5 [Storage Component](#3.5-storage-component)<br>
+    3.6 [CommonClasses](#3.6-common-classes)<br>
 4. [Implementation](#4-implementation)
-    4.1 [Logging](#4.1-logging)
-    4.2 [Configuration](#4.2-configuration) 
+    4.1 [Logging](#4.1-logging)<br>
+    4.2 [Configuration](#4.2-configuration) <br>
 5. [Testing](#5-testing)
 6. [Dev Ops](#6-dev-ops)
-    6.1 [Build Automation](#6.1-build-automation)
-    6.2 [Continuous Integration](#6.2-continuous-integration)
-    6.3 [Making a release](#6.3-making-a-release)
-    6.4 [Managing dependencies](#6.4-managing-dependencies)
+    6.1 [Build Automation](#6.1-build-automation)<br>
+    6.2 [Continuous Integration](#6.2-continuous-integration)<br>
+    6.3 [Making a release](#6.3-making-a-release)<br>
+    6.4 [Managing dependencies](#6.4-managing-dependencies)<br>
 7. [Appendices](#7-appendices)
-    A. [User Stories](#a-user-stories)
-    B. [Use Cases](#b-use-cases)
-    C. [Non-Functional Requirements](#c-non-functional-requirements)
-    D. [Product Survey](#d-product-survey)
+    A. [User Stories](#a-user-stories)<br>
+    B. [Use Cases](#b-use-cases)<br>
+    C. [Non-Functional Requirements](#c-non-functional-requirements)<br>
+    D. [Product Survey](#d-product-survey)<br>
     E. [Glossary](#e-glossary)<br>
 
 ## 1. Introduction
@@ -39,12 +39,12 @@ This guide describes the design and implementation of Remindaroo. It provides fu
 
 1. **JDK `1.8.0_60`**  or later<br>
 
-    >Note:
+    >Note: <br>
     >  Having any Java 8 version is not enough. 
     This app will not work with earlier versions of Java 8.
 
 2. **Eclipse** IDE
-    > Note:
+    > Note: <br>
     > Eclipse Neon is required. This app will not work with older versions of Eclipse.
 
 3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in
@@ -52,8 +52,8 @@ This guide describes the design and implementation of Remindaroo. It provides fu
    
 4. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 
-In addition, we also recommend the following software to assist you in development:
-1. Eclemma plugin for Eclipse to analyse test coverage locally
+In addition, we also recommend the following software to assist you in development:<br>
+1. Eclemma plugin for Eclipse to analyse test coverage locally<br>
 2. SourceTree to improve your Git workflow experience
 <br>
 
@@ -67,17 +67,17 @@ In order to import the project into Eclipse, proceed with the following steps:
 5. Click `Browse`, then locate the project's directory (your clone's location)
 6. Click `Finish`
 
-  > Note:
+  > Note:<br>
   > If you are asked whether to `keep` or `overwrite` config files, choose to `keep`.
 
-  >Note:
+  >Note:<br>
   >  Depending on connection speed, it might take up to 30 mintues to complete setup.
 
 ## 3. Design
 ### 3.1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
-Figure 1: _Architecture Diagram_
+Figure 1: _Architecture Diagram_ 
 
 With reference to Figure 1, the application is initialized via the `Main` component, which contains only the `MainApp` class. When the user starts up the program, `MainApp` initializes the components in the correct sequence and connects them up with each other. When the user exists the program, `MainApp` shuts down the components and invokes clean-up method(s) where necessary.
 
@@ -104,7 +104,7 @@ In figure 2, Model simply raises an ActivityManagerChangedEvent when data in Act
 
 <img src="images/SDforDeleteActivityEventHandling.png" width="800">
 
-Figure 3: Sequence diagram of handling     `ActivityManagerChangedEvent`
+Figure 3: Sequence diagram of handling `ActivityManagerChangedEvent`
 
 In Figure 3, the event is propagated through the EventsCenter to the Storage. Figures 2 and 3 exemplifies how an event-driven approach reduces direct coupling between Model and Storage components.
 
@@ -209,7 +209,7 @@ To perform testing in eclipse:
 * To run all tests, right-click on the `src/test/java` folder and choose `Run as` > `JUnit Test`
 * To run a subset of tests, right-click on a test package, test class, or a test and choose `Run as` > `JUnit Test`
 
-> Note:
+> Note: <br>
 > If you have the Eclemma plugin installed, you may instead choose Coverage As > JUnit test instead to obtain code coverage results.
 
 
@@ -257,7 +257,8 @@ To create a new release:
 A project often depends on third-party libraries. For example, Remindaroo depends on the Jackson library for XML parsing. These dependencies can be automatically managed using Gradle. Gradle can download these dependencies automatically, which is better than the following alternatives:
 * Include third-party libraries in the repository
 * Require developers to download these libraries manually
-## 7. Appendices
+
+## 7. Appendices <br>
 ### A. User Stories
 
 <br>
@@ -295,191 +296,191 @@ Use cases are lists of actions that define the interaction between a user and Re
 
 #### Use case 1: Add an activity
 
-MSS:
-1. User types command <b>add</b> `ACTIVITY …`
-2. System determines the activity type (task, deadline or event)
-3. System adds activity into list of activities
-4. System ensures activities with date and time are sorted in chronological order
-5. System displays newly added activity in appropriate panel (schedule / task)
-6. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>add</b> `ACTIVITY …` <br>
+2. System determines the activity type (task, deadline or event) <br>
+3. System adds activity into list of activities <br>
+4. System ensures activities with date and time are sorted in chronological order <br>
+5. System displays newly added activity in appropriate panel (schedule / task) <br>
+6. System records the current state of all activities <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. A recurring activity is detected
-1. System generates a list of activities with appropriate dates and times
-2. Repeat steps 3-5 in MSS for each single activity
-3. System records the current state of all activities
-Use case ends
+2a. A recurring activity is detected <br>
+1. System generates a list of activities with appropriate dates and times <br>
+2. Repeat steps 3-5 in MSS for each single activity <br>
+3. System records the current state of all activities <br>
+Use case ends <br>
 
 
 #### Use Case 2: Remove all activities
 
-MSS:
-1. User types command <b>clear</b>
-2. System deletes all activities from storage file
-3. System reflects this change to user by displaying empty schedule and task panels
-4. System records the current state of all activities (i.e. blank)
-Use case ends
+MSS: <br>
+1. User types command <b>clear</b> <br>
+2. System deletes all activities from storage file<br>
+3. System reflects this change to user by displaying empty schedule and task panels<br>
+4. System records the current state of all activities (i.e. blank)<br>
+Use case ends<br>
 
 #### Use Case 3: View all activities
 
-MSS:
-1. User types command <b>list</b>
-2. System ensures activities with date and time are sorted in chronological order
-3. System displays all activities in the respective panels (schedule / task)
-Use case ends
+MSS:<br>
+1. User types command <b>list</b> <br>
+2. System ensures activities with date and time are sorted in chronological order <br>
+3. System displays all activities in the respective panels (schedule / task) <br>
+Use case ends <br>
 
 #### Use case 4: Update an activity
 
-MSS:
-1. User types command <b>update</b> `ACTIVITY_ID ...`
-2. System searches for the activity with corresponding `ACTIVITY_ID`
-3. System updates appropriate attributes such as name, starting date time (if any)
-and ending date time (if any) of the activity
-4. System ensures activities with date and time are sorted in chronological order
-5. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>update</b> `ACTIVITY_ID ...` <br>
+2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
+3. System updates appropriate attributes such as name, starting date time (if any) <br>
+and ending date time (if any) of the activity <br>
+4. System ensures activities with date and time are sorted in chronological order <br>
+5. System records the current state of all activities <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. No activity with corresponding `ACTIVITY_ID` is found
-1. System displays error message
-Use case ends
+2a. No activity with corresponding `ACTIVITY_ID` is found <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 5: Access the help menu
 
-MSS:
-1. User types command <b>help</b>
-2. System displays a help window showing a list of commands and examples
-Use case ends
+MSS: <br>
+1. User types command <b>help</b> <br>
+2. System displays a help window showing a list of commands and examples <br>
+Use case ends <br>
 
 #### Use case 6: Exit the application
-MSS:
-1. User types command <b>exit</b>
-2. System closes the main window of the application and terminates the process
-Use case ends
+MSS: <br>
+1. User types command <b>exit</b> <br>
+2. System closes the main window of the application and terminates the process <br>
+Use case ends <br>
 
 #### Use case 7: Delete an activity
-MSS:
-1. User types command <b>delete</b> `ACTIVITY_ID ...`
-2. System searches for the activity with corresponding `ACTIVITY_ID`
-3. System deletes the activity
-4. If more than `ACTIVITY_ID` is present, repeat steps 2-3 for each `ACTIVITY_ID`
-5. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>delete</b> `ACTIVITY_ID ...` <br>
+2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
+3. System deletes the activity <br>
+4. If more than `ACTIVITY_ID` is present, repeat steps 2-3 for each `ACTIVITY_ID` <br>
+5. System records the current state of all activities <br>
+Use case ends <br>
+
+Extensions <br>
+
+2a. No activity with corresponding `ACTIVITY_ID` is found <br>
+1. System displays error message <br>
+Use case ends <br>
+ 
+#### Use case 8: Search for activities <br>
+MSS: <br>
+1. User types command <b>search</b> `...` <br>
+2. System searches activities that match corresponding keywords, occur during a specified date/time or have a specific status (pending or completed) <br>
+3. System displays all activities fulfilling the search criteria in the respective panels (schedule / task) <br>
+Use case ends <br>
 
 Extensions
 
-2a. No activity with corresponding `ACTIVITY_ID` is found
-1. System displays error message
-Use case ends
+2a. User specified keywords without using quotation marks (“” or ‘’) <br>
+1. System displays error message <br>
+Use case ends <br>
 
-#### Use case 8: Search for activities
-MSS:
-1. User types command <b>search</b> `...`
-2. System searches activities that match corresponding keywords, occur during a specified date/time or have a specific status (pending or completed)
-3. System displays all activities fulfilling the search criteria in the respective panels (schedule / task)
-Use case ends
-
-Extensions
-
-2a. User specified keywords without using quotation marks (“” or ‘’)
-1. System displays error message
-Use case ends
-
-2b. User specified an unknown status (neither pending nor completed)
-1. System displays error message
-Use case ends
+2b. User specified an unknown status (neither pending nor completed) <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 9: Undo a command
-MSS:
-1. User types command <b>undo</b> `[NUMBER_OF_TIMES]`
-2. System reverts to the previous state. If `NUMBER_OF_TIMES` is specified, System reverts to the previous state for `NUMBER_OF_TIMES`
-3. System displays all activities in the respective panels (schedule / task)
-4. System indicates that it is currently in a previous state
-Use case ends
+MSS: <br>
+1. User types command <b>undo</b> `[NUMBER_OF_TIMES]` <br>
+2. System reverts to the previous state. If `NUMBER_OF_TIMES` is specified, System reverts to the previous state for `NUMBER_OF_TIMES`<br>
+3. System displays all activities in the respective panels (schedule / task) <br>
+4. System indicates that it is currently in a previous state <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. No previous state was found
-1. System displays error message
-Use case ends
+2a. No previous state was found <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 10: Redo a command
-MSS:
-1. User types command <b>redo</b> `[NUMBER_OF_TIMES]`
-2. System reverts to a future state. If `NUMBER_OF_TIMES` is specified, System reverts to the future state for `NUMBER_OF_TIMES`
-3. System displays all activities in the respective panels (schedule / task)
-4. System indicates that it is currently in a future state
-Use case ends
+MSS: <br>
+1. User types command <b>redo</b> `[NUMBER_OF_TIMES]` <br>
+2. System reverts to a future state. If `NUMBER_OF_TIMES` is specified, System reverts to the future state for `NUMBER_OF_TIMES` <br>
+3. System displays all activities in the respective panels (schedule / task) <br>
+4. System indicates that it is currently in a future state <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. No future state was found
-1. System displays error message
-Use case ends
+2a. No future state was found <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 11: Change the storage file
-MSS:
-1. User types command <b>store</b> `NEW_DATA_FILE_PATH`
-2. System attempts to locate the specified `.xml` file
-3. System writes the list of activities into the specified `.xml` file
-4. System displays `NEW_DATA_FILE_PATH` as storage location in the status bar
-Use case ends
+MSS: <br>
+1. User types command <b>store</b> `NEW_DATA_FILE_PATH` <br>
+2. System attempts to locate the specified `.xml` file <br>
+3. System writes the list of activities into the specified `.xml` file <br>
+4. System displays `NEW_DATA_FILE_PATH` as storage location in the status bar <br>
+Use case ends <br>
 
 Extensions
 
-2a. Specified `.xml` file is not found
-1. Systems creates a new `.xml` file with the specified name
-2. Proceed with steps 3 and 4 in MSS
-Use case ends
+2a. Specified `.xml` file is not found <br>
+1. Systems creates a new `.xml` file with the specified name <br>
+2. Proceed with steps 3 and 4 in MSS <br>
+Use case ends <br>
 
 #### Use case 12: Load schedule from a file
-MSS:
-1. User types command <b>load</b> `DATA_FILE_PATH`
-2. System attempts to parse the specified `.xml` file
-3. System retrieves a list of activities from specified `.xml` file
-4. System overwrites the list of activities into the current storage location
-5. System ensures activities with date and time are sorted in chronological order
-6. System displays the corresponding list of activities in appropriate panels
-7. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>load</b> `DATA_FILE_PATH` <br>
+2. System attempts to parse the specified `.xml` file <br>
+3. System retrieves a list of activities from specified `.xml` file <br>
+4. System overwrites the list of activities into the current storage location <br>
+5. System ensures activities with date and time are sorted in chronological order <br> 
+6. System displays the corresponding list of activities in appropriate panels <br>
+7. System records the current state of all activities <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. Specified `.xml` file is not found or invalid
-1. System displays error message
-Use case ends
+2a. Specified `.xml` file is not found or invalid <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 13: Mark an activity as done
-MSS:
-1. User types command <b>mark</b> `ACTIVITY_ID`
-2. System searches for the activity with corresponding `ACTIVITY_ID`
-3. System changes the status of that activity from pending to completed
-4. System displays a list remaining activities that are pending
-5. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>mark</b> `ACTIVITY_ID` <br>
+2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
+3. System changes the status of that activity from pending to completed <br>
+4. System displays a list remaining activities that are pending <br>
+5. System records the current state of all activities <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. No activity with corresponding `ACTIVITY_ID` is found
-1. System displays error message
-Use case ends
+2a. No activity with corresponding `ACTIVITY_ID` is found <br>
+1. System displays error message <br>
+Use case ends <br>
 
 #### Use case 14: Unmark an activity as done
-MSS:
-1. User types command <b>unmark</b> `ACTIVITY_ID`
-2. System searches for the activity with corresponding `ACTIVITY_ID`
-3. System changes the status of that activity from completed to pending
-4. System records the current state of all activities
-Use case ends
+MSS: <br>
+1. User types command <b>unmark</b> `ACTIVITY_ID` <br>
+2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
+3. System changes the status of that activity from completed to pending <br>
+4. System records the current state of all activities <br>
+Use case ends <br>
 
-Extensions
+Extensions <br>
 
-2a. No activity with corresponding `ACTIVITY_ID` is found
-1. System displays error message
-Use case ends
+2a. No activity with corresponding `ACTIVITY_ID` is found <br>
+1. System displays error message <br>
+Use case ends <br>
 
 ### C. Non-Functional Requirements
 Non-functional requirements (NFRs) are requirements that define how Remindaroo should function as a system, independent of user behaviour. We have identified the following NFRs as essential for Remindaroo:
