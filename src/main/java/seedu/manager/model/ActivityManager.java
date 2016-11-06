@@ -89,8 +89,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
 
     @Override
     public String toString() {
-        return activities.getInternalList().size() + " activities";
-        // TODO: refine later
+        return activities.getInternalList().toString();
     }
 
     @Override
@@ -102,9 +101,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ActivityManager // instanceof handles nulls
-                && this.toString().equals(other.toString()));
-                // TODO: check if activities are actually equal
-                /* this.activities.equals(((ActivityManager) other).getActivities()); */       
+                    && this.activities.equals(((ActivityManager) other).activities));       
                 
     }
 

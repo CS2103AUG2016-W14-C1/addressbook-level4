@@ -102,17 +102,6 @@ public class LogicManagerTest {
         assertEquals(expectedActivityManager, model.getActivityManager());
         assertEquals(expectedActivityManager, latestSavedActivityManager);
     }
-    
-    // TODO: Refactor this "hack" if possible
-    /**
-     * Overload assertCommandBehavior(..., List<? extends Activity> expectedShownList) to accept both data types
-     */
-    private void assertCommandBehavior(String inputCommand, String expectedMessage,
-            ReadOnlyActivityManager expectedActivityManager,
-            ActivityList expectedShownList) throws Exception {
-        assertCommandBehavior(inputCommand, expectedMessage, expectedActivityManager, (List<? extends Activity>)expectedShownList.getInternalList());
-    }
-    
 
     //@@author A0144881Y
     @Test
@@ -171,7 +160,7 @@ public class LogicManagerTest {
         assertCommandBehavior("add Girl from next door",
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());       
+                expectedAM.getActivityList().getInternalList());       
         
         // able to add deadline activity with keywords (on/by) (with spaces)
         toBeAdded = new Activity("read Village by the Sea");
@@ -182,7 +171,7 @@ public class LogicManagerTest {
         assertCommandBehavior("add read Village by the Sea \"BY\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         
         // able to add deadline activity with keywords (on/by) (with spaces)
@@ -194,7 +183,7 @@ public class LogicManagerTest {
         assertCommandBehavior("add learn Ruby on Rails \"on\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to add event activity with keywords (from/to) (with spaces)
         toBeAdded = new Activity("Love from Paris");
@@ -207,7 +196,7 @@ public class LogicManagerTest {
                               + " to " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to add event activity with keywords (from and to) (with spaces)
         toBeAdded = new Activity("Movie: from Jupiter to Mars");
@@ -220,7 +209,7 @@ public class LogicManagerTest {
                               + " \"to\" " + helper.getReferenceDateString(),
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     @Test
@@ -247,7 +236,7 @@ public class LogicManagerTest {
         assertCommandBehavior("add Every day I'm shuffling by " + helper.getReferenceDateString() + " for 3 days",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to add recurring deadline by week
         for (repeat = 0; repeat < 2; repeat++) {
@@ -261,7 +250,7 @@ public class LogicManagerTest {
         assertCommandBehavior("add Clubbing on the dance floor \"ON\" " + helper.getReferenceDateString() + " for 2 WEEK",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to add recurring event by month
         for (repeat = 0; repeat < 12; repeat++) {
@@ -277,7 +266,7 @@ public class LogicManagerTest {
                               + " to " + helper.getReferenceDateString() + " For 12 months",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to add recurring event by year
         for (repeat = 0; repeat < 1; repeat++) {
@@ -293,7 +282,7 @@ public class LogicManagerTest {
                               + " \"to\" day after " + helper.getReferenceDateString() + " foR 1 yeaR",
                 String.format(AddCommand.MESSAGE_RECUR_SUCCESS, toBeAdded.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     //@@author A0135730M
@@ -377,7 +366,7 @@ public class LogicManagerTest {
                 String.format(DeleteCommand.MESSAGE_DELETE_ACTIVITY_SUCCESS, 
                               DeleteCommand.ACTIVITY_SEPERATOR +threeActivities.get(1).getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     @Test
@@ -398,7 +387,7 @@ public class LogicManagerTest {
                               + " to day before " + helper.getReferenceDateString(),
                 Activity.MESSAGE_DATE_CONSTRAINTS,
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     @Test
@@ -436,7 +425,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1     bla",
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newActivity.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     @Test
@@ -459,7 +448,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 on day after " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update deadline activity with keywords (on/by) (with spaces)
         expectedAM.resetData(emptyAM);
@@ -470,7 +459,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 read Village by the Sea \"by\" " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newDeadline.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update event without name
         expectedAM.resetData(emptyAM);
@@ -483,7 +472,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 from day after " + helper.getReferenceDateString() + " to day after " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update event activity with keywords (from/to) (with spaces)
         expectedAM.resetData(emptyAM);
@@ -496,7 +485,7 @@ public class LogicManagerTest {
                               + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update event activity with keywords (from and to) (with spaces)
         expectedAM.resetData(emptyAM);
@@ -509,7 +498,7 @@ public class LogicManagerTest {
                               + " \"to\" " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, newEvent.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     @Test
@@ -532,7 +521,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update from deadline to event
         expectedAM.resetData(emptyAM);
@@ -540,7 +529,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         
         // able to update from floating to event
@@ -551,7 +540,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 Event from " + helper.getReferenceDateString() + " to " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, event.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
         
         // able to update from event to deadline
         expectedAM.resetData(emptyAM);
@@ -559,7 +548,7 @@ public class LogicManagerTest {
         assertCommandBehavior("update 1 Deadline on " + helper.getReferenceDateString(),
                 String.format(UpdateCommand.MESSAGE_UPDATE_ACTIVITY_SUCCESS, deadline.getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
 
     @Test
@@ -748,7 +737,7 @@ public class LogicManagerTest {
         assertCommandBehavior("unmark 2",
                 String.format(UnmarkCommand.MESSAGE_UNMARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
                 expectedAM,
-                expectedAM.getActivityList());
+                expectedAM.getActivityList().getInternalList());
     }
     
     //@@author A0139797E

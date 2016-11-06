@@ -84,8 +84,7 @@ public class XmlUtilTest {
         XmlSerializableActivityManager dataToWrite = new XmlSerializableActivityManager(new ActivityManager());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         XmlSerializableActivityManager dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableActivityManager.class);
-        assertEquals((new ActivityManager(dataToWrite)).toString(),(new ActivityManager(dataFromFile)).toString());
-        //TODO: use equality instead of string comparisons
+        assertEquals(new ActivityManager(dataToWrite), new ActivityManager(dataFromFile));
 
         ActivityManagerBuilder builder = new ActivityManagerBuilder(new ActivityManager());
         dataToWrite = new XmlSerializableActivityManager(builder.withActivity(TestUtil.generateSampleActivityData().get(0)).build());

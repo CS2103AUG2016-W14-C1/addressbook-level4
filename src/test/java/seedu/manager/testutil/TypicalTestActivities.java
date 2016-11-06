@@ -20,8 +20,7 @@ public class TypicalTestActivities {
             guitar = new ActivityBuilder().withName("Practice playing guitar").build();
             paint = new ActivityBuilder().withName("Paint room wall (blue)").build();
             movie =  new ActivityBuilder().withNameAndStatus("Watch Lord of the Rings", false).build();
-            // TODO: set to true to test for mark when GUI is more stable
-            dog =  new ActivityBuilder().withNameAndStatus("Walk the dog", false).build();
+            dog =  new ActivityBuilder().withNameAndStatus("Walk the dog", true).build();
             // Deadline task example
             assignment = new ActivityBuilder().withNameAndTime("essay assignment", "1 Sep 2016 23:59:59").build();
            // Event task example
@@ -50,7 +49,7 @@ public class TypicalTestActivities {
     }
     
     public TestActivity[] getTypicalFloatingActivities() {
-        return new TestActivity[]{groceries, reading, guitar, paint, movie, dog};
+        return new TestActivity[]{groceries, reading, guitar, paint, movie};
     }
     
     public TestActivity[] getTypicalScheduleActivities() {
