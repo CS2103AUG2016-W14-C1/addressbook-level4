@@ -131,24 +131,39 @@ public class LogicManagerTest {
     }
 
     //@@author A0135730M
+    
+    private void assertEndDateEarlierThanStartDateForCommand(String commandWord) throws Exception {
+        ActivityManager expectedAM = new ActivityManager();
+        Activity dummy = new Activity("Dummy");
+        model.addActivity(dummy, true);
+        expectedAM.addActivity(dummy);
+        
+        assertCommandBehavior(commandWord + " invalid event from " + helper.getReferenceDateString()
+                              + " to day before " + helper.getReferenceDateString(),
+                Activity.MESSAGE_DATE_CONSTRAINTS,
+                expectedAM,
+                expectedAM.getActivityList().getInternalList());
+    }
+    
+    private void assertInvalidDateForCommand(String commandWord) throws Exception {
+        assertCommandBehavior(commandWord + " event from abc to def", 
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
+        assertCommandBehavior(commandWord + " event from today to def", 
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
+        assertCommandBehavior(commandWord + " deadline by ghi", 
+                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+    }
+    
     @Test
     public void execute_addEndDateEarlierThanStartDate_errorMessageShown() throws Exception {
-        assertCommandBehavior("add invalid event from " + helper.getReferenceDateString()
-                              + " to day before " + helper.getReferenceDateString(),
-                Activity.MESSAGE_DATE_CONSTRAINTS);
+        assertEndDateEarlierThanStartDateForCommand("add");
     }
     
     @Test
     public void execute_addInvalidDate_errorMessageShown() throws Exception {
-        assertCommandBehavior("add event from abc to def", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
-        assertCommandBehavior("add event from today to def", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
-        assertCommandBehavior("add deadline by ghi", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+        assertInvalidDateForCommand("add");
     }
     
-    // TODO: extract out similar code into utility methods, or break into smaller test cases
     @Test
     public void execute_add_parseKeywordsCorrectly() throws Exception {
         // able to add floating activity
@@ -331,12 +346,12 @@ public class LogicManagerTest {
      * targeting a single activity in the shown list, using visible index.
      * @param commandWord to test assuming it targets a single activity in the last shown list based on visible index.
      */
-    private void assertIndexNotFoundBehaviorForCommand(String commandWord) throws Exception {
+    private void assertIndexNotFoundBehaviorForCommand(String commandWord, String optArgs) throws Exception {
         ActivityManager expectedAM = helper.generateActivityManager(2);
         List<Activity> activityList = helper.generateActivityList(2);
         model.resetData(expectedAM);
 
-        assertCommandBehavior(commandWord + " 3", 
+        assertCommandBehavior(commandWord + " 3 " + optArgs, 
                 MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX, 
                 expectedAM, 
                 activityList);
@@ -350,7 +365,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("delete");
+        assertIndexNotFoundBehaviorForCommand("delete", "");
     }
 
     @Test
@@ -378,38 +393,17 @@ public class LogicManagerTest {
     //@@author A0135730M
     @Test
     public void execute_updateEndDateEarlierThanStartDate_errorMessageShown() throws Exception {
-        ActivityManager expectedAM = new ActivityManager();
-        Activity dummy = new Activity("Dummy");
-        model.addActivity(dummy, true);
-        expectedAM.addActivity(dummy);
-        
-        assertCommandBehavior("update 1 newName from " + helper.getReferenceDateString()
-                              + " to day before " + helper.getReferenceDateString(),
-                Activity.MESSAGE_DATE_CONSTRAINTS,
-                expectedAM,
-                expectedAM.getActivityList().getInternalList());
+        assertEndDateEarlierThanStartDateForCommand("update 1");
     }
     
     @Test
     public void execute_updateIndexNotFound_errorMessageShown() throws Exception {
-        ActivityManager expectedAM = helper.generateActivityManager(2);
-        List<Activity> activityList = helper.generateActivityList(2);
-        model.resetData(expectedAM);
-
-        assertCommandBehavior("update 3 blind mice", 
-                MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX, 
-                expectedAM, 
-                activityList);
+        assertIndexNotFoundBehaviorForCommand("update", "blind mice");
     }
     
     @Test
     public void execute_updateInvalidDate_errorMessageShown() throws Exception {
-        assertCommandBehavior("update 1 new from abc to def", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "abc"));
-        assertCommandBehavior("update 1 new from today to def", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "def"));
-        assertCommandBehavior("update 1 new by ghi", 
-                String.format(MESSAGE_CANNOT_PARSE_TO_DATE, "ghi"));
+        assertInvalidDateForCommand("update 1");
     }
     
     
@@ -503,7 +497,6 @@ public class LogicManagerTest {
     
     @Test
     public void execute_update_changeActivityTypeCorrectly() throws Exception {
-        
         ActivityManager expectedAM = new ActivityManager();
         ActivityManager emptyAM = new ActivityManager();
         Activity floating = new Activity("Floating");
@@ -695,7 +688,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_markIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("mark");
+        assertIndexNotFoundBehaviorForCommand("mark", "");
     }
 
     @Test
@@ -722,7 +715,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_unmarkIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("unmark");
+        assertIndexNotFoundBehaviorForCommand("unmark", "");
     }
 
     @Test
