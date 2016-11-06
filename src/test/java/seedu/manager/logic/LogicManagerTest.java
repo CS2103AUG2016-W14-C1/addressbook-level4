@@ -760,19 +760,22 @@ public class LogicManagerTest {
 
         ActivityManager expectedAM = helper.generateActivityManager(threeActivities);
         expectedAM.markActivity(threeActivities.get(0));
+        threeActivities.get(0).setStatus(true);
         helper.addToModel(model, threeActivities);
         List<Activity> expectedMarkList = helper.generateActivityList(threeActivities.get(0));
         List<Activity> expectedPendingList = helper.generateActivityList(threeActivities.get(1), threeActivities.get(2));
        
+        assertCommandBehavior("search completed",
+                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
+                expectedAM,
+                expectedMarkList);
+        
         assertCommandBehavior("search pending",
                 Command.getMessageForActivityListShownSummary(expectedPendingList.size()),
                 expectedAM,
                 expectedPendingList);
         
-        assertCommandBehavior("search completed",
-                Command.getMessageForActivityListShownSummary(expectedMarkList.size()),
-                expectedAM,
-                expectedMarkList);
+        
     }
     
     //@@author A0144704L
@@ -796,7 +799,7 @@ public class LogicManagerTest {
         expectedAM.markActivity(threeActivities.get(1));
         helper.addToModel(model, threeActivities);
        
-        assertCommandBehavior("mark 3",
+        assertCommandBehavior("mark 2",
                 String.format(MarkCommand.MESSAGE_MARK_ACTIVITY_SUCCESS, threeActivities.get(1).getName()),
                 expectedAM,
                 expectedAM.getPendingActivityList());

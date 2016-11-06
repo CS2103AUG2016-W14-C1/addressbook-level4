@@ -39,9 +39,9 @@ public class MarkCommand extends Command {
 
         Activity activityToMark = lastShownList.get(targetIndex - 1);
         
-        model.markActivity(activityToMark);
-
-        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, activityToMark.getName()));
+        String markedActivityName = model.markActivity(activityToMark);
+        
+        return new CommandResult(String.format(MESSAGE_MARK_ACTIVITY_SUCCESS, markedActivityName));
     }
 }
 
