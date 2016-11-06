@@ -17,7 +17,7 @@ import seedu.manager.model.activity.Activity;
 import java.util.logging.Logger;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of activities.
  */
 public class FloatingListPanel extends UiPart{
     private final Logger logger = LogsCenter.getLogger(FloatingListPanel.class);

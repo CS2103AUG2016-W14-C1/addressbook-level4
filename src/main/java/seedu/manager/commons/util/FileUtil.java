@@ -25,7 +25,7 @@ public class FileUtil {
      *
      * @return true if file is created, false if file already exists
      */
-    public static boolean createFile(File file) throws IOException {
+    private static boolean createFile(File file) throws IOException {
         if (file.exists()) {
             return false;
         }
@@ -50,7 +50,7 @@ public class FileUtil {
     /**
      * Creates parent directories of file if it has a parent directory
      */
-    public static void createParentDirsOfFile(File file) throws IOException {
+    private static void createParentDirsOfFile(File file) throws IOException {
         File parentDir = file.getParentFile();
 
         if (parentDir != null) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<activitymanager>
+    <activity>
+        <type>DEADLINE</type>
+        <name>sample deadline</name>
+        <epochDateTime>1480583333157</epochDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>EVENT</type>
+        <name>sample event</name>
+        <epochDateTime>1480583340836</epochDateTime>
+        <epochEndDateTime>1480669740837</epochEndDateTime>
+        <isCompleted>false</isCompleted>
+    </activity>
+    <activity>
+        <type>FLOATING</type>
+        <name>sample activity</name>
+        <isCompleted>false</isCompleted>
+    </activity>
+</activitymanager>

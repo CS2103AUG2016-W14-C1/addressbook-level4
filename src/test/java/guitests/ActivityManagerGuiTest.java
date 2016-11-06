@@ -100,7 +100,7 @@ public abstract class ActivityManagerGuiTest {
     }
 
     /**
-     * Asserts the person shown in the card is same as the given person
+     * Asserts the activity shown in the card is same as the given activity
      */
     public void assertMatching(ReadOnlyActivity activity, ActivityCardHandle card) {
         assertTrue(TestUtil.compareCardAndActivity(card, activity));

@@ -17,7 +17,7 @@ import java.util.Set;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Provides a handle for the panel containing the person list.
+ * Provides a handle for the panel containing the activity list.
  */
 //@@author A0144704L
 public class FloatingListPanelHandle extends GuiHandle {
@@ -32,8 +32,8 @@ public class FloatingListPanelHandle extends GuiHandle {
     }
 
     public List<ReadOnlyActivity> getSelectedActivities() {
-        ListView<ReadOnlyActivity> personList = getListView();
-        return personList.getSelectionModel().getSelectedItems();
+        ListView<ReadOnlyActivity> activityList = getListView();
+        return activityList.getSelectionModel().getSelectedItems();
     }
 
     public ListView<ReadOnlyActivity> getListView() {
@@ -41,8 +41,8 @@ public class FloatingListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Returns true if the list is showing the person details correctly and in correct order.
-     * @param activities A list of person in the correct order.
+     * Returns true if the list is showing the activity details correctly and in correct order.
+     * @param activities A list of activity in the correct order.
      */
     public boolean isListMatching(ReadOnlyActivity... activities) {
         return this.isListMatching(0, activities);
@@ -67,7 +67,7 @@ public class FloatingListPanelHandle extends GuiHandle {
             return false;
         }
 
-        // Return false if any of the persons doesn't match
+        // Return false if any of the activities doesn't match
         for (int i = 0; i < activities.length; i++) {
             if (!activitiesInList.get(startPosition + i).getName().equals(activities[i].getName())){
                 return false;
@@ -102,19 +102,19 @@ public class FloatingListPanelHandle extends GuiHandle {
 
     public ActivityCardHandle navigateToActivity(String name) {
         guiRobot.sleep(500); //Allow a bit of time for the list to be updated
-        final Optional<ReadOnlyActivity> person = getListView().getItems().stream().filter(p -> p.getName().equals(name)).findAny();
-        if (!person.isPresent()) {
+        final Optional<ReadOnlyActivity> activity = getListView().getItems().stream().filter(p -> p.getName().equals(name)).findAny();
+        if (!activity.isPresent()) {
             throw new IllegalStateException("Name not found: " + name);
         }
 
-        return navigateToPerson(person.get());
+        return navigateToActivity(activity.get());
     }
 
     /**
      * Navigates the listview to display and select the activity.
      */
-    public ActivityCardHandle navigateToPerson(ReadOnlyActivity activity) {
-        int index = getPersonIndex(activity);
+    public ActivityCardHandle navigateToActivity(ReadOnlyActivity activity) {
+        int index = getActivityIndex(activity);
 
         guiRobot.interact(() -> {
             getListView().scrollTo(index);
@@ -122,14 +122,14 @@ public class FloatingListPanelHandle extends GuiHandle {
             getListView().getSelectionModel().select(index);
         });
         guiRobot.sleep(100);
-        return getPersonCardHandle(activity);
+        return getActivityCardHandle(activity);
     }
 
 
     /**
-     * Returns the position of the person given, {@code NOT_FOUND} if not found in the list.
+     * Returns the position of the activity given, {@code NOT_FOUND} if not found in the list.
      */
-    public int getPersonIndex(ReadOnlyActivity targetActivity) {
+    public int getActivityIndex(ReadOnlyActivity targetActivity) {
         List<ReadOnlyActivity> activitiesInList = getListView().getItems();
         for (int i = 0; i < activitiesInList.size(); i++) {
             if(activitiesInList.get(i).getName().equals(targetActivity.getName())){
@@ -147,10 +147,10 @@ public class FloatingListPanelHandle extends GuiHandle {
     }
 
     public ActivityCardHandle getActivityCardHandle(int index) {
-        return getPersonCardHandle(getListView().getItems().get(index));
+        return getActivityCardHandle(getListView().getItems().get(index));
     }
 
-    public ActivityCardHandle getPersonCardHandle(ReadOnlyActivity activity) {
+    public ActivityCardHandle getActivityCardHandle(ReadOnlyActivity activity) {
         Set<Node> nodes = getAllCardNodes();
         Optional<Node> activityCardNode = nodes.stream()
                 .filter(n -> new ActivityCardHandle(guiRobot, primaryStage, n).isSameActivity(activity))
