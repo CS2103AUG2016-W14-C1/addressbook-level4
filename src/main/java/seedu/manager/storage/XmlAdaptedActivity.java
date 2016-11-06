@@ -54,6 +54,7 @@ public class XmlAdaptedActivity {
      */
     public Activity toModelType() {
         Activity newActivity = new Activity(this.name);
+        newActivity.setType(this.type);
         if (type.equals(ActivityType.EVENT)) {
             newActivity.setDateTime(this.epochDateTime);
             newActivity.setEndDateTime(this.epochEndDateTime);
