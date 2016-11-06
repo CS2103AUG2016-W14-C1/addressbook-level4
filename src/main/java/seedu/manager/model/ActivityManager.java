@@ -18,14 +18,14 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public ActivityManager() {}
 
     /**
-     * Activities and Tags are copied into this activity manager
+     * Activities are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
         this(toBeCopied.getActivityList());
     }
 
     /**
-     * Activities and Tags are copied into this activity manager
+     * Activities are copied into this activity manager
      */
     public ActivityManager(ActivityList activities) {
         resetData(activities.getInternalList());
@@ -57,9 +57,6 @@ public class ActivityManager implements ReadOnlyActivityManager {
 
     /**
      * Adds an activity to the activity manager.
-     * Also checks the new acitivity's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the activity to point to those in {@link #tags}.
-     *
      */
     public void addActivity(Activity activity) {
         activities.add(activity);
