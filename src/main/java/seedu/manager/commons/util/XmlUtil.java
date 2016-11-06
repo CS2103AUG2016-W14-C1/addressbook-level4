@@ -4,6 +4,11 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -61,6 +66,26 @@ public class XmlUtil {
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         m.marshal(data, file);
+    }
+    
+    /**
+     * Returns true if both files have the same content
+     */
+    public static boolean contentEquals(String filename1, String filename2) throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        dbf.setCoalescing(true);
+        dbf.setIgnoringElementContentWhitespace(true);
+        dbf.setIgnoringComments(true);
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        Document doc1 = db.parse(new File(filename1));
+        doc1.normalizeDocument();
+
+        Document doc2 = db.parse(new File(filename2));
+
+        doc2.normalizeDocument();
+        return doc1.isEqualNode(doc2);
     }
 
 }

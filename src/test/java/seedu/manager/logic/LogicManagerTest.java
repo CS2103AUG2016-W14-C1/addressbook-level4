@@ -2,9 +2,12 @@ package seedu.manager.logic;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.manager.commons.core.Config;
 import seedu.manager.commons.core.EventsCenter;
 import seedu.manager.commons.events.model.ActivityManagerChangedEvent;
 import seedu.manager.commons.events.ui.ShowHelpRequestEvent;
+import seedu.manager.commons.util.ConfigUtil;
+import seedu.manager.commons.util.XmlUtil;
 import seedu.manager.logic.Logic;
 import seedu.manager.logic.LogicManager;
 import seedu.manager.logic.commands.*;
@@ -860,6 +863,19 @@ public class LogicManagerTest {
     public void execute_store_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StoreCommand.MESSAGE_USAGE);
         assertCommandBehavior("store", expectedMessage);
+    }
+    
+    @Test
+    public void execute_load_fileLoadedCorrectly() throws Exception {
+        String testDataFileLocation = "data/seed.xml";
+        String existingDataFileLocation = ConfigUtil.readConfig(Config.DEFAULT_CONFIG_FILE).get()
+                                          .getActivityManagerFilePath();
+        logic.execute("clear");
+        
+        CommandResult result = logic.execute("load " + testDataFileLocation);
+        
+        assertEquals(String.format(LoadCommand.MESSAGE_LOAD_FILE_SUCCESS, testDataFileLocation), result.feedbackToUser);
+        XmlUtil.contentEquals(testDataFileLocation, existingDataFileLocation);
     }
     
     @Test
