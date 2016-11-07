@@ -23,8 +23,8 @@ public class DeleteCommand extends Command {
     
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the activity identified by the index number used in the last activity listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX [INDEX2] ... (all indices must be a positive integers)\n"
+            + "Example: " + COMMAND_WORD + " 1 / " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity / Activities:%1$s";
     
