@@ -6,14 +6,14 @@
 2. [Setup](#2-setup)
 3. [Design](#3-design) <br>
     3.1 [Architecture](#3.1-architecture)<br>
-    3.2 [UI Component](#3.2-UI-component)<br>
-    3.3 [Logic Component](#3.3-logic-component)<br>
-    3.4 [Model Component](#3.4-model-component)<br>
-    3.5 [Storage Component](#3.5-storage-component)<br>
-    3.6 [CommonClasses](#3.6-common-classes)<br>
+    3.2 [UI Component](#32-ui-component)<br>
+    3.3 [Logic Component](#33-logic-component)<br>
+    3.4 [Model Component](#34-model-component)<br>
+    3.5 [Storage Component](#35-storage-component)<br>
+    3.6 [CommonClasses](#36-common-classes)<br>
 4. [Implementation](#4-implementation) <br>
-    4.1 [Logging](#4.1-logging)<br>
-    4.2 [Configuration](#4.2-configuration) <br>
+    4.1 [Logging](#41-logging)<br>
+    4.2 [Configuration](#42-configuration) <br>
 5. [Testing](#5-testing)
 6. [Dev Ops](#6-dev-ops) <br>
     6.1 [Build Automation](#6.1-build-automation)<br>
@@ -87,10 +87,10 @@ With reference to Figure 1, the application is initialized via the `Main` compon
 * `LogsCenter` : This class is used by many other classes to write log messages to the App's log file
 
 The rest of the App consists four components:
-* [**`UI`**](#ui-component) : Gets input from the user and display results to the user
-* [**`Logic`**](#logic-component) : Interprets user input and executes command accordingly
-* [**`Model`**](#model-component) : Holds the data of the App in-memory
-* [**`Storage`**](#storage-component) : Reads data from the hard disk and writes data to the hard disk
+* [**`UI`**](#32ui-component) : Gets input from the user and display results to the user
+* [**`Logic`**](#33logic-component) : Interprets user input and executes command accordingly
+* [**`Model`**](#34model-component) : Holds the data of the App in-memory
+* [**`Storage`**](#35storage-component) : Reads data from the hard disk and writes data to the hard disk
 
 Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
