@@ -27,12 +27,14 @@
     D. [Product Survey](#d-product-survey)<br>
     E. [Glossary](#e-glossary)<br>
 
+<!-- @@author A0139797E -->
 ## 1. Introduction
 
 Remindaroo is an activity manager that helps users track tasks, deadlines, as well as events. It is a Java command line interface (CLI) application with a basic graphic user interface (GUI).
 
 This guide describes the design and implementation of Remindaroo. It provides further details related to Remindaroo’s development, allowing you to better contribute to our project. We have organized this guide in a top-down manner to help you comprehend the bigger picture before proceeding on to more detailed sections.
 
+<!-- @@author A0144881Y -->
 ## 2. Setup
 
 The prerequisites to develop Remindaroo are as follows: <br><br>
@@ -73,6 +75,7 @@ In order to import the project into Eclipse, proceed with the following steps:
   > Depending on connection speed, it might take up to 30 mintues to complete setup.
 
 ## 3. Design
+<!-- @@author A0144704L -->
 ### 3.1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
@@ -127,6 +130,7 @@ The `UI` component:
 * Observes a list of activities via the `UnmodifiableObservableList` class to be displayed in the application, hence adhering to the observer pattern.
 * Responds to events raised from various parts of the application and updates the UI accordingly (e.g. via `ActivityListPanelUpdateEvent`)
 
+<!-- @@author A0139797E -->
 ### 3.3 Logic component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
@@ -178,6 +182,7 @@ The `Storage` component:
 
 Classes used by multiple components, such as `UnmodifiableObservableList`, can be found in the `seedu.manager.commons package`.
 
+<!-- @@author A0135730M -->
 ## 4. Implementation
 
 ### 4.1 Logging
@@ -234,7 +239,7 @@ We have 2 types of tests as follows:
       e.g. `seedu.manager.logic.LogicManagerTest`
 
 
-
+<!-- @@author A0144881Y -->
 ## 6. Dev Ops
 
 ### 6.1 Build Automation
@@ -259,6 +264,7 @@ A project often depends on third-party libraries. For example, Remindaroo depend
 * Require developers to download these libraries manually
 
 ## 7. Appendices <br>
+<!-- @@author A0139797E -->
 ### A. User Stories
 
 <br>
@@ -293,7 +299,7 @@ User stories are high-level definitions of requirements containing enough inform
 ### B. Use Cases
 
 Use cases are lists of actions that define the interaction between a user and Remindaroo. This section details the use cases that we have considered.
-
+<!-- @@author A0144704L -->
 #### Use case 1: Add an activity
 
 MSS: <br>
@@ -375,7 +381,7 @@ Extensions <br>
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
 	1. System displays error message <br>
 	   Use case ends <br>
-
+<!-- @@author A0135730M -->
 #### Use case 8: Search for activities <br>
 MSS: <br>
 1. User types command **`search`** `...` <br>
@@ -482,6 +488,7 @@ Extensions <br>
 	1. System displays error message <br>
  	   Use case ends <br>
 
+<!-- @@author A0144704L -->
 ### C. Non-Functional Requirements
 Non-functional requirements (NFRs) are requirements that define how Remindaroo should function as a system, independent of user behaviour. We have identified the following NFRs as essential for Remindaroo:
 * Remindaroo should support up to 1000 activities in total
