@@ -30,11 +30,11 @@ public class HelpWindow extends UiPart {
     private Stage dialogStage;
 
     /** Table-related properties */
-    private static final int WINDOW_HEIGHT = 500;
-    private static final int WINDOW_WIDTH = 800;
+    private static final int WINDOW_HEIGHT = 550;
+    private static final int WINDOW_WIDTH = 950;
     private static final int COMMAND_WIDTH = 150;
-    private static final int USAGE_WIDTH = 350;
-    private static final int EXAMPLES_WIDTH = 300;
+    private static final int USAGE_WIDTH = 450;
+    private static final int EXAMPLES_WIDTH = 350;
     
     private TableView<HelpWindowCommand> table = new TableView<HelpWindowCommand>();
     
@@ -90,8 +90,10 @@ public class HelpWindow extends UiPart {
                 new HelpWindowCommand(ListCommand.COMMAND_WORD, ListCommand.USAGE, ListCommand.EXAMPLES),
                 new HelpWindowCommand(MarkCommand.COMMAND_WORD, MarkCommand.USAGE, MarkCommand.EXAMPLES),
                 new HelpWindowCommand(SearchCommand.COMMAND_WORD, SearchCommand.USAGE, SearchCommand.EXAMPLES),
+                new HelpWindowCommand(LoadCommand.COMMAND_WORD, LoadCommand.USAGE, LoadCommand.EXAMPLES),
                 new HelpWindowCommand(StoreCommand.COMMAND_WORD, StoreCommand.USAGE, StoreCommand.EXAMPLES),
                 new HelpWindowCommand(UndoCommand.COMMAND_WORD, UndoCommand.USAGE, UndoCommand.EXAMPLES),
+                new HelpWindowCommand(RedoCommand.COMMAND_WORD, RedoCommand.USAGE, RedoCommand.EXAMPLES),
                 new HelpWindowCommand(UnmarkCommand.COMMAND_WORD, UnmarkCommand.USAGE, UnmarkCommand.EXAMPLES),
                 new HelpWindowCommand(UpdateCommand.COMMAND_WORD, UpdateCommand.USAGE, UpdateCommand.EXAMPLES)
                 );
