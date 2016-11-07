@@ -316,7 +316,7 @@ Command Box should turn red.
 ### Normal paths
 #### Unmark an activity
 1. Enter `search completed` in the Command Box.
-2. Result Display Section should display **3 activities listed!**.<br>
+2. Result Display Section should display **5 activities listed!**.<br>
 Tasks Display Panel and Schedule Display Panel should show all completed activities.
 3. Enter `unmark 1` in the Command Box.
 4. Result Display Section should display **Pending Activity: sad life :(**.<br>
