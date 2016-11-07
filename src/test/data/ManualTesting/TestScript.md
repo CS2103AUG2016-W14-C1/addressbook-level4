@@ -36,7 +36,7 @@ The test cases mentioned below should be done sequentially in order to get the c
 1. Ensure that you have Java Version 1.8.0_60 or later installed in your computer
 2. Download the latest remindaroo.jar from the releases tab
 3. Copy remindaroo.jar to the folder you wish to use as the home folder for Remindaroo, such as User/John/Documents.
-4. Download [SampleData.xml](SampleData.xml) from Remindaroo's Github repository.
+4. Access [SampleData.xml](https://raw.githubusercontent.com/CS2103AUG2016-W14-C1/main/master/src/test/data/ManualTesting/SampleData.xml) in Remindaroo's Github repository. Copy the file contents to a text editor (e.g. Notepad) and save it in a file named `SampleData.xml`.
 5. Move SampleData.xml to be in the same directory as that of remindaroo.jar
 6. Double-click the file to start Remindaroo. The Graphical User Interface (GUI) should appear in a few seconds.
 Status bar should display **Not updated yet in this session** and current stored file location (**data/remindaroo.xml**).
