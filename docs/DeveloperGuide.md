@@ -18,12 +18,12 @@
 6. [Dev Ops](#6-dev-ops) <br>
     6.1 [Build Automation](#61-build-automation)<br>
     6.2 [Continuous Integration](#62-continuous-integration)<br>
-    6.3 [Making a release](#63-making-a-release)<br>
-    6.4 [Managing dependencies](#64-managing-dependencies)<br>
+    6.3 [Making a Release](#63-making-a-release)<br>
+    6.4 [Managing Dependencies](#64-managing-dependencies)<br>
 7. [Appendices](#7-appendices) <br>
     A. [User Stories](#a-user-stories)<br>
     B. [Use Cases](#b-use-cases)<br>
-    C. [Non-Functional Requirements](#c-non-functional-requirements)<br>
+    C. [Non-functional Requirements](#c-non-functional-requirements)<br>
     D. [Product Survey](#d-product-survey)<br>
     E. [Glossary](#e-glossary)<br>
 
@@ -253,7 +253,7 @@ To create a new release:
 * Tag the specific commit (usually the latest) in the Github repository with a version number, e.g. `V0.1`
 * [Create a new release](https://help.github.com/articles/creating-releases/) on Github and upload the JAR file you created
 
-### Managing Dependencies
+### 6.4 Managing Dependencies
 
 A project often depends on third-party libraries. For example, Remindaroo depends on the Jackson library for XML parsing. These dependencies can be automatically managed using Gradle. Gradle can download these dependencies automatically, which is better than the following alternatives:
 * Include third-party libraries in the repository
