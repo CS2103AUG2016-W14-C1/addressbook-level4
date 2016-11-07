@@ -53,15 +53,14 @@ The prerequisites to develop Remindaroo are as follows: <br><br>
 4. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 
 In addition, we also recommend the following software to assist you in development:<br>
+
 1. Eclemma plugin for Eclipse to analyse test coverage locally<br>
-2. SourceTree to improve your Git workflow experience
-<br>
+2. SourceTree to improve your Git workflow experience<br>
 
 In order to import the project into Eclipse, proceed with the following steps:
 
 1. Fork this repo, and clone the fork to your computer
-2. Open Eclipse
-   in the prerequisites above)
+2. Open Eclipse (in the prerequisites above)
 3. Click `File` > `Import`
 4. Click `Gradle` > `Gradle Project` > `Next` > `Next`
 5. Click `Browse`, then locate the project's directory (your clone's location)
@@ -70,8 +69,8 @@ In order to import the project into Eclipse, proceed with the following steps:
   > Note:<br>
   > If you are asked whether to `keep` or `overwrite` config files, choose to `keep`.
 
-  >Note:<br>
-  >  Depending on connection speed, it might take up to 30 mintues to complete setup.
+  > Note:<br>
+  > Depending on connection speed, it might take up to 30 mintues to complete setup.
 
 ## 3. Design
 ### 3.1. Architecture
