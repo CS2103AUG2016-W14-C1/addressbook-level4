@@ -23,9 +23,11 @@ Role: Developer <br>
 * Features implemented: <br>
     * Help Command <br>
     * Undo Command <br>
+    * Load Command <br>
 * Other Major Contributions: <br>
     * Contributed to initial refactoring from AddressBook to Remindaroo <br>
     * Set up Travis CI, Coveralls and Codacy <br>
+    * Convert all Github markdown documents to Microsoft Word format
 
 -----
 
@@ -37,8 +39,9 @@ Role: Developer <br>
 * Components in charge of: Storage <br>
 * Aspects/tools in charge of: Documentation <br>
 * Features implemented: <br>
-    * Mark/Unmark Command <br>
     * Store Command <br>
+    * Mark Command <br>
+    * Unmark Command <br>
 * Other Major Contributions: <br>
     * Contributed to initial refactoring from AddressBook to Remindaroo <br>
 
