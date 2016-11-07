@@ -12,6 +12,6 @@ public class Messages {
     public static final String MESSAGE_ACTIVITIES_LISTED_OVERVIEW = "%1$d activities listed!";
     public static final String MESSAGE_CANNOT_PARSE_TO_DATE = "'%1$s' cannot be parsed to a date.";
     public static final String MESSAGE_EVENT_DATE_CONSTRAINTS = "Event has already ended before it starts.";
-    public static final String MESSAGE_RECUR_NOT_POSITIVE = "Recurring number of times must be at least 1.";
+    public static final String MESSAGE_RECUR_OUT_OF_RANGE = "Recurring number of times must be between 1 and 30.";
     
 }

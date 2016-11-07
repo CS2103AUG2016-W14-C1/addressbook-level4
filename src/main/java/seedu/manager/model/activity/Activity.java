@@ -17,80 +17,12 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
 	
 	//@@author A0135730M
 	
-	// Floating activity constructor
-    
+	// Constructor for required fields
 	public Activity(String name) {
 	    this.type = ActivityType.FLOATING;
 	    this.name = name;
 		this.status = new Status();
-		this.dateTime = null;
-		this.endDateTime = null;
-		this.selected = false;
 	}
-	
-	// Deadline activity constructors
-	
-	/**
-     * Constructor which gets dateTime in natural English from user input
-     */
-    public Activity(String name, String newDateTime) {
-        this(name);
-        this.type = ActivityType.DEADLINE;
-        this.dateTime = new AMDate(newDateTime);
-    }
-	
-	/**
-     * Constructor which gets dateTime in epoch format from XML file
-     */
-    public Activity(String name, Long newEpochDateTime) {
-        this(name);
-        this.type = ActivityType.DEADLINE;
-        this.dateTime = new AMDate(newEpochDateTime);
-    }
-    
-    /**
-     * Constructor which gets dateTime, offset and unit for recurrence
-     */
-    public Activity(String name, String newDateTime, int offset, String unit) {
-        this(name);
-        this.type = ActivityType.DEADLINE;
-        this.dateTime = new AMDate(newDateTime);
-        this.dateTime.addOffset(offset, unit);
-    }
-    
-    // Event activity constructors
-    
-    /**
-     * Constructor which gets start and end dateTime in natural English from user input
-     */
-    public Activity(String name, String newStartDateTime, String newEndDateTime) {
-        this(name);
-        this.type = ActivityType.EVENT;
-        this.dateTime = new AMDate(newStartDateTime);
-        this.endDateTime = new AMDate(newEndDateTime);
-    }
-    
-    /**
-     * Constructor which gets start and end dateTime in epoch format from XML file
-     */
-    public Activity(String name, Long newEpochStartDateTime, Long newEpochEndDateTime) {
-        this(name);
-        this.type = ActivityType.EVENT;
-        this.dateTime = new AMDate(newEpochStartDateTime);
-        this.endDateTime = new AMDate(newEpochEndDateTime);
-    }
-    
-    /**
-     * Constructor which gets start, end dateTime, offset and unit for recurrence
-     */
-    public Activity(String name, String newStartDateTime, String newEndDateTime, int offset, String unit) {
-        this(name);
-        this.type = ActivityType.EVENT;
-        this.dateTime = new AMDate(newStartDateTime);
-        this.dateTime.addOffset(offset, unit);
-        this.endDateTime = new AMDate(newEndDateTime);
-        this.endDateTime.addOffset(offset, unit);
-    }
     
     //@@author A0139797E
     // Wrapper constructor for ReadOnlyActivity
@@ -177,7 +109,7 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
     }
     
     //@@author A0139797E
-    public void setDateTime(Long epochDateTime) {
+    public void setDateTime(long epochDateTime) {
         this.dateTime = new AMDate(epochDateTime);
     }
     
@@ -196,17 +128,28 @@ public class Activity implements ReadOnlyActivity, Comparable<Activity> {
         }
     }
 	
-  //@@author A0139797E
     public void removeEndDateTime() {
         this.endDateTime = null;
     }
     
-    //@@author A0139797E
-    public void setEndDateTime(Long epochEndDateTime) {
+    public void setEndDateTime(long epochEndDateTime) {
         this.endDateTime = new AMDate(epochEndDateTime);
     }
     
     //@@author A0135730M
+    public void setOffset(int offset, String unit) {
+        assert !this.type.equals(ActivityType.FLOATING);
+        this.dateTime.addOffset(offset, unit);
+        if (this.endDateTime != null) {
+            this.endDateTime.addOffset(offset, unit);
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
+    
 	@Override
 	public boolean equals(Object o) {
 	    return o == this

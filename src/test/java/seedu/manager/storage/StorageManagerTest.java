@@ -54,7 +54,7 @@ public class StorageManagerTest {
         storageManager.saveActivityManager(original);
         ReadOnlyActivityManager retrieved = storageManager.readActivityManager().get();
         assertTrue(original.toString().equals((new ActivityManager(retrieved)).toString()));
-        //More extensive testing of ActivityManager saving/reading is done in XmlAddressBookStorageTest
+        //More extensive testing of ActivityManager saving/reading is done in XmlActivityManagerStorageTest
     }
 
 

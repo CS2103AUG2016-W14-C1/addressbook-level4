@@ -17,7 +17,7 @@ import java.util.Set;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Provides a handle for the panel containing the person list.
+ * Provides a handle for the panel containing the activity list.
  */
 public class ActivityListPanelHandle extends GuiHandle {
 
@@ -31,8 +31,8 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     public List<ReadOnlyActivity> getSelectedActivities() {
-        ListView<ReadOnlyActivity> personList = getListView();
-        return personList.getSelectionModel().getSelectedItems();
+        ListView<ReadOnlyActivity> activityList = getListView();
+        return activityList.getSelectionModel().getSelectedItems();
     }
 
     public ListView<ReadOnlyActivity> getListView() {
@@ -66,7 +66,7 @@ public class ActivityListPanelHandle extends GuiHandle {
             return false;
         }
 
-        // Return false if any of the persons doesn't match
+        // Return false if any of the activities doesn't match
         for (int i = 0; i < activities.length; i++) {
             if (!activitiesInList.get(startPosition + i).getName().equals(activities[i].getName())){
                 return false;
@@ -110,7 +110,7 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the activity.
      */
     public ActivityCardHandle navigateToActivity(ReadOnlyActivity activity) {
         int index = getActivityIndex(activity);
@@ -121,7 +121,7 @@ public class ActivityListPanelHandle extends GuiHandle {
             getListView().getSelectionModel().select(index);
         });
         guiRobot.sleep(100);
-        return getPersonActivityHandle(activity);
+        return getActivityHandle(activity);
     }
 
 
@@ -139,17 +139,17 @@ public class ActivityListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Gets a person from the list by index
+     * Gets an activity from the list by index
      */
     public ReadOnlyActivity getActivity(int index) {
         return getListView().getItems().get(index);
     }
 
     public ActivityCardHandle getActivityCardHandle(int index) {
-        return getPersonActivityHandle(getListView().getItems().get(index));
+        return getActivityHandle(getListView().getItems().get(index));
     }
 
-    public ActivityCardHandle getPersonActivityHandle(ReadOnlyActivity activity) {
+    public ActivityCardHandle getActivityHandle(ReadOnlyActivity activity) {
         Set<Node> nodes = getAllCardNodes();
         Optional<Node> activityCardNode = nodes.stream()
                 .filter(n -> new ActivityCardHandle(guiRobot, primaryStage, n).isSameActivity(activity))

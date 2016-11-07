@@ -18,14 +18,14 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public ActivityManager() {}
 
     /**
-     * Activities and Tags are copied into this activity manager
+     * Activities are copied into this activity manager
      */
     public ActivityManager(ReadOnlyActivityManager toBeCopied) {
         this(toBeCopied.getActivityList());
     }
 
     /**
-     * Activities and Tags are copied into this activity manager
+     * Activities are copied into this activity manager
      */
     public ActivityManager(ActivityList activities) {
         resetData(activities.getInternalList());
@@ -57,9 +57,6 @@ public class ActivityManager implements ReadOnlyActivityManager {
 
     /**
      * Adds an activity to the activity manager.
-     * Also checks the new acitivity's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the activity to point to those in {@link #tags}.
-     *
      */
     public void addActivity(Activity activity) {
         activities.add(activity);
@@ -89,8 +86,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
 
     @Override
     public String toString() {
-        return activities.getInternalList().size() + " activities";
-        // TODO: refine later
+        return activities.getInternalList().toString();
     }
 
     @Override
@@ -102,9 +98,7 @@ public class ActivityManager implements ReadOnlyActivityManager {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ActivityManager // instanceof handles nulls
-                && this.toString().equals(other.toString()));
-                // TODO: check if activities are actually equal
-                /* this.activities.equals(((ActivityManager) other).getActivities()); */       
+                    && this.activities.equals(((ActivityManager) other).activities));       
                 
     }
 
