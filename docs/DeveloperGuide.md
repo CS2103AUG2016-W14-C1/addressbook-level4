@@ -125,6 +125,7 @@ The `UI` component uses the [JavaFX](http://www.oracle.com/technetwork/java/java
 The `UI` component
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Observes a list of activities via the `UnmodifiableObservableList` class to be displayed in the application, hence adhering to the observer pattern.
 * Responds to events raised from various parts of the application and updates the UI accordingly (e.g. via `ActivityListPanelUpdateEvent`)
 
 ### 3.3 Logic component
@@ -142,6 +143,8 @@ Figure 6: Sequence diagram for `Logic` component interactions for `execute(delet
 
 More complex commands such as AddCommand and UpdateCommand are implemented using the builder pattern in the `AMParser` class. These commands have a concrete builder method each due to the complexity in processing the user input.
 
+The `Command` class is also used as part of the command pattern. Notice how `ActivityManager` represents the state of our application. Therefore, `UI` acts as a client that leads to the execution of a `Command`, determined by `AMParser`. The `Model` then acts as a receiver to change `ActivityManager` itself.
+
 ### 3.4 Model component
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
@@ -158,7 +161,7 @@ The `Model` component
 
 The model component is managed by the `ModelManager` class. `ModelManager` keeps track of a history of the state of `ActivityManager` upon the execution of statechanging commands (such as AddCommand and DeleteCommand). A `historyIndex` tracks the current state of `ActivityManager` and is used in UndoCommand and RedoCommand.
 
-Each `ActivityManager` can holds a list of activities. An `Activity` has attributes such as a name, `Status` and can have up to 2 `AMDate` objects. The `AMDate` class is responsible for the automatic recognition of user-defined date and time values and is supported by the [Natty library](http://natty.joestelmach.com/). All internal operations related to `AMDate` are done in the epoch time format.
+Each `ActivityManager` can holds a list of activities. An `Activity` has attributes such as a name, `Status` and can have up to 2 `AMDate` objects. The `AMDate` class is implemented using the façade pattern for the underlying [Natty](http://natty.joestelmach.com/) library, and is responsible for the automatic recognition and handling of user-defined date and time values. All internal operations related to `AMDate` such as storage are done in the epoch time format.
 
 ### 3.5 Storage component
 
