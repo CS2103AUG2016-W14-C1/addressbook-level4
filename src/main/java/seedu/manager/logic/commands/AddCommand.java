@@ -18,9 +18,9 @@ public class AddCommand extends Command {
                                           "add attend talk from 1 oct 10am to 1 oct 12pm";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a activity to the activity manager.\n"
-              + "Usage: add ACTIVITY / "
-              + "add ACTIVITY on DATETIME / "
-              + "add ACTIVITY from DATETIME to DATETIME";
+              + "Usage: " + COMMAND_WORD + " ACTIVITY / "
+              + COMMAND_WORD + " ACTIVITY on DATETIME / "
+              + COMMAND_WORD + " ACTIVITY from DATETIME to DATETIME";
 
     public static final String MESSAGE_SUCCESS = "New activity added: %1$s";
     public static final String MESSAGE_RECUR_SUCCESS = "New recurring activity added: %1$s";

@@ -30,6 +30,7 @@ public class ResultDisplay extends UiPart {
 
     public void configure() {
         resultDisplayArea = new TextArea();
+        resultDisplayArea.setMinHeight(90.0);
         resultDisplayArea.setEditable(false);
         resultDisplayArea.setId(RESULT_DISPLAY_ID);
         resultDisplayArea.setText("");

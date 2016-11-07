@@ -22,7 +22,7 @@ public class UpdateCommand extends Command {
 	
 	public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the activity identified by the index number used in the last activity listing.\n"
-            + "Parameters: INDEX (must be a positive integer) [NEW_NAME] [on|by DATE_TIME] [from START_DATE_TIME to END_DATE_TIME]";
+            + "Usage: " + COMMAND_WORD + " [NEW_NAME] [on|by DATE_TIME] [from START_DATE_TIME to END_DATE_TIME]";
 
     public static final String MESSAGE_UPDATE_ACTIVITY_SUCCESS = "Updated Activity: %1$s";
 	public final int targetIndex;
