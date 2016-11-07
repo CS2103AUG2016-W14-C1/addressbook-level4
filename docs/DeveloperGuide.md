@@ -35,7 +35,7 @@ This guide describes the design and implementation of Remindaroo. It provides fu
 
 ## 2. Setup
 
-#### Prerequisites
+The prerequisites to develop Remindaroo are as follows: <br><br>
 
 1. **JDK `1.8.0_60`**  or later<br>
 
