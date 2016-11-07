@@ -16,10 +16,10 @@
     4.2 [Configuration](#42-configuration) <br>
 5. [Testing](#5-testing)
 6. [Dev Ops](#6-dev-ops) <br>
-    6.1 [Build Automation](#6.1-build-automation)<br>
-    6.2 [Continuous Integration](#6.2-continuous-integration)<br>
-    6.3 [Making a release](#6.3-making-a-release)<br>
-    6.4 [Managing dependencies](#6.4-managing-dependencies)<br>
+    6.1 [Build Automation](#61-build-automation)<br>
+    6.2 [Continuous Integration](#62-continuous-integration)<br>
+    6.3 [Making a release](#63-making-a-release)<br>
+    6.4 [Managing dependencies](#64-managing-dependencies)<br>
 7. [Appendices](#7-appendices) <br>
     A. [User Stories](#a-user-stories)<br>
     B. [Use Cases](#b-use-cases)<br>
@@ -87,10 +87,10 @@ With reference to Figure 1, the application is initialized via the `Main` compon
 * `LogsCenter` : This class is used by many other classes to write log messages to the App's log file
 
 The rest of the App consists four components:
-* [**`UI`**](#32ui-component) : Gets input from the user and display results to the user
-* [**`Logic`**](#33logic-component) : Interprets user input and executes command accordingly
-* [**`Model`**](#34model-component) : Holds the data of the App in-memory
-* [**`Storage`**](#35storage-component) : Reads data from the hard disk and writes data to the hard disk
+* [**`UI`**](#32-ui-component) : Gets input from the user and display results to the user
+* [**`Logic`**](#33-logic-component) : Interprets user input and executes command accordingly
+* [**`Model`**](#34-model-component) : Holds the data of the App in-memory
+* [**`Storage`**](#35-storage-component) : Reads data from the hard disk and writes data to the hard disk
 
 Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
