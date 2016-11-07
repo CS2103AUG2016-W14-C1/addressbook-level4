@@ -5,7 +5,7 @@ import seedu.manager.model.activity.*;
 /**
  * A mutable activity object. For testing only.
  */ 
-//@@author A0135730M
+//@@author A0144881Y
 public class TestActivity implements ReadOnlyActivity {
 
     private ActivityType type;
