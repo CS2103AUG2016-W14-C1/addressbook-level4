@@ -40,7 +40,7 @@ This guide describes the design and implementation of Remindaroo. It provides fu
 1. **JDK `1.8.0_60`**  or later<br>
 
     >Note: <br>
-    >  Having any Java 8 version is not enough. 
+    >  Having any Java 8 version is not enough.
     This app will not work with earlier versions of Java 8.
 
 2. **Eclipse** IDE
@@ -49,7 +49,7 @@ This guide describes the design and implementation of Remindaroo. It provides fu
 
 3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in
    [this page](http://www.eclipse.org/efxclipse/install.html#for-the-ambitious))
-   
+
 4. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 
 In addition, we also recommend the following software to assist you in development:<br>
@@ -86,11 +86,11 @@ With reference to Figure 1, the application is initialized via the `Main` compon
 * `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained)) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : This class is used by many other classes to write log messages to the App's log file
 
-The rest of the App consists four components
+The rest of the App consists four components:
 * [**`UI`**](#ui-component) : Gets input from the user and display results to the user
 * [**`Logic`**](#logic-component) : Interprets user input and executes command accordingly
-* [**`Model`**](#model-component) : Holds the data of the App in-memory.
-* [**`Storage`**](#storage-component) : Reads data from the hard disk and writes data to the hard disk.
+* [**`Model`**](#model-component) : Holds the data of the App in-memory
+* [**`Storage`**](#storage-component) : Reads data from the hard disk and writes data to the hard disk
 
 Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
@@ -100,20 +100,20 @@ Each of the four components
 
 Figure 2: Sequence diagram of component interactions for command `delete 1` <br>
 
-In figure 2, Model simply raises an ActivityManagerChangedEvent when data in ActivityManager is changed. It does not ask Storage to save any updates to the hard disk.
+In figure 2, Model simply raises an ActivityManagerChangedEvent when data in ActivityManager is changed. It does not ask **`Storage`** to save any updates to the hard disk.
 
 <img src="images/SDforDeleteActivityEventHandling.png" width="800">
 
 Figure 3: Sequence diagram of handling `ActivityManagerChangedEvent` <br>
 
-In Figure 3, the event is propagated through the EventsCenter to the Storage. Figures 2 and 3 exemplifies how an event-driven approach reduces direct coupling between Model and Storage components.
+In Figure 3, the event is propagated through the `EventsCenter` to the `Storage`. Figures 2 and 3 exemplifies how an event-driven approach reduces direct coupling between `Model` and `Storage` components.
 
 Each component is explained in greater detail below.
 
 ### 3.2 UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
-Figure 4: _Class Diagram_ of UI component
+Figure 4: _Class Diagram_ of `UI` component
 
 **API** : [`Ui.java`](../src/main/java/seedu/manager/ui/Ui.java)
 
@@ -122,7 +122,7 @@ The UI component consists of a `MainWindow` that is made up of parts such as`Com
 The `UI` component uses the [JavaFX](http://www.oracle.com/technetwork/java/javase/overview/javafx-overview-2158620.html) UI framework. The layout of the various UI parts are defined in matching `.fxml` files that are located in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](../src/main/java/seedu/manager/ui/MainWindow.java) is specified in [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
 
 
-The `UI` component
+The `UI` component:
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Observes a list of activities via the `UnmodifiableObservableList` class to be displayed in the application, hence adhering to the observer pattern.
@@ -132,7 +132,7 @@ The `UI` component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-Figure 5: _Class Diagram_ of Logic component
+Figure 5: _Class Diagram_ of `Logic` component
 
 **API** : [`Logic.java`](../src/main/java/seedu/manager/logic/Logic.java)
 
@@ -141,7 +141,7 @@ The logic component is implemented as a façade for easy manipulation of the oth
 <img src="images/DeleteActivitySdForLogic.png" width="800"><br>
 Figure 6: Sequence diagram for `Logic` component interactions for `execute(delete 1)` API call
 
-More complex commands such as AddCommand and UpdateCommand are implemented using the builder pattern in the `AMParser` class. These commands have a concrete builder method each due to the complexity in processing the user input.
+The various commands such as `AddCommand` and `UpdateCommand` are implemented using the factory pattern in the `AMParser` class. `AMParser` produces a new specific `Command` type from user input given in the `CommandBox`.
 
 The `Command` class is also used as part of the command pattern. Notice how `ActivityManager` represents the state of our application. Therefore, `UI` acts as a client that leads to the execution of a `Command`, determined by `AMParser`. The `Model` then acts as a receiver to change `ActivityManager` itself.
 
@@ -149,30 +149,30 @@ The `Command` class is also used as part of the command pattern. Notice how `Act
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
-Figure 7: _Class Diagram_ for Model component
+Figure 7: _Class Diagram_ for `Model` component
 
 **API** : [`Model.java`](../src/main/java/seedu/manager/model/Model.java)
 
-The `Model` component
+The `Model` component:
 * Stores a `UserPref` object that represents the user's preferences
 * Stores the `ActivityManager` data
 * Exposes an `UnmodifiableObservableList<ReadOnlyActivity>` that can be ‘observed’. This is bound to the UI for automatic graphical updates
 * Does not depend on any of the other three components
 
-The model component is managed by the `ModelManager` class. `ModelManager` keeps track of a history of the state of `ActivityManager` upon the execution of statechanging commands (such as AddCommand and DeleteCommand). A `historyIndex` tracks the current state of `ActivityManager` and is used in UndoCommand and RedoCommand.
+The `Model` component is managed by the `ModelManager` class. `ModelManager` keeps track of a history of the state of `ActivityManager` upon the execution of state-changing commands (such as `AddCommand` and `DeleteCommand`). `historyIndex` tracks the current state of `ActivityManager` and is used in `UndoCommand` and `RedoCommand`.
 
-Each `ActivityManager` can holds a list of activities. An `Activity` has attributes such as a name, `Status` and can have up to 2 `AMDate` objects. The `AMDate` class is implemented using the façade pattern for the underlying [Natty](http://natty.joestelmach.com/) library, and is responsible for the automatic recognition and handling of user-defined date and time values. All internal operations related to `AMDate` such as storage are done in the epoch time format.
+Each `ActivityManager` can hold a list of activities. An `Activity` has attributes such as a name, `Status` and can have up to 2 `AMDate` objects. The `AMDate` class is implemented using the façade pattern for the underlying [Natty](http://natty.joestelmach.com/) library, and is responsible for the automatic recognition and handling of user-defined date and time values. All internal operations related to `AMDate` such as storage are done in the epoch time format.
 
 ### 3.5 Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
 
-Figure 8: _Class Diagram_ for Storage component
+Figure 8: _Class Diagram_ for `Storage` component
 
 **API** : [`Storage.java`](../src/main/java/seedu/manager/storage/Storage.java)
 
-The `Storage` component
-* Saves UserPref objects in JSON format and reads it back
+The `Storage` component:
+* Saves `UserPref` objects in JSON format and reads it back
 * Saves `ActivityManager` data in XML format and reads it from XML
 
 ### 3.6 Common classes
@@ -183,13 +183,11 @@ Classes used by multiple components, such as `UnmodifiableObservableList`, can b
 
 ### 4.1 Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.Some
-important details to utilize logging features are as follows:
-
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations. Some important details to utilize logging features are as follows:
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file
 * The Logger for a specific class can be obtained using the method`LogsCenter.getLogger(class)`, which will log messages according to the specified logging level
-* Log messages are currently displayed via `Console` and is recorded in a `.log` file
+* Log messages are currently displayed via console and is recorded in a `.log` file
 
 
 **Logging Levels**
@@ -213,7 +211,7 @@ To perform testing in eclipse:
 * To run a subset of tests, right-click on a test package, test class, or a test and choose `Run as` > `JUnit Test`
 
 > Note: <br>
-> If you have the Eclemma plugin installed, you may instead choose Coverage As > JUnit test instead to obtain code coverage results.
+> If you have the Eclemma plugin installed, you may instead choose Coverage As > JUnit Test instead to obtain code coverage results.
 
 
 **Using Gradle**:
@@ -228,12 +226,12 @@ We have 2 types of tests as follows:
 > Thanks to the TestFX library, GUI tests can be run in headless mode. In headless mode, GUI tests do not show up on the screen. Please refer to the guide on using Gradle for running tests in headless mode.
 
 2. **Non-GUI Tests** - These are tests that do not involve the GUI. They include:
-   * _Unit tests_ that check the lowest level methods and classes 
-      e.g. `seedu.manager.commons.ConfigUtilTest` 
-	  
-   * _Integration tests_ that check for proper integration of multiple code units 
+   * _Unit tests_ that check the lowest level methods and classes
+      e.g. `seedu.manager.commons.ConfigUtilTest`
+
+   * _Integration tests_ that check for proper integration of multiple code units
       e.g. `seedu.manager.storage.StorageManagerTest`
-   * _Hybrid tests_ that check multiple code units and how well they are connected with each other 
+   * _Hybrid tests_ that check multiple code units and how well they are connected with each other
       e.g. `seedu.manager.logic.LogicManagerTest`
 
 
@@ -300,7 +298,7 @@ Use cases are lists of actions that define the interaction between a user and Re
 #### Use case 1: Add an activity
 
 MSS: <br>
-1. User types command <b>add</b> `ACTIVITY …` <br>
+1. User types command **`add`** ` ACTIVITY …` <br>
 2. System determines the activity type (task, deadline or event) <br>
 3. System adds activity into list of activities <br>
 4. System ensures activities with date and time are sorted in chronological order <br>
@@ -320,7 +318,7 @@ Extensions <br>
 #### Use Case 2: Remove all activities
 
 MSS: <br>
-1. User types command <b>clear</b> <br>
+1. User types command **`clear`** <br>
 2. System deletes all activities from storage file<br>
 3. System reflects this change to user by displaying empty schedule and task panels<br>
 4. System records the current state of all activities (i.e. blank)<br>
@@ -329,7 +327,7 @@ MSS: <br>
 #### Use Case 3: View all activities
 
 MSS:<br>
-1. User types command <b>list</b> <br>
+1. User types command **`list`** <br>
 2. System ensures activities with date and time are sorted in chronological order <br>
 3. System displays all activities in the respective panels (schedule / task) <br>
    Use case ends <br>
@@ -337,7 +335,7 @@ MSS:<br>
 #### Use case 4: Update an activity
 
 MSS: <br>
-1. User types command <b>update</b> `ACTIVITY_ID ...` <br>
+1. User types command **`update`** `ACTIVITY_ID ...` <br>
 2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
 3. System updates appropriate attributes such as name, starting date time (if any) <br>
 and ending date time (if any) of the activity <br>
@@ -354,19 +352,19 @@ Extensions <br>
 #### Use case 5: Access the help menu
 
 MSS: <br>
-1. User types command <b>help</b> <br>
+1. User types command **`help`** <br>
 2. System displays a help window showing a list of commands and examples <br>
    Use case ends <br>
 
 #### Use case 6: Exit the application
 MSS: <br>
-1. User types command <b>exit</b> <br>
+1. User types command **`exit`** <br>
 2. System closes the main window of the application and terminates the process <br>
    Use case ends <br>
 
 #### Use case 7: Delete an activity
 MSS: <br>
-1. User types command <b>delete</b> `ACTIVITY_ID ...` <br>
+1. User types command **`delete`** `ACTIVITY_ID ...` <br>
 2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
 3. System deletes the activity <br>
 4. If more than `ACTIVITY_ID` is present, repeat steps 2-3 for each `ACTIVITY_ID` <br>
@@ -378,10 +376,10 @@ Extensions <br>
 2a. No activity with corresponding `ACTIVITY_ID` is found <br>
 	1. System displays error message <br>
 	   Use case ends <br>
- 
+
 #### Use case 8: Search for activities <br>
 MSS: <br>
-1. User types command <b>search</b> `...` <br>
+1. User types command **`search`** `...` <br>
 2. System searches activities that match corresponding keywords, occur during a specified date/time or have a specific status (pending or completed) <br>
 3. System displays all activities fulfilling the search criteria in the respective panels (schedule / task) <br>
    Use case ends <br>
@@ -398,7 +396,7 @@ Extensions
 
 #### Use case 9: Undo a command
 MSS: <br>
-1. User types command <b>undo</b> `[NUMBER_OF_TIMES]` <br>
+1. User types command **`undo`** `[NUMBER_OF_TIMES]` <br>
 2. System reverts to the previous state. If `NUMBER_OF_TIMES` is specified, System reverts to the previous state for `NUMBER_OF_TIMES`<br>
 3. System displays all activities in the respective panels (schedule / task) <br>
 4. System indicates that it is currently in a previous state <br>
@@ -412,7 +410,7 @@ Extensions <br>
 
 #### Use case 10: Redo a command
 MSS: <br>
-1. User types command <b>redo</b> `[NUMBER_OF_TIMES]` <br>
+1. User types command **`redo`** `[NUMBER_OF_TIMES]` <br>
 2. System reverts to a future state. If `NUMBER_OF_TIMES` is specified, System reverts to the future state for `NUMBER_OF_TIMES` <br>
 3. System displays all activities in the respective panels (schedule / task) <br>
 4. System indicates that it is currently in a future state <br>
@@ -426,7 +424,7 @@ Extensions <br>
 
 #### Use case 11: Change the storage file
 MSS: <br>
-1. User types command <b>store</b> `NEW_DATA_FILE_PATH` <br>
+1. User types command **`store`** `NEW_DATA_FILE_PATH` <br>
 2. System attempts to locate the specified `.xml` file <br>
 3. System writes the list of activities into the specified `.xml` file <br>
 4. System displays `NEW_DATA_FILE_PATH` as storage location in the status bar <br>
@@ -441,11 +439,11 @@ Extensions
 
 #### Use case 12: Load schedule from a file
 MSS: <br>
-1. User types command <b>load</b> `DATA_FILE_PATH` <br>
+1. User types command **`load`** `DATA_FILE_PATH` <br>
 2. System attempts to parse the specified `.xml` file <br>
 3. System retrieves a list of activities from specified `.xml` file <br>
 4. System overwrites the list of activities into the current storage location <br>
-5. System ensures activities with date and time are sorted in chronological order <br> 
+5. System ensures activities with date and time are sorted in chronological order <br>
 6. System displays the corresponding list of activities in appropriate panels <br>
 7. System records the current state of all activities <br>
    Use case ends <br>
@@ -458,7 +456,7 @@ Extensions <br>
 
 #### Use case 13: Mark an activity as done
 MSS: <br>
-1. User types command <b>mark</b> `ACTIVITY_ID` <br>
+1. User types command **`mark`** `ACTIVITY_ID` <br>
 2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
 3. System changes the status of that activity from pending to completed <br>
 4. System displays a list remaining activities that are pending <br>
@@ -473,7 +471,7 @@ Extensions <br>
 
 #### Use case 14: Unmark an activity as done
 MSS: <br>
-1. User types command <b>unmark</b> `ACTIVITY_ID` <br>
+1. User types command **`unmark`** `ACTIVITY_ID` <br>
 2. System searches for the activity with corresponding `ACTIVITY_ID` <br>
 3. System changes the status of that activity from completed to pending <br>
 4. System records the current state of all activities <br>

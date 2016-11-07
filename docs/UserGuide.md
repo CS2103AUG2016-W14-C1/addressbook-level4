@@ -12,7 +12,7 @@
 
 Do you feel overwhelmed by all the activities in your life? Do you find yourself occasionally forgetting an important task at hand? With Remindaroo, be assured that these worrisome days will be a thing of the past!
 
-Remindaroo it is a personal assistant that manages your schedule and tasks. It will inform you of tasks due on a particular day, or the next event you need to attend.
+Remindaroo is a personal assistant that manages your schedule and tasks. It will inform you of tasks due on a particular day, or the next event you need to attend.
 
 Unlike other task managers, Remindaroo is simple to use. Each action only requires a single line of command. Clicking and scrolling is reduced to an absolute minimum, making Remindaroo clean and easy to navigate.
 
