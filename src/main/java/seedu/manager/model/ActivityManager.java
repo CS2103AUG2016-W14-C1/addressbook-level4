@@ -66,8 +66,8 @@ public class ActivityManager implements ReadOnlyActivityManager {
         activities.remove(key);
     }
 
-    public void updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) {
-    	activities.update(key, newName, newDateTime, newEndDateTime);
+    public Activity updateActivity(Activity key, String newName, String newDateTime, String newEndDateTime) {
+    	return activities.update(key, newName, newDateTime, newEndDateTime);
     }
 
     public void markActivity(Activity key) {

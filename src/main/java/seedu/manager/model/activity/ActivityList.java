@@ -40,7 +40,7 @@ public class ActivityList implements Iterable<Activity> {
     /**
      * Updates the equivalent activity in the list.
      */
-    public void update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) {
+    public Activity update(Activity toUpdate, String newName, String newDateTime, String newEndDateTime) {
     	assert toUpdate != null;
     	assert internalList.contains(toUpdate);
     	
@@ -67,6 +67,7 @@ public class ActivityList implements Iterable<Activity> {
     	}
     	internalList.set(toUpdateIndex, newActivity);
     	Collections.sort(internalList);
+    	return newActivity;
     }
     
     //@@author A0144704L

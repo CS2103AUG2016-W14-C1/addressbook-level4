@@ -110,9 +110,9 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public synchronized void updateActivity(Activity activity, String newName, String newDateTime, String newEndDateTime) {
-        activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
+        Activity newActivity = activityManager.updateActivity(activity, newName, newDateTime, newEndDateTime);
         indicateActivityManagerChanged();
-        indicateActivityListPanelUpdate(activity);
+        indicateActivityListPanelUpdate(newActivity);
         recordManagerHistory(activityManager);
     }
 
